@@ -1,0 +1,37 @@
+%section.admin_add_video
+  .container
+    .row
+      .span10.offset1
+        %form.form-horizontal
+          %ul.nav.nav-tabs
+            %li
+              %a(href="/ui/admin_views_payments") Recent Payments
+            %li.active
+              %a(href="") Add a New Video
+          %fieldset
+            .control-group
+              %label.control-label Title
+              .controls
+                %input.span3(type="text")
+            .control-group
+              %label.control-label Category
+              .controls
+                %select
+            .control-group
+              %label.control-label Description
+              .controls
+                %textarea.span6(rows="8")
+            .control-group
+              %label.control-label Large Cover
+              .controls
+                %span.btn.btn-file
+                  %input(type="file")
+            .control-group
+              %label.control-label Small Cover
+              .controls
+                %span.btn.btn-file
+                  %input(type="file")
+
+          %fieldset.actions.control-group
+            .controls
+              %input(type="submit" value="Add Video" class="btn")
