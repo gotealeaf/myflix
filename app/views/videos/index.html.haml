@@ -1,24 +1,9 @@
-%article.video_category
-  %header
-    %h3= link_to "TV Commedies"
-  .videos.row
-    - 6.times do
-      .video.span2
-        = link_to "", nil do
-          %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
-
-%article.video_category
-  %header
-    %h3= link_to "TV Dramas"
-  .videos.row
-    - 6.times do
-      .video.span2
-        %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
-
-%article.video_category
-  %header
-    %h3= link_to "Reality TV"
-  .videos.row
-    - 6.times do
-      .video.span2
-        %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
+- @videos.each_slice(5) do |slice|
+  %article.video_category
+    %header
+      %h3= link_to "TV Comedies"
+    .videos.row
+      - slice.each do |v|
+        .video.span2
+          = link_to image_tag(v.thumbnail), "http://www.google.com"
+    
