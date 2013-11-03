@@ -1,3 +1,4 @@
+ /* require boostrap-responsive*/
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -10,7 +11,8 @@
  *
  *= require_self
  *= require bootstrap
- *= require bootstrap-responsive
+
  *= require whitespace-reset
  *= require_tree .
 */
+ @import "bootstrap";
