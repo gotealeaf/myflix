@@ -33,5 +33,5 @@ videos = Video.create([
           large_cover_url:'tmp/south_park.jpg'
           }])
 
-//commit to github
+//commit to git 
 
