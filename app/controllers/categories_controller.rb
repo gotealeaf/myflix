@@ -5,4 +5,8 @@ class CategoriesController < ApplicationController
   	@videos = @category.videos.all
   end
 
+  def index
+  	@categories = Category.all
+  end
+
 end
