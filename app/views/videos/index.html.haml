@@ -1,0 +1,28 @@
+%article.video_category
+  %header
+    %h3= link_to "All Movies"
+  .videos.row
+    - @videos.each do |video|
+      .video.span2
+        = link_to video do
+          %img(src="#{video.small_cover_url}")
+
+
+%article.video_category
+  %header
+    %h3= link_to "Comedies"
+  .videos.row
+    - @comedies.each do |comedy|
+      .video.span2
+        = link_to comedy do
+          %img(src="#{comedy.small_cover_url}")
+
+%article.video_category
+  %header
+    %h3= link_to "Dramas"
+  .videos.row
+    - @dramas.each do |drama|
+      .video.span2
+        = link_to drama do
+          %img(src="#{drama.small_cover_url}")
+
