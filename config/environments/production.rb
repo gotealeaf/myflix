@@ -11,6 +11,9 @@ Myflix::Application.configure do
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
 
+  # Log error messages when you accidentally call methods on nil
+  config.whiny_nils = false
+
   # Compress JavaScripts and CSS
   config.assets.compress = true
 
