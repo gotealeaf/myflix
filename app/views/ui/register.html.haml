@@ -1,0 +1,36 @@
+%section.register.container
+  .row
+    .span10.offset1
+      %form.form-horizontal
+        %header
+          %h1 Register
+        %fieldset
+          .control-group
+            %label.control-label Email Address
+            .controls
+              %input.span3(type="email")
+          .control-group
+            %label.control-label Password
+            .controls
+              %input.span3(type="password")
+          .control-group
+            %label.control-label Full Name
+            .controls
+              %input.span3(type="text")
+        %fieldset.credit_card
+          .control-group
+            %label.control-label Credit Card Number
+            .controls
+              %input.span3(type="text")
+          .control-group
+            %label.control-label Security Code
+            .controls
+              %input.span3(type="text")
+          .control-group
+            %label.control-label Expiration
+            .controls
+              = select_month(Date.today, {add_month_numbers: true},  class: 'span2')
+              = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'span1')
+        %fieldset.actions.control-group
+          .controls
+            %input(type="submit" value="Sign Up" class="btn")
