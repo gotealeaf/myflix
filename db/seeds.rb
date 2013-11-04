@@ -16,7 +16,7 @@ videos = Video.create([
           },
          
         { title:'Family Guy' , 
-          description:'Hilarious animated sitcom about a truly dysfunctional family from Quahog, Rhode Island' , 
+          description:'HilariousSouth Park is an animated series featuring four foul-mouthed 4th graders, Stan, Kyle, Kenny and Cartman. animated sitcom about a truly dysfunctional family from Quahog, Rhode Island' , 
           small_cover_url:'tmp/family_guy.jpg',
           large_cover_url:'tmp/family_guy.jpg'
           },
