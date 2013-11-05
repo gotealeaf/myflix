@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails' #, '4.0.1' 
 gem 'haml-rails'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '2.3.2.2'
+gem 'turbolinks'
 
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
-end
+gem 'sass-rails' #,   '~> 3.2.3'
+gem 'coffee-rails' #, '~> 3.2.1'
+gem 'uglifier', '>= 1.0.3'
+
 
 group :development do
   gem 'sqlite3'
@@ -21,3 +21,11 @@ group :production do
 end
 
 gem 'jquery-rails'
+
+group :test, :development do
+  gem 'rspec-rails'
+end
+
+group :test do
+  gem 'shoulda-matchers'
+end
