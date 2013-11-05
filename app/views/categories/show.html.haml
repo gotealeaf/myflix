@@ -1,0 +1,8 @@
+%article.video_category
+  %header
+    %h3= link_to "#{@category.name.pluralize}", category_path(@category)
+  .videos.row
+    - @category.videos.each do |video|
+      .video.span2
+        = link_to "#{video_path(video)}", nil do
+          %img(src="#{video.small_cover_url}")

@@ -14,6 +14,7 @@ group :development do
   gem 'sqlite3'
   gem 'pry'
   gem 'pry-nav'
+  gem 'faker'
 end
 
 group :production do
