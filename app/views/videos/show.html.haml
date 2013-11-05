@@ -2,14 +2,12 @@
   .container
     .row
       .video_large_cover.span7.offset1
-        %img.video-cover-large{src: @video.large_cover_url}
+        %img(src="/tmp/monk_large.jpg")
       .video_info.span3
         %header
-          %h3 
-            = @video.title
+          %h3= @video.title
           %span Rating: 4.5/5.0
-        %p 
-          = @video.description
+        %p= @video.description
         .actions
           %a.btn.btn-primary(href="") Watch Now
           %a.btn(href="") + My Queue
