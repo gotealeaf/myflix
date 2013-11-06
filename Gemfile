@@ -16,6 +16,8 @@ end
 
 group :test, :development do
   gem "rspec-rails", "~> 2.0"
+  #gem 'pry'
+  #gem 'pry-nav'
 end
 
 group :production do
