@@ -40,12 +40,11 @@ describe Video do
     monk = Video.create(title: "Monk", description: "This is monk movie")
     futurama = Video.create(title: "Futurama", description: "This is futurama movie")
     expect(Video.search_by_title("Monk")).to eq([monk])
-    #binding.pry
   end
 
-  # it "returns many record if search result is many" do
-  #   video = Video.create(title: "Monk", description: "This is monk movie")
-  #   video = Video.create(title: "Monk 2", description: "This is monk movie")
-  #   result << Video.search_by_title("Monk")
-  # end
+  it "returns many record if search result is many" do
+    monk = Video.create(title: "Monk", description: "This is monk movie")
+    monk2 = Video.create(title: "Monk 2", description: "This is monk 2 movie")
+    expect(Video.search_by_title("Monk")).to eq([monk, monk2])
+  end
 end
