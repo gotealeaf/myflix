@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.0.1'
 gem 'haml-rails'
+gem 'haml'
 gem 'bootstrap-sass', '~> 2.2.1.0'
 gem 'turbolinks'
 gem 'sass-rails', '~> 4.0.0'
