@@ -1,6 +1,6 @@
 %section.my_queue.container
   .row
-    .span10.offset1
+    .col-sm-10.col-sm-offset-1
       %article
         %header
           %h2 My Queue
@@ -16,13 +16,13 @@
           %tbody
             %tr
               %td
-                %input(type="text" value="1")
+                %input.form-control(type="text" value="1")
               %td
                 = link_to "Futurama"
               %td
-                = button_to "Play", nil, class: "btn"
+                = button_to "Play", nil, class: "btn btn-default"
               %td
-                %select(name="")
+                %select.form-group(name="")
                   %option(value="5") 5 Stars
                   %option(value="4") 4 Stars
                   %option(value="3") 3 Stars
@@ -35,11 +35,11 @@
                   %i.icon-remove
             %tr
               %td
-                %input(type="text" value="2")
+                %input.form-control(type="text" value="2")
               %td
                 = link_to "Family Guy"
               %td
-                = button_to "Play", nil, class: "btn"
+                = button_to "Play", nil, class: "btn btn-default"
               %td
                 %select(name="")
                   %option(value="5") 5 Stars
@@ -52,4 +52,4 @@
               %td
                 = link_to "", method: :post do
                   %i.icon-remove
-        = button_to "Update Instant Queue", nil, class: "btn"
+        = button_to "Update Instant Queue", nil, class: "btn btn-default"
