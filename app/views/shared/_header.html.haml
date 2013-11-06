@@ -1,13 +1,14 @@
 %section#top-header.row
-  %h1.span2
+  %h1.col-md-2
     = link_to "MyFLiX"
-  %ul.span4.clearfix
+  %ul.col-md-4.clearfix
     %li= link_to "Videos"
     %li= link_to "My Queue"
     %li= link_to "People"
-  %form.span5.for-search(action="")
-    %input.search-query(type="text" placeholder="Search for videos here")
-    %button.btn(type="submit") Search
+  %form.col-md-5.navbar-form(action="")
+    .form-group
+      %input.form-control(type="text" placeholder="Search for videos here")
+    %button.btn.btn-default(type="submit") Search
   #user_links.pull-right
     %ul
       %li.dropdown
