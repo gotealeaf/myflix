@@ -5,14 +5,4 @@ class UiController < ApplicationController
 
   layout "application"
 
-  def index
-  end
-
-  def home
-    @categories = Category.all
-  end
-
-  def video
-    @video = Video.first   # find(params[:id])
-  end
 end
