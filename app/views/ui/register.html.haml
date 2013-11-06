@@ -1,36 +1,37 @@
 %section.register.container
   .row
-    .span10.offset1
+    .col-sm-10.col-sm-offset-1
       %form.form-horizontal
         %header
           %h1 Register
         %fieldset
-          .control-group
-            %label.control-label Email Address
-            .controls
-              %input.span3(type="email")
-          .control-group
-            %label.control-label Password
-            .controls
-              %input.span3(type="password")
-          .control-group
-            %label.control-label Full Name
-            .controls
-              %input.span3(type="text")
+          .form-group
+            %label.control-label.col-sm-2 Email Address
+            .col-sm-6
+              %input.form-control(type="email")
+          .form-group
+            %label.control-label.col-sm-2 Password
+            .col-sm-6
+              %input.form-control(type="password")
+          .form-group
+            %label.control-label.col-sm-2 Full Name
+            .col-sm-6
+              %input.form-control(type="text")
         %fieldset.credit_card
-          .control-group
-            %label.control-label Credit Card Number
-            .controls
-              %input.span3(type="text")
-          .control-group
-            %label.control-label Security Code
-            .controls
-              %input.span3(type="text")
-          .control-group
-            %label.control-label Expiration
-            .controls
-              = select_month(Date.today, {add_month_numbers: true},  class: 'span2')
-              = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'span1')
-        %fieldset.actions.control-group
+          .form-group
+            %label.control-label.col-sm-2 Credit Card Number
+            .col-sm-6
+              %input.form-control(type="text")
+          .form-group
+            %label.control-label.col-sm-2 Security Code
+            .col-sm-6
+              %input.form-control(type="text")
+          .form-group
+            %label.control-label.col-sm-2 Expiration
+            .col-sm-3
+              = select_month(Date.today, {add_month_numbers: true},  class: 'form-control')
+            .col-sm-2
+              = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'form-control')
+        %fieldset.actions.control-group.col-sm-offset-2
           .controls
-            %input(type="submit" value="Sign Up" class="btn")
+            %input(type="submit" value="Sign Up" class="btn btn-default")

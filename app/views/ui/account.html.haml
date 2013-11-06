@@ -1,27 +1,27 @@
 %section.account.container
   .row
-    .span10.offset1
+    .col-md-10.col-lg-offset-1
       %form.form-horizontal
         %header
           %h1 Your Account
         %fieldset
-          .control-group
-            %label.control-label Email Address
-            .controls
-              %input.span3(type="email")
-          .control-group
-            %label.control-label Password
-            .controls
-              %input.span3(type="password")
-          .control-group
-            %label.control-label Confirm Password
-            .controls
-              %input.span3(type="password")
-          .control-group
-            %label.control-label Full Name
-            .controls
-              %input.span3(type="text")
-        %fieldset.actions.control-group
-          .controls
-            %input(type="submit" value="Update" class="btn")
+          .form-group
+            %label.control-label.col-sm-3 Email Address
+            .col-sm-4
+              %input.form-control(type="email")
+          .form-group
+            %label.control-label.col-sm-3 Password
+            .col-sm-4
+              %input.form-control(type="password")
+          .form-group
+            %label.control-label.col-sm-3 Confirm Password
+            .col-sm-4
+              %input.form-control(type="password")
+          .form-group
+            %label.control-label.col-sm-3 Full Name
+            .col-sm-4
+              %input.form-control(type="text")
+        %fieldset.actions.form-group
+          .col-sm-8.col-lg-offset-3
+            %input(type="submit" value="Update" class="btn btn-default")
             = link_to "Cancel"
