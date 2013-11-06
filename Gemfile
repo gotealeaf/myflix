@@ -10,8 +10,8 @@ gem 'uglifier', '>= 1.3.0'
 
 group :development do
   gem 'sqlite3'
-  gem 'pry'
-  gem 'pry-nav'
+  # gem 'pry'
+  # gem 'pry-nav'
 end
 
 group :test do
@@ -20,8 +20,8 @@ end
 
 group :test, :development do
   gem "rspec-rails", "~> 2.0"
-  #gem 'pry'
-  #gem 'pry-nav'
+  gem 'pry'
+  gem 'pry-nav'
 end
 
 group :production do
