@@ -8,3 +8,5 @@
 
 Futurama = Video.create(title: 'Futurama', description: 'Never watched it', small_cover_url: '/tmp/futurama.jpg', large_cover_url: '/tmp/monk_large.jpg')
 Monk = Video.create(title: 'Futurama', description: 'Almost famous', small_cover_url: '/tmp/monk.jpg', large_cover_url: '/tmp/monk_large.jpg')
+Horror = Category.create(name: 'Horror')
+Monk = Video.create(title: 'Futurama', description: 'Almost famous', small_cover_url: '/tmp/monk.jpg', large_cover_url: '/tmp/monk_large.jpg', category_id: 1)
