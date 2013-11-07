@@ -15,6 +15,14 @@ group :development do
   gem 'pry-nav'
 end
 
+group :test, :development do
+	gem 'rspec-rails'
+end
+
+group :test do
+	gem 'shoulda-matchers'
+end
+
 group :production do
   gem 'pg'
 end
