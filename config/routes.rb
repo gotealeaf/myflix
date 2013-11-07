@@ -7,4 +7,5 @@ Myflix::Application.routes.draw do
 
   resources :videos, except: [:index]
 
+  # test test
 end
