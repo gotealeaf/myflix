@@ -1,0 +1,10 @@
+%article.video
+  .container
+    .row
+      .video_large_cover.span7.offset1
+        %img(src="#{@video.large_cover_url}")
+      .video_info.span3
+        %header
+          %h3= @video.title
+          %span Rating: 4.5/5.0
+        %p= @video.description
