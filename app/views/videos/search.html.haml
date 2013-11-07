@@ -1,3 +1,13 @@
+/ - @categories.each do |category|
+/   - if @videos.where(category_id: category.id).count > 0
+/     %article.video_category
+/       %header
+/         %h3
+/           = link_to category.name, category_path(category)
+/       .videos.row
+/         - @videos.where(category_id: category.id).each do |video|
+/           .video.span2
+/             = link_to (image_tag video.small_cover_url), video_path(video)
 - @categories.each do |category|
   - if @videos.where(category_id: category.id).count > 0
     %article.video_category
