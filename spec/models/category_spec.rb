@@ -30,8 +30,44 @@ describe Category do
   it { should validate_presence_of(:name)}
   it { should validate_uniqueness_of(:name)}
 
-  it ' ' do
-    
+  it "returns videos in the reverse chronical order by created_at" do
+    drama  = Category.create(name: "Drama")
+    toy    = Video.create(title: 'Toy Story 3', description: "The toys are mistakenly delivered to a" , created_at: 1.month.ago, category: drama)
+    totoro = Video.create(title: 'My Neighbour Totoro', description: "When two girls move to the cou", created_at: 2.months.ago, category: drama)
+    howl   = Video.create(title: "Howl's Moving Castle", description: "When an unconfident young wom", created_at: 10.days.ago, category: drama)
+    truman = Video.create(title: "The Truman Show", description: "An insurance salesman/adjuster dis", created_at: 15.days.ago, category: drama)
+    bruce  = Video.create(title: "Bruce Almighty", description: "A guy who complains about God too o", created_at: 10.months.ago, category: drama)
+    bean   = Video.create(title: "Bean The Movie", description: "The bumbling Mr. Bean travels to Am", created_at: 12.months.ago, category: drama)
+    inter  = Video.create(title: "The Internship", description: "Two salesmen whose careers have bee", created_at: 13.days.ago, category: drama)
+    gump   = Video.create(title: "Forrest Gump", description: "Forrest Gump, while not intelligent", created_at: 1.hour.ago, category: drama)
+    ryan   = Video.create(title: "Saving Private Ryan", description: "Following the Normandy Landing", created_at: 7.month.ago, category: drama)
+    expect(drama.recent_videos).to eq([gump, howl, inter, truman, toy, totoro])
   end
 
+  it "returns all the videos if there are less than 6 videos" do
+    drama  = Category.create(name: "Drama")
+    toy    = Video.create(title: 'Toy Story 3', description: "The toys are mistakenly delivered to a" , created_at: 1.month.ago, category: drama)
+    totoro = Video.create(title: 'My Neighbour Totoro', description: "When two girls move to the cou", created_at: 2.months.ago, category: drama)
+    expect(drama.recent_videos.size).to eq(2)
+  end
+
+  it "returns only 6 videos when there are more than 6 videos" do
+    drama  = Category.create(name: "Drama")
+    toy    = Video.create(title: 'Toy Story 3', description: "The toys are mistakenly delivered to a" , created_at: 1.month.ago, category: drama)
+    totoro = Video.create(title: 'My Neighbour Totoro', description: "When two girls move to the cou", created_at: 2.months.ago, category: drama)
+    howl   = Video.create(title: "Howl's Moving Castle", description: "When an unconfident young wom", created_at: 10.days.ago, category: drama)
+    truman = Video.create(title: "The Truman Show", description: "An insurance salesman/adjuster dis", created_at: 15.days.ago, category: drama)
+    bruce  = Video.create(title: "Bruce Almighty", description: "A guy who complains about God too o", created_at: 10.months.ago, category: drama)
+    bean   = Video.create(title: "Bean The Movie", description: "The bumbling Mr. Bean travels to Am", created_at: 12.months.ago, category: drama)
+    inter  = Video.create(title: "The Internship", description: "Two salesmen whose careers have bee", created_at: 13.days.ago, category: drama)
+    gump   = Video.create(title: "Forrest Gump", description: "Forrest Gump, while not intelligent", created_at: 1.hour.ago, category: drama)
+    ryan   = Video.create(title: "Saving Private Ryan", description: "Following the Normandy Landing", created_at: 7.month.ago, category: drama)
+    bones  = Video.create(title: 'Bones', description: "Bones was one of several series which popped up", created_at: 2.years.ago, category: drama)
+    expect(drama.recent_videos).not_to include(bones, bruce, bean)
+  end
+
+  it "returns an empty array if no recent videos in this category" do
+    drama  = Category.create(name: "Drama")
+    expect(drama.recent_videos).to eq([])
+  end
 end
