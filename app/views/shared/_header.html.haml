@@ -1,12 +1,14 @@
 %section#top-header.row
   %h1.span2
-    = link_to "MyFLiX"
+    = link_to "MyFlix", root_path
   %ul.span4.clearfix
     %li= link_to "Videos"
     %li= link_to "My Queue"
     %li= link_to "People"
-  %form.span5.for-search(action="")
-    %input.search-query(type="text" placeholder="Search for videos here")
+  .span5.for-search  
+    = form_tag(search_videos_path) do
+      .search-query
+        = text_field_tag :search_term, params[:search_term], placeholder: "Search for videos here"
     %button.btn(type="submit") Search
   #user_links.pull-right
     %ul
