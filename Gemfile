@@ -10,14 +10,18 @@ gem 'turbolinks'
 
 group :development do
   gem 'sqlite3'
-  gem 'pry'
-  gem 'pry-nav'
-  gem 'rspec-rails', '~> 2.0'
+  # gem 'pry'
+  # gem 'pry-nav'
 end
 
 group :test do
-  gem 'rspec-rails', '~> 2.0'
   gem "shoulda-matchers", "~> 2.4.0"
+end
+
+group :development, :test do
+  gem "rspec-rails", "~> 2.14.0"
+  gem 'pry'
+  gem 'pry-nav'
 end
 
 group :production do
