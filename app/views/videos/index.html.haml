@@ -1,0 +1,8 @@
+%article.video_category
+  - @categories.each do |category|
+    %header
+      %h3= link_to "#{category.name}"
+    .videos.row
+      - category.recent_videos.each do |video|
+        .video.span2
+          = link_to(image_tag(video.small_cover_url), video_path(video))
