@@ -2,7 +2,7 @@
   %header
     %h3= link_to "TV Commedies"
   .videos.row
-    - @video.each do |video|
+    - @videos.each do |video|
       .video.span2
         = link_to video_path(video) do
           %img(src="#{video.small_cover_url}")
