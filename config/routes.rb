@@ -5,7 +5,11 @@ Myflix::Application.routes.draw do
 
   get '/home', to: 'videos#index'
 
-  resources :videos, except: [:index]
+  resources :videos, except: [:index] do
+    collection do
+      post :search, to: "videos#search"
+    end
+  end
 
   # test test
 end
