@@ -46,5 +46,4 @@ describe Video do
     monk = Video.create(title: "Monk", description: "This is monk movie")
     monk2 = Video.create(title: "Monk 2", description: "This is monk 2 movie")
     expect(Video.search_by_title("Monk")).to eq([monk, monk2])
-  end
 end
