@@ -2,7 +2,6 @@ class VideosController < ApplicationController
   before_filter :require_user
 
   def index
-    @videos = Video.all
     @categories = Category.all
   end
 
@@ -14,21 +13,6 @@ class VideosController < ApplicationController
   def search
     @categories = Category.all
     @videos = Video.search_by_title(params[:search_term])
-  end
-
-  def new
-  end
-
-  def create
-  end
-
-  def edit
-  end
-
-  def update
-  end
-
-  def destroy
   end
 
   private
