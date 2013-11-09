@@ -1,4 +1,5 @@
 class VideosController < ApplicationController
+  before_filter :require_user
 
   def index
     @videos = Video.all
@@ -6,9 +7,13 @@ class VideosController < ApplicationController
   end
 
   def show
-    #binding.pry
     @video = Video.find(params[:id])
 
+  end
+
+  def search
+    @categories = Category.all
+    @videos = Video.search_by_title(params[:search_term])
   end
 
   def new
