@@ -1,9 +1,9 @@
-- (@videos).each_slice(5) do |slice|
+- @categories.each do |cat|
   %article.video_category
     %header
-      %h3= link_to "TV Comedies"
+      %h3= link_to cat.name
     .videos.row
-      - slice.each do |v|
+      - cat.videos.recent.each do |v|
         .video.span2
           = link_to image_tag(v.thumbnail), video_path(v.id)
     

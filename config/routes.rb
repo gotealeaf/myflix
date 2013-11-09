@@ -3,6 +3,7 @@ Myflix::Application.routes.draw do
   resources :videos do
     collection do
       get :search, to: "videos#search"
+      get :recent, to: "videos#recent"
     end
   end
   resources :categories, :path => 'genre'
