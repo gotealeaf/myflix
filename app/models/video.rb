@@ -4,7 +4,7 @@ class Video < ActiveRecord::Base
   belongs_to :category
   
   def self.search_by_name(search_term)
-    return [] if search_term.empty?
-    where("name like ?", "%#{search_term}%")
+    return [] if search_term.blank?
+    where("name LIKE ?", "%#{search_term}%")
   end
 end
