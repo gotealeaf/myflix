@@ -6,10 +6,11 @@ Myflix::Application.routes.draw do
     end
   end
   root to: 'pages#front'
-  get '/home', to: 'videos#index'
+  get 'home', to: 'videos#index'
   resources :categories, only: [:show]
 
-  get '/register', to: 'users#register'
-  get '/sign_in', to: 'users#sign_in'
+  get 'register', to: 'users#new'
+  get 'sign_in', to: 'users#sign_in'
+  resources :users, only: [:create]
 
 end
