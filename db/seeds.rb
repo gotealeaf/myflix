@@ -8,6 +8,7 @@
 
 comedies = Category.create(name: "Comedies")
 dramas = Category.create(name: "Dramas")
+users = User.create(email: "marviluw@gmail.com", password: "ace", full_name: "ace")
 
 Video.create(title: "Futurama", description: "Never watched it", small_cover_url: "/tmp/futurama.jpg", category: comedies, large_cover_url: "/tmp/monk_large.jpg")
 Video.create(title: "Monk", description: "Almost famous", small_cover_url: "/tmp/monk.jpg", category: dramas, large_cover_url: "/tmp/monk_large.jpg")
