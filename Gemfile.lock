@@ -27,8 +27,10 @@ GEM
       tzinfo (~> 0.3.37)
     arel (4.0.1)
     atomic (1.1.14)
+    bcrypt-ruby (3.0.1)
     bootstrap-sass (2.2.1.1)
       sass (~> 3.2)
+    bootstrap_form (1.0.0)
     builder (3.1.4)
     coderay (1.0.9)
     coffee-rails (4.0.1)
@@ -38,7 +40,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
-    diff-lcs (1.2.4)
+    diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.0.2)
     haml (4.0.4)
@@ -87,7 +89,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.1.0)
     rspec-core (2.14.7)
-    rspec-expectations (2.14.3)
+    rspec-expectations (2.14.4)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.14.4)
     rspec-rails (2.14.0)
@@ -125,7 +127,7 @@ GEM
     turbolinks (1.3.0)
       coffee-rails
     tzinfo (0.3.38)
-    uglifier (2.3.0)
+    uglifier (2.3.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
 
@@ -133,7 +135,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt-ruby (~> 3.0.0)
   bootstrap-sass (~> 2.2.1.0)
+  bootstrap_form
   coffee-rails (~> 4.0.0)
   haml-rails
   jquery-rails
@@ -141,7 +145,7 @@ DEPENDENCIES
   pry
   pry-nav
   rails (= 4.0.0)
-  rspec-rails (~> 2.0)
+  rspec-rails (~> 2.14.0)
   sass-rails (~> 4.0.0)
   shoulda-matchers (~> 2.4.0)
   sqlite3
