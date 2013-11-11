@@ -1,0 +1,15 @@
+%section.register.container
+  .row
+    .span10.offset1
+      = bootstrap_form_for(@user, html: { class: 'form-horizontal' }, help: :block) do |f|
+        %header
+          %h1 Register
+        %fieldset
+        = f.alert_message "Please fix the errors below."
+  
+        = f.text_field :name, label: "Full Name"
+        = f.email_field :email, label: "Email Address"
+        = f.password_field :password
+        
+        = f.actions do
+          = f.primary 'Create My Account', disable_with: 'Saving...'

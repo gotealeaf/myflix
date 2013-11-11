@@ -1,0 +1,14 @@
+%section.sign_in.container
+  .row
+    .span10.offset1
+      = form_tag '/login' do
+        %header
+          %h1 Sign in
+        %fieldset
+          = label_tag :email
+          = text_field_tag :email, params[:email] || ''
+          = label_tag :password
+          = password_field_tag :password, params[:password] || ''
+        %fieldset.action
+          = submit_tag "Login", class: 'btn btn-success'
+          

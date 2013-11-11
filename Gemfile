@@ -1,12 +1,14 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '4.0.0'
 gem 'haml-rails'
 gem 'bootstrap-sass', '2.3.2'
+gem 'bcrypt-ruby', '3.0.0'
+gem 'bootstrap_form'
 
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails'
+  gem 'coffee-rails'
   gem 'uglifier', '>= 1.0.3'
 end
 
