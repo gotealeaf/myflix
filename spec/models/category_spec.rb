@@ -12,7 +12,7 @@ describe Category do
       video3 = Video.create(title: "Monk3", description: "This is monk 3 video description", small_cover_url: "/tmp/monk.jpg", large_cover_url: "/tmp/monk_large.jpg", category: category)
       video4 = Video.create(title: "Monk4", description: "This is monk 4 video description", small_cover_url: "/tmp/monk.jpg", large_cover_url: "/tmp/monk_large.jpg", category: category)
       video5 = Video.create(title: "Monk5", description: "This is monk 5 video description", small_cover_url: "/tmp/monk.jpg", large_cover_url: "/tmp/monk_large.jpg", category: category)
-      expect(category.recent_video.to eq([video5, video4, video3, video2, video1])
+      expect(category.recent_video).to eq([video5, video4, video3, video2, video1])
     end
 
     it "should show only six videos if the result is more than six videos in reverse order" do
