@@ -2,6 +2,8 @@
   .videos.row
     - @video_array.each do |video|
       .video.span2
+        %b
+          = video.category.name
         = link_to video_path(video) do
           %img(src="#{video.small_cover_url}")
   %br/

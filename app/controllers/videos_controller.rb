@@ -1,22 +1,15 @@
 class VideosController < ApplicationController
-  before_action :set_video, only: [:show]
   before_action :require_user
 
   def index
-    @videos = Video.all
     @categories = Category.all
   end
 
   def show
+    @video = Video.find(params[:id])
   end
 
   def search
     @video_array = Video.search_by_title(params[:search_term])
-  end
-
-  private
-
-  def set_video
-    @video = Video.find(params[:id])
   end
 end
