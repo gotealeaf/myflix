@@ -1,4 +1,6 @@
 class VideosController < ApplicationController
+  before_action :require_user
+  
   def index
     @videos = Video.all
     @categories = Category.all
@@ -7,10 +9,6 @@ class VideosController < ApplicationController
   def search
     @results = Video.search_by_name(params[:search])
     render search_videos_path
-  end
-  
-  def recent
-    @videos = Video.recent
   end
   
   def show

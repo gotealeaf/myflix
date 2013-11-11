@@ -1,9 +1,14 @@
 class UsersController < ApplicationController
+  
   def index
   end
   
   def new
     @user = User.new
+  end
+  
+  def front
+    redirect_to videos_path if current_user
   end
   
   def create

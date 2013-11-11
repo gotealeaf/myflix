@@ -2,6 +2,7 @@ class SessionsController < ApplicationController
   before_action :require_user, only: [:destroy]
   
   def new
+    redirect_to videos_path if current_user
   end
   
   def create
@@ -24,6 +25,6 @@ class SessionsController < ApplicationController
     def login_user!(user)
       session[:user_id] = user.id
       flash[:notice] = "Welcome, you've logged in."
-      redirect_to root_path
+      redirect_to videos_path
     end
 end

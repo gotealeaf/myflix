@@ -3,7 +3,6 @@
     %header
       %h3= link_to cat.name
     .videos.row
-      - cat.videos.recent.each do |v|
+      - cat.videos.last(5).reverse.each do |v|
         .video.span2
           = link_to image_tag(v.thumbnail), video_path(v.id)
-    
