@@ -12,7 +12,10 @@ Myflix::Application.configure do
   config.serve_static_assets = false
 
   # Log error messages when you accidentally call methods on nil
-  config.whiny_nils = false
+  #config.whiny_nils = false
+
+  # Load code on boot.
+  config.eager_load = true
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
