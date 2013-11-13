@@ -13,6 +13,14 @@ dramas = Category.create(name: 'Dramas')
 reality = Category.create(name: 'Reality')
 documentaries = Category.create(name: 'Documentaries')
 
+
+Loose_Change = Video.create(
+title:'Loose Change Final Cut',
+description:'Loose Change Final Cut is the third installment of the documentary that asks the tough questions about the 9/11 attacks and related events',
+small_cover_url:'tmp/loose_change.jpg',
+large_cover_url:'tmp/loose_change_large.jpg',
+category: documentaries)
+
 Futurama = Video.create(
 title: 'Futurama', 
 description: 'A pizza delivery boy named Fry accidentally gets cryogenically frozen and awakens in the year 3000', 
