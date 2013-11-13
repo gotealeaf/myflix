@@ -1,8 +1,9 @@
 %article.video_category
+- @categories.each do |category|
   %header
-    %h3= link_to "TV Commedies"
+    %h3= category.name
   .videos.row
-    - @videos.each do |video|
+    - category.videos.each do |video|
       .video.span2
-        = link_to video_path(video) do
+        = link_to video do
           %img(src="#{video.small_cover_url}")
