@@ -9,6 +9,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'turbolinks'
 gem 'bootstrap_form'
 gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'fabrication'
+gem 'faker'
 
 group :development do
   gem 'sqlite3'
