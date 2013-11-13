@@ -9,4 +9,15 @@ describe VideosController do
       expect(assigns(:video)).to eq(video)
     end
   end
+  
+  describe "POST search" do
+    it "sets @results for authenticated users" do
+      session[:user_id] = Fabricate(:user).id
+      
+      video1 = Fabricate(:video, name: "Joe")
+      
+      post :search, search: 'Joe'
+      expect(assigns(:results)).to eq([video1])
+    end
+  end
 end
