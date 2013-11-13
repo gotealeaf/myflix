@@ -3,7 +3,7 @@
   %header
     %h3= category.name
   .videos.row
-    - category.videos.each do |video|
+    - category.recent_videos.each do |video|
       .video.span2
         = link_to video do
           %img(src="#{video.small_cover_url}")
