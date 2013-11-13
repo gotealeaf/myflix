@@ -27,12 +27,11 @@ GEM
       tzinfo (~> 0.3.37)
     arel (4.0.1)
     atomic (1.1.14)
+    bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-x86-mingw32)
-    bootstrap-form (3.0.0)
-      actionpack (> 3.2)
-      railties (> 3.2)
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
+    bootstrap_form (1.0.0)
     builder (3.1.4)
     coderay (1.1.0)
     coffee-rails (4.0.1)
@@ -143,9 +142,9 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  bcrypt-ruby (~> 3.0.0)
-  bootstrap-form
+  bcrypt-ruby
   bootstrap-sass (~> 2.3.2)
+  bootstrap_form
   coffee-rails (~> 4.0.0)
   haml-rails
   jquery-rails

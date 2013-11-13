@@ -7,9 +7,8 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'turbolinks'
-gem 'bootstrap-form'
-#gem 'bcrypt-ruby'
-gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bootstrap_form'
+gem 'bcrypt-ruby'
 
 group :development do
   gem 'sqlite3', '~> 1.3.8'
