@@ -10,11 +10,16 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-group :development do
+group :development, :test do
   #gem 'sqlite3'
   gem 'pg'
   gem 'pry'
   gem 'pry-nav'
+  gem "rspec-rails"
+end
+
+group :test do 
+  gem 'shoulda-matchers'
 end
 
 group :production do

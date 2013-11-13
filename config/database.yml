@@ -25,3 +25,12 @@ development:
 #  database: db/test.sqlite3
 #  pool: 5
 #  timeout: 5000
+test:
+  adapter: postgresql
+  encoding: utf8
+  database: myflix_test
+  host: localhost
+  username: akaing
+  password: 
+  pool: 5
+  timeout: 5000
