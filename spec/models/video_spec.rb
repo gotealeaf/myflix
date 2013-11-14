@@ -4,7 +4,9 @@ describe Video do
   it { should belong_to(:category) }
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:description) }
-  
+  it { should have_many(:reviews) }
+
+
   it "returns an empty array if no results found" do
     Video.create(name: "epic", description: "Also epic")
     Video.search_by_name("chump").should == []

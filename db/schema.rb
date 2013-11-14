@@ -9,30 +9,39 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131110194117) do
+ActiveRecord::Schema.define(version: 20131114154434) do
 
-  create_table "categories", :force => true do |t|
+  create_table "categories", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "users", :force => true do |t|
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+  create_table "reviews", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+    t.integer  "video_id"
+    t.integer  "rating"
+    t.text     "description"
+  end
+
+  create_table "users", force: true do |t|
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "name"
     t.string   "password_digest"
     t.string   "email"
   end
 
-  create_table "videos", :force => true do |t|
+  create_table "videos", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.string   "source"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.string   "thumbnail"
     t.integer  "category_id"
   end

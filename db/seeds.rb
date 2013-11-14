@@ -6,6 +6,11 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Category.create(name: 'Comedy')
-Category.create(name: 'Drama')
-Category.create(name: 'Action')
+# Category.create(name: 'Comedy')
+# Category.create(name: 'Drama')
+# Category.create(name: 'Action')
+
+Review.create(video_id: 1, user_id: 1, rating: rand(1..5), description: Faker::Lorem.paragraph.to_s)
+Review.create(video_id: 1, user_id: 1, rating: rand(1..5), description: Faker::Lorem.paragraph.to_s)
+Review.create(video_id: 1, user_id: 1, rating: rand(1..5), description: Faker::Lorem.paragraph.to_s)
+Review.create(video_id: 1, user_id: 1, rating: rand(1..5), description: Faker::Lorem.paragraph.to_s)

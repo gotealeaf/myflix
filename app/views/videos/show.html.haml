@@ -6,5 +6,19 @@
       .video_info.span3
         %header
           %h3= @video.name
-          %span Rating: 4.5/5.0
+          %span Rating: #{@average_rating}/5.0
         %p= @video.description
+%section.reviews.container
+  .row
+    .span10.offset1
+      %header
+        %h3 User Reviews (#{@reviews.count})
+      %ul
+      - @reviews.each do |review|
+        %article.review
+          %li.row
+            .span2
+              %span Rating: #{review.rating} / 5
+              %p by <a href=""> #{review.user.name} </a>
+            .span8
+              %p= review.description
