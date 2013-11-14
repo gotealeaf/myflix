@@ -4,7 +4,6 @@ class ReviewsController < ApplicationController
     @video = Video.find(params[:video_id])
     review = @video.reviews.new(review_params)
     if review.save
-      binding.pry
       redirect_to video_path(@video)
     else 
       @reviews = @video.reviews.reload
