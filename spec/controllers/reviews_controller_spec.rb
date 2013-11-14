@@ -26,7 +26,7 @@ describe ReviewsController do
 
         it "creates a review associated with the signed in user" do
           video = Fabricate(:video)
-          post :create, review: Fabricate.attributes_for(:review), video_id: video.id
+          post :create, review: Fabricate.attributes_for(:review), video_id: video.id, user_id: current_user.id
           expect(Review.first.user).to eq current_user 
         end
         
