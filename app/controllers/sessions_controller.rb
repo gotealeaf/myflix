@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
   
   def create
     user = User.where(email: params[:email]).first
+    
     if user && user.authenticate(params[:password])
       login_user!(user)
     else
