@@ -1,34 +1,18 @@
 class VideosController < ApplicationController
-  before_filter :require_user
+  before_action :require_user
 
   def index
-    @videos = Video.all
     @categories = Category.all
   end
 
   def show
     @video = Video.find(params[:id])
-
+    @reviews = @video.reviews
   end
 
   def search
     @categories = Category.all
     @videos = Video.search_by_title(params[:search_term])
-  end
-
-  def new
-  end
-
-  def create
-  end
-
-  def edit
-  end
-
-  def update
-  end
-
-  def destroy
   end
 
   private
