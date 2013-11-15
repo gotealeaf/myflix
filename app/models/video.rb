@@ -1,5 +1,6 @@
 class Video < ActiveRecord::Base
   belongs_to :category, foreign_key: :category_id
+  has_many :reviews
 
   validates_presence_of :title, :description
   validates_uniqueness_of :title

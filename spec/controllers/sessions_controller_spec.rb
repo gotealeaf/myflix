@@ -14,14 +14,15 @@ describe SessionsController do
   end
 
   describe 'POST create' do
+    let(:bob) { Fabricate(:user) }
+
     context 'with valid credentials' do
       before do
-        @bob = Fabricate(:user)
-        post :create, email_address: @bob.email_address, password: @bob.password
+        post :create, email_address: bob.email_address, password: bob.password
       end
 
       it 'puts the signed in user in the session' do
-        expect(session[:user_id]).to eq(@bob.id)
+        expect(session[:user_id]).to eq(bob.id)
       end
       it 'sets the notice message' do
         expect(flash[:notice]).not_to be_blank
@@ -33,7 +34,6 @@ describe SessionsController do
 
     context 'with invalid credentials' do
       before do
-        bob = Fabricate(:user)
         post :create, email_address: bob.email_address, password: bob.password + 'invalid'
       end
 
