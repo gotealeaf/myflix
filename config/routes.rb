@@ -8,6 +8,8 @@ Myflix::Application.routes.draw do
   root to: 'pages#front'
 
   get 'my_queue', to: 'queue_items#index'
+  resources :queue_items, only: [:create, :destroy]
+
   get 'home', to: 'videos#index'
   get 'register', to: 'users#new'
   get 'sign_in', to: 'sessions#new'

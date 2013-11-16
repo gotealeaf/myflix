@@ -17,4 +17,64 @@ describe QueueItemsController do
       expect(response).to redirect_to sign_in_path
     end
   end
+
+  describe "POST create" do
+    it "redirects to the my queue page" do
+      alice = Fabricate(:user)
+      session[:user_id] = alice.id
+      video = Fabricate(:video)
+      post :create, video_id: video.id
+      expect(response).to redirect_to my_queue_path
+    end
+
+    it "creates the queue item" do
+      alice = Fabricate(:user)
+      session[:user_id] = alice.id
+      video = Fabricate(:video)
+      post :create, video_id: video.id
+      expect(QueueItem.count).to eq 1
+    end
+
+    it "creates the queue item that is associated with the video" do
+      alice = Fabricate(:user)
+      session[:user_id] = alice.id
+      video = Fabricate(:video)
+      post :create, video_id: video.id
+      expect(QueueItem.first.video).to eq video
+    end
+
+    it "creates the queue item that is associated with the sign in user" do
+      alice = Fabricate(:user)
+      session[:user_id] = alice.id
+      video = Fabricate(:video)
+      post :create, video_id: video.id
+      expect(QueueItem.first.user).to eq alice
+    end
+
+    it "puts the video as the last one in the queue" do
+      alice = Fabricate(:user)
+      session[:user_id] = alice.id
+      monk = Fabricate(:video)
+      Fabricate(:queue_item, video: monk, user: alice)
+      futurama = Fabricate(:video)
+      Fabricate(:queue_item, video: futurama, user: alice)
+      south_park = Fabricate(:video)
+      post :create, video_id: south_park.id
+      expect(QueueItem.last.position).to eq 3
+    end
+
+    it "doesn not add the video in the queue if the video is already there" do
+      alice = Fabricate(:user)
+      session[:user_id] = alice.id
+      monk = Fabricate(:video)
+      Fabricate(:queue_item, video: monk, user: alice)
+      post :create, video_id: monk.id
+      expect(alice.queue_items.count).to eq 1
+    end  
+
+    it "redirects to the sign in page for unauthenticated users" do
+      post :create, video_id: 3
+      expect(response).to redirect_to sign_in_path
+    end
+  end
 end
