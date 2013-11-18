@@ -6,6 +6,8 @@ gem 'jquery-rails'
 gem 'bootstrap-sass','~>2.2.1.0'
 gem 'bootstrap_form' 
 gem 'bcrypt-ruby','3.0.0'
+gem 'fabrication'
+gem 'faker'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
