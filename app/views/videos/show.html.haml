@@ -6,8 +6,18 @@
       .video_info.span3
         %header
           %h3= @video.title
-          %span Rating: 4.5/5.0
-        %p= @video.description
-        .actions
-          %a.btn.btn-primary(href="") Watch Now
-          %a.btn(href="") + My Queue
+          %p= @video.description
+        %section.reviews.container
+  .row
+    .span10.offset1
+      %header
+        %h3 User Reviews (#{@reviews.count})
+      %ul
+        - @reviews.each do |review|
+          %article.review
+            %li.row
+              .span2
+                %span Rating: #{review.rating} / 5
+                %p by <a href="">#{review.user.full_name}</a>
+              .span8
+                %p= review.content

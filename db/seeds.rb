@@ -84,4 +84,6 @@ small_cover_url: 'tmp/burning_love.jpg',
 large_cover_url: 'tmp/burning_love_large.jpg', 
 category: comedies)
 
+mark = User.create(full_name:'Mark Hustad', password:'123', email:'mark@hustad.com')
 
+Review.create(user: mark, video: Fringe, rating: 4, content: "Awesome scifi show")
