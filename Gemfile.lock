@@ -28,9 +28,11 @@ GEM
     activesupport (3.2.11)
       i18n (~> 0.6)
       multi_json (~> 1.0)
-    arel (3.0.2)
+    arel (3.0.3)
+    bcrypt-ruby (3.0.0)
     bootstrap-sass (2.2.1.1)
       sass (~> 3.2)
+    bootstrap_form (1.0.0)
     builder (3.0.4)
     coderay (1.1.0)
     coffee-rails (3.2.2)
@@ -115,7 +117,7 @@ GEM
       tilt (~> 1.3)
     shoulda-matchers (2.4.0)
       activesupport (>= 3.0.0)
-    slop (3.4.6)
+    slop (3.4.7)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -136,7 +138,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt-ruby (= 3.0.0)
   bootstrap-sass (~> 2.2.1.0)
+  bootstrap_form
   coffee-rails (~> 3.2.1)
   haml-rails
   jquery-rails
