@@ -5,6 +5,8 @@ class QueueItem < ActiveRecord::Base
   delegate :category, to: :video
   delegate :title, to: :video, prefix: :video
 
+  validates_numericality_of :position, {only_integer: true}
+
   def video_title
     video.title
   end
