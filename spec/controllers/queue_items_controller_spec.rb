@@ -109,4 +109,20 @@ describe QueueItemsController do
       expect(response).to redirect_to sign_in_path
     end
   end
+
+  describe "POST update_item" do
+    context "with valid inputs" do
+      it "redirects to the my queue page" do
+        post :update_queue, id: 1, position: 1
+        expect(response).to redirect_to update_queue_path
+      end
+      it "reorders the queue items"
+      it "normalizes the position numbers"
+    end
+
+    context "with invalid inputs"
+    context "with unauthenticated users"
+    context "with queue items that do not belong to the current user"
+  end
+
 end
