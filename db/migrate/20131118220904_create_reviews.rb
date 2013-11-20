@@ -5,6 +5,7 @@ class CreateReviews < ActiveRecord::Migration
       t.integer :video_id
       t.text :content
       t.integer :rating
+      t.timestamps
     end
   end
 end

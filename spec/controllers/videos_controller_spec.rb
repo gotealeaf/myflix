@@ -27,15 +27,15 @@
             get :show, id: video.id
             expect(response).to redirect_to sign_in_path
           end
-        end
+        #end
 
-      describe "POST search" do
-        it "sets results for authenticated users" do
-          session[:user_id] = Fabricate(:user).id
-          futurama = Fabricate(:video, title:'Futurama')
-          post :search, search_term: 'rama'
-          expect(assigns(:results)).to eq([futurama])
-        end
+      #describe "POST search" do
+        #it "sets results for authenticated users" do
+          #session[:user_id] = Fabricate(:user).id
+          #futurama = Fabricate(:video, title:'Futurama')
+          #post :search, search_term: 'rama'
+          #expect(assigns(:results)).to eq([futurama])
+        #end
 
             it "redirect to sign in page for unauthenticated users" do
               futurama = Fabricate(:video, title: 'Futurama')

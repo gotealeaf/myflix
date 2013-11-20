@@ -20,10 +20,12 @@ ActiveRecord::Schema.define(:version => 20131118220904) do
   end
 
   create_table "reviews", :force => true do |t|
-    t.integer "user_id"
-    t.integer "video_id"
-    t.text    "content"
-    t.integer "rating"
+    t.integer  "user_id"
+    t.integer  "video_id"
+    t.text     "content"
+    t.integer  "rating"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
