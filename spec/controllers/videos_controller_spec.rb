@@ -15,7 +15,7 @@ describe VideosController do
       review1 = Fabricate(:review, video: video)
       review2 = Fabricate(:review, video: video)
       get :show, id: video.id
-      expect(assigns(:reviews)).to eq([review1, review2])
+      expect(assigns(:reviews)).to eq([review2, review1])
     end
 
     it "sets @average_rating to be the average of all review ratings" do
@@ -31,7 +31,6 @@ describe VideosController do
   describe "POST search" do
     it "sets @results for authenticated users" do
       session[:user_id] = Fabricate(:user).id
-      
       video1 = Fabricate(:video, name: "Joe")
       
       post :search, search: 'Joe'

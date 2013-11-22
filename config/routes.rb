@@ -14,6 +14,7 @@ Myflix::Application.routes.draw do
       get :search, to: "videos#search"
       get :recent, to: "videos#recent"
     end
+    resources :reviews, only: [:create]
   end
   
   resources :categories, :path => 'genre'
