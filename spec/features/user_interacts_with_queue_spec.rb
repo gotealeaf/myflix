@@ -25,13 +25,14 @@ feature "User interacts with the queue" do
     expect_video_position(south_park, 1)
     expect_video_position(futurama, 2)
     expect_video_position(monk, 3)
+  end
 
     def expect_video_to_be_in_queue(video)
       page.should have_content(video.title)
     end
 
     def expect_link_not_to_be_seen(link_text)
-      page.should have_content(link_text)
+      page.should_not have_content(link_text)
     end
 
     def update_queue
@@ -53,5 +54,5 @@ feature "User interacts with the queue" do
     def expect_video_position(video, position)
       expect(find(:xpath, "//tr[contains(.,'#{video.title}')]//input[@type='text']").value).to eq position.to_s
     end
-  end  
+  
 end
