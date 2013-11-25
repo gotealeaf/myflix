@@ -6,8 +6,11 @@
       .video_info.span3
         %header
           %h3= @video.title
-          %p= @video.description
-        %section.reviews.container
+        %p= @video.description
+        .actions  
+          = link_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: 'btn'
+
+%section.reviews.container
   .row
     .span10.offset1
       = form_for [@video, Review.new] do |f|
