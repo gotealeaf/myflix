@@ -24,10 +24,24 @@ describe User do
       user.queued_video?(video).should be_true
     end
 
-    it "returns false whtn the user hasn't queued the video" do
+    it "returns false when the user hasn't queued the video" do
       user = Fabricate(:user)
       video = Fabricate(:video)
       user.queued_video?(video).should be_false
+    end
+  end
+
+  describe "#follows?" do
+    it "returns true when the user already followed the leader" do
+      alice = Fabricate(:user)
+      bob = Fabricate(:user) 
+      Fabricate(:relationship, follower: alice, leader: bob)
+      expect(alice.follows?(bob)).to be_true
+    end
+    it "returns false when the user hasn't followed the leader" do
+      alice = Fabricate(:user)
+      bob = Fabricate(:user) 
+      expect(alice.follows?(bob)).to be_false
     end
   end
 end
