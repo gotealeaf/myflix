@@ -1,0 +1,12 @@
+%section.forgot_password.container
+  .row
+    .span10.offset1
+      = form_tag forgot_passwords_path, class: "sign_in" do
+        %header
+          %h1 Forgot Password?
+          %p We will send you an email with a link that you can use to reset your password.
+        %fieldset
+          = label_tag :email, "Email Address"
+          = text_field_tag :email
+        %fieldset.action
+          %input(type="submit" value="Send Email" class="btn")
