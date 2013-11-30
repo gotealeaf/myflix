@@ -1,6 +1,7 @@
 - @videos.each do |video|
 	.video.col-sm-2
-		%img{src: video.small_cover}
+		%a{href: video_path(video.id)}
+			%img{src: video.small_cover}
 
 
 	
