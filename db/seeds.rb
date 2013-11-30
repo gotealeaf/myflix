@@ -15,8 +15,11 @@ Video.create(title: 'Rush', description: "Set against the sexy, glamorous golden
 Video.create(title: 'The Dark Knight', description: "Batman raises the stakes in his war on crime. With the help of Lieutenant Jim Gordon and District Attorney Harvey Dent, Batman sets out to dismantle the remaining criminal organizations that plague the city streets.", 
 	small_cover: '/tmp/the_dark_knight.jpg', big_cover: '/tmp/the_dark_knight_large.jpg')
 
+Video.create(title: 'Gravity', description: "Dr. Ryan Stone (Sandra Bullock) is a brilliant medical engineer on her first shuttle mission, with veteran astronaut Matt Kowalsky (George Clooney) in command of his last flight before retiring. But on a seemingly routine spacewalk, disaster strikes.", 
+	small_cover: '/tmp/gravity.jpg', big_cover: '/tmp/gravity_large.jpg')
+
+Video.create(title: 'Terminator2', description: "Almost 10 years have passed since the first cyborg called The Terminator tried to kill Sarah Connor and her unborn son, John Connor. John Connor, the future leader of the human resistance, is now a healthy young boy.", 
+	small_cover: '/tmp/terminator2.jpg', big_cover: '/tmp/terminator2_large.jpg')
+
 Video.create(title: 'The Matrix', description: "Thomas A. Anderson is a man living two lives. By day he is an average computer programmer and by night a hacker known as Neo. Neo has always questioned his reality, but the truth is far beyond his imagination.", 
 	small_cover: '/tmp/the_matrix.jpg', big_cover: '/tmp/the_matrix_large.jpg')
-
-Video.create(title: 'The Shawnshank Redemption', description: "Andy Dufresne is a young and successful banker whose life changes drastically when he is convicted and sentenced to life imprisonment for the murder of his wife and her lover. Set in the 1940's, the film shows how Andy, with the help of his friend Red, the prison entrepreneur, turns out to be a most unconventional prisoner.", 
-	small_cover: '/tmp/the_shawnshank_redemption.jpg', big_cover: '/tmp/the_shawnshank_redemption_large.jpg')
