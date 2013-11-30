@@ -1,7 +1,13 @@
-- @videos.each do |video|
-	.video.col-sm-2
-		%a{href: video_path(video.id)}
-			%img{src: video.small_cover}
+- @categories.each do |category|
+	- if @videos.find_by(category_id: category.id)
+		%article.video_category
+			%header
+				%h3= link_to category.name, category_path(category.id)
+			.videos.row
+				- category.videos.each do |video|
+					.video.col-sm-2
+						%a{href: video_path(video.id)}
+							%img{src: video.small_cover}
 
 
 	
