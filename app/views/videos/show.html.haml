@@ -16,7 +16,7 @@
       = form_for [@video, Review.new] do |f|
         %fieldset
           %label Rate this video
-          = f.select :rating, options_for_select([5,4,3,2,1].map {|number| [pluralize(number, "Star")]})
+          = f.select :rating, options_for_video_reviews 
           %label Write Review
           = f.text_area :content, rows: 6, class: "span6"
           %textarea.span6(name="" rows="6")
