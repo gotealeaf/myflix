@@ -24,7 +24,7 @@ group :test do
   gem "shoulda-matchers"
   gem "launchy"
   gem "capybara"
-  gem "capybara-email"
+  gem "capybara-email", '2.2.0'
 end
 
 group :test, :development do
