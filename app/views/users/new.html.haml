@@ -9,6 +9,7 @@
           = f.password_field :password
           = f.password_field :password_confirmation
           = f.text_field :full_name, label: "Full Name"
+          = hidden_field_tag :invitation_token, @invitation_token
         %fieldset.actions.control-group
           .controls
             %input(type="submit" value="Sign Up" class="btn")
