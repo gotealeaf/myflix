@@ -6,6 +6,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.password_confirmation = @user.password
     if @user.save
       handle_invitation
       AppMailer.send_welcome_email(@user).deliver
