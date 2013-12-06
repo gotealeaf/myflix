@@ -2,6 +2,7 @@ class VideosController < ApplicationController
 
   def index
   @videos = Video.all
+  debugger
   end
 
   def show
