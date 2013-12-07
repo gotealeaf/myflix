@@ -88,7 +88,7 @@ Myflix::Application.configure do
   # authentication:       'plain',
   # enable_starttls_auto: true  }
 
-  config.action_mailer.default_url_options = { :host => 'powerful-brook-2693.heroku.com' }
+  config.action_mailer.default_url_options = { :host => 'powerful-brook-2693.heroku.com', :only_path => true }
   ActionMailer::Base.smtp_settings = {
   :port           => ENV['MAILGUN_SMTP_PORT'],
   :address        => ENV['MAILGUN_SMTP_SERVER'],
