@@ -15,6 +15,7 @@ gem 'fabrication'
 
 group :development do
   gem 'sqlite3'
+  gem 'letter_opener'
   # gem 'pry'
   # gem 'pry-nav'
 end
@@ -23,6 +24,7 @@ group :test do
   gem "shoulda-matchers"
   gem "launchy"
   gem "capybara"
+  gem "capybara-email", '2.2.0'
 end
 
 group :test, :development do

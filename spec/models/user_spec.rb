@@ -14,6 +14,12 @@ describe User do
   it { should validate_presence_of(:full_name) }
   it { should validate_uniqueness_of(:email) }
   it { should have_many(:queue_items).order("position ASC") }
+  it { should have_many(:reviews).order("created_at DESC") }
+
+  it "gennerates a random token when the user is created" do
+    alice = Fabricate(:user)
+    expect(alice.token).to be_present
+  end
 
   describe "#queued_video?" do
     it "returns true when the user queued the video" do
@@ -23,10 +29,38 @@ describe User do
       user.queued_video?(video).should be_true
     end
 
-    it "returns false whtn the user hasn't queued the video" do
+    it "returns false when the user hasn't queued the video" do
       user = Fabricate(:user)
       video = Fabricate(:video)
       user.queued_video?(video).should be_false
+    end
+  end
+
+  describe "#follows?" do
+    it "returns true when the user already followed the leader" do
+      alice = Fabricate(:user)
+      bob = Fabricate(:user) 
+      Fabricate(:relationship, follower: alice, leader: bob)
+      expect(alice.follows?(bob)).to be_true
+    end
+    it "returns false when the user hasn't followed the leader" do
+      alice = Fabricate(:user)
+      bob = Fabricate(:user) 
+      expect(alice.follows?(bob)).to be_false
+    end
+  end
+
+  describe "#follow" do
+    it "follows another user" do
+      alice = Fabricate(:user)
+      bob = Fabricate(:user)
+      alice.follow(bob)
+      expect(alice.follows?(bob)).to be_true
+    end
+    it "does not follow one self" do
+      alice = Fabricate(:user)
+      alice.follow(alice)
+      expect(alice.follows?(alice)).to be_false
     end
   end
 end

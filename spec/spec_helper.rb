@@ -6,6 +6,7 @@ require 'rspec/autorun'
 require 'pry'
 require "shoulda/matchers"
 require "capybara/rails"
+require "capybara/email/rspec"
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -42,4 +43,5 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+  #config.after(:all) { ActionMailer::Base.deliveries.clear }
 end
