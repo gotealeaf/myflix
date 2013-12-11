@@ -1,10 +1,9 @@
 class VideosController < ApplicationController
   def index
-    @videos = Video.all.sort_by{|x| x.category}
+    @categories = Category.all.sort_by{|x| x.name}
   end
 
   def show
     @video = Video.find(params[:id])
-    # @video = Video.find_by(slug: params[:id])
   end
 end
