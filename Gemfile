@@ -18,7 +18,7 @@ end
 group :development do
   gem 'sqlite3'
   gem 'pry'
-  gem 'pry-nav'
+  gem 'pry-nav' 
 end
 
 group :production do
@@ -31,3 +31,8 @@ group :test, :development do
   gem "rspec-rails", "~> 2.0"
   gem "shoulda-matchers"
 end   
+
+group :test do
+  gem 'capybara'
+  gem 'launchy'
+end
