@@ -4,8 +4,4 @@ class VideosController < ApplicationController
   @videos = Video.all
   end
 
-  def show
-  @videos = Videos.find(params[:id])
-  end
- 
 end

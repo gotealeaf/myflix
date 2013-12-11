@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131204030454) do
+ActiveRecord::Schema.define(version: 20131211051433) do
 
   create_table "videos", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
-    t.string   "#<ActiveRecord::ConnectionAdapters::TableDefinition:0x00000003613f20>"
     t.string   "cover_image_url"
+    t.string   "description"
   end
 
 end

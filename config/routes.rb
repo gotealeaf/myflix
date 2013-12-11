@@ -1,6 +1,5 @@
 Myflix::Application.routes.draw do
-   root to: 'videos#index'
-
-   resource :videos, except: [:destroy]
+  get 'ui(/:action)', controller: 'ui' 
+  get 'videos/:action', controller: 'videos'
 end
  
