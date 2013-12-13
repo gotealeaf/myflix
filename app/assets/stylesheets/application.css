@@ -10,7 +10,10 @@
  *
  *= require_self
  *= require bootstrap
+<<<<<<< HEAD
  *= require bootstrap-responsive
+=======
+>>>>>>> mod6
  *= require whitespace-reset
  *= require_tree .
 */
