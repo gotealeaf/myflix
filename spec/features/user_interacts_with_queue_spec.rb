@@ -63,4 +63,4 @@ feature "User interacts with queue" do
       expect(find(:xpath, "//tr[contains(.,'#{video.title}')]//input[@type='text']").value).to eq(position.to_s)
     end
   end
-  
+    
