@@ -6,7 +6,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-   videos = Video.create(
-       name: 'Family Guy', 
-         description: 'Family guy series is awesome',
-         cover_image_url: '/tmp/family_guy.jpg')
+
+   @categories = Category.create(title: "Comedy")
+   @categories = Category.create(title: "Detective series")
