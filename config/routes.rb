@@ -1,8 +1,8 @@
 Myflix::Application.routes.draw do
-<<<<<<< HEAD
+
   get 'ui(/:action)', controller: 'ui'
-end
-=======
+
+
   root to: 'pages#front'
   get 'home', to: 'videos#index'
   
@@ -12,6 +12,10 @@ end
   end
   resources :reviews, only: [:create]
 end
+
+  resources :users, only: [:show]
+  resources :relationships, only: [:destroy, :create]
+  get 'people', to: 'relationships#index'
 
   resources :queue_items, only: [:create, :destroy]
   post 'update_queue', to: 'queue_items#update_queue'
@@ -24,5 +28,6 @@ end
   
   resources :users, only: [:create]
   resources :sessions, only: [:create]
+  resources :categories, only: [:show]
 end
->>>>>>> mod6
+

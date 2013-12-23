@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-<<<<<<< HEAD
-=======
+
 
   def require_user
     redirect_to sign_in_path unless current_user
@@ -12,5 +11,4 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :current_user
->>>>>>> mod6
 end
