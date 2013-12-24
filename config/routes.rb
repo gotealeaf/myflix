@@ -29,5 +29,12 @@ end
   resources :users, only: [:create]
   resources :sessions, only: [:create]
   resources :categories, only: [:show]
+
+  get 'forgot_password', to: 'forgot_passwords#new'
+  resources :forgot_passwords, only: [:create]
+  get 'forgot_password_confirmation', to: 'forgot_passwords#confirm'
+
+  resources :password_resets, only: [:show, :create]
+  get 'expired_token', to: 'password_resets#expired_token' 
 end
 

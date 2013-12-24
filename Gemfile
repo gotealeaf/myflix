@@ -23,6 +23,7 @@ group :development do
   gem 'pry'
   gem 'pry-nav'
   gem 'pry-nav' 
+  gem 'letter_opener'
 end
 
 group :production do

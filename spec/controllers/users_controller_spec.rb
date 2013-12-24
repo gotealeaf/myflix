@@ -38,6 +38,26 @@
         expect(response).to render_template :new
       end
     end
+
+    context "sending emails" do
+
+      after { ActionMailer::Base.deliveries.clear }
+      
+      it "sends out email to the user with valid inputs" do
+        post :create, user: { email: "mark@example.com", password: "password", full_name: "Mark Hustad" }
+        expect(ActionMailer::Base.deliveries.last.to).to eq(['mark@example.com'])
+      end
+     
+      it "sends out email containing the users name with valid inputs" do
+        post :create, user: { email: "mark@example.com", password: "password", full_name: "Mark Hustad" }
+        expect(ActionMailer::Base.deliveries.last.body).to include('Mark Hustad')
+      end
+     
+      it "does not send out email with invalid inputs" do
+        post :create, user: { email: "mark@example.com" }
+        expect(ActionMailer::Base.deliveries).to be_empty
+      end
+    end
   end
     
 
@@ -54,3 +74,11 @@
     end
   end
 end
+
+
+
+
+
+
+
+
