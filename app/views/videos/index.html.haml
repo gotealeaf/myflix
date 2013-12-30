@@ -1,3 +1,3 @@
-%ul
-	- @videos.each do |video|
-		%li= video.name
+- @videos.each do |video|
+  .video.col-sm-2
+    %img(src="/tmp/#{video.small_thumb}.jpg")
