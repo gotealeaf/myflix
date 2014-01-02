@@ -1,5 +1,5 @@
 class VideosController < ApplicationController
-
+  before_filter :require_user
   def index
   	@videos = Video.all
   	@categories = Category.all
