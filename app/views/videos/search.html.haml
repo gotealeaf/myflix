@@ -1,4 +1,6 @@
 .videos.row
+  %header
+    %h3 Search Results:
   - @results.each do |video|
     .video.col-sm-2
       = link_to video_path(video) do
