@@ -1,9 +1,5 @@
-- @results.each do |category, videos|
-  %article.video_category
-    %header
-      %h3
-        = link_to "#{category.name}", category_path(category)
-      .videos.row
-        - videos.each do |video|
-          .video.span2
-            = link_to (image_tag video.small_cover_url), video_path(video)
+.videos.row
+  - @results.each do |video|
+    .video.col-sm-2
+      = link_to video_path(video) do
+        %img(src="#{video.small_cover_url}")
