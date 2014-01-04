@@ -32,4 +32,27 @@ describe Video do
       expect(Video.search_by_title("")).to eq([])
     end
   end
+
+  describe "search_by_title_categorized" do
+    it "categorizes the search results" do
+      comedies = Category.create(name: "Comedies")
+      dramas = Category.create(name: "Dramas")
+      westerns = Category.create(name: "Westerns")
+      thrillers = Category.create(name: "Thriller")
+
+      friends = comedies.videos.create(title: "Friends", description: "A bunch of friends")
+      good_friends = comedies.videos.create(title: "Good Friends", description: "They go to bars")
+      friends_and_foe = dramas.videos.create(title: "Dramatic Friends", description: "Always getting in fights")
+      the_friends_saloon = westerns.videos.create(title: "Western Friends", description: "Shooting each other")
+      cowboy_friends = westerns.videos.create(title: "Cowboy Friends", description: "Riding Horses")
+      zombies = thrillers.videos.create(title: "Zombies", description: "Braaaains")
+
+      results = Video.search_by_title_categorized("Friends")
+      expect(results).to eq({
+          comedies => Set.new([friends, good_friends]),
+          dramas => Set.new([friends_and_foe]),
+          westerns => Set.new([the_friends_saloon, cowboy_friends])
+        })
+    end
+  end
 end
