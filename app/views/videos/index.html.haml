@@ -1,6 +1,9 @@
-%article.video_category
+%article.video
 	.videos.row
 		- @videos.each do |video|
 			.video.span2
 				= link_to video_path(video) do
-				%img(src="#{video.small_cover_url}")
+					%img(src="#{video.small_cover_url}")
+
+					%br/
+					%br/
