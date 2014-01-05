@@ -5,7 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-Video.create(title: "monk",
-  description: "an American comedy-drama detective mystery television series created by Andy Breckman and starring Tony Shalhoub as the eponymous character, Adrian Monk.",
+video = Video.create(title: "monk",
+  description: "An American comedy-drama detective mystery television series created by Andy Breckman and starring Tony Shalhoub as the eponymous character, Adrian Monk.",
   small_cover_url: "/tmp/monk.jpg",
   large_cover_url: "/tmp/monk_large.jpg")
+Category.create(name: "TV drama", video_id: video.id)
