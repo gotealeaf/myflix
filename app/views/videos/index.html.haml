@@ -1,16 +1,16 @@
 %article.video_category
-  - @categories.each do |c|
+  - @categories.each do |category|
     %header
       %br
-        %h3= link_to c.name, category_path(c)
+        %h3= link_to category.name, category_path(category)
       
     .videos.row
       %br
         - 4.times do
-          - @videos.each do |v|
+          - @videos.each do |video|
             .video.col-sm-2
-              = link_to v, nil do
-                %img(src="#{v.small_cover_url}")
+              = link_to video, nil do
+                %img(src="#{video.small_cover_url}")
 
 
 
