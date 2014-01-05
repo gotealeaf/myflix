@@ -5,7 +5,7 @@ describe Video do
   it {should validate_presence_of(:title)}
   it {should validate_presence_of(:description)}
 
-  describe "#search_by_title" do
+  describe "search_by_title" do
     it "returns empty array if no videos found" do
       Video.delete_all
       Video.search_by_title("Wizard").should == []
