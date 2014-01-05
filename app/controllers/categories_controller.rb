@@ -7,7 +7,7 @@ class CategoriesController < ApplicationController
   private
 
   def set_category
-    @category = Category.find_by(params[:id]) 
+    @category = Category.find(params[:id]) 
   end
 
 end
