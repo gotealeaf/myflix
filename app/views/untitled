@@ -3,8 +3,8 @@
     .row
       %header
         %h3= @category.name
-    - @category.videos.each do |v|
+    - @category.videos.each do |video|
       .video.col-sm-2
-        = link_to v, nil do
-          %img(src="#{v.small_cover_url}")
+        = link_to video, nil do
+          %img(src="#{video.small_cover_url}")
         
