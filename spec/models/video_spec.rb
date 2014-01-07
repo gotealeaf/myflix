@@ -13,4 +13,12 @@ describe Video do
 
     expect(video.category).to eq(cat)
   end
+
+  it "fails validation with no title" do
+     expect(Video.new).to have(1).errors_on(:title)
+  end
+
+  it "fails validation with no description" do
+    expect(Video.new).to have(1).errors_on(:description)
+  end
 end
