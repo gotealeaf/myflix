@@ -27,7 +27,7 @@ Video.find_or_create_by(title: "Family Guy") do |video|
   video.category_id = "1" 
 end
 
-Video.find_or_create_by(title: "Monk") do |video|
+monk = Video.find_or_create_by(title: "Monk") do |video|
   video.description = "Something something detective something."
   video.small_cover_url = "/tmp/monk.jpg"
   video.large_cover_url = "monk_large.jpg"
@@ -64,6 +64,11 @@ Video.find_or_create_by(title: "Healthcare") do |video|
   video.small_cover_url = "/tmp/family_guy.jpg"
   video.category_id = "1" 
 end
+
+jack = User.create(full_name: "Jack Collins", password: "password", email: "jack@example.com")
+
+Review.create(user: jack, video: monk, rating: 5, content: "What a crazy show")
+Review.create(user: jack, video: monk, rating: 4, content: "Alright")
 
 
 
