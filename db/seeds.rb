@@ -7,8 +7,20 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
+action = Category.create(name: "Actions")
+love = Category.create(name: "Love")
 Video.create(title: "Toy Story", description: "Toy Story", small_cover_url: "/tmp/futurama.jpg", large_cover_url: "/tmp/monk_large.jpg", category_id: 1)
 
 Video.create(title: "south_park", description: "south_park", small_cover_url: "/tmp/south_park.jpg", large_cover_url: "/tmp/monk_large.jpg", category_id: 1)
 
 Video.create(title: "family_guy", description: "family_guy", small_cover_url: "/tmp/family_guy.jpg", large_cover_url: "/tmp/monk_large.jpg", category_id: 1)
+Video.create(title: "Toy Story", description: "Toy Story", small_cover_url: "/tmp/futurama.jpg", large_cover_url: "/tmp/monk_large.jpg", category_id: 1)
+
+Video.create(title: "south_park", description: "south_park", small_cover_url: "/tmp/south_park.jpg", large_cover_url: "/tmp/monk_large.jpg", category_id: 1)
+
+Video.create(title: "family_guy", description: "family_guy", small_cover_url: "/tmp/family_guy.jpg", large_cover_url: "/tmp/monk_large.jpg", category_id: 1)
+Video.create(title: "Toy Story", description: "Toy Story", small_cover_url: "/tmp/futurama.jpg", large_cover_url: "/tmp/monk_large.jpg", category_id: 1)
+
+Video.create(title: "south_park", description: "south_park", small_cover_url: "/tmp/south_park.jpg", large_cover_url: "/tmp/monk_large.jpg", category_id: 1)
+
+Video.create(title: "family_guy", description: "family_guy", small_cover_url: "/tmp/family_guy.jpg", large_cover_url: "/tmp/monk_large.jpg", category_id: 2)
