@@ -18,6 +18,14 @@ group :development do
   gem "binding_of_caller"
 end
 
+group :development, :test do
+  gem 'rspec-rails'
+end
+
+group :test do
+  gem 'shoulda-matchers'
+end
+
 group :production do
   gem 'pg'
   gem 'rails_12factor'
