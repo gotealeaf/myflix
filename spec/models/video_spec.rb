@@ -21,4 +21,8 @@ describe Video do
   it "fails validation with no description" do
     expect(Video.new).to have(1).errors_on(:description)
   end
+
+  it { should belong_to(:category) }
+  it { should validate_presence_of(:title) }
+  it { should validate_presence_of(:description) }
 end

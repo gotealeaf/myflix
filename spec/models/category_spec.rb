@@ -8,4 +8,6 @@ describe Category do
 
     expect(cat.videos).to include(monk, family_guy)
   end
+
+  it { should have_many(:videos) }
 end
