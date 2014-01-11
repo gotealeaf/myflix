@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 
-gem 'bootstrap-sass'
+gem 'bootstrap-sass','~> 3.0.3'
 gem 'coffee-rails'
 gem 'rails'
 gem 'haml-rails'
