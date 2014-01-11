@@ -7,9 +7,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-<<<<<<< HEAD
-//for initial commit
-=======
 
 comedies = Category.create(name: 'Comedies')
 dramas = Category.create(name: 'Dramas')
@@ -90,4 +87,4 @@ category: comedies)
 mark = User.create(full_name:'Mark Hustad', password:'123', email:'mark@hustad.com')
 
 Review.create(user: mark, video: Fringe, rating: 4, content: "Awesome scifi show")
->>>>>>> mod6
+

@@ -11,12 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131223081343) do
+ActiveRecord::Schema.define(:version => 20140110184309) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "invitations", :force => true do |t|
+    t.integer  "inviter_id"
+    t.string   "recipient_name"
+    t.string   "recipient_email"
+    t.text     "message"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.string   "token"
   end
 
   create_table "queue_items", :force => true do |t|
