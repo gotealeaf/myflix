@@ -16,11 +16,12 @@
   .row
     .col-sm-10.col-sm-offset-1
       = form_for [@video, Review.new] do |f|
-        %fieldset
+        %fieldset.form-group
           %label Rate this video
-          = f.select :rating, options_for_select([5,4,3,2,1].map { |number| [pluralize(number, "Star")]})
+          = f.select :rating, options_for_select([5,4,3,2,1].map { |number| [pluralize(number, "Star")]}), {}, {class: "form-control"}
+        %fieldset.form-group
           %label Write Review
-          = f.text_area :content, rows: 6, class: "span6"
+          = f.text_area :content, rows: 6, class: "form-control"
         %fieldset.actions.clearfix
           %input(type="submit" value="Submit" class="btn")
           = link_to "Cancel", @video
