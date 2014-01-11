@@ -3,99 +3,99 @@
 This "MyFlix" app is a clone of the popular Netflix video streaming service. This project was completed as a part of Tealeaf Academy's curriculum and reinforced the following skills:
 
 == Front-end Frameworks
-HAML
-SASS
-Twitter Bootstrap
-jQuery
+- HAML
+- SASS
+- Twitter Bootstrap
+- jQuery
 
 == Team Collaboration
-Feature development with Git branching
-Github flow
-Code reviews
+- Feature development with Git branching
+- Github flow
+- Code reviews
 
 == Testing
-The rationale behind testing
-Technical debt
-Unit, functional, and integration tests
-Development and test databases
-Shoulda matchers
-Ways to write tests
-TDD and red / green / refactor
-Testing with RSpec
-Two styles of writing tests in RSpec
-The built-in RSpec Matchers
-Single assertion principle
-Controller tests
-Object generation
-Generate fake data
-Dealing with cardinality and boundary conditions
-Refactor with TDD
-Growing complexity guided by tests
-Interactive debugging for solution discovery
-Respond to feature changes
-Macros
-Shared examples
-Feature specs
-Capybara
-Test doubles and method stubs
-Feature tests with Javascript
-Testing email sending
-Fully integrated API tests
-Isolated API tests
-Message expectations
-Mocking
-Stubs and mocks
+- The rationale behind testing
+- Technical debt
+- Unit, functional, and integration tests
+- Development and test databases
+- Shoulda matchers
+- Ways to write tests
+- TDD and red / green / refactor
+- Testing with RSpec
+- Two styles of writing tests in RSpec
+- The built-in RSpec Matchers
+- Single assertion principle
+- Controller tests
+- Object generation
+- Generate fake data
+- Dealing with cardinality and boundary conditions
+- Refactor with TDD
+- Growing complexity guided by tests
+- Interactive debugging for solution discovery
+- Respond to feature changes
+- Macros
+- Shared examples
+- Feature specs
+- Capybara
+- Test doubles and method stubs
+- Feature tests with Javascript
+- Testing email sending
+- Fully integrated API tests
+- Isolated API tests
+- Message expectations
+- Mocking
+- Stubs and mocks
 
 == Application Design and Development
-Seeding data
-Search
-Sending emails
-Use random tokens
-Email Service Providers
-Custom form builders
-Custom form builders as gems
-Complex forms
-Self referential associations
-Organize cross cutting functionality with Concerns
-Background jobs
-Resque and Sidekiq
-S3
-Uploading files
-Scheduled jobs
-Skinny controller, fat model
-Structural refactors
-Separating actors
-Securing access
-Wrapping APIs
-Responding to webhooks
-Collect credit card payments
-Checkout
-Payment forms
-Recurring billing
-Handle callback events
-Beyond MVC
+- Seeding data
+- Search
+- Sending emails
+- Use random tokens
+- Email Service Providers
+- Custom form builders
+- Custom form builders as gems
+- Complex forms
+- Self referential associations
+- Organize cross cutting functionality with Concerns
+- Background jobs
+- Resque and Sidekiq
+- S3
+- Uploading files
+- Scheduled jobs
+- Skinny controller, fat model
+- Structural refactors
+- Separating actors
+- Securing access
+- Wrapping APIs
+- Responding to webhooks
+- Collect credit card payments
+- Checkout
+- Payment forms
+- Recurring billing
+- Handle callback events
+- Beyond MVC
 
 == Production Application Considerations
-Secure sensitive data
-Deploy with Procfile and Foreman
-Unicorn
-Staging and production environments
-Custom deployment scripts
-Safe guarding staging environment
-Email filters for staging environment
-Integrating SSL
-Production environment monitoring
-Handle production errors
-Production data backup and restore
+- Secure sensitive data
+- Deploy with Procfile and Foreman
+- Unicorn
+- Staging and production environments
+- Custom deployment scripts
+- Safe guarding staging environment
+- Email filters for staging environment
+- Integrating SSL
+- Production environment monitoring
+- Handle production errors
+- Production data backup and restore
 
 == Workflows
-Build workflows that involve multiple sub-systems
-Complex registration workflow
-Invitation workflow
-User life cycle management
-Social networking
-Taking and charging credit cards
-Recurring billing
-Privileges and access control
-Account and billing management
-Plan cancellation and lock out
+- Build workflows that involve multiple sub-systems
+- Complex registration workflow
+- Invitation workflow
+- User life cycle management
+- Social networking
+- Taking and charging credit cards
+- Recurring billing
+- Privileges and access control
+- Account and billing management
+- Plan cancellation and lock out
