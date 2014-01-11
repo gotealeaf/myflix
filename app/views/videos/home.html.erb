@@ -6,7 +6,7 @@
       </h3>
     </header>
     <div class='videos row'>
-      <% category.videos.each do |video| %>
+      <% category.recent_videos.each do |video| %>
         <div class='video col-sm-2'>
           <%= link_to image_tag(video.small_cover_url), video_path(video) %>
         </div>
