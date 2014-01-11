@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SessionsController do
 	describe "GET new" do
-		it "renders the new template for unauthenticated users" do
+		it "renders the new template for unauthenticated users"  do
 			get :new
 			expect(response).to render_template :new
 		end
