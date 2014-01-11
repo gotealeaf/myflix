@@ -1,22 +1,24 @@
 %section#top-header.row
   %h1.col-md-2
     = link_to "MyFLiX", videos_path
-  %ul.col-md-4.clearfix
-    %li= link_to "Videos", videos_path
-    %li= link_to "My Queue"
-    %li= link_to "People"
-  %form.col-md-5.navbar-form(action="")
-    .form-group
-      %input.form-control(type="text" placeholder="Search for videos here")
-    %button.btn.btn-default(type="submit") Search
-  #user_links.pull-right
-    %ul
-      %li.dropdown
-        %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
-          Welcome, Philip J. Fry
-          %b.caret
-        %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
-          %li
-            %a(href="#") Account
-            %a(href="#") Plan and Billing
-            %a(href="#") Sign Out
+  - if current_user
+    %ul.col-md-4.clearfix
+      %li= link_to "Videos", videos_path
+      %li= link_to "My Queue"
+      %li= link_to "People"
+    = form_tag search_videos_path, class: "col-md-5 navbar-form" do
+      .form-group
+        %input.form-control(name="search_term" type="text" placeholder="Search for videos here")
+      %button.btn.btn-default(type="submit") Search
+    #user_links.pull-right
+      %ul
+        %li.dropdown
+          %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
+            Welcome, #{current_user.full_name}
+            %b.caret
+          %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
+            %li
+              %a(href="#") Account
+              %a(href="#") Plan and Billing
+              = link_to "Sign Out", sign_out_path
+
