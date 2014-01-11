@@ -8,7 +8,7 @@
 
 tv_commedies = Category.create(name: 'TV Commedies')
 tv_dramas = Category.create(name: 'TV Dramas')
-monk = Video.create(title: 'Monk', description: 'n/a', small_cover_url: '/tmp/monk.jpg', large_cover_url: '/tmp/large.jpg', category_id: 1)
-family_guy = Video.create(title: 'Family Guy', description: 'n/a', small_cover_url: '/tmp/family_guy.jpg', large_cover_url: '/tmp/large.jpg', category_id: 1)
-futurama = Video.create(title: 'Futurama', description: 'n/a', small_cover_url: '/tmp/futurama.jpg', large_cover_url: '/tmp/large.jpg', category_id: 2)
-south_park = Video.create(title: 'South Park', description: 'n/a', small_cover_url: '/tmp/south_park.jpg', large_cover_url: '/tmp/large.jpg', category_id: 2)
+monk = Video.create(title: 'Monk', description: 'n/a', small_cover_url: '/tmp/monk.jpg', large_cover_url: '/tmp/large.jpg', category: tv_commedies)
+family_guy = Video.create(title: 'Family Guy', description: 'n/a', small_cover_url: '/tmp/family_guy.jpg', large_cover_url: '/tmp/large.jpg', category: tv_commedies)
+futurama = Video.create(title: 'Futurama', description: 'n/a', small_cover_url: '/tmp/futurama.jpg', large_cover_url: '/tmp/large.jpg', category: tv_dramas)
+south_park = Video.create(title: 'South Park', description: 'n/a', small_cover_url: '/tmp/south_park.jpg', large_cover_url: '/tmp/large.jpg', category: tv_dramas)
