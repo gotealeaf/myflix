@@ -3,7 +3,7 @@
     - @videos.each do |video|
       .video.col-sm-2
         %header
-          %h3= link_to video.video_category
+          %h3= link_to video.category_id
         =  link_to  video_path(video)  do
           %img(src="#{video.cover_image_url}")
 
