@@ -1,0 +1,16 @@
+%section.sign_in.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = form_tag sessions_path, class: 'sign_in form-hroizontal' do
+        %header
+          %h1 Sign in
+        %fieldset
+          = label_tag :email, "Email Address"
+          = email_field_tag :email
+
+          <br />
+          <br />
+          = label_tag :password
+          = password_field_tag :password
+        %fieldset.action
+          %input(type="submit" value="Sign in" class="btn btn-default")
