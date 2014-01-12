@@ -6,9 +6,9 @@ class Video < ActiveRecord::Base
 
   # helper_method :search_by_title
 
- # def self.search_by_title(search_term)
- #  where("title LIKE ?", "%#{search_term}%").order("created_at DESC")
- #  end
+ def self.search_by_title(search_term)
+  where("title LIKE ?", "%#{search_term}%").order("created_at DESC")
+  end
 
   # def self.search_by_title(search_term)
   #   search_array = []
@@ -29,10 +29,10 @@ class Video < ActiveRecord::Base
   # end
 
 
-  def self.search_by_title(search_term)
-    @nada = [Video.first, Video.last]
+  # def self.search_by_title(search_term)
+  #   @nada = [Video.first, Video.last]
       
-  end
+  # end
 
 
 end

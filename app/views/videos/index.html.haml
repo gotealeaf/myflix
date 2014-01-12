@@ -1,12 +1,7 @@
 
-= form_tag search_videos_path, class: "span5 for-search" do
-  = text_field_tag :search_term, params[:search_term], placeholder: "Search for videos here", class: 'form-control'
-  = submit_tag "Seach", name: nil, class: "btn btn-default"
 
-= Video.all
-<br />
-<br />
-=params.inspect
+
+
 
 %header
 - Category.all.each do |category|

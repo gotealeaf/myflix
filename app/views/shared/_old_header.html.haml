@@ -7,21 +7,19 @@
       %li= link_to "Videos", videos_path
       %li= link_to "My Queue"
       %li= link_to "People"
+
     %form.col-md-5.navbar-form(action="")
-
-      = form_tag search_videos_path, class: "span5 for-search" do
-        = text_field_tag :search_term, params[:search_term], placeholder: "Search for videos here", class: 'form-control'
-        = submit_tag "Seach", name: nil, class: "btn btn-default"
-
+      .form-group
+        %input.form-control(type="text" placeholder="Search for videos here")
+      %button.btn.btn-default(type="submit") Search
     #user_links.pull-right
       %ul
         %li.dropdown
           %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
-            Welcome, #{current_user.full_name if current_user}
+            Welcome, Philip J. Fry
             %b.caret
           %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
             %li
               %a(href="#") Account
               %a(href="#") Plan and Billing
               = link_to "Sign Out", sign_out_path
-

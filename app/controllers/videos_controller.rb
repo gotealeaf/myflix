@@ -4,16 +4,14 @@ class VideosController < ApplicationController
   def index
     @videos = Video.all
   end
-
   def show
     @video = Video.find(params[:id])
   end
 
 
   def search
-
     @results = search_by_title(params[:search_term])
-
+    
   end
         
   def edit
@@ -24,9 +22,8 @@ class VideosController < ApplicationController
 
   private
 
-  def search_by_title(search_term)
-    @nada = [Video.first, Video.last]
-      
+  def self.search_by_title(search_term)
+  where("title LIKE ?", "%#{search_term}%").order("created_at DESC")
   end
 
 end
