@@ -1,4 +1,12 @@
 
+= form_tag search_videos_path, class: "span5 for-search" do
+  = text_field_tag :search_term, params[:search_term], placeholder: "Search for videos here", class: 'form-control'
+  = submit_tag "Seach", name: nil, class: "btn btn-default"
+
+= Video.all
+<br />
+<br />
+=params.inspect
 
 %header
 - Category.all.each do |category|
@@ -7,7 +15,7 @@
       %h1.category_title
         =category.name.capitalize
     .videos.row
-      - category.videos.each do |video|
+      - category.recent_videos.each do |video|
         .video.col-sm-2
           = link_to video_path(video), nil do
             %img(src="#{video.small_cover_url}")
