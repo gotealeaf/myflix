@@ -5,18 +5,17 @@
         %header
           %h1 Sign in
         %fieldset
-          .form-group
-            .row
+          .row
+            .form-group
               .col-sm-4
-                = label_tag :email, "Email Address"
-                %br
-                = email_field_tag :email
-          .form-group
-            .row
+                = label_tag :email, "Email Address", class: 'small_label'
+                = email_field_tag :email, "example@example.com", class: 'form-control'
+          .row  
+            .form-group
               .col-sm-4
                 = label_tag :password
-                %br
-                = password_field_tag :password
+                = password_field_tag :password, nil, class: 'form-control'
+        %br
         %fieldset
           .form-group
             .action
