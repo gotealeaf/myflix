@@ -5,8 +5,7 @@ gem 'haml-rails'
 
 
 gem 'jquery-rails'
-gem 'bootstrap-sass','2.2.1.0'
-gem 'bootstrap_form' 
+gem 'bootstrap-sass','2.2.1.0' 
 gem 'bcrypt-ruby','3.0.0'
 gem 'fabrication'
 gem 'faker'
