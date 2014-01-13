@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.0.0'
 gem 'haml-rails'
-<<<<<<< HEAD
+
 
 
 gem 'bootstrap-sass'
@@ -12,7 +12,6 @@ gem 'jquery-rails'
 gem 'bootstrap-sass','~>2.2.1.0'
 gem 'bootstrap_form' 
 gem 'bcrypt-ruby','3.0.0'
-=======
 gem 'bootstrap-sass', '~> 2.3.2'
 gem 'sass-rails', '~> 4.0.0'
 gem 'coffee-rails', '~> 4.0.0'
@@ -20,7 +19,6 @@ gem 'uglifier', '>= 1.3.0'
 gem 'turbolinks'
 gem 'bootstrap_form'
 gem 'bcrypt-ruby', '~> 3.0.0'
->>>>>>> mod8.1
 gem 'fabrication'
 gem 'faker'
 
@@ -34,13 +32,10 @@ group :development do
   gem 'pry-nav' 
 
   gem 'pry-nav'
-<<<<<<< HEAD
   gem 'pry-nav' 
   gem 'letter_opener'
 
-=======
-        gem 'letter_opener'
->>>>>>> mod8.1
+  gem 'letter_opener'
 end
 
 group :test, :development do
