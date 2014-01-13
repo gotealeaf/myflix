@@ -23,9 +23,11 @@ group :development do
   gem 'pry'
   gem 'pry-nav'
   gem 'pry-nav' 
+  gem 'letter_opener'
 end
 
 group :production do
+  gem 'rails_12factor', group: :production
   gem 'pg'
 end
 
@@ -42,5 +44,6 @@ end
 group :test do
   gem 'capybara'
   gem 'launchy'
+  gem 'capybara-email'
 end
 
