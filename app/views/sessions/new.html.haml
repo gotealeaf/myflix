@@ -1,24 +1,20 @@
 %section.sign_in.container
   .row
     .col-sm-10.col-sm-offset-1
-      = form_tag sessions_path, class: 'sign_in' do
-        %header
-          %h1 Sign in
+      = form_tag sessions_path, class: 'sign_in form-horizontal' do
+        -# %header
+        -#   %h1 Sign in
         %fieldset
-          .form-group
+          .control-group
             .row
               .col-sm-4
                 = label_tag :email, "Email Address"
-                %br
-                = email_field_tag :email
-          .form-group
+                = email_field_tag :email, nil, clss: "form-control"
+          .control-group
             .row
               .col-sm-4
                 = label_tag :password
-                %br
-                = password_field_tag :password
-        %fieldset
-          .form-group
-            .action
-              %input(type="submit" value="Sign in" class="btn btn-default")
+                = password_field_tag :password, nil, clss: "form-control"
+        %fieldset.action
+          %input(type="submit" value="Sign in" class="btn btn-default")
 
