@@ -10,6 +10,8 @@
   %body
     %header
       = render 'shared/header'
+      = params.inspect
+      =Video.count
     %section.content.clearfix
       = render 'shared/messages'
       = yield
