@@ -8,9 +8,8 @@
       it { should have_many(:queue_items).order(:position)}
       it { should have_many(:reviews).order("created_at DESC")}
 
-      it "generates a random token when the user is created" do
-        mark = Fabricate(:user)
-        expect(mark.token).to be_present
+      it "behaves like tokenable" do
+        let(:object) { Fabricate(:user) }
       end
     
 
