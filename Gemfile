@@ -3,7 +3,9 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.11'
 gem 'haml-rails'
 
+
 gem 'bootstrap-sass'
+
 
 gem 'jquery-rails'
 gem 'bootstrap-sass','~>2.2.1.0'
@@ -23,12 +25,19 @@ group :development do
   gem 'sqlite3'
   gem 'pry'
 
+
   gem 'pry-nav'
 
   gem 'pry-nav' 
+
+  gem 'pry-nav'
+  gem 'pry-nav' 
+  gem 'letter_opener'
+
 end
 
 group :production do
+  gem 'rails_12factor', group: :production
   gem 'pg'
 end
 
@@ -45,5 +54,6 @@ end
 group :test do
   gem 'capybara'
   gem 'launchy'
+  gem 'capybara-email'
 end
 
