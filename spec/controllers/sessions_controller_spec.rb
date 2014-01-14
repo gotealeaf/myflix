@@ -16,42 +16,36 @@ describe SessionsController do
 
   describe "Post create" do
     context "with valid credentials" do
-      before  do
+      let(:alice) {Fabricate(:user)}
+      before do
         # alice = Fabricate(:user)
-        # post :create, email: alice.email, password: alice.password, full_name: alice.full_name
+        post :create, email: alice.email, password: alice.password, full_name: alice.full_name
       end
-      it "should create a new session" do 
-        alice = Fabricate(:user)
+      it "should create a new session" do
+        # alice = Fabricate(:user)
         post :create, email: alice.email, password: alice.password, full_name: alice.full_name
         expect(session[:user_id]).to eq(alice.id)
       end
       it "should redirect to the home page" do
-        alice = Fabricate(:user)
-        post :create, email: alice.email, password: alice.password, full_name: alice.full_name
-          expect(response).to redirect_to home_path
+        expect(response).to redirect_to home_path
       end
        it "should set the success message" do
-        alice = Fabricate(:user)
-        post :create, email: alice.email, password: alice.password, full_name: alice.full_name
         expect(flash[:notice]).not_to be_blank
       end
 
     end
     context "with invalid credentials" do
-      
-      it "should not set the session" do
+      before do
         alice = Fabricate(:user)
         post :create, email: alice.email, password: alice.password+'asdf', full_name: alice.full_name
-       expect(session[:user_id]).to be_nil
+      end
+      it "should not set the session" do
+          expect(session[:user_id]).to be_nil
       end
       it "should redirect to the sign_in page" do
-        alice = Fabricate(:user)
-        post :create, email: alice.email, password: alice.password+'asdf', full_name: alice.full_name
-       expect(response).to redirect_to sign_in_path
+        expect(response).to redirect_to sign_in_path
       end
       it "should set the error message" do
-        alice = Fabricate(:user)
-        post :create, email: 'email', password: 'password', full_name: 'full_name'
         expect(flash[:error]).not_to be_blank
       end
     end

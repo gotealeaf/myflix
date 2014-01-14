@@ -3,10 +3,12 @@ require 'spec_helper'
 
 describe UsersController do
   describe "GET new" do
-    it "should create a new user object" do
+    it "sets the @user variable" do
      user = Fabricate(:user)
      get :new
-     expect(assigns(:user)).to be_instance_of(User)
+     assigns(:user).should be_new_record
+      assigns(:user).should be_instance_of(User)
+      
    end
   end
 
