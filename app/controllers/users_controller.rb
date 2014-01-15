@@ -39,4 +39,10 @@
           invitation.update_column(:token, nil)
       end
     end
+
+    private 
+
+    def users_params
+      params.require(:user).permit(:username, :email, :password, :salt, :encrypted_password)
   end
+end
