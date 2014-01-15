@@ -1,4 +1,5 @@
 class Video < ActiveRecord::Base
-  has_many :video_categories
-  has_many :categories, through: :video_categories
+  belongs_to :category
+
+  validates_presence_of :title, :description
 end
