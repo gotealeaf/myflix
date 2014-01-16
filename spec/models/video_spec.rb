@@ -10,17 +10,30 @@ describe Video do
     monk.save
     expect(Video.first).to eq(monk)
   end
-  
-  it 'does not save a video without a title' do
-    south_park = Video.new(description: 'n/a')
-    south_park.save
-    expect(Video.all.size).to eq(0)
-    #so, each it...do block is seperate from each other? otherwise how come this could be 0 as we just created a video sucessfully in the 'saves itself' block above
-  end
-  
-  it 'belongs to category' do
-    tv = Category.create(name: 'TV')
-    monk = Video.create(title: 'Monk', description: 'n/a', category: tv)
-    expect(monk.category).to eq(tv)
-  end
 end
+
+describe 'search_by_title' do
+  it 'returns an empty array for a search of empty string' do
+    futurama = Video.create(title: 'Futurama', description: 'n/a')
+    expect(Video.search_by_title('')).to eq([])
+  end
+
+  it 'returns an empty array if there is no match' do
+    futurama = Video.create(title: 'Futurama', description: 'n/a')
+    expect(Video.search_by_title('test')).to eq([])
+  end
+
+  it 'returns an array of one video for an exact match' do
+    futurama = Video.create(title: 'Futurama', description: 'n/a')
+    expect(Video.search_by_title('futurama')).to eq([futurama])
+  end
+
+  it 'returns an array of all matches for a partial match and ordered by created_at' do
+  #should I be doing this, it makes sense to me though? Or should this be splitted into two test?
+    futurama = Video.create(title: 'Futurama', description: 'n/a')
+    back_to_future = Video.create(title: 'Back To Future', description: 'n/a')
+    expect(Video.search_by_title('futu')).to eq([back_to_future, futurama])
+  end
+
+end
+
