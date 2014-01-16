@@ -8,6 +8,7 @@ module Myflix
   class Application < Rails::Application
     config.encoding = "utf-8"
     config.filter_parameters += [:password]
+    config.i18n.enforce_available_locales = true
     config.active_support.escape_html_entities_in_json = true
 
     config.assets.enabled = true
