@@ -25,7 +25,7 @@ describe UsersController do
 	  end
 
 	  context "with invalid input" do
-	  	
+	  	 
 	  	before { post :create, user: { password: "password", full_name: "Kevin Smith" } }
 
 		  it "does not create the user" do
