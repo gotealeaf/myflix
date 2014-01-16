@@ -1,1 +1,2 @@
-Video.create(title: "Futurama",description:"Pizza boy Philip J. Fry awakens in the 31st century after 1,000 years of cryogenic preservation in this animated series. After he gets a job at an interplanetary delivery service, Fry embarks on ridiculous escapades to make sense of his predicament.")
+Category.create(title:"Comedies")
+Video.create(category_id: 1,title: "Futurama",description:"Pizza boy Philip J. Fry awakens in the 31st century after 1,000 years of cryogenic preservation in this animated series. After he gets a job at an interplanetary delivery service, Fry embarks on ridiculous escapades to make sense of his predicament.")
