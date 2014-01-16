@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe VideosController do
+
   describe 'GET show' do
 
     it "redirects to sign_in for unathenticated users" do
@@ -27,6 +28,18 @@ describe VideosController do
         assigns(:reviews).should match_array([review1, review2])
       end
     end
+
+    context "for someone submitting a review" do
+      let(:test_review) = Review.build(rating: 3, content: "Wonderful Movie")
+      it "sets the @reveiw variable" do
+        expect(assigns(:video)).to eq
+      end
+    end
+
+
+
+
+
   end
 
       describe 'POST search' do
