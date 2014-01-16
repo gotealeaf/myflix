@@ -7,8 +7,9 @@ resources :videos do
   collection do
     post :search, to: 'videos#search'
   end
+  resources :reviews, only: [:create]
 end
-
+resources :reviews, only: [:create]
 resources :categories, only: [:show]
 
 get 'register', to: 'users#new'

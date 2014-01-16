@@ -4,8 +4,11 @@ class VideosController < ApplicationController
   def index
     @videos = Video.all
   end
+
   def show
     @video = Video.find(params[:id])
+    @reviews = @video.reviews
+    @review = Review.new
   end
 
 
@@ -20,5 +23,11 @@ class VideosController < ApplicationController
   def new
   end
 
+  private 
+
+ # def  video_params
+ #  params.require(:video).permit(reviews_attributes: [:id, :rating, :content, :video_id, :user_id])
+   
+ # end
   
 end

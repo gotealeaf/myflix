@@ -1,6 +1,8 @@
 class Video < ActiveRecord::Base
 
   belongs_to :category
+  has_many :reviews
+  # accepts_nested_attributes_for :reviews
 
   validates_presence_of  :title, :description
 
