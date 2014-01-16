@@ -6,10 +6,11 @@ class SessionsController < ApplicationController
     user = User.where(email: params[:email]).first
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to home_path, notice: 'You are signed in!'
+      flash[:notice] = 'You are signed in!'
+      redirect_to home_path 
     else 
-      flash[:error] = "Invalid email or passwod."
-      render :new
+      flash[:danger] = "Invalid email or passwod."
+      redirect_to sign_in_path 
     end
   end
 
