@@ -3,6 +3,7 @@ class Category < ActiveRecord::Base
   #above code will top the order in the recent_videos
   has_many :videos
   validates_presence_of :name
+  validates_uniqueness_of :name
 
   def recent_videos
     self.videos.order(created_at: :desc).first(6)

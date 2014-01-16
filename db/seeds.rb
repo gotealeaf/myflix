@@ -20,8 +20,13 @@ Video.create(title: 'Love Actually', description: 'N/A', small_cover_url: '/tmp/
 Video.create(title: 'Man On Fire', description: 'N/A', small_cover_url: '/tmp/man_on_fire.jpg', large_cover_url: '/tmp/sample.jpg', category: drama)
 Video.create(title: 'Misery', description: 'N/A', small_cover_url: '/tmp/misery.jpg', large_cover_url: '/tmp/sample.jpg', category: drama)
 Video.create(title: 'Moon', description: 'N/A', small_cover_url: '/tmp/moon.jpg', large_cover_url: '/tmp/sample.jpg', category: scifi)
-Video.create(title: 'No', description: 'N/A', small_cover_url: '/tmp/no.jpg', large_cover_url: '/tmp/sample.jpg', category: drama)
+no = Video.create(title: 'No', description: 'N/A', small_cover_url: '/tmp/no.jpg', large_cover_url: '/tmp/sample.jpg', category: drama)
 Video.create(title: 'Outrage', description: 'N/A', small_cover_url: '/tmp/outrage.jpg', large_cover_url: '/tmp/sample.jpg', category: drama)
 Video.create(title: 'Seven', description: 'N/A', small_cover_url: '/tmp/seven.jpg', large_cover_url: '/tmp/sample.jpg', category: drama)
 Video.create(title: 'Star Trek', description: 'N/A', small_cover_url: '/tmp/star_trek.jpg', large_cover_url: '/tmp/sample.jpg', category: scifi)
 Video.create(title: 'Trainspotting', description: 'N/A', small_cover_url: '/tmp/trainspotting.jpg', large_cover_url: '/tmp/sample.jpg', category: drama)
+
+bob = User.create(email: 'john@example.com', password: '123', full_name: 'John Doe')
+
+Review.create(content: 'two thumbs up!!', rating: 4, video: no, user: bob)
+Review.create(content: 'best of the year!', rating: 5, video: no, user: bob)
