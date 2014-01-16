@@ -6,4 +6,10 @@ describe Video do
 		video.save
 		expect(Video.first).to eq(video)
 	end
+
+	it "belongs to category" do
+		dramas = Category.create(name: "Dramas")
+		inception = Video.create(title: "Inception", description: "brilliant movie", category: dramas)
+		expect(inception.category).to eq(dramas)
+	end
 end
