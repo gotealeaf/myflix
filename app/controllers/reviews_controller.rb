@@ -5,8 +5,10 @@ class ReviewsController < ApplicationController
   def create
    @video = Video.find(params[:video_id]) 
    
-   @review = @video.reviews.build(params[:review].merge!(user_id: current_user.id))
+   @review = @video.reviews.build(params[review_params])
+   @review.user = current_user
 
+   #.merge!(user_id: current_user.id)
 
    # @review = Review.new(params[review_params])
    # @review.user_id = current_user.id
@@ -18,7 +20,7 @@ class ReviewsController < ApplicationController
     @reviews = @video.reviews.reload
     flash[:error] = "Sorry there was a problem saving your review."
     render 'videos/show'
-    # redirect_to home_path
+   
   end
 
 
