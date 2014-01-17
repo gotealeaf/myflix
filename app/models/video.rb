@@ -9,4 +9,9 @@ class Video < ActiveRecord::Base
     return [] if search_term.blank?
     where('title LIKE ?', "%#{search_term}%").order('created_at DESC') 
   end
+
+  def average_rating
+    return 0 if self.reviews.empty?
+    self.reviews.average(:rating).round(1)
+  end
 end

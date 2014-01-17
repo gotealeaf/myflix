@@ -38,3 +38,18 @@ describe 'search_by_title' do
 
 end
 
+describe 'average_rating' do
+  let(:video) { Fabricate(:video) }
+  context 'video has no rating' do
+    it 'sets average rating to 0' do
+      expect(video.average_rating).to eq(0)
+    end
+  end
+  context 'video has ratings' do
+    it 'sets average rating as rounded float' do
+      review1 = Fabricate(:review, rating: 2, video_id: video.id)
+      review2 = Fabricate(:review, rating: 3, video_id: video.id)
+      expect(video.average_rating).to eq(2.5)
+    end
+  end
+end
