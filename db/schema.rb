@@ -21,9 +21,9 @@ ActiveRecord::Schema.define(version: 20140116133819) do
 
   create_table "reviews", force: true do |t|
     t.integer  "rate"
-    t.text     "review"
-    t.string   "user_id"
-    t.string   "video_id"
+    t.text     "content"
+    t.integer  "user_id"
+    t.integer  "video_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
