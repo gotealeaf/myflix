@@ -25,3 +25,15 @@ Video.create(title: 'The Matrix', description: "Thomas A. Anderson is a man livi
 	small_cover: '/tmp/the_matrix.jpg', big_cover: '/tmp/the_matrix_large.jpg', category_id: '8')
 
 Category.create([{name: 'Drama'}, {name: 'Action'}, {name: 'Animation'}, {name: 'Comedy'}, {name: 'Thriller'}, {name: 'Fantasy'}, {name: 'Romance'}, {name: 'Sci-Fi'}, {name: 'Biography'}, {name: 'Adventure'}])
+
+Video.create(title: 'Gravity', description: "Dr. Ryan Stone (Sandra Bullock) is a brilliant medical engineer on her first shuttle mission, with veteran astronaut Matt Kowalsky (George Clooney) in command of his last flight before retiring. But on a seemingly routine spacewalk, disaster strikes.", 
+	small_cover: '/tmp/gravity.jpg', big_cover: '/tmp/gravity_large.jpg', category_id: '8')
+
+Video.create(title: 'Terminator2', description: "Almost 10 years have passed since the first cyborg called The Terminator tried to kill Sarah Connor and her unborn son, John Connor. John Connor, the future leader of the human resistance, is now a healthy young boy.", 
+	small_cover: '/tmp/terminator2.jpg', big_cover: '/tmp/terminator2_large.jpg', category_id: '8')
+
+Video.create(title: 'The Matrix', description: "Thomas A. Anderson is a man living two lives. By day he is an average computer programmer and by night a hacker known as Neo. Neo has always questioned his reality, but the truth is far beyond his imagination.", 
+	small_cover: '/tmp/the_matrix.jpg', big_cover: '/tmp/the_matrix_large.jpg', category_id: '8')
+
+Video.create(title: 'Gravity', description: "Dr. Ryan Stone (Sandra Bullock) is a brilliant medical engineer on her first shuttle mission, with veteran astronaut Matt Kowalsky (George Clooney) in command of his last flight before retiring. But on a seemingly routine spacewalk, disaster strikes.", 
+	small_cover: '/tmp/gravity.jpg', big_cover: '/tmp/gravity_large.jpg', category_id: '8')
