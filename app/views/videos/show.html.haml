@@ -2,7 +2,7 @@
   .container
     .row
       .video_large_cover.span7.offset1
-        %img(src="#{@video.large_cover_url}")
+        = image_tag @video.large_cover_url
       .video_info.span3
         %header
           %h3= @video.title

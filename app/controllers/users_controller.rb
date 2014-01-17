@@ -1,12 +1,12 @@
     class UsersController < ApplicationController
-      before_filter :require_user, only: [:show]
+      before_action :require_user, only: [:show]
 
       def new
         @user = User.new
       end
 
       def create
-        @user = User.new(params[:user])
+        @user = User.new(users_params)
         if @user.save
           handle_invitation
           AppMailer.send_welcome_email(@user).deliver
@@ -15,6 +15,7 @@
           render :new
         end
       end
+    
 
       def show
         @user = User.find(params[:id])
@@ -31,18 +32,22 @@
       end
     end
 
+
+    
+
+ 
+
+    def users_params
+      params.require(:user).permit(:email, :password, :full_name)
+    end
+
     def handle_invitation
-      if params[:invitation_token].present?
-          invitation = Invitation.where(token: params[:invitation_token]).first
-          @user.follow(invitation.inviter)
-          invitation.inviter.follow(@user)
-          invitation.update_column(:token, nil)
+        if params[:invitation_token].present?
+            invitation = Invitation.where(token: params[:invitation_token]).first
+            @user.follow(invitation.inviter)
+            invitation.inviter.follow(@user)
+            invitation.update_column(:token, nil)
+        end
       end
     end
 
-    private 
-
-    def users_params
-      params.require(:user).permit(:username, :email, :password, :salt, :encrypted_password)
-  end
-end

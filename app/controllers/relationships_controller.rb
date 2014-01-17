@@ -1,5 +1,5 @@
 class RelationshipsController < ApplicationController
-  before_filter :require_user 
+  before_action :require_user 
 
   def index
     @relationships = current_user.following_relationships
