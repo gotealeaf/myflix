@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Category do
   it { should have_many(:videos) }
   it { should validate_presence_of(:name) }
+  it { should validate_uniqueness_of(:name) } 
 
   it 'saves itself' do
     tv = Category.new(name: 'TV')
@@ -27,13 +28,13 @@ describe Category do
 
     it 'returns 6 videos if there are more than 6 videos' do
       drama = Category.create(name: 'Drama')
-      7.times { Video.create(title: 'Seven', description: 'n/a', category: drama) }
+      7.times { Video.create(title: Faker::Lorem.words(1).to_s, description: 'n/a', category: drama) }
       expect(drama.recent_videos.size).to eq(6) 
     end
 
     it 'returns most recent 6 videos' do
       drama = Category.create(name: 'Drama')
-      7.times { Video.create(title: 'Seven', description: 'n/a', category: drama) }
+      7.times { Video.create(title: Faker::Lorem.words(1).to_s, description: 'n/a', category: drama) }
       annie_hall = Video.create(title: 'Annie Hall', description: 'n/a', category: drama, created_at: 1.day.ago) 
       expect(drama.recent_videos).not_to include(annie_hall)
     end

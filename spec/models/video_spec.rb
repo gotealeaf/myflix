@@ -4,6 +4,8 @@ describe Video do
   it { should belong_to(:category) }
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:description) }
+  it { should validate_uniqueness_of(:title) }
+  it { should have_many(:reviews).order('created_at desc') }
 
   it 'saves itself' do
     monk = Video.new(title: 'monk', description: 'n/a')
@@ -29,7 +31,6 @@ describe 'search_by_title' do
   end
 
   it 'returns an array of all matches for a partial match and ordered by created_at' do
-  #should I be doing this, it makes sense to me though? Or should this be splitted into two test?
     futurama = Video.create(title: 'Futurama', description: 'n/a')
     back_to_future = Video.create(title: 'Back To Future', description: 'n/a')
     expect(Video.search_by_title('futu')).to eq([back_to_future, futurama])
