@@ -30,6 +30,6 @@ describe Category do
     it "returns an empty array if the category does not have any videos" do
       comedies = Category.create(name: "comedies")
       expect(comedies.recent_videos).to eq([])
-    en
+    end
   end
 end
