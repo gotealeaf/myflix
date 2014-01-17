@@ -20,15 +20,16 @@
         %fieldset
           %label Rate this video
           = f.select :rate, options_for_select([5,4,3,2,1,].map {|number| [pluralize(number, "Star")]})
+        .row
           %label Write Review
           = f.text_area :content , rows: 6, class: "span6"
         %fieldset.actions.clearfix
           %input(type="submit" value="Submit" class="btn")
           = link_to "Cancel", @video 
       %header
-        %h3 User Reviews (#{@reviews.count})
+        %h3 User Reviews (#{@video.reviews.count})
       %ul
-        - @reviews.each do |review| 
+        - @video.reviews.each do |review| 
           %article.review
             %li.row
               .col-sm-2
