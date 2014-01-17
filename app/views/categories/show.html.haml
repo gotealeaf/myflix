@@ -1,0 +1,7 @@
+%section.genre
+  %header.clearfix
+    %h1 #{@category.name}
+  %article.row
+    - @category.videos.each do |video|
+      .video.col-sm-2
+        %img(src="/tmp/#{video.small_thumb}.jpg")
