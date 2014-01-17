@@ -5,7 +5,6 @@ class ReviewsController < ApplicationController
     @video = Video.find(params[:video_id])
     @review = @video.reviews.build(review_params)
     @review.user = current_user 
-
     if @review.save
       redirect_to @video
     else

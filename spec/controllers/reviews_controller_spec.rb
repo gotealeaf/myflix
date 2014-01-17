@@ -12,10 +12,10 @@ describe ReviewsController do
 
     context "with authenticated users" do
       let(:current_user) {Fabricate(:user)}
-      before { session[:usesr_id] = current_user.id }
+      before { session[:user_id] = current_user.id }
 
       context "with valid inputs" do
-        before { post :create, review: Fabricate.attributes_for(:review), video_id: video.id }
+        before { post :create, review: { rate: 4, content: "good" }, video_id: video.id }
 
         it "redirect to the video show page" do
           expect(response).to redirect_to video 

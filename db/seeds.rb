@@ -27,6 +27,6 @@ Video.create(title: "family_guy", description: "family_guy", small_cover_url: "/
 
 neil = User.create(full_name: "Neil Wang", password: "password", email: "neil@gmail.com")
 
-Review.create(user: neil, video: kungfu, rate: 3, review: "alsdkfj") 
-Review.create(user: neil, video: kungfu, rate: 4, review: "good video") 
+Review.create(user: neil, video: kungfu, rate: 3, content: "alsdkfj") 
+Review.create(user: neil, video: kungfu, rate: 4, content: "good video") 
 
