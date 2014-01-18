@@ -41,4 +41,29 @@ describe QueueItemsController do
       expect(QueueItem.count).to eq(1)
     end
   end
+
+  describe 'DELETE destroy' do
+    let(:video) { Fabricate(:video) }
+    let(:user) { Fabricate(:user) }
+    before do
+      session[:user_id] = user.id
+    end
+    it 'redirects user to the my queue page' do
+      queue_item = Fabricate(:queue_item, video: video, user: user)
+      delete :destroy, id: queue_item.id
+      expect(response).to redirect_to my_queue_path
+    end
+    it 'removes queue item from queue' do
+      queue_item = Fabricate(:queue_item, video: video, user: user)
+      delete :destroy, id: queue_item.id
+      expect(QueueItem.count).to eq(0)
+    end
+    it 'does not remove queue item from others queue' do
+      queue_item = Fabricate(:queue_item, video: video, user: user)
+      bob = Fabricate(:user)  
+      bobs_queue_item = Fabricate(:queue_item, video: video, user: bob)
+      delete :destroy, id: bobs_queue_item.id
+      expect(QueueItem.count).to eq(2)
+    end
+  end
 end
