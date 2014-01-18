@@ -10,7 +10,7 @@
         %p= @video.description
         .actions
           =link_to 'Watch Now', '#', class: 'btn btn-primary'
-          =link_to '+ My Queue', '#', class: 'btn btn-default'
+          =link_to '+ My Queue', queue_items_path(video_id: @video.id), method: :post, class: 'btn btn-default'
 
 %section.reviews.container
   .row
