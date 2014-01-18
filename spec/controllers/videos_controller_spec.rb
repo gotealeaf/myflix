@@ -6,13 +6,14 @@ describe VideosController do
       before do
         session[:user_id] = Fabricate(:user).id
       end
+
       it "sets the @videos variable" do
         kungfu = Video.create(title: "Kung Fu", description: "Jack Chen") 
         kungfu_panda = Video.create(title: "Kung Fu Panda", description: "Bao") 
-
         get :index
         assigns(:videos).should == [kungfu, kungfu_panda]
       end
+
       it "renders the index template" do
         get :index 
         response.should render_template :index
@@ -26,6 +27,15 @@ describe VideosController do
       video = Fabricate(:video)
       get :show, id: video.id
       expect(assigns(:video)).to eq(video)
+    end
+
+    it "sets the @reviews variable" do
+      session[:user_id] = Fabricate(:user).id
+      video = Fabricate(:video)
+      review1 = Fabricate(:review, video: video)
+      review2 = Fabricate(:review, video: video)
+      get :show, id: video.id
+      expect(assigns(:reviews)).to match_array([review1, review2])
     end
 
     it "renders the show template" do
