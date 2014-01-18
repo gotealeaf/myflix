@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_secure_password validations: false
 
   has_many :queue_items, -> { order("position") }
+  has_many :reviews, -> { order(created_at: :desc) }
 
   def normalize_queue_item_positions
 		queue_items.each_with_index do |queue_item, index|
