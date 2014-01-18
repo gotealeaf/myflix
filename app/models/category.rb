@@ -1,5 +1,6 @@
 class Category < ActiveRecord::Base
-  has_many :videos, order: "created_at DESC"
+  has_many :videos
+  # , -> order: "created_at DESC"
   # , -> order: :title
 
   def recent_videos

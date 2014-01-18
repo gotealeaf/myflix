@@ -10,14 +10,7 @@
   %body
     %header
       = render 'shared/header'
-      = params.inspect
-      video total:
-      =Video.count
-
-      <br />
-      current user_id: 
-      = @current_user.id
-      <br />
+     
     %section.content.clearfix
       = render 'shared/messages'
       = yield

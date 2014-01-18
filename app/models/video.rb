@@ -2,11 +2,11 @@ class Video < ActiveRecord::Base
 
   belongs_to :category
   has_many :reviews
-  # accepts_nested_attributes_for :reviews
+  has_many :queue_items
 
   validates_presence_of  :title, :description
 
-  # helper_method :search_by_title
+
 
  def self.search_by_title(search_term)
   where("title LIKE ?", "%#{search_term}%").order("created_at DESC")
