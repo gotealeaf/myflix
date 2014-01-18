@@ -2,6 +2,7 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
+I18n.enforce_available_locales = false
 Bundler.require(:default, Rails.env)
 
 module Myflix
