@@ -7,5 +7,15 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-   @categories = Category.create(title: "Comedy")
-   @categories = Category.create(title: "Detective series")
+  
+Video.create(name: "Futurama", description: "space travel!", small_cover_url: "/tmp/futurama.jpg", category_id: dramas, large_cover_url: '/tmp/monk_large.jpg')
+
+Video.create(name: "Monk", description: "Paranoid SF detective", small_cover_url: "/tmp/monk.jpg", categoryi_id: dramas, large_cover_url: '/tmp/monk_large.jpg')
+
+Video.create(name: "Futurama", description: "space travel!", small_cover_url: "/tmp/mok.jpg", category_id: dramas, large_cover_url: '/tmp/monk_large.jpg')
+
+Video.create(name: "Family Guy", description: "Peter Griffin and talking dog", small_cover_url: "/tmp/family.jpg", category_id: dramas, large_cover_url: '/tmp/monk_large.jpg')
+
+Video.create(name: "Futurama", description: "space travel!", small_cover_url: "/tmp/futuramaa.jpg", category_id: dramas, large_cover_url: '/tmp/monk_large.jpg')
+
+Video.create(name: "Futurama", description: "space travel!", small_cover_url: "/tmp/mok.jpg", category_id: dramas, large_cover_url: '/tmp/monk_large.jpg')
