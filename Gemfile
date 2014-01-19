@@ -8,7 +8,8 @@ gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
 
-group :development do
+group :test, :development do
+	gem 'rspec-rails'
   gem 'sqlite3'
   gem 'pry'
   gem 'pry-nav'
@@ -17,6 +18,9 @@ group :development do
   gem "binding_of_caller"
 end
 
+group :test do
+  gem 'shoulda-matchers'
+end
 group :production do
   gem 'pg'
   gem 'rails_12factor'
