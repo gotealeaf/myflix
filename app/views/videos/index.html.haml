@@ -1,10 +1,10 @@
-%article.video_category
-  - @categories.each do |category|
+- @categories.each do |category|
+  %article.video_category
     %header
-      %h3= category.title
+      %h3= link_to category.name, category
     .videos.row
       - category.recent_videos.each do |video|
-        .video.span2
-          = link_to  video  do
-            %img(src="#{video.cover_image_url}")
-
+        .video.col-sm-2
+          = link_to video_path(video), nil do
+            %img{:src => "#{video.small_cover_url}"}
+            <br/><br/><br/>
