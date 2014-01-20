@@ -6,5 +6,31 @@
       .video_info.col-sm-3
         %header
           %h3= @video.title
-          %span Rating
         %p= @video.description
+
+%section.reviews.container
+  .col-sm-10.col-sm-offset-1
+    = form_for [@video, Review.new] do |f|
+      %fieldset
+        %label Rate this video
+        %br
+        = f.select :rating, options_for_select([5,4,3,2,1].map {|number| [pluralize(number, "Star")]})
+        %br
+        %label Write Review
+        %br
+        = f.text_area :content, rows: 8, class: "span8"
+      %fieldset.actions.clearfix
+        %input(type="submit" value="Submit" class="btn")
+        = link_to "Cancel", @video
+      %header
+        %br
+        %h3 User Reviews (#{@reviews.count})
+      %ul
+        - @reviews.each do |review|
+          %article.review
+            %li.row
+              .col-sm-2
+                %span Rating: #{review.rating} / 5
+                %p by <a href="">#{review.user.full_name}</a>
+              .col-sm-8
+                %p= review.content

@@ -26,3 +26,7 @@ videos = Video.create([{title: 'Inception',
 	                      small_cover_url: '/tmp/lost_highway.jpg',
 	                      large_cover_url:'/tmp/lost_highway.jpg',
 	                      category: thriller}])
+
+bobby = User.create(full_name: "Bobby Bobson", password: "bobby", email: "bobby@bobson.com")
+
+Review.create(user: bobby, video:videos.first, rating: 5, content: "This is one of my favourite movies!")
