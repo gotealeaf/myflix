@@ -1,7 +1,7 @@
 - @categories.each do |category|
   %article.video_category
     %header
-      %h3= link_to category.name, category
+      %h3= link_to category.name.pluralize, category
     .videos.row
       - category.videos.each do |video|
         .video.col-sm-2
