@@ -190,6 +190,7 @@ describe QueueItemsController do
 
   describe "#rating=" do
    
+    subject { Review.first.rate }
     let(:video) { Fabricate(:video) }
     let(:user) { Fabricate(:user) }
     let(:review) { Fabricate(:review, user: user, video: video, rate: 2) }
@@ -197,17 +198,17 @@ describe QueueItemsController do
 
     it "changes the rating of the review if the review is present" do
       queue_item.rating = 4
-      expect(Review.first.rate).to eq(4)
+      expect(subject).to eq(4)
     end
 
     it "clears the rating of the review if the review is present" do
       queue_item.rating = nil
-      expect(Review.first.rate).to be_nil
+      expect(subject).to be_nil
     end
 
     it "creates a review with the rating if the review is not present" do
       queue_item.rating = 3 
-      expect(Review.first.rate).to eq(3)
+      expect(subject).to eq(3)
     end
   end
 end
