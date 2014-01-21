@@ -11,9 +11,11 @@ class ReviewsController < ApplicationController
       render 'videos/show'
     end
   end
-
+  
   def review_params
     params.require(:review).permit(:video_id, :user_id, :content, :rating)
   end
 end
-##
+
+
+
