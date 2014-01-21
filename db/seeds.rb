@@ -6,6 +6,10 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+drama = Category.create(name: 'Drama')
+comedy = Category.create(name: 'Comedy')
+reality= Category.create(name: 'Reality')
+
 Video.create(title: 'Breaking Bad - Pilot',
              description: 'A mild mannered teacher of high school chemistry learns he' +
                           'has contracted lung cancer and decides to undertake a new ' +
@@ -13,7 +17,8 @@ Video.create(title: 'Breaking Bad - Pilot',
                           'guaranteeing financial solvency for his wife and son' +
                           'after his death.',
              small_cover_url: '/covers/breaking_bad_small.jpg',
-             large_cover_url: '/covers/breaking_bad_large.jpg'
+             large_cover_url: '/covers/breaking_bad_large.jpg',
+             category: drama
 )
 
 Video.create(title: 'Dexter - Dexter',
@@ -25,7 +30,8 @@ Video.create(title: 'Dexter - Dexter',
                           'around Miami. Meanwhile, Dexter hunts a man who made snuff videos and killed a mother of ' +
                           'two.',
              small_cover_url: '/covers/dexter_small.jpg',
-             large_cover_url: '/covers/dexter_large.jpg'
+             large_cover_url: '/covers/dexter_large.jpg',
+             category: drama
 )
 
 Video.create(title: 'Sons of Anarchy - Pilot',
@@ -33,7 +39,8 @@ Video.create(title: 'Sons of Anarchy - Pilot',
                         'life also becomes unstable when he learns his druggy ex-wife has given birth to his son ' +
                         'prematurely.',
              small_cover_url: '/covers/sons_of_anarchy_small.jpg',
-             large_cover_url: '/covers/sons_of_anarchy_large.jpg'
+             large_cover_url: '/covers/sons_of_anarchy_large.jpg',
+             category: drama
 )
 
 Video.create(title: 'Game of Thrones - Winter is Coming',
@@ -52,7 +59,8 @@ Video.create(title: 'Game of Thrones - Winter is Coming',
                         'accompanied by a curious Tyrion. But a startling act of treachery directed at young Bran ' +
                         'may postpone their departures.',
              small_cover_url: '/covers/game_of_thrones_small.jpg',
-             large_cover_url: '/covers/game_of_thrones_large.jpg'
+             large_cover_url: '/covers/game_of_thrones_large.jpg',
+             category: drama
 )
 
 Video.create(title: 'Homeland - Pilot',
@@ -61,7 +69,8 @@ Video.create(title: 'Homeland - Pilot',
                         'CIA operative (Claire Danes) suspects he may actually be an enemy agent with a connection ' +
                         'to Al Qaeda and part of a plan to commit a terrorist act on U.S. soil.',
              small_cover_url: '/covers/homeland_small.jpg',
-             large_cover_url: '/covers/homeland_large.jpg'
+             large_cover_url: '/covers/homeland_large.jpg',
+             category: drama
 )
 
 Video.create(title: 'Sherlock - A Study in Pink',
@@ -69,5 +78,54 @@ Video.create(title: 'Sherlock - A Study in Pink',
                           'odd suicides. Sherlock and John end up trying to solve cryptic clues and have to deal ' +
                           'with a lethal killer in their quest to discover the truth.',
              small_cover_url: '/covers/sherlock_small.jpg',
-             large_cover_url: '/covers/sherlock_large.jpg'
+             large_cover_url: '/covers/sherlock_large.jpg',
+             category: drama
+)
+
+Video.create(title: '30 Rock - Pilot',
+             description: 'Liz Lemon is living every writer\'s dream -- the head writer for a live variety show that ' +
+                          'stars her best friend, Jenna Maroney. But her world is thrown off track when Jack Donaghy ' +
+                          'is hired as the new network executive. He begins to interfere with the show and convinces ' +
+                          'Liz to hire Tracy Jordan, a wild movie star. Jack later has Liz spend time with Tracy ' +
+                          'before she rejects him and she ends up swept up in his entourage.',
+             small_cover_url: '/covers/30_rock_small.jpg',
+             large_cover_url: '/covers/30_rock_large.jpg',
+             category: comedy
+)
+
+Video.create(title: 'The Big Bang Theory - Pilot',
+             description: 'Leonard and Sheldon visit a high IQ sperm bank, but have regrets about going, so they ' +
+                        'leave, only to feel guilty afterwards. When they arrive back at the apartment, they see a ' +
+                        'beautiful blonde woman, Penny, in the apartment across the hallway and they attempt to ' +
+                        'befriend her. Sheldon, who has no experience being around someone like Penny, doesn’t ' +
+                        'know what to do, while Leonard really takes a shine to her. Meanwhile, Howard makes ' +
+                        'numerous attempts to impress Penny, while Koothrappali is too shy to talk to her.',
+             small_cover_url: '/covers/the_big_bang_theory_small.jpg',
+             large_cover_url: '/covers/the_big_bang_theory_large.jpg',
+             category: comedy
+)
+
+Video.create(title: 'American Idol - Auditions #1 - Boston & Austin',
+             description: "Everyone's favorite singing competition returns for its highly anticipated 13th season " +
+                        "with a new dream team judging panel, new contestants and the best and worst of auditions. " +
+                        "Host Ryan Seacrest and judges Jennifer Lopez, Keith Urban and Harry Connick, Jr., travel " +
+                        "across the country to Atlanta, Austin, Boston, Detroit, Omaha, Salt Lake City and San " +
+                        "Francisco where the good, the bad and the outrageous audition for their shot at stardom. " +
+                        "This season promises to deliver the most talented group of singers yet and as always, " +
+                        "it's up to the viewers to root and vote for their favorite contestants, ultimately " +
+                        "crowning the next AMERICAN IDOL. Don't miss the auditions from Boston and Austin that " +
+                        "everyone will be talking about the next day.",
+             small_cover_url: '/covers/american_idol_small.jpg',
+             large_cover_url: '/covers/american_idol_large.jpg',
+             category: reality
+)
+
+Video.create(title: 'American Dad - Pilot',
+             description: "Stan rigs the school election so Steve can become school president so he can impress the " +
+                          "most popular girl in school, Lisa Silver. Meanwhile, after Francine cuts off Roger's " +
+                          "supply of junk food, he agrees to write Hayley's term papers if he continues to supply " +
+                          "his fix.",
+             small_cover_url: '/covers/american_dad_small.jpg',
+             large_cover_url: '/covers/american_dad_large.jpg',
+             category: comedy
 )
