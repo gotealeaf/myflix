@@ -44,4 +44,3 @@ describe QueueItem do
     end
   end
 end
-
