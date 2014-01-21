@@ -10,8 +10,6 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'bootstrap_form'
 gem 'bcrypt-ruby'
-gem 'fabrication'
-gem 'faker'
 
 group :development do
   gem 'sqlite3'
@@ -28,6 +26,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
   gem 'pry'
   gem 'pry-nav'
+  gem 'fabrication'
+  gem 'faker'
 end
 
 group :production do
