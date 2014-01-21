@@ -21,7 +21,6 @@ describe UsersController do
 			it "redirects to the sign in page" do
 			  expect(response).to redirect_to sign_in_path
 			end
-
 	  end
 
 	  context "with invalid input" do
@@ -39,8 +38,27 @@ describe UsersController do
 		  it "sets @user" do 
 		  	expect(assigns(:user)).to be_instance_of(User)
 		  end
-
 	  end
+
+	  context "sending emails" do 
+	  	after { ActionMailer::Base.deliveries.clear }
+
+	  	it "sends out an email to the user with valid inputs" do
+	  		post :create, user: { email: "jack@example.com", password: "password", full_name: "Jack Collins" }
+	  		expect(ActionMailer::Base.deliveries.last.to).to eq(['jack@example.com'])
+	  	end
+
+	  	it "sends out an email containing the user's name with valid inputs" do
+	  		post :create, user: { email: "jack@example.com", password: "password", full_name: "Jack Collins" }
+	  		expect(ActionMailer::Base.deliveries.last.body).to include("Jack Collins")
+	  	end
+
+	  	it "does not send out an email with invalid inputs" do
+	  		post :create, user: { email: "jack@example.com" }
+	  		expect(ActionMailer::Base.deliveries).to be_empty
+	  	end
+	  end
+
 	end
 
 	describe "GET show" do
