@@ -1,5 +1,5 @@
 require 'spec_helper'
 
 describe User do
-   it {has_many(:queue_items)}
+   it {should have_many(:queue_items)}
 end

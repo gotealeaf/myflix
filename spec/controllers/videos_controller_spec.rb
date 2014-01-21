@@ -25,16 +25,12 @@ describe VideosController do
       it "sets the @reviews variable" do
         review1 = Fabricate(:review, video: test_video)
         review2 = Fabricate(:review, video: test_video)
+
         assigns(:reviews).should match_array([review1, review2])
       end
     end
 
-    context "for someone submitting a review" do
-      let(:test_review) = Review.build(rating: 3, content: "Wonderful Movie")
-      it "sets the @reveiw variable" do
-        expect(assigns(:video)).to eq
-      end
-    end
+    
 
 
 
