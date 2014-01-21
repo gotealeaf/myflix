@@ -2,51 +2,71 @@ require 'spec_helper'
 
 describe SessionsController do
   describe 'GET new' do
-    it "creates a new User object" do
-      get :new
-      expect(assigns(:user)).to be_new_record
-      expect(assigns(:user)).to be_instance_of User
-    end
-    it "renders the Sign In page" do
+    it "renders the Sign In page for unauthenticated users" do
       get :new
       expect(response).to render_template :new
+    end
+    it "redirects to the home page for authenticated users" do
+      session[:user_id] = Fabricate(:user).id
+      get :new
+      expect(response).to redirect_to videos_path
     end
   end
 
   describe 'POST create' do
-    it "does not create a new session if the email is invalid" do
-      my_user = User.create(email: 'jlevinger@jtonedesigns.com', password: 'joelevinger', full_name: 'Joe Levinger')
-      post :create, user: {email: 'joe@example.com', password: 'joelevinger'}
-      expect(session[:user_id]).to eq nil
+    before do
+      alice = Fabricate(:user)
+      post :create, email: alice.email, password: alice.password
     end
-    it "does not create a new session if the password is invalid" do
-      my_user = User.create(email: 'jlevinger@jtonedesigns.com', password: 'joelevinger', full_name: 'Joe Levinger')
-      post :create, user: {email: 'jlevinger@jtonedesigns.com', password: 'abc'}
-      expect(session[:user_id]).to eq nil
+    context "with valid credentials" do
+      it "creates a new session" do
+        alice = Fabricate(:user)
+        post :create, email: alice.email, password: alice.password
+        expect(session[:user_id]).to eq(alice.id)
+      end
+      it "redirects to the root" do
+        expect(response).to redirect_to root_path
+      end
+      it "sets the notice" do
+        expect(flash[:notice]).not_to be_blank
+      end
     end
-    it "renders new again if anything is invalid" do
-      my_user = User.create(email: 'jlevinger@jtonedesigns.com', password: 'joelevinger', full_name: 'Joe Levinger')
-      post :create, user: {email: 'jlevinger@jtonedesigns.com', password: 'abc'}
-      expect(response).to render_template :new
-    end
-    it "creates a new session if valid" do
-      my_user = User.create(email: 'jlevinger@jtonedesigns.com', password: 'joelevinger', full_name: 'Joe Levinger')
-      post :create, user: {email: 'jlevinger@jtonedesigns.com', password: 'joelevinger'}
-      expect(session[:user_id]).to eq my_user.id
-    end
-    it "redirects to the root if valid" do
-      my_user = User.create(email: 'jlevinger@jtonedesigns.com', password: 'joelevinger', full_name: 'Joe Levinger')
-      post :create, user: {email: 'jlevinger@jtonedesigns.com', password: 'joelevinger'}
-      expect(response).to redirect_to root_path
+    context "with invalid credentials" do
+      before do
+        session[:user_id] = nil
+        alice = Fabricate(:user)
+        post :create, email: alice.email, password: alice.password + 'asdfasdf'
+      end
+      it "does not create a new session because of invalid email" do
+        alice = Fabricate(:user)
+        post :create, email: alice.email + '.com', password: alice.password
+        expect(session[:user_id]).to be_nil
+      end
+      it "does not create a new session because of invalid password" do
+        expect(session[:user_id]).to be_nil
+      end
+      it "renders the new template" do
+        expect(response).to render_template :new
+      end
+      it "sets the error message" do
+        expect(flash[:error]).not_to be_blank
+      end
     end
   end
 
   describe 'GET destroy' do
-    it "makes the session user id nil" do
-      my_user = User.create(email: 'jlevinger@jtonedesigns.com', password: 'joelevinger', full_name: 'Joe Levinger')
-      post :create, user: {email: 'jlevinger@jtonedesigns.com', password: 'joelevinger'}
+    before do
+      session[:user_id] = Fabricate(:user).id
       get :destroy
-      expect(session[:user_id]).to eq nil
+    end
+    it "makes the session user id nil" do
+      expect(session[:user_id]).to be_nil
+    end
+    it "redirects to the root path" do
+      expect(response).to redirect_to root_path
+    end
+    it "sets the notice" do
+      expect(flash[:notice]).not_to be_blank
     end
   end
 end

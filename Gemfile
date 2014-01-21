@@ -26,6 +26,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
   gem 'pry'
   gem 'pry-nav'
+  gem 'fabrication'
+  gem 'faker'
 end
 
 group :production do

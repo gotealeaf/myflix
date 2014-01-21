@@ -8,12 +8,22 @@
 
 Video.delete_all
 Category.delete_all
+User.delete_all
+Review.delete_all
 
 c1 = Category.create(name: "Biographies")
 c2 = Category.create(name: "Political Dramas")
 c3 = Category.create(name: "Romantic Dramas")
 
-Video.create(title: "Gandhi", description: "This awe-inspiring biopic about Mahatma Gandhi -- the diminutive lawyer who stood up against British rule in India and became an international symbol of nonviolence and understanding -- brilliantly underscores the difference one person can make.", small_cover_url: 'tmp/gandhi.jpg', large_cover_url: 'tmp/gandhi_large.jpg', category: c1)
+user_1 = User.create(email: "jlevinger@jtonedesigns.com", password: "joelevinger", full_name: "Joe Levinger")
+user_2 = User.create(email: "steve@gotealeaf.com", password: "steveturczyn", full_name: "Steve Turczyn")
+user_3 = User.create(email: "lisamurphy0205@earthlink.net", password: "lisamurphy", full_name: "Lisa Murphy")
+
+gandhi = Video.create(title: "Gandhi", description: "This awe-inspiring biopic about Mahatma Gandhi -- the diminutive lawyer who stood up against British rule in India and became an international symbol of nonviolence and understanding -- brilliantly underscores the difference one person can make.", small_cover_url: 'tmp/gandhi.jpg', large_cover_url: 'tmp/gandhi_large.jpg', category: c1)
+Review.create(body: "No doubt one of the very best historical and biographical films ever made. Gandhi, as portrayed by Ben Kingsley, is completely accessible and lovable. The man had important things to say, and he did so in little ways. Don't worry, this is not a preachy film, unless you consider a film about someone who will go to any lengths to live by his basic principles, preachy. Mohandas K. Gandhi is an inspiration to all of us, especially those of us who call ourselves Christian and see how this little half-clothed man, a Hindu, practiced the teachings of Jesus more than most of us. No wonder Martin Luther King was inspired by his teachings and life. If you do not see this DVD (with excellent cinematography and music, by the way), you are depriving yourself of a most extraordinary experience. I'm serious!", rating: 5, video: gandhi, user: user_1)
+Review.create(body: "I’m glad I saw Gandhi. This movie gave me insight into the life of Mahatma Gandhi that I didn’t have before. It is also very interesting to see Ben Kingsley completely disappear into the role of this iconic historical figure. However, like many other biopics, the quest to cover a person’s whole life tends to drag when you put it on the screen. It’s an educational film. It’s a well-made film. But it’s not a film I would choose to watch again.", rating: 3, video: gandhi, user: user_2)
+Review.create(body: "Amazing, amazing movie! I know that this is an older film, but it was well casted and the overall plot was great. I liked that there really wasn't any cursing or sexuality in the film, unlike so many modern films. I give this movie an \"A.\"", rating: 5, video: gandhi, user: user_3)
+
 Video.create(title: "The Iron Lady", description: "Meryl Streep provides a subtle and nuanced portrait of Margaret Thatcher, the first female prime minister of Britain, whose political career and determination changed the rules that had limited women's opportunities for leadership.", small_cover_url: 'tmp/ironlady.jpg', large_cover_url: 'tmp/ironlady_large.jpg', category: c1)
 Video.create(title: "Lincoln", description: "Director Steven Spielberg takes on the towering legacy of Abraham Lincoln, focusing on his stewardship of the Union during the Civil War years. The biographical saga also reveals the conflicts within Lincoln's cabinet regarding the war and abolition.", small_cover_url: 'tmp/lincoln.jpg', large_cover_url: 'tmp/lincoln_large.jpg', category: c1)
 Video.create(title: "John Adams", description: "Paul Giamatti shines in the title role of this epic Emmy and Golden Globe winner that recounts the life of founding father John Adams as revolutionary leader, America's first ambassador to England, the first vice president and the second president. The iconic cast of characters includes Abigail Adams (Laura Linney), George Washington (David Morse), Thomas Jefferson (Stephen Dillane) and Benjamin Franklin (Tom Wilkinson).", small_cover_url: 'tmp/johnadams.jpg', large_cover_url: 'tmp/johnadams_large.jpg', category: c1)
@@ -45,3 +55,4 @@ Video.create(title: "Les Misérables", description: "The musical version of Vict
 Video.create(title: "Pride & Prejudice", description: "In this retelling of Jane Austen's novel set in 19th-century England, Mrs. Bennet is all atwitter in hopes of marrying her daughters to prosperous gentlemen callers, especially when a wealthy bachelor moves nearby.", small_cover_url: 'tmp/prideprejudice.jpg', large_cover_url: 'tmp/prideprejudice_large.jpg', category: c3)
 Video.create(title: "Triston & Isolde", description: "When gallant English knight Tristan wins the love of beautiful Isolde -- the daughter of the Irish king -- soon after the fall of the Roman Empire, their liaison threatens to destroy the uneasy truce between their respective nations.", small_cover_url: 'tmp/tristanisolde.jpg', large_cover_url: 'tmp/tristanisolde_large.jpg', category: c3)
 Video.create(title: "Chocolat", description: "A single mother and her young daughter move into a peaceful French village and open a chocolate shop during the height of Lent. At first, the shop's rich, sensuous desserts scandalize the town. But the villagers soon learn to savor the sweetness.", small_cover_url: 'tmp/chocolat.jpg', large_cover_url: 'tmp/chocolat_large.jpg', category: c3)
+
