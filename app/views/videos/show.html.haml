@@ -26,7 +26,8 @@
         %fieldset
           .form-group
             %label Rate this video
-            =f.select :rating, options_for_select((1..5).to_a.reverse.map {|n| [pluralize(n, "Star")]})
+
+            =f.select :rating, options_for_video_rating(@review.rating), include_blank: true
           .form-group
             %label Write Review
             <br />

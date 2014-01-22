@@ -96,10 +96,10 @@ describe QueueItemsController  do
       end
      
       context "having existing queue items with position," do
-        # let(:video) { Fabricate(:video) }
-        # let(:queue_item1) {Fabricate(:queue_item, user: alice, position: 1, video: video)}
-        # let(:queue_item2) {Fabricate(:queue_item, user: alice, position: 2, video: video)}
-
+          # let( :video)  {Fabricate(:video)}
+          # let(:queue_item1) { Fabricate(:queue_item, user: alice, position: 1, video: video)}
+          # let(:queue_item2) {Fabricate(:queue_item, user: alice, position: 2, video: video)}
+          
         it "should update position" do
           video = Fabricate(:video)
           queue_item1 = Fabricate(:queue_item, user: alice, position: 1, video: video)
@@ -138,7 +138,7 @@ describe QueueItemsController  do
         end
       end
 
-        context "with invalid inputs" do
+        context "with invalid inputs," do
         
         let(:video) { Fabricate(:video) }
         let(:alice) { Fabricate(:user) }
@@ -149,12 +149,12 @@ describe QueueItemsController  do
             session[:user_id] = alice.id
         end
         
-        it "redirects to the my queue page" do
+        it "should redirect to the my queue page" do
           post :update_queue, queue_items: [{id: queue_item1.id, position: 3.4}, {id: queue_item2.id, position: 2}]
           expect(response).to redirect_to my_queue_path
         end
         
-        it "sets the flash error message" do
+        it "should set the flash error message" do
           post :update_queue, queue_items: [{id: queue_item1.id, position: 3.4}, {id: queue_item2.id, position: 2.7}]
           expect(flash[:error]).to be_present
         end
