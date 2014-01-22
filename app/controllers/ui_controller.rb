@@ -1,10 +1,10 @@
 class UiController < ApplicationController
-  before_filter do
-    redirect_to :root if Rails.env.production?
-  end
+ protect_from_forgery with: :exception
 
-  layout "application"
+ before_filter do
+   redirect_to :root if Rails.env.production?
+ end
 
-  def index
-  end
+ layout "application"
+
 end

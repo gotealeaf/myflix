@@ -1,0 +1,13 @@
+%article.video
+  .container
+    .row
+      %p=@videos.category_id
+      .video_large_cover.col-sm-7.col-sm-offset-1
+        %img(src="#{@videos.cover_image_url}")
+      .video_info.col-sm-3
+        %header
+          %h3 
+            =@videos.name
+          %span Rating: 4.5/5.0
+        %p
+          =@videos.description 
