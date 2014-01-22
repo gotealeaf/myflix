@@ -12,6 +12,7 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'fabrication'
 gem 'faker'
 gem 'unicorn'
+gem 'sidekiq'
 
 
 group :development do
