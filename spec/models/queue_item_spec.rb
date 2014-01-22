@@ -4,6 +4,7 @@ describe QueueItem do
   
   it {should belong_to(:user)}
   it {should belong_to(:video)}
+  it {should validate_numericality_of(:position).only_integer}
 
   describe '#video_title' do
     it "returns the title of a video" do
@@ -29,6 +30,36 @@ describe QueueItem do
 
     end
   end
+
+  describe '#rating=' do
+    it "should update an existing rating" do
+      user = Fabricate(:user)
+      video = Fabricate(:video)
+      review = Fabricate(:review, user: user, video: video, rating: 3)
+      queue_item = Fabricate(:queue_item, user: user, video: video)
+      queue_item.rating = 5
+     expect(Review.first.rating).to eq(5)
+   end
+
+    it "should clear an existing rating"  do
+     user = Fabricate(:user)
+      video = Fabricate(:video)
+      review = Fabricate(:review, user: user, video: video, rating: 3)
+      queue_item = Fabricate(:queue_item, user: user, video: video)
+      queue_item.rating = nil
+      expect(Review.first.rating).to  eq(nil)
+    end
+    it "should create a new rating where it did not exist" do
+      user = Fabricate(:user)
+      video = Fabricate(:video)
+      queue_item = Fabricate(:queue_item, user: user, video: video)
+      queue_item.rating = 5
+      expect(Review.first.rating).to  eq(5)
+    end
+  end
+
+
+
 
 
     describe '#category' do 
