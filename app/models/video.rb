@@ -11,6 +11,6 @@ class Video < ActiveRecord::Base
   end
 
   def average_rate(video)
-    video.reviews.average('rate')
+    video.reviews.average('rate').round(1) if video.nil?
   end
 end
