@@ -14,14 +14,12 @@ describe Video do
   end
 
   it 'requires a title' do
-    video = Video.new(description: 'Oscar-nominated Joe Mama leads this action packed blockbuster!')
-    video.save
-    expect(video.errors.full_messages.first).to eq("Title can't be blank")
+    Video.create(description: 'Oscar-nominated Joe Mama leads this action packed blockbuster!')
+    expect(Video.count).to eq(0)
   end
 
   it 'requires a description' do
-    video = Video.new(title: 'Bones')
-    video.save
-    expect(video.errors.full_messages.first).to eq("Description can't be blank")
+    Video.create(title: 'Bones')
+    expect(Video.count).to eq(0)
   end
 end

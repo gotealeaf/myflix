@@ -15,8 +15,7 @@ describe Category do
   end
 
   it 'requires a name' do
-    category = Category.new()
-    category.save
-    expect(category.errors.full_messages.first).to eq("Name can't be blank")
+    Category.create()
+    expect(Category.count).to eq(0)
   end
 end
