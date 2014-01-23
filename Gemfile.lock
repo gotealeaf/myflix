@@ -27,11 +27,15 @@ GEM
       tzinfo (~> 0.3.37)
     arel (4.0.1)
     atomic (1.1.14)
+    bcrypt-ruby (3.1.2)
     better_errors (1.0.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap-form (3.0.0)
+      actionpack (> 3.2)
+      railties (> 3.2)
     bootstrap-sass (3.0.2.1)
       sass (~> 3.2)
     builder (3.1.4)
@@ -149,8 +153,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt-ruby
   better_errors
   binding_of_caller
+  bootstrap-form
   bootstrap-sass
   coffee-rails
   haml-rails
