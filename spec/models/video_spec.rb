@@ -6,4 +6,10 @@ describe Video do
     video.save
     Video.first.title.should == 'A video'
   end
+
+  it 'can belong to a category' do
+    drama = Category.create(name: 'drama')
+    video = Video.create(title: 'A video', description: 'A really long description', category: drama)
+    expect(Video.first.category).to eq(drama)
+  end
 end
