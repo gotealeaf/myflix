@@ -1,0 +1,8 @@
+%article.video_category
+	- @results.each do |video|
+		.video.col-sm-2
+			%a{href: video_path(video.id)}
+				%img{src: video.small_cover}
+
+
+	
