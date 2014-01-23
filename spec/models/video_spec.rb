@@ -7,19 +7,7 @@ describe Video do
     Video.first.title.should == 'A video'
   end
 
-  it 'can belong to a category' do
-    drama = Category.create(name: 'drama')
-    video = Video.create(title: 'A video', description: 'A really long description', category: drama)
-    expect(Video.first.category).to eq(drama)
-  end
-
-  it 'requires a title' do
-    Video.create(description: 'Oscar-nominated Joe Mama leads this action packed blockbuster!')
-    expect(Video.count).to eq(0)
-  end
-
-  it 'requires a description' do
-    Video.create(title: 'Bones')
-    expect(Video.count).to eq(0)
-  end
+  it { should belong_to(:category) }
+  it { should validate_presence_of(:title) }
+  it { should validate_presence_of(:description) }
 end

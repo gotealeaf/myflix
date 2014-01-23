@@ -7,15 +7,6 @@ describe Category do
     expect(Category.first).to eq(category)
   end
 
-  it 'can have many videos' do
-    drama = Category.create(name: 'drama')
-    Video.create(title: 'First video', description: 'Hilarious!', category: drama)
-    Video.create(title: 'Second video', description: 'So sad :-(', category: drama)
-    expect(drama.videos.count).to eq(2)
-  end
-
-  it 'requires a name' do
-    Category.create()
-    expect(Category.count).to eq(0)
-  end
+  it { should have_many(:videos) }
+  it { should validate_presence_of(:name) }
 end
