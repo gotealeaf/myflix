@@ -83,48 +83,43 @@ describe QueueItemsController  do
 
 
     context "having existing queue items with position" do
-    
+        set_queue_of_2
        it "should redirect to my_queue page" do
         post :update_queue
         expect(response).to redirect_to my_queue_path
       end
 
       it "should update position" do
-        video = Fabricate(:video)
-        queue_item1 = Fabricate(:queue_item, user: alice, position: 1, video: video)
-        queue_item2 = Fabricate(:queue_item, user: alice, position: 2, video: video)
         post :update_queue, queue_items: [{id: queue_item1.id, position: 3}]
         expect(queue_item1.reload.position).not_to eq(1)
       end
 
       it "should reorder the items by ascending position" do
-        video = Fabricate(:video)
-        queue_item1 = Fabricate(:queue_item, user: current_user, position: 1, video: video)
-        queue_item2 = Fabricate(:queue_item, user: current_user, position: 2, video: video)
         post :update_queue, queue_items: [{id: queue_item1.id, position: 3}]
         expect(current_user.queue_items.all).to eq([queue_item2,queue_item1])
 
       end
 
       it "should normalize the values to be 1,2,3 etc" do
-        video = Fabricate(:video)
-        queue_item1 = Fabricate(:queue_item, user: current_user, position: 3, video: video)
-        queue_item2 = Fabricate(:queue_item, user: current_user, position: 5, video: video)
-        post :update_queue, queue_items: [{id: queue_item1.id, position: 7}]
+        post :update_queue, queue_items: [{id: queue_item1.id, position: 3}]
         expect(alice.queue_items.load.map(&:position)).to eq([1,2])
       end
     end
 
     context "with invalid inputs," do
+      set_queue_of_2
       
     
       it "should redirect to the my queue page" do
-        post :update_queue, queue_items: [{id: queue_item1.id, position: 3.4}, {id: queue_item2.id, position: 2}]
+        # queue_item1.position = 3.4
+        input_invalid_queue_position
+        # post :update_queue, queue_items: [{id: queue_item1.id, position: 3.4}, {id: queue_item2.id, position: 2}]
         expect(response).to redirect_to my_queue_path
       end
       
       it "should set the flash error message" do
-        post :update_queue, queue_items: [{id: queue_item1.id, position: 3.4}, {id: queue_item2.id, position: 2.7}]
+        # post :update_queue, queue_items: [{id: queue_item1.id, position: 3.4}, {id: queue_item2.id, position: 2.7}]
+        input_invalid_queue_position
         expect(flash[:error]).to be_present
       end
       
@@ -151,20 +146,13 @@ describe QueueItemsController  do
     it_behaves_like "requires sign in" do
       let(:action) {delete :destroy, id: 3}
     end
-   context "with unauthenticated user" do
-      it "should redirect to the sign_in page" do
-        clear_session
-        delete :destroy, id: 3
-        expect(response).to redirect_to sign_in_path
-      end
-    end
    
     context "where there is an existing queue_item for the signed user" do 
       set_queue_of_2
        before {delete :destroy, id: queue_item1.id}
 
       it "should remove the item from the users queue" do
-        expect(QueueItem.count).to eq(0)
+        expect(QueueItem.all).to eq([queue_item2])
       end
 
       it "should redirect to the my_queue page" do
