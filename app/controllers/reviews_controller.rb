@@ -7,7 +7,7 @@ class ReviewsController < ApplicationController
     if @review.save
       redirect_to @video
     else
-      flash.now[:error] = @review.body == '' ? "Please write a review" : "You have already posted a review."
+      flash.now[:error] = @review.body.empty? ? "Please write a review" : "You have already posted a review."
       @reviews = @video.reviews.reload
       render 'videos/show'
     end
