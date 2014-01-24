@@ -8,6 +8,8 @@
           %h3= @video.title
           %span Rating: #{@video.average_rating}/5.0
         %p= @video.description
+        .actions
+          = button_to '+ My Queue', video_queue_items_path(@video), class: 'btn btn-default'
 
 %section.reviews.container
   .row
