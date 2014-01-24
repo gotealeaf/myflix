@@ -5,4 +5,6 @@ Myflix::Application.routes.draw do
 
   get '/home', to: 'videos#index'
   resources :videos, except: [:destroy]
+
+  get '/genre/:id', to: 'categories#show', as: 'category'
 end
