@@ -8,6 +8,8 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
+gem 'bcrypt-ruby'
+gem 'bootstrap_form'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
