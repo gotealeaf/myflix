@@ -13,6 +13,7 @@ gem 'bootstrap_form'
 gem 'fabrication'
 gem 'faker'
 
+
 group :development do
   gem 'sqlite3'
   gem 'pry'
@@ -32,5 +33,6 @@ group :test, :development do
 end
 
 group :test do
-  gem 'shoulda-matchers'
+  gem 'capybara' 
+  gem 'shoulda-matchers' 
 end
