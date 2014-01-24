@@ -45,5 +45,10 @@ describe Category do
       breaking_bad = Video.create(title: 'Breaking Bad', description: "Walter White 'kills' it", category: drama)
       expect(drama.recent_videos).to eq([breaking_bad, dexter, sons_of_anarchy])
     end
+
+    it 'returns an empty array if the category has no videos' do
+      drama = Category.create(name: 'drama')
+      expect(drama.recent_videos).to eq ([])
+    end
   end
 end
