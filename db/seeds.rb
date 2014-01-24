@@ -34,6 +34,17 @@ Video.create(title: 'Dexter - Dexter',
              category: drama
 )
 
+Video.create(title: 'Dexter - Crocodile',
+             description: 'As Dexter stalks his next victim, a drunk driver who is about to be acquitted for ' +
+                          'vehicular homicide that resulted in the death of a teenage boy, the Ice Truck Killer ' +
+                          'strikes again and later gets in touch with Dexter. Meanwhile, when a cop is found ' +
+                          'murdered, Dexter helps Doakes and Debra investigate a crime boss who they believe is ' +
+                          'responsible.',
+             small_cover_url: '/covers/dexter_small.jpg',
+             large_cover_url: '/covers/dexter_large.jpg',
+             category: drama
+)
+
 Video.create(title: 'Sons of Anarchy - Pilot',
              description: 'Jax begins to doubt the club after a string of lawlessness hits the town. Meanwhile, his ' +
                         'life also becomes unstable when he learns his druggy ex-wife has given birth to his son ' +
@@ -68,6 +79,15 @@ Video.create(title: 'Homeland - Pilot',
                         'Lewis) rescued after eight years as a POW in Afghanistan returns home a war hero. But a ' +
                         'CIA operative (Claire Danes) suspects he may actually be an enemy agent with a connection ' +
                         'to Al Qaeda and part of a plan to commit a terrorist act on U.S. soil.',
+             small_cover_url: '/covers/homeland_small.jpg',
+             large_cover_url: '/covers/homeland_large.jpg',
+             category: drama
+)
+
+Video.create(title: 'Homeland - Grace',
+             description: 'Carrie receives a new piece of electronic evidence from an undercover agent while staying ' +
+                          "glued to the surveillance footage of life in Brody's home, which reveals a man struggling " +
+                          'with his traumatic memories and resisting pressure to become a media hero.',
              small_cover_url: '/covers/homeland_small.jpg',
              large_cover_url: '/covers/homeland_large.jpg',
              category: drama
