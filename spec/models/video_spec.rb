@@ -42,8 +42,8 @@ describe Video do
     end
     it "should return the average if reviews exist" do
       alice = Fabricate(:video)
-      Fabricate(:review, rating: 5, video: alice)
-      Fabricate(:review, rating: 2, video: alice)
+      Fabricate(:review, rating: 5, video: alice, user: Fabricate(:user))
+      Fabricate(:review, rating: 2, video: alice, user: Fabricate(:user))
       expect(alice.average_rating).to eq 3.5
     end
   end
@@ -51,8 +51,8 @@ describe Video do
   describe "reviews" do
     it "should return reviews in reverse chronological order" do
       alice = Fabricate(:video)
-      review1 = Fabricate(:review, rating: 5, created_at: 1.day.ago, video: alice)
-      review2 = Fabricate(:review, rating: 2, created_at: 0.days.ago, video: alice)
+      review1 = Fabricate(:review, rating: 5, created_at: 1.day.ago, video: alice, user: Fabricate(:user))
+      review2 = Fabricate(:review, rating: 2, created_at: 0.days.ago, video: alice, user: Fabricate(:user))
       expect(alice.reviews.first).to eq review2
     end
   end
