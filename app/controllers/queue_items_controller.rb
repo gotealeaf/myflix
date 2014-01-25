@@ -1,6 +1,12 @@
 class QueueItemsController < ApplicationController
  
+   
+
+  helper_method :already_queued?
+
    before_action :require_user
+
+
 
   def index
     @queue_items = current_user.queue_items
@@ -32,11 +38,13 @@ class QueueItemsController < ApplicationController
     redirect_to my_queue_path
   end
 
-  private  
-
   def already_queued?(video)
     current_user.queue_items.map(&:video).include?(video)
   end
+
+  private  
+
+  
 
   def last_place
     current_user.queue_items.count + 1

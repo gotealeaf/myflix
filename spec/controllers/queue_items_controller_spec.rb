@@ -2,12 +2,7 @@ require 'spec_helper'
 
 describe QueueItemsController  do
 
-    set_user_and_session
-
-    it "should recognize the current user" do
-        expect(User.first).to eq(current_user)
-     end 
-
+  set_user_and_session
 
   describe 'GET index' do
    
@@ -21,11 +16,8 @@ describe QueueItemsController  do
         get :index
         expect(assigns(:queue_items)).to match_array([queue_item1, queue_item2])
        end
-
-
-
     end
-  end 
+  end #method
 
   describe 'POST create' do
 
@@ -72,21 +64,21 @@ describe QueueItemsController  do
           expect(QueueItem.last.position).to eq(2) 
         end
      end
-  end
+  end #method
 
   describe "POST update_queue" do
-     set_queue_of_2
+    set_queue_of_2
     
     it_behaves_like "requires sign in" do
       let(:action) {post :update_queue}
     end
 
-
     context "having existing queue items with position" do
-        set_queue_of_2
-       it "should redirect to my_queue page" do
-        post :update_queue
-        expect(response).to redirect_to my_queue_path
+      set_queue_of_2
+
+      it "should redirect to my_queue page" do
+         post :update_queue
+         expect(response).to redirect_to my_queue_path
       end
 
       it "should update position" do
@@ -102,9 +94,9 @@ describe QueueItemsController  do
 
       it "should normalize the values to be 1,2,3 etc" do
         post :update_queue, queue_items: [{id: queue_item1.id, position: 3}]
-        expect(alice.queue_items.load.map(&:position)).to eq([1,2])
+        expect(user1.queue_items.load.map(&:position)).to eq([1,2])
       end
-    end
+    end #context
 
     context "with invalid inputs," do
       set_queue_of_2
@@ -138,8 +130,8 @@ describe QueueItemsController  do
         post :update_queue, queue_items: [{id: queue_item1.id, position: 7}]
         expect(queue_item3.reload.position).to eq(1)
       end
-    end
-  end
+    end #context
+  end #method
 
   describe "DELETE destroy"  do
 
@@ -159,6 +151,19 @@ describe QueueItemsController  do
         expect(response).to redirect_to my_queue_path
       end
     end
-  end
-end
+  end #method
+
+
+  describe '#already_queued?' do
+
+    set_video(1)
+    set_queue_item1
+    
+    it "should return true if the video is in the queue" do
+    # expect(current_user.queue_items.map(&:video).include?(video1)).to eq(true)
+    expect(already_queued?(video1)).to eq(true)
+    end
+  end #method
+
+end  #class
 

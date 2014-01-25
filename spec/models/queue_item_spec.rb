@@ -2,12 +2,24 @@ require 'spec_helper'
 
 describe QueueItem do
   set_user1
-  set_category1
-  set_video1
+  set_category(1)
+  set_video(1)
   set_review1
   set_queue_item1
   
-  
+
+#   context "more founcitons tests" do
+#         set_video(3)
+#     it "should test my functions" do
+    
+#     # video3.update_attributes(category: category1)
+#     # category1.videos << video1
+#     # expect(Category.first.videos.first).to eq(video1)
+#     expect(video3.category).to eq(category1)
+#     end
+# end
+
+
   it {should belong_to(:user)}
   it {should belong_to(:video)}
   it {should validate_numericality_of(:position).only_integer}
