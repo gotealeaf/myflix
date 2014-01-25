@@ -7,6 +7,12 @@ Myflix::Application.routes.draw do
   get 'my_queue', to: 'queue_items#index'
   get 'ui(/:action)', controller: 'ui'
 
+  get 'forgot_password', to: 'forgot_passwords#new'
+  get 'forgot_password_confirmation', to: 'forgot_passwords#confirm'
+  resources :forgot_passwords, only: [:create]
+  get 'expired_token', to: 'password_resets#expired_token'
+  resources :password_resets, only: [:show, :create]
+
   resources :videos, only: [:show, :index] do
     collection do
     	post 'search', to: 'videos#search'
