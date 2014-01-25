@@ -1,0 +1,7 @@
+%article.video_category
+  %header
+    %h1.test Results
+  .videos.row
+- @results.each do |video|
+  .video.col-sm-2
+    %img(src="/tmp/#{video.small_thumb}.jpg")

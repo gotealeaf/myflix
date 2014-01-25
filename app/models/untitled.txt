@@ -1,0 +1,26 @@
+checkboxes for English, French, SM, Newsletter + timestamps for OptIn + OptOut
+
+describe "Accurately represent permission to email in x language" do
+  describe "if x is check send email" do
+  
+    ian = User(english:checked)
+    beth = User(english:checked, french:checked)
+    sarah = user(french:checked)
+    chris = user()
+    
+    if "English" do
+      expect(ian.send_english_email).to be_true
+      expect(chris.send_english_email).to be_false
+      expect(sarah.send_english_email).to be_false
+      expect(beth.send_english_email).to be_true?
+    end
+    
+    if "French" do
+      expect(ian.send_french_email).to be_false
+      expect(chris.send_french_email).to be_false
+      expect(sarah.send_french_email).to be_true
+      expect(beth.send_french_email).to be_true?
+    end
+    
+  end
+end

@@ -8,6 +8,10 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
+gem 'bootstrap_form'
+gem 'bcrypt-ruby'
+gem 'fabrication'
+gem 'faker'
 
 group :development do
   gem 'sqlite3'
@@ -23,3 +27,11 @@ group :production do
   gem 'rails_12factor'
 end
 
+group :test do
+  gem 'shoulda-matchers'
+  gem 'capybara'
+end
+
+group :test, :development do
+  gem 'rspec-rails'
+end
