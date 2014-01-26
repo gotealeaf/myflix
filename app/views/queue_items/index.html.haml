@@ -19,7 +19,7 @@
                 %tr
                   = hidden_field_tag "queue_items[][id]", queue_item.id
                   %td
-                    = text_field_tag "queue_items[][position]", queue_item.position, class: 'form-control' 
+                    = text_field_tag "queue_items[][position]", queue_item.position, class: 'form-control', data: { video_id: queue_item.video.id }
                   %td
                     = link_to queue_item.video_title, queue_item.video 
                   %td
