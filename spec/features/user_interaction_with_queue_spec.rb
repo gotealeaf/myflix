@@ -79,29 +79,7 @@ feature "user_interaction_with_queue" do
       expect(find(:xpath, "//tr[contains(.,'#{video3.title}')]//input[@type='text']").value).to eq("3")    
      
 
-        
-
-
-
-
-
-
-# feature "user interacts with queue" do
-#   scenario "add and reorder queue" do
-#     movie = Fabricate(:category, name: "movie")
-#     monk = Fabricate(:video, title: 'Monk', category: movie)
-#     mib = Fabricate(:video, title: 'MIB', category: movie)
-#     batman = Fabricate(:video, title: 'Batman', category: movie)
-
-#     sign_in
-
-#     find("a[href='/videos/1']").click
-#      page.should have_content "Monk"
-    
-    # add_video_to_queue(monk)
-    # expect_video_to_be_in_queue(monk)
-    # visit video_path(monk)
-    # expect_link_not_to_be_seen("+ My Queue")
+     
 
 
 

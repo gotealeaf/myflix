@@ -1,4 +1,4 @@
-requre 'spec_helper'
+require 'spec_helper'
 
 feature "user_sign_in" do
   scenario "user enters email and password" do

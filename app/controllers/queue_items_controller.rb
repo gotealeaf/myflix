@@ -2,10 +2,11 @@ class QueueItemsController < ApplicationController
  
    
 
-  helper_method :already_queued?
+ 
 
    before_action :require_user
 
+   helper_method :already_queued?
 
 
   def index
@@ -42,6 +43,7 @@ class QueueItemsController < ApplicationController
     current_user.queue_items.map(&:video).include?(video)
   end
 
+ 
   private  
 
   
