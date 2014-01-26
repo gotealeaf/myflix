@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe SessionsController do
+
   describe "GET new" do
     it "redirects valid users to home page" do
       session[:user_id] = Fabricate(:user).id

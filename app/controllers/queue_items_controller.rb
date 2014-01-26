@@ -1,6 +1,13 @@
 class QueueItemsController < ApplicationController
  
+   
+
+ 
+
    before_action :require_user
+
+   helper_method :already_queued?
+
 
   def index
     @queue_items = current_user.queue_items
@@ -32,11 +39,19 @@ class QueueItemsController < ApplicationController
     redirect_to my_queue_path
   end
 
+  def already_queued?(video)
+    # original
+    # current_user.queue_items.map(&:video).include?(video)
+    # refactored to user model
+   # current_user.queued_video_previously?(video)
+   #use pluck method
+   current_user.queue_items.pluck(:video_id).include?(video.id)
+  end
+
+ 
   private  
 
-  def already_queued?(video)
-    current_user.queue_items.map(&:video).include?(video)
-  end
+  
 
   def last_place
     current_user.queue_items.count + 1
@@ -58,6 +73,14 @@ class QueueItemsController < ApplicationController
       end
     end
   end
+
+  private
+  # def already_queued?(video)
+  #   current_user.queue_items.map(&:video).include?(video)
+  # end
+
+
+
 
 end
   

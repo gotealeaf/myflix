@@ -20,7 +20,10 @@
                 =hidden_field_tag 'queue_items[][id]', queue_item.id
                 %tr
                   %td
-                    = text_field_tag 'queue_items[][position]', queue_item.position
+                    / two selecctors and xpath used in capybara tests for illustration
+                    = text_field_tag 'queue_items[][position]', queue_item.position, id: "video_#{queue_item.video.id}", data: {video_id: queue_item.video.id}
+
+                  
 
                   %td
                     = link_to queue_item.video_title, video_path(queue_item.video)
