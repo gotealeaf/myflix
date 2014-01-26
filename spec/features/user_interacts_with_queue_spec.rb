@@ -9,31 +9,40 @@ feature "User interacts with the queue" do
     transformers = Fabricate(:video, title: "Transformers", category: action)
 
     sign_in
-    find("a[href='/videos/#{ kungfu.id }']").click
-    page.should have_content(kungfu.title)
 
-    click_link "+ My Queue"
+    add_video_to_queue(kungfu)
+
     page.should have_content(kungfu.title)
 
     visit video_path(kungfu)
     page.should_not have_content("+ My Queue")
 
-    visit home_path
-    find("a[href='/videos/#{ panda.id }']").click
-    click_link "+ My Queue"
-    
-    visit home_path
-    find("a[href='/videos/#{ transformers.id }']").click
-    click_link "+ My Queue"
+   
+    add_video_to_queue(panda)
+    add_video_to_queue(transformers)
 
-    find("input[data-video-id='#{ kungfu.id }']").set(3)
-    find("input[data-video-id='#{ panda.id }']").set(1)
-    find("input[data-video-id='#{ transformers.id }']").set(2)
+    set_video_position(kungfu, 3) 
+    set_video_position(panda, 1) 
+    set_video_position(transformers, 2) 
 
     click_button "Update Instant Queue"
 
-    expect(find("input[data-video-id='#{ panda.id }']").value).to eq("1")
-    expect(find("input[data-video-id='#{ transformers.id }']").value).to eq("2")
-    expect(find("input[data-video-id='#{ kungfu.id }']").value).to eq("3")
+    expect_video_position(panda, 1) 
+    expect_video_position(transformers, 2) 
+    expect_video_position(kungfu, 3) 
+  end
+  
+  def add_video_to_queue(video)
+    visit home_path
+    find("a[href='/videos/#{ video.id }']").click
+    click_link "+ My Queue"
+  end
+
+  def set_video_position(video, position)
+    find("input[data-video-id='#{ video.id }']").set(position.to_s)
+  end
+
+  def expect_video_position(video, position)
+    expect(find("input[data-video-id='#{ video.id }']").value).to eq(position.to_s)
   end
 end
