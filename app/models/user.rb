@@ -13,8 +13,15 @@ class User < ActiveRecord::Base
     end
   end
 
- def is_already_queued?(video)
+ def queued_video_previsouly?(video)
     queue_items.map(&:video).include?(video)
   end
+
+
+  def has_queued_video?(video_id)
+    queue_items.pluck(:video_id).include?(video_id)
+  end
+
+
 
 end

@@ -19,7 +19,7 @@
 
 
   def set_user_and_session
-    let(:user1) {Fabricate(:user)}
+    let!(:user1) {Fabricate(:user)}
     before {session[:user_id] = user1.id}
     
   end

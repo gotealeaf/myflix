@@ -40,7 +40,12 @@ class QueueItemsController < ApplicationController
   end
 
   def already_queued?(video)
-    current_user.queue_items.map(&:video).include?(video)
+    # original
+    # current_user.queue_items.map(&:video).include?(video)
+    # refactored to user model
+   # current_user.queued_video_previously?(video)
+   #use pluck method
+   current_user.queue_items.pluck(:video_id).include?(video.id)
   end
 
  
@@ -68,6 +73,14 @@ class QueueItemsController < ApplicationController
       end
     end
   end
+
+  private
+  # def already_queued?(video)
+  #   current_user.queue_items.map(&:video).include?(video)
+  # end
+
+
+
 
 end
   
