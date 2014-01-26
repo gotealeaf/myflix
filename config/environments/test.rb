@@ -3,6 +3,7 @@ Myflix::Application.configure do
 
   config.serve_static_assets = true
   config.static_cache_control = "public, max-age=3600"
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   config.eager_load = false
 

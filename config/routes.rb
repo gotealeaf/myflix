@@ -29,7 +29,7 @@ Myflix::Application.routes.draw do
 
   resources :sessions, only: [:create, :destroy]
 
-
+  resources :invitations, only: [:new, :create]
 end
 
 
