@@ -12,11 +12,10 @@ feature "User interacts with the queue" do
 
     add_video_to_queue(kungfu)
 
-    page.should have_content(kungfu.title)
+    expect_video_to_be_in_queue(kungfu) 
 
     visit video_path(kungfu)
-    page.should_not have_content("+ My Queue")
-
+    expect_link_not_to_be_seen("+ My Queue")
    
     add_video_to_queue(panda)
     add_video_to_queue(transformers)
@@ -25,11 +24,13 @@ feature "User interacts with the queue" do
     set_video_position(panda, 1) 
     set_video_position(transformers, 2) 
 
-    click_button "Update Instant Queue"
+    update_queue
 
     expect_video_position(panda, 1) 
     expect_video_position(transformers, 2) 
     expect_video_position(kungfu, 3) 
+
+
   end
   
   def add_video_to_queue(video)
@@ -44,5 +45,17 @@ feature "User interacts with the queue" do
 
   def expect_video_position(video, position)
     expect(find("input[data-video-id='#{ video.id }']").value).to eq(position.to_s)
+  end
+
+  def expect_video_to_be_in_queue(video)
+    page.should have_content(video.title)
+  end
+
+  def expect_link_not_to_be_seen(link_text)
+    page.should_not have_content(link_text)
+  end
+
+  def update_queue
+    click_button "Update Instant Queue"
   end
 end
