@@ -42,4 +42,12 @@ describe Video do
       expect(Video.search_by_title('')).to eq([])
     end
   end
+
+  describe '#average_rating' do
+    it 'returns a float with a maximum of three decimals' do
+      video = Fabricate(:video)
+      [3, 1, 4].each { |rating| Fabricate(:review, rating: rating, video: video) }
+      expect(video.average_rating).to eq(2.667)
+    end
+  end
 end
