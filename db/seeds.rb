@@ -45,7 +45,7 @@ Video.create(title: 'Dexter - Crocodile',
              category: drama
 )
 
-Video.create(title: 'Sons of Anarchy - Pilot',
+sons_of_anarchy = Video.create(title: 'Sons of Anarchy - Pilot',
              description: 'Jax begins to doubt the club after a string of lawlessness hits the town. Meanwhile, his ' +
                         'life also becomes unstable when he learns his druggy ex-wife has given birth to his son ' +
                         'prematurely.',
@@ -150,4 +150,8 @@ Video.create(title: 'American Dad - Pilot',
              category: comedy
 )
 
-User.create(email: 'user@email.com', password: 'password', full_name: 'Brandon Conway')
+brandon = User.create(email: 'user@email.com', password: 'password', full_name: 'Brandon Conway')
+
+Review.create(rating: 5, body: 'Amazing!', creator: brandon, video: sons_of_anarchy)
+
+Review.create(rating: 2, body: 'Blech!', creator: brandon, video: sons_of_anarchy)
