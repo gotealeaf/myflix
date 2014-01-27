@@ -149,3 +149,5 @@ Video.create(title: 'American Dad - Pilot',
              large_cover_url: '/covers/american_dad_large.jpg',
              category: comedy
 )
+
+User.create(email: 'user@email.com', password: 'password', full_name: 'Brandon Conway')
