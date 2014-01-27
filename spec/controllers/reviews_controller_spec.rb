@@ -31,6 +31,9 @@ describe ReviewsController do
         it 'creates review' do
           expect(Review.first.video).to eq(video)
         end
+
+        it 'expects review to be associated with signed in user' do
+          expect(Review.first.creator).to eq(user)
         end
 
         it 'redirects to show video path' do
