@@ -50,4 +50,14 @@ describe Video do
       expect(video.average_rating).to eq(2.7)
     end
   end
+
+  describe 'reviews relation' do
+    it 'returns reviews in reverse chronological order' do
+      video = Fabricate(:video)
+      first_review = Fabricate(:review, video: video, created_at: 3.days.ago)
+      second_review = Fabricate(:review, video: video, created_at: 2.days.ago)
+      third_review = Fabricate(:review, video: video, created_at: 1.days.ago)
+      expect(video.reviews).to eq([third_review, second_review, first_review])
+    end
+  end
 end
