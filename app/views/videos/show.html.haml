@@ -6,43 +6,41 @@
       .video_info.col-sm-3
         %header
           %h3 #{@video.title}
-          %span Rating: 4.5/5.0
+          - if @video.reviews.any?
+            %span Rating: #{@video.average_rating}/5.0
+          - else
+            %span Rating: No ratings yet, #{link_to 'rate it now', '#reviews'}.
         %p #{@video.description}
         .actions
           %a.btn.btn-primary(href="") Watch Now
           %a.btn.btn-default(href="") + My Queue
 
-%section.reviews.container
+%section.reviews.container#reviews
   .row
     .col-sm-10.col-sm-offset-1
-      %form
+      = form_for [@video, Review.new], url: review_video_path do |f|
         %fieldset
           .form-group
-            %label Rate this video
+            = f.label :rating, 'Rate this video'
             .row
               .col-sm-3
-                %select.form-control(name="")
-                  %option(value="5") 5 Stars
-                  %option(value="4") 4 Stars
-                  %option(value="3") 3 Stars
-                  %option(value="2") 2 Stars
-                  %option(value="1") 1 Star
+                = f.select :rating, [['5 Stars', 5], ['4 Stars', 4], ['3 Stars', 3], ['2 Stars', 2], ['1 Star', 1]], {}, class: 'form-control'
           .form-group
-            %label Write Review
+            = f.label :body, 'Write Review'
             .row
               .col-sm-8
-                %textarea.form-control(name="" rows="6")
+                = f.text_area :body, rows: 6, class: 'form-control'
         %fieldset.form-group.actions.clearfix
-          %input(type="submit" value="Submit" class="btn")
-          %a(href="") Cancel
+          = f.submit 'Submit', class: 'btn'
+          = link_to 'Cancel', video_path(@video)
       %header
-        %h3 User Reviews (253)
+        %h3 User Reviews (#{@video.reviews.count})
       %ul
-        - 8.times do
+        - @video.reviews.each do |review|
           %article.review
             %li.row
               .col-sm-2
-                %span Rating: 5 / 5
-                %p by <a href="">John A. Zoidberg</a>
+                %span Rating: #{review.rating} / 5
+                = link_to "#{review.creator.full_name}", user_path(review.creator)
               .col-sm-8
-                %p In my opinion, this is one of the best shows ever made. It's not only funny, but despite being so frequently silly, it's very smart as well. Math, science, history, all get referenced. The best parts of the show are the subtle things, those little things in the background or just on screen for a couple of seconds that just make you laugh out loud if you were paying attention. The writers even appear to have been thinking ahead, because if you play close attention to the first episode, you can see a literal shadow of an event revealed seasons later.
+                %p #{review.body}
