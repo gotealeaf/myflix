@@ -19,47 +19,49 @@ describe ReviewsController do
       end
     end
 
-    context 'with valid parameters' do
-      let(:user) { Fabricate(:user) }
-      let(:video) { Fabricate(:video) }
-      before do
-        session[:user_id] = user.id
-        post :create, video_id: video.id, review: Fabricate.attributes_for(:review)
+    context 'user logged in' do
+      context 'with valid parameters' do
+        let(:user) { Fabricate(:user) }
+        let(:video) { Fabricate(:video) }
+        before do
+          session[:user_id] = user.id
+          post :create, video_id: video.id, review: Fabricate.attributes_for(:review)
+        end
+
+        it 'creates review' do
+          expect(Review.count).to eq(1)
+        end
+
+        it 'redirects to show video path' do
+          expect(response).to redirect_to(video_path(video))
+        end
+
+        it 'sets success message' do
+          expect(flash[:success]).not_to be_blank
+        end
       end
 
-      it 'creates review' do
-        expect(Review.count).to eq(1)
-      end
+      context 'with invalid parameters' do
+        let(:user) { Fabricate(:user) }
+        let(:video) { Fabricate(:video) }
+        let(:review) { Fabricate.build(:review) }
+        before do
+          review['body']    = nil
+          session[:user_id] = user.id
+          post :create, video_id: video.id, review: review.attributes
+        end
 
-      it 'redirects to show video path' do
-        expect(response).to redirect_to(video_path(video))
-      end
+        it 'does not create review' do
+          expect(Review.count).to eq(0)
+        end
 
-      it 'sets success message' do
-        expect(flash[:success]).not_to be_blank
-      end
-    end
+        it 'redirects to show video path' do
+          expect(response).to redirect_to(video_path(video))
+        end
 
-    context 'with invalid parameters' do
-      let(:user) { Fabricate(:user) }
-      let(:video) { Fabricate(:video) }
-      let(:review) { Fabricate.build(:review) }
-      before do
-        review['body'] = nil
-        session[:user_id] = user.id
-        post :create, video_id: video.id, review: review.attributes
-      end
-
-      it 'does not create review' do
-        expect(Review.count).to eq(0)
-      end
-
-      it 'redirects to show video path' do
-        expect(response).to redirect_to(video_path(video))
-      end
-
-      it 'sets error message' do
-        expect(flash[:danger]).not_to be_blank
+        it 'sets error message' do
+          expect(flash[:danger]).not_to be_blank
+        end
       end
     end
   end
