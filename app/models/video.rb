@@ -12,7 +12,7 @@ class Video < ActiveRecord::Base
   end
 
   def average_rating
-     (total_reviews_rating / reviews_count).round(3)
+     (total_reviews_rating / reviews_count).round(1)
   end
 
   private

@@ -44,10 +44,10 @@ describe Video do
   end
 
   describe '#average_rating' do
-    it 'returns a float with a maximum of three decimals' do
+    it 'returns a float with a maximum of 1 number after the decimal' do
       video = Fabricate(:video)
       [3, 1, 4].each { |rating| Fabricate(:review, rating: rating, video: video) }
-      expect(video.average_rating).to eq(2.667)
+      expect(video.average_rating).to eq(2.7)
     end
   end
 end
