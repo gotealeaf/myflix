@@ -29,7 +29,8 @@ describe ReviewsController do
         end
 
         it 'creates review' do
-          expect(Review.count).to eq(1)
+          expect(Review.first.video).to eq(video)
+        end
         end
 
         it 'redirects to show video path' do
