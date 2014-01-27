@@ -1,13 +1,8 @@
 class QueueItemsController < ApplicationController
  
-   
-
- 
-
    before_action :require_user
 
    helper_method :already_queued?
-
 
   def index
     @queue_items = current_user.queue_items
@@ -21,7 +16,6 @@ class QueueItemsController < ApplicationController
 
   def update_queue
     unless params[:queue_items].nil?
-
       begin
         update_queue_items
         current_user.normalize_queue_item_positions
@@ -40,18 +34,10 @@ class QueueItemsController < ApplicationController
   end
 
   def already_queued?(video)
-    # original
-    # current_user.queue_items.map(&:video).include?(video)
-    # refactored to user model
-   # current_user.queued_video_previously?(video)
-   #use pluck method
-   current_user.queue_items.pluck(:video_id).include?(video.id)
+   current_user.has_queued_video?(video)
   end
-
  
   private  
-
-  
 
   def last_place
     current_user.queue_items.count + 1
@@ -59,9 +45,7 @@ class QueueItemsController < ApplicationController
 
   def queue_video(video)
     QueueItem.create(position: last_place, video: video, user: current_user)  
-   end 
-  
-  
+  end 
 
   def update_queue_items
     ActiveRecord::Base.transaction do
@@ -73,14 +57,5 @@ class QueueItemsController < ApplicationController
       end
     end
   end
-
-  private
-  # def already_queued?(video)
-  #   current_user.queue_items.map(&:video).include?(video)
-  # end
-
-
-
-
 end
   

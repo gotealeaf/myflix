@@ -1,26 +1,16 @@
+# This  file is just for documenting techniques of the course
 require 'spec_helper'
 
 feature "user_interaction_with_queue" do
   scenario "user adds, deletes, and reorders videos in the queue" do
-   category1 = Fabricate(:category, name: "Category1")
-   video1 = Fabricate(:video, title: "Video1", category: category1)
-   video2 = Fabricate(:video, title: "Video2",category: category1)
-   video3 = Fabricate(:video, title: "Video3",category: category1)
+    category1 = Fabricate(:category, name: "Category1")
+    video1 = Fabricate(:video, title: "Video1", category: category1)
+    video2 = Fabricate(:video, title: "Video2",category: category1)
+    video3 = Fabricate(:video, title: "Video3",category: category1)
 
-
-
-    sign_in
-    # require 'pry'; binding.pry
-    # require 'pry'; binding.pry
-    # find("a[href='/videos/1']").click
-   # click_link("video_1)
-     
-     # find('#video_1').click
-    # find(alt="Video1").click
-
-    find("a[href='#{video_path(video1)}']").click
-     page.should have_content video1.title
-
+      sign_in
+      find("a[href='#{video_path(video1)}']").click
+      page.should have_content video1.title
 
       #add a video to the queue
       click_link("+ My Queue")
@@ -50,7 +40,6 @@ feature "user_interaction_with_queue" do
       expect(find("#video_#{video3.id}").value).to eq("1")
 
       #find and set with data attribute
-
       find("input[data-video-id='#{video1.id}']").set(3)
       find("input[data-video-id='#{video2.id}']").set(1)
       find("input[data-video-id='#{video3.id}']").set(2)
@@ -61,14 +50,12 @@ feature "user_interaction_with_queue" do
 
 
       #find using xpath
-
       within(:xpath, "//tr[contains(.,'#{video1.title}')]") do
         fill_in 'queue_items[][position]', with: 6
       end
        within(:xpath, "//tr[contains(.,'#{video2.title}')]") do
         fill_in 'queue_items[][position]', with: 7
       end
-
       within(:xpath, "//tr[contains(.,'#{video3.title}')]") do
         fill_in 'queue_items[][position]', with: 8
       end
@@ -77,15 +64,5 @@ feature "user_interaction_with_queue" do
       expect(find(:xpath, "//tr[contains(.,'#{video1.title}')]//input[@type='text']").value).to eq("1")    
       expect(find(:xpath, "//tr[contains(.,'#{video2.title}')]//input[@type='text']").value).to eq("2")    
       expect(find(:xpath, "//tr[contains(.,'#{video3.title}')]//input[@type='text']").value).to eq("3")    
-     
-
-     
-
-
-
-
-
-
   end
-
 end

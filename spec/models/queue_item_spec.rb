@@ -1,24 +1,11 @@
 require 'spec_helper'
 
 describe QueueItem do
-  set_user1
-  set_category(1)
-  set_video(1)
-  set_review1
-  set_queue_item1
-  
-
-#   context "more founcitons tests" do
-#         set_video(3)
-#     it "should test my functions" do
-    
-#     # video3.update_attributes(category: category1)
-#     # category1.videos << video1
-#     # expect(Category.first.videos.first).to eq(video1)
-#     expect(video3.category).to eq(category1)
-#     end
-# end
-
+  let!(:user1) {Fabricate(:user)}
+  let!(:category1) {Fabricate(:category, name: "Category1")}
+  let!(:video1) {Fabricate(:video, title: "Video1")}
+  let!(:review1) {Fabricate(:review, rating: 1, video: video1, user: user1, content: 'Content1')}
+  let!(:queue_item1) { Fabricate(:queue_item, user: user1, position: 1, video: video1)}
 
   it {should belong_to(:user)}
   it {should belong_to(:video)}
@@ -31,11 +18,9 @@ describe QueueItem do
   end
 
   describe '#rating' do
-      
     it "returns the review rating for the movie if any" do
       expect(queue_item1.rating).to eq(1)
     end
-
     it "returns nil if there is no review"  do
       video3 = Fabricate(:video)
       queue_item3 = Fabricate(:queue_item, video: video3, user: user1 )
@@ -49,12 +34,10 @@ describe QueueItem do
       queue_item1.rating = 5
      expect(Review.first.rating).to eq(5)
    end
-
     it "should clear an existing rating"  do
       queue_item1.rating = nil
       expect(Review.first.rating).to  eq(nil)
     end
-
     it "should create a new rating where a review did not exist" do
       review1 = nil
       queue_item1.rating = 5
@@ -67,7 +50,6 @@ describe QueueItem do
       video1.category =  category1
       expect(queue_item1.category).to eq(category1)
     end    
-
   end
   describe '#category_name' do 
     it "should return the category name of the video" do      
@@ -75,5 +57,4 @@ describe QueueItem do
       expect(queue_item1.category.name).to eq('Category1')
     end    
   end
-
 end

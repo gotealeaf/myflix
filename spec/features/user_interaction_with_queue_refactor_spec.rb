@@ -4,12 +4,9 @@ feature "user_interaction_with_queue" do
   scenario "user adds, deletes, and reorders videos in the queue" do
     
    category1 = Fabricate(:category, name: "Category1")
-   # fabricate_video_for_category1(video1, category1)
    video1 = Fabricate(:video, title: "Video1", category: category1)
    video2 = Fabricate(:video, title: "Video2",category: category1)
    video3 = Fabricate(:video, title: "Video3",category: category1)
-
-    
     
     sign_in
     visit home_path
@@ -44,7 +41,6 @@ feature "user_interaction_with_queue" do
     change_rating(video1,nil)
     update_queue
     confirm_rating(video1,nil) 
-
   end
 end
 
@@ -64,23 +60,15 @@ def confirm_rating(video,rating)
     expect(find("#queue_items__rating").value).to eq(rating.to_s)
   end
 end
-  
 
-
- def delete_queue_item(video)
-   within(:xpath, "//tr[contains(.,'#{video.title}')]") do
-     find("a[data-method='delete']").click
+def delete_queue_item(video)
+  within(:xpath, "//tr[contains(.,'#{video.title}')]") do
+    find("a[data-method='delete']").click
   end
 end
 
 def confirm_deletion(video)
    page.should_not have_content video.title
-end
-
-
-#the following method doesn't work
-def fabricate_video_for_category1(video, category)
-   video.to_sym = Fabricate(:video, title: "#{video.to_s.capitalize}", category: category)
 end
 
 def add_video_to_queue(video)

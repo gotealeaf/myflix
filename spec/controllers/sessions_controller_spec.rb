@@ -14,8 +14,8 @@ describe SessionsController do
     end
   end
 
-
   describe "Post create" do
+
     context "with valid credentials" do
       let(:alice) {Fabricate(:user)}
       before do
@@ -33,8 +33,8 @@ describe SessionsController do
        it "should set the success message" do
         expect(flash[:notice]).not_to be_blank
       end
-
     end
+
     context "with invalid credentials" do
       before do
         alice = Fabricate(:user)
@@ -64,13 +64,12 @@ describe SessionsController do
       session[:user_id] = Fabricate(:user).id
       get :destroy
     end
+    
     it "should end the session" do
       expect(session[:user_id]).to be_nil
     end
     it "should set the success message" do
       expect(flash[:notice]).not_to be_blank
     end
-
   end
-
 end
