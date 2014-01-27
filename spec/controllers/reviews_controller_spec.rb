@@ -7,7 +7,7 @@ describe ReviewsController do
       let(:review) { Fabricate.build(:review) }
       before do
         review['body'] = nil
-        post :create, id: video.id, review: review.attributes
+        post :create, video_id: video.id, review: review.attributes
       end
 
       it 'redirects to sign in page' do
@@ -24,7 +24,7 @@ describe ReviewsController do
       let(:video) { Fabricate(:video) }
       before do
         session[:user_id] = user.id
-        post :create, id: video.id, review: Fabricate.attributes_for(:review)
+        post :create, video_id: video.id, review: Fabricate.attributes_for(:review)
       end
 
       it 'creates review' do
@@ -47,7 +47,7 @@ describe ReviewsController do
       before do
         review['body'] = nil
         session[:user_id] = user.id
-        post :create, id: video.id, review: review.attributes
+        post :create, video_id: video.id, review: review.attributes
       end
 
       it 'does not create review' do

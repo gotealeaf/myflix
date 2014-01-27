@@ -2,7 +2,7 @@ class ReviewsController < ApplicationController
   before_action :require_user
 
   def create
-    video = Video.find(params[:id])
+    video = Video.find(params[:video_id])
     review = video.reviews.new(review_params)
     review.creator = current_user
 
