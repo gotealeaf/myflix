@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Video do
   it { should belong_to(:category) }
+  it { should have_many(:reviews) }
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:description) }
 
@@ -39,6 +40,24 @@ describe Video do
     it 'returns an empty array if search string is empty' do
       Video.create(title: 'House, M.D. - Pilot', description: 'The pilot.')
       expect(Video.search_by_title('')).to eq([])
+    end
+  end
+
+  describe '#average_rating' do
+    it 'returns a float with a maximum of 1 number after the decimal' do
+      video = Fabricate(:video)
+      [3, 1, 4].each { |rating| Fabricate(:review, rating: rating, video: video) }
+      expect(video.average_rating).to eq(2.7)
+    end
+  end
+
+  describe 'reviews relation' do
+    it 'returns reviews in reverse chronological order' do
+      video = Fabricate(:video)
+      first_review = Fabricate(:review, video: video, created_at: 3.days.ago)
+      second_review = Fabricate(:review, video: video, created_at: 2.days.ago)
+      third_review = Fabricate(:review, video: video, created_at: 1.days.ago)
+      expect(video.reviews).to eq([third_review, second_review, first_review])
     end
   end
 end

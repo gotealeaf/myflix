@@ -3,10 +3,10 @@ class VideosController < ApplicationController
 
   def index
     @categories = Category.all
-    @videos = Video.all
   end
 
   def show
+    @review = Review.new
     @video = Video.find(params[:id])
   end
 
