@@ -55,12 +55,20 @@ describe ReviewsController do
           post :create, video_id: video.id, review: review.attributes
         end
 
+        it 'sets @video' do
+          expect(assigns(:video)).to eq(video)
+        end
+
+        it 'sets @review' do
+          expect(assigns(:review).body).to eq(review.body)
+        end
+
         it 'does not create review' do
           expect(Review.count).to eq(0)
         end
 
-        it 'redirects to show video path' do
-          expect(response).to redirect_to(video_path(video))
+        it 'renders the videos#show template' do
+          expect(response).to render_template('videos/show')
         end
 
         it 'sets error message' do

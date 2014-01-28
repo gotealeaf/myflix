@@ -14,6 +14,13 @@ describe VideosController do
       get :show, id: video
       expect(response).to redirect_to sign_in_path
     end
+
+    it 'sets @review' do
+      session[:user_id] = Fabricate(:user).id
+      video = Fabricate(:video)
+      get :show, id: video
+      expect(assigns(:review)).to be_instance_of(Review)
+    end
   end
 
   describe 'POST #search' do
