@@ -21,6 +21,13 @@ describe VideosController do
       get :show, id: video
       expect(assigns(:review)).to be_instance_of(Review)
     end
+
+    it 'creates an empty review' do
+      session[:user_id] = Fabricate(:user).id
+      video = Fabricate(:video)
+      get :show, id: video
+      expect(assigns(:review)).to be_new_record
+    end
   end
 
   describe 'POST #search' do
