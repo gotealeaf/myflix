@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Category do
+
   it "saves itself" do
     category = Category.new(name: "Sports")
     category.save
@@ -15,6 +16,5 @@ describe Category do
 
     expect(sports.videos).to eq([futurama, south_park])
   end
-
 
 end
