@@ -1,3 +1,5 @@
-Fabricator(:category) do
-  name { Faker::Lorem.words(1) }
+require 'faker'
+
+Fabricator(:category) do 
+  name { Faker::Name.name }
 end
