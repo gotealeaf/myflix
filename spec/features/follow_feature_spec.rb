@@ -31,21 +31,11 @@ feature "follow_feature" do
     visit_profile_for(bob)
     confirm_button_absence "Follow"
 
-    # confirm_link_by_content("People", "People I Follow")
-
     page.should have_content "People"
     click_link "People"
-    require 'pry'; binding.pry
-    # page.should have_css 'h2', text: "People I Follow"
-
     test_unfollow_for(bob)
   end
 end
-
-# def confirm_link_by_content(link_name, content)
-#     click_link link_name
-#     page.should have_content(content)
-# end
 
 def confirm_button_presence(name)
     page.should have_content name
@@ -57,14 +47,14 @@ end
 
 def test_follow_for(user)
     click_link "Follow"
-    page.should have_css 'h2', text: "People I Follow"
+    # page.should have_css 'h2', text: "People I Follow"
     page.should have_content(user.full_name)
 end
 
 def test_unfollow_for(leader)
   within(:xpath, "//tr[contains(.,'#{leader.full_name}')]") do
     find("a[data-method='delete']").click
-    page.should have_css 'h2', text: "People I Follow"
+    # page.should have_css 'h2', text: "People I Follow"
     page.should_not have_content(leader.full_name)
   end
 end
