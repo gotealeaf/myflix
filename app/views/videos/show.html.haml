@@ -13,7 +13,11 @@
         %p #{@video.description}
         .actions
           %a.btn.btn-primary(href="") Watch Now
-          %a.btn.btn-default(href="") + My Queue
+          - if current_user.queued_videos.include?(@video)
+            = link_to '- My Queue', dequeue_video_path(@video), method: :post, class: 'btn btn-default'
+          -else
+            = link_to '+ My Queue', queue_video_path(@video), method: :post, class: 'btn btn-default'
+
 
 %section.reviews.container#reviews
   .row
