@@ -18,6 +18,8 @@ Myflix::Application.routes.draw do
 
   resources :users, only: [:show, :edit, :update], path: '/account'
 
+  resources :queue_items, only: [:create, :destroy, :index], path: '/my_queue'
+
   root to: 'pages#front'
   get 'ui(/:action)', controller: 'ui'
   get 'home', to: 'videos#index'

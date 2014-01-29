@@ -113,7 +113,7 @@ Video.create(title: '30 Rock - Pilot',
              category: comedy
 )
 
-Video.create(title: 'The Big Bang Theory - Pilot',
+the_big_bang_theory = Video.create(title: 'The Big Bang Theory - Pilot',
              description: 'Leonard and Sheldon visit a high IQ sperm bank, but have regrets about going, so they ' +
                         'leave, only to feel guilty afterwards. When they arrive back at the apartment, they see a ' +
                         'beautiful blonde woman, Penny, in the apartment across the hallway and they attempt to ' +
@@ -125,7 +125,7 @@ Video.create(title: 'The Big Bang Theory - Pilot',
              category: comedy
 )
 
-Video.create(title: 'American Idol - Auditions #1 - Boston & Austin',
+american_idol = Video.create(title: 'American Idol - Auditions #1 - Boston & Austin',
              description: "Everyone's favorite singing competition returns for its highly anticipated 13th season " +
                         "with a new dream team judging panel, new contestants and the best and worst of auditions. " +
                         "Host Ryan Seacrest and judges Jennifer Lopez, Keith Urban and Harry Connick, Jr., travel " +
@@ -154,4 +154,8 @@ brandon = User.create(email: 'user@email.com', password: 'password', full_name: 
 
 Review.create(rating: 5, body: 'Amazing!', creator: brandon, video: sons_of_anarchy)
 
-Review.create(rating: 2, body: 'Blech!', creator: brandon, video: sons_of_anarchy)
+Review.create(rating: 2, body: 'Blech!', creator: brandon, video: american_idol)
+
+brandon.queue_items.create(video: american_idol, position: brandon.next_available_position)
+brandon.queue_items.create(video: the_big_bang_theory, position: brandon.next_available_position)
+brandon.queue_items.create(video: sons_of_anarchy, position: brandon.next_available_position)
