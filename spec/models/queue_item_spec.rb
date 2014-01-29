@@ -43,7 +43,7 @@ describe QueueItem do
       end
     end
 
-    describe '#find_by_user_and_video' do
+    describe '::find_by_user_and_video' do
       it 'returns a QueueItem belonging to the provided user and video pair, if one exists' do
         expect(QueueItem.find_by_user_and_video(nil, video)).to be_nil
       end
@@ -54,7 +54,7 @@ describe QueueItem do
       end
     end
 
-    describe '#next_available_position' do
+    describe '::next_available_position' do
       it "returns a number that is one higher than the highest taken position in the given user's queue" do
         user              = Fabricate(:user)
         first_video       = Fabricate(:video)
