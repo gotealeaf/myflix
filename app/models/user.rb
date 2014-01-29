@@ -8,10 +8,6 @@ class User < ActiveRecord::Base
   has_secure_password validations: false
   validates_presence_of :password
 
-  def next_available_position
-    (self.queue_items.maximum(:position) || 0) + 1
-  end
-
   def queued_videos
     queue_items.map(&:video)
   end

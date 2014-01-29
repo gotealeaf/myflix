@@ -5,11 +5,6 @@ Myflix::Application.routes.draw do
       post 'search'
     end
 
-    member do
-      post 'queue'
-      post 'dequeue'
-    end
-
     resources :reviews, only: :create
   end
 
@@ -23,7 +18,7 @@ Myflix::Application.routes.draw do
 
   resources :users, only: [:show, :edit, :update], path: '/account'
 
-  resources :queue_items, only: [:index], path: '/my_queue'
+  resources :queue_items, only: [:create, :destroy, :index], path: '/my_queue'
 
   root to: 'pages#front'
   get 'ui(/:action)', controller: 'ui'
