@@ -10,5 +10,6 @@ def already_queued?(video)
     current_user.queue_items.map(&:video).include?(video)
   end
 
+   
   
 end
