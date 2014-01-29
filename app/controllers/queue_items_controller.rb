@@ -6,28 +6,36 @@ class QueueItemsController < ApplicationController
   end
 
   def create
-    @video = Video.find(params[:video_id])
-    queue_video(@video)
+    video = Video.find(params[:video_id])
+    current_user.queue_video(video)
+    redirect_to queue_items_path
+  end
+
+  def update_queue_list
+    begin
+      update_each_queue_item
+      current_user.renumber_queue
+    rescue ActiveRecord::RecordInvalid
+      flash[:error] = "You must enter only whole numbers."
+    end
     redirect_to queue_items_path
   end
 
   def destroy
     queue_item = QueueItem.find(params[:id])
     queue_item.destroy if current_user.queue_items.include?(queue_item)
+    current_user.renumber_queue
     redirect_to queue_items_path
   end
 
   private
 
-  def queue_video(video)
-    @queue_item = @video.queue_items.create(user: current_user, ranking: new_queue_item_ranking) unless current_user_queued_video?(@video) 
-  end
-
-  def new_queue_item_ranking
-    current_user.queue_items.count + 1
-  end
-
-  def current_user_queued_video?(video)
-    @video.queue_items.find_by_user_id(current_user.id)
+  def update_each_queue_item
+    ActiveRecord::Base.transaction do
+      params[:queue_items].each do |data|
+        queue_item = QueueItem.find data[:id]
+        queue_item.update_attributes!(ranking: data[:ranking], rating: data[:rating]) if current_user == queue_item.user
+      end
+    end
   end
 end

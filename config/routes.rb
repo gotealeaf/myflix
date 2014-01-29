@@ -11,6 +11,7 @@ Myflix::Application.routes.draw do
   get '/register', to: 'users#new'
   get '/sign_in', to: 'sessions#new'
   get '/sign_out', to: 'sessions#destroy'
+  post '/queue_list', to: 'queue_items#update_queue_list'
 
   resources :users, only: [:create]
   resources :categories, only: [:show]

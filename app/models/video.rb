@@ -10,6 +10,8 @@ class Video < ActiveRecord::Base
   end
 
   def average_rating
-    self.reviews.empty? ? 0.0 : self.reviews.average('rating').round(1)
+    ratings = reviews.map(&:rating) - [nil]
+    average_rating = ratings.inject(:+).to_f / ratings.count
+    reviews.empty? ? 0.0 : average_rating.round(1)
   end
 end
