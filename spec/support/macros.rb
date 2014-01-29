@@ -14,6 +14,9 @@ def current_user
   @current_user = @current_user || User.find(session[:user_id])
 end
 
-
+def click_on_video_on_home_page(video)
+  visit home_path
+  find("a[href='#{video_path(video)}']").click
+end
 
  

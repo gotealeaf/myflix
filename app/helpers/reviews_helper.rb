@@ -7,10 +7,4 @@ def display_rating_for(review)
       "none"
     end
   end
-
-  def test_helper(review)
-    "Victory!"
-    
-  end
- 
 end
