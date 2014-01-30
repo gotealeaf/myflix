@@ -73,6 +73,14 @@ describe QueueItemsController do
       delete :destroy, video_id: my_video.id, id: queue_item.id
       expect(QueueItem.count).to eq(0)
     end
+    it "renumbers any remaining queue items" do
+      alice = Fabricate(:user)
+      session[:user_id] = alice.id
+      queue_item1 = Fabricate(:queue_item, user: alice, ranking: 1)
+      queue_item2 = Fabricate(:queue_item, user: alice, ranking: 2)
+      delete :destroy, video_id: my_video.id, id: queue_item1.id
+      expect(queue_item2.reload.ranking).to eq(1)
+    end
     it "does not delete the queue item if the queue item is not in the current user's queue" do
       alice = Fabricate(:user)
       bob = Fabricate(:user)
@@ -85,6 +93,79 @@ describe QueueItemsController do
       session[:user_id] = nil
       delete :destroy, video_id: my_video.id, id: 3
       expect(response).to redirect_to sign_in_path
+    end
+  end
+  describe "POST update_queue_list" do
+    context "valid data" do
+      it "redirects to the My Queue page" do
+        alice = Fabricate(:user)
+        session[:user_id] = alice.id
+        queue_item = Fabricate(:queue_item, user: alice, video: Fabricate(:video))
+        post :update_queue_list, queue_items: [{id: queue_item.id, ranking: queue_item.ranking}]
+        expect(response).to redirect_to queue_items_path
+      end
+      it "reorders the queue items" do
+        alice = Fabricate(:user)
+        session[:user_id] = alice.id
+        queue_item1 = Fabricate(:queue_item, user: alice, ranking: 1, video: Fabricate(:video))
+        queue_item2 = Fabricate(:queue_item, user: alice, ranking: 2, video: Fabricate(:video))
+        post :update_queue_list, queue_items: [{id: queue_item1.id, ranking: 5}, {id: queue_item2.id, ranking: 2}]
+        expect(alice.queue_items).to eq([queue_item2, queue_item1])
+      end
+      it "resets the ranking in the queue" do
+        alice = Fabricate(:user)
+        session[:user_id] = alice.id
+        queue_item1 = Fabricate(:queue_item, user: alice, ranking: 1, video: Fabricate(:video))
+        queue_item2 = Fabricate(:queue_item, user: alice, ranking: 2, video: Fabricate(:video))
+        post :update_queue_list, queue_items: [{id: queue_item1.id, ranking: 5}, {id: queue_item2.id, ranking: 2}]
+        expect(alice.queue_items.map(&:ranking)).to eq([1,2])
+      end
+    end
+    context "invalid data" do
+      it "sets a flash error message for any non-integer value" do
+        alice = Fabricate(:user)
+        session[:user_id] = alice.id
+        queue_item1 = Fabricate(:queue_item, user: alice, ranking: 1, video: Fabricate(:video))
+        queue_item2 = Fabricate(:queue_item, user: alice, ranking: 2, video: Fabricate(:video))
+        post :update_queue_list, queue_items: [{id: queue_item1.id, ranking: 5.2}, {id: queue_item2.id, ranking: 2}]
+        expect(flash[:error]).to be_present
+      end
+      it "should not make any changes to the queue" do
+        alice = Fabricate(:user)
+        session[:user_id] = alice.id
+        queue_item1 = Fabricate(:queue_item, user: alice, ranking: 1, video: Fabricate(:video))
+        queue_item2 = Fabricate(:queue_item, user: alice, ranking: 2, video: Fabricate(:video))
+        post :update_queue_list, queue_items: [{id: queue_item1.id, ranking: 5}, {id: queue_item2.id, ranking: 2.8}]
+        expect(queue_item1.reload.ranking).to eq(1)
+      end
+      it "should redirect to the My Queue page" do
+        alice = Fabricate(:user)
+        session[:user_id] = alice.id
+        queue_item1 = Fabricate(:queue_item, user: alice, ranking: 1, video: Fabricate(:video))
+        queue_item2 = Fabricate(:queue_item, user: alice, ranking: 2, video: Fabricate(:video))
+        post :update_queue_list, queue_items: [{id: queue_item1.id, ranking: 5}, {id: queue_item2.id, ranking: 2.8}]
+        expect(response).to redirect_to queue_items_path
+      end
+    end
+    context "unauthenticated user" do
+      it "redirects to the sign-in page" do
+        alice = Fabricate(:user)
+        session[:user_id] = nil
+        queue_item = Fabricate(:queue_item, user: alice, video: Fabricate(:video))
+        post :update_queue_list, queue_items: [{id: queue_item.id, ranking: queue_item.ranking}]
+        expect(response).to redirect_to sign_in_path
+      end
+    end
+    context "not current user" do
+      it "doesn't allow the queue items to be changed" do
+        alice = Fabricate(:user)
+        session[:user_id] = alice.id
+        bob = Fabricate(:user)
+        queue_item1 = Fabricate(:queue_item, user: alice, ranking: 1, video: Fabricate(:video))
+        queue_item2 = Fabricate(:queue_item, user: bob, ranking: 2, video: Fabricate(:video))
+        post :update_queue_list, queue_items: [{id: queue_item1.id, ranking: 2}, {id: queue_item2.id, ranking: 1}]
+        expect(queue_item2.reload.ranking).to eq(2)
+      end
     end
   end
 end

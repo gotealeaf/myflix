@@ -34,7 +34,7 @@
           %article.review
             %li.row
               .col-sm-2
-                %span Rating: #{review.rating} / 5
+                %span Rating: #{rating(review)}
                 %p
                   by
                   = link_to review.user.full_name, "#"
