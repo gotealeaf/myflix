@@ -1,9 +1,9 @@
-%section.user.container
+%section.user.container 
   .row
     .col-sm-10.col-sm-offset-1
       %article
         %header
-          %img(src="http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(@user.full_name.downcase)}?s=40")
+          %img(src="http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(@user.email.downcase)}?s=40")
           %h2 #{@user.full_name}'s video collections (#{@user.queue_items.count})
           %button.btn.btn-default follow
         %table.table
@@ -18,7 +18,7 @@
                   = link_to queue_item.video.title, queue_item.video
 
                 %td
-                  = link_to queue_item.video.category.name, queue_item.video
+                  = link_to queue_item.video.category.name, queue_item.video.category
 
 
 
