@@ -15,15 +15,15 @@ Myflix::Application.configure do
   config.action_mailer.smtp_settings = {
   address:              'smtp.gmail.com',
   port:                 587,
-  domain:               'gmail.com',
+  # domain:               'gmail.com',
   user_name:            ENV["GMAIL-USERNAME"],
   password:             ENV["GMAIL-PASSWORD"],
   authentication:       'plain',
   enable_starttls_auto: true  }
 
-# ActionMailer::Base.default_url_options[:host] = "http://emeraldprayerchalice.herokuapp.com/"
-config.ActionMailer::Base.default_url_options[:host] = "localhost:3000"
+  # ActionMailer::Base.default_url_options[:host] = "http://emeraldprayerchalice.herokuapp.com/"
 
+ config.action_mailer.default_url_options = { host: 'localhost:3000'}
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
