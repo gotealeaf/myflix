@@ -5,7 +5,9 @@ class User < ActiveRecord::Base
   has_many :reviews, -> {order("created_at DESC")}
   has_many :following_relationships, class_name: "Relationship", foreign_key: :follower_id
   has_many :leading_relationships, class_name: "Relationship", foreign_key: :leader_id
-    
+  has_many :followers, through: :leading_relationships 
+  has_many :leaders, through: :following_relationships
+
   validates_presence_of :email, :password, :full_name
 
   def normalize_queue_item_positions
@@ -29,10 +31,6 @@ class User < ActiveRecord::Base
 
   def can_follow?(leader)
       !(self.follows?(leader) || self == leader)
-  end
-
-  def followers
-    leading_relationships
   end
 end
 

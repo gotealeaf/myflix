@@ -13,8 +13,6 @@ gem 'bootstrap_form'
 gem 'fabrication'
 gem 'faker'
 
-
-
 group :development do
   gem 'sqlite3'
   gem 'pry'

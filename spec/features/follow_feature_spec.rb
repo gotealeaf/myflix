@@ -27,7 +27,6 @@ feature "follow_feature" do
     confirm_button_presence "Follow"
 
     test_follow_for(bob)
-    
     visit_profile_for(bob)
     confirm_button_absence "Follow"
 
@@ -47,16 +46,17 @@ end
 
 def test_follow_for(user)
     click_link "Follow"
-    # page.should have_css 'h2', text: "People I Follow"
+    page.should have_css 'h2', text: "People I Follow"
     page.should have_content(user.full_name)
 end
 
 def test_unfollow_for(leader)
   within(:xpath, "//tr[contains(.,'#{leader.full_name}')]") do
+    # find("a[data-method='delete']").click
     find("a[data-method='delete']").click
-    # page.should have_css 'h2', text: "People I Follow"
-    page.should_not have_content(leader.full_name)
   end
+    page.should have_css 'h2', text: "People I Follow"
+    page.should_not have_content(leader.full_name)
 end
 
 def visit_profile_for(user)
