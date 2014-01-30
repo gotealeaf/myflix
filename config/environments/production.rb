@@ -23,8 +23,8 @@ config.action_mailer.smtp_settings = {
   address:              'smtp.gmail.com',
   port:                 587,
   domain:               'gmail.com',
-  user_name:            ENV["GMAIL-USERNAME"]
-  password:             ENV["GMAIL-PASSWORD"]
+  user_name:            ENV["GMAIL-USERNAME"],
+  password:             ENV["GMAIL-PASSWORD"],
   authentication:       'plain',
   enable_starttls_auto: true  }
 
