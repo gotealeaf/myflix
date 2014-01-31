@@ -18,18 +18,8 @@ class UsersController < ApplicationController
   end
 
   def update_queue
-    current_user.transaction do
-      params[:user][:queue_item].each do |id, parameters|
-        queue_item = QueueItem.find(id)
-        if parameters[:position] =~ /\A\d+\z/ && queue_item.user == current_user
-          queue_item.position = parameters[:position]
-          queue_item.save
-        else
-          flash[:danger] = 'There was a problem updating your queue. Please try again.'
-          raise ActiveRecord::Rollback
-        end
-      end
-      current_user.sort_queue_items_by_position
+    if !current_user.reorder_queue_items(params[:user])
+      flash[:danger] = 'There was a problem updating your queue. Please try again.'
     end
 
     redirect_to :back
