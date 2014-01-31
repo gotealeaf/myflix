@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe QueueItemsController do
-  before { session[:user_id] = Fabricate(:user).id }
+  before { set_fabricated_user }
   let(:my_video) { Fabricate(:video) }
   let(:alice) { Fabricate(:user) }
   let(:current_user) { User.find(session[:user_id]) }

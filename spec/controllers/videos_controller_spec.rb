@@ -1,9 +1,7 @@
 require 'spec_helper'
 
 describe VideosController do
-  before do
-    session[:user_id] = Fabricate(:user).id
-  end
+  before { set_fabricated_user }
   describe 'GET index' do
     it "builds a Categories collection" do
       biographies = Fabricate(:category, name: "Biographies")
