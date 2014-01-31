@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
   has_many :reviews
   has_many :queue_items, -> {order(:position)}
-
+  has_many :following_relationships, class_name: "Relationship", foreign_key: :follower_id
   has_secure_password validations: false
 
   def normalize_queue_item_positions
