@@ -1,19 +1,21 @@
 %section.sign_in.container
   .row
     .col-sm-10.col-sm-offset-1
-      %form.sign_in
+      = form_tag sessions_path, class: "sign_in" do
         %header
           %h1 Sign in
         %fieldset
           .form-group
-            %label Email Address
+            = label_tag :email, "Email Address"
             .row
               .col-sm-4
-                %input.form-control(type="email")
+                / for some reason this over-rides the form size
+                = email_field_tag :email
           .form-group
-            %label Password
+            = label_tag :password
             .row
               .col-sm-4
-                %input.form-control(type="password")
+                / for some reason this over-rides the form size
+                = password_field_tag :password
         %fieldset.form-group.action
           %input(type="submit" value="Sign in" class="btn btn-default")
