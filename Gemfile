@@ -20,6 +20,7 @@ gem 'stripe'
 gem 'figaro'
 
 
+
 group :development do
   gem 'sqlite3', '~> 1.3.8'
   gem 'pry'
@@ -38,6 +39,8 @@ group :test do
   gem 'capybara'
   gem 'capybara-email'
   gem 'launchy'
+  gem 'vcr'
+  gem 'webmock', '1.11.0'
 end
 
 group :production do
