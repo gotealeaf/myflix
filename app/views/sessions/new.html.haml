@@ -9,13 +9,11 @@
             = label_tag :email, "Email Address"
             .row
               .col-sm-4
-                / for some reason this over-rides the form size
-                = email_field_tag :email
+                = email_field_tag :email, nil, class: "form-control"
           .form-group
             = label_tag :password
             .row
               .col-sm-4
-                / for some reason this over-rides the form size
-                = password_field_tag :password
+                = password_field_tag :password, nil, class: "form-control"
         %fieldset.form-group.action
           %input(type="submit" value="Sign in" class="btn btn-default")
