@@ -20,6 +20,6 @@ class QueueItem < ActiveRecord::Base
   end
 
   def category_name
-    category.name
+    category.name if category
   end
 end
