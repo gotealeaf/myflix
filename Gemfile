@@ -19,7 +19,7 @@ group :development do
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
-  gem 'letter_opener'
+  # gem 'letter_opener'
 end
 
 group :production do
@@ -31,10 +31,12 @@ group :test, :development do
   gem 'pry'
   gem 'pry-nav'
   gem "rspec-rails"
+  gem 'letter_opener'
 end
 
 group :test do
   gem 'launchy'
   gem 'capybara' 
   gem 'shoulda-matchers' 
+  # gem 'letter_opener'
 end
