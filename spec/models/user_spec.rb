@@ -4,6 +4,11 @@ describe User do
 
   it {should have_many(:queue_items).order(:position)}
 
+  it "should generate a random token at create" do
+      alice = Fabricate(:user)
+      expect(alice.token).to be_present
+    end
+
   describe '#queued_video_previsouly?' do
     let!(:user1) {Fabricate(:user)}
     let!(:video1) {Fabricate(:video, title: "Video1")}
@@ -39,6 +44,9 @@ describe User do
       Fabricate(:relationship, leader: bob, follower: charlie)
       expect(alice.follows?(bob)).to be_false
     end
+  end
+
+  describe "#generate_token" do
 
   end
 
