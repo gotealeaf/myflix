@@ -4,10 +4,9 @@ describe ReviewsController do
   describe 'POST create' do
     let(:video) { Fabricate(:video) }
     context "with authenticated users" do
-      let(:current_user) { Fabricate(:user) }
       before { set_current_user }
       context "with valid inputs" do
-        before { create_review_valid_input }
+        before { create_review_valid_credentials }
         it "redirects to the video show page" do
           expect(response).to redirect_to video
         end
@@ -47,10 +46,16 @@ describe ReviewsController do
         expect(response).to redirect_to sign_in_path
       end
       it "must be a logged in user" do
-        session[:user_id] = nil
+        clear_current_user
         post :create, video_id: Fabricate(:video).id, review: {body: "Great video!", rating: 5}
         expect(Review.count).to eq 0
       end
     end
   end
+
+  private
+
+  def create_review_valid_credentials
+    post :create, review: Fabricate.attributes_for(:review), video_id: video.id
+  end  
 end

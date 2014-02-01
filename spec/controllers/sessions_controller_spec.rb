@@ -7,7 +7,7 @@ describe SessionsController do
       expect(response).to render_template :new
     end
     it "redirects to the home page for authenticated users" do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       get :new
       expect(response).to redirect_to videos_path
     end
@@ -17,9 +17,7 @@ describe SessionsController do
     context "with valid credentials" do
       before { create_user_valid_credentials }
       it "creates a new session" do
-        alice = Fabricate(:user)
-        post :create, email: alice.email, password: alice.password
-        expect(session[:user_id]).to eq(alice.id)
+        expect(session[:user_id]).to eq(User.first.id)
       end
       it "redirects to the root" do
         expect(response).to redirect_to root_path
@@ -58,5 +56,23 @@ describe SessionsController do
     it "sets the notice" do
       expect(flash[:notice]).not_to be_blank
     end
+  end
+
+  private
+
+  def create_user_valid_credentials
+    alice = Fabricate(:user)
+    post :create, email: alice.email, password: alice.password
+  end
+
+  def create_user_invalid_credentials
+    clear_current_user
+    alice = Fabricate(:user)
+    post :create, email: alice.email, password: alice.password + 'asdfasdf'
+  end
+
+  def destroy_session
+    set_current_user
+    get :destroy
   end
 end
