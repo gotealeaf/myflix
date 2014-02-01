@@ -13,8 +13,6 @@ class User < ActiveRecord::Base
     self.fill_queue_item_position_gaps
   end
 
-  private
-
   def break_position_ties
     while self.queue_items.reload.map(&:position).uniq.count != self.queue_items.count
       items_to_sort = self.queue_items.map { |queue_item| [queue_item.id, queue_item.position] }
