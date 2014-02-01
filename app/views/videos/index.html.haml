@@ -4,7 +4,9 @@
 
 
 %header
-- Category.all.each do |category|
+-# Category.all.each do |category|
+- @categories = Category.all
+- for category in @categories
   .category_section
     = link_to category_path(category), nil do
       %h1.category_title
@@ -15,6 +17,5 @@
           / = link_to video_path(video), nil, do
           = link_to video_path(video),  id: "video_#{video.id}" do
             %img{src: "#{video.small_cover_url}", alt: "#{video.title}"}
-            / %img(src: "#{video.small_cover_url}", alt: "#{video.title}")
        
 
