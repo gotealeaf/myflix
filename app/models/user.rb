@@ -8,26 +8,6 @@ class User < ActiveRecord::Base
   has_secure_password validations: false
   validates_presence_of :password
 
-  def reorder_queue_items(queue_items_params_hash)
-    transaction_was_successful = true
-
-    transaction do
-      queue_items_params_hash[:queue_item].each do |id, parameters|
-        queue_item = QueueItem.find(id)
-        if parameters[:position] =~ /\A\d+\z/ && queue_item.user == self
-          queue_item.position = parameters[:position]
-          queue_item.save
-        else
-          transaction_was_successful = false
-          raise ActiveRecord::Rollback
-        end
-      end
-      self.sort_queue_items_by_position
-    end
-
-    transaction_was_successful
-  end
-
   def sort_queue_items_by_position
     self.break_position_ties
     self.fill_queue_item_position_gaps
