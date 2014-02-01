@@ -28,10 +28,6 @@ class User < ActiveRecord::Base
     transaction_was_successful
   end
 
-  def queued_videos
-    queue_items.map(&:video)
-  end
-
   def sort_queue_items_by_position
     self.break_position_ties
     self.fill_queue_item_position_gaps
