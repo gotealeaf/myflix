@@ -26,10 +26,8 @@
                 %td
                   = button_to "Play", nil, class: "btn btn-default"
                 %td
-                  - if Review.find_rating_by_creator_and_video(current_user, queue_item.video)
-                    = pluralize(Review.find_rating_by_creator_and_video(current_user, queue_item.video), "Star")
-                  - else
-                    n/a
+                  = select_tag "user[queue_item][#{queue_item.id}][rating]",
+                               my_queue_rating_select_options(Review.find_rating_by_creator_and_video(current_user, queue_item.video)), :include_blank => true, class: 'form-group'
                 %td
                   = link_to queue_item.video_category.name, queue_item.video_category
                 %td
