@@ -4,32 +4,33 @@
       %article
         %header
           %h2 My Queue
-        %table.table
-          %thead
-            %tr
-              %th(width="10%") List Order
-              %th(width="30%") Video Title
-              %th(width="10%") Play
-              %th(width="20%") Rating
-              %th(width="15%") Genre
-              %th(width="15%") Remove
-          %tbody
-          - @queue_items.each do |queue_item|
-            %tr
-              %td
-                %input.form-control(type="text" value="#{queue_item.position}")
-              %td
-                = link_to queue_item.video_title, queue_item.video
-              %td
-                = button_to "Play", nil, class: "btn btn-default"
-              %td
-                - if Review.find_rating_by_creator_and_video(current_user, queue_item.video)
-                  = pluralize(Review.find_rating_by_creator_and_video(current_user, queue_item.video), "Star")
-                - else
-                  n/a
-              %td
-                = link_to queue_item.video_category.name, queue_item.video_category
-              %td
-                = link_to queue_item, method: :delete do
-                  %i.glyphicon.glyphicon-remove
-        = button_to "Update Instant Queue", nil, class: "btn btn-default"
+        = form_for current_user, url: update_queue_user_path(current_user) do |queue_form|
+
+          %table.table
+            %thead
+              %tr
+                %th(width="10%") List Order
+                %th(width="30%") Video Title
+                %th(width="10%") Play
+                %th(width="20%") Rating
+                %th(width="15%") Genre
+                %th(width="15%") Remove
+            %tbody
+            - @queue_items.each do |queue_item|
+              %tr
+              = queue_form.fields_for :queue_item, index: queue_item.id do |fields|
+                %td
+                  = fields.text_field :position, value: queue_item.position, class: 'form-control'
+                %td
+                  = link_to queue_item.video_title, queue_item.video
+                %td
+                  = button_to "Play", nil, class: "btn btn-default"
+                %td
+                  = select_tag "user[queue_item][#{queue_item.id}][rating]",
+                               my_queue_rating_select_options(Review.find_rating_by_creator_and_video(current_user, queue_item.video)), :include_blank => true, class: 'form-control'
+                %td
+                  = link_to queue_item.video_category.name, queue_item.video_category
+                %td
+                  = link_to queue_item, method: :delete do
+                    %i.glyphicon.glyphicon-remove
+          = queue_form.submit 'Update Instant Queue', class: "btn btn-default"

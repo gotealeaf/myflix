@@ -4,15 +4,20 @@ class Review < ActiveRecord::Base
 
   validates_presence_of :creator, :rating, :body, :video
 
+  def self.valid_ratings
+    (1..5).to_a
+  end
+
+  def self.find_by_creator_and_video(user, video)
+    if !user.nil? && !video.nil?
+      self.where(user_id: user, video: video).first
+    end
+  end
+
   def self.find_rating_by_creator_and_video(user, video)
     if !user.nil? && !video.nil?
       review = self.where(user_id: user, video: video).first
-
-      if !review.nil?
-        review.rating
-      else
-        nil
-      end
+      review.try(:rating)
     end
   end
 end
