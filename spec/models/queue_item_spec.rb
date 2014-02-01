@@ -45,12 +45,12 @@ describe QueueItem do
 
     describe '::find_by_user_and_video' do
       it 'returns a QueueItem belonging to the provided user and video pair, if one exists' do
-        expect(QueueItem.find_by_user_and_video(nil, video)).to be_nil
+        queue_item = Fabricate(:queue_item, user: user, video: video)
+        expect(QueueItem.find_by_user_and_video(user, video)).to eq(queue_item)
       end
 
       it 'returns nil if no QueueItem, which belongs to the provided user and video pair, exists' do
-        queue_item = Fabricate(:queue_item, user: user, video: video)
-        expect(QueueItem.find_by_user_and_video(user, video)).to eq(queue_item)
+        expect(QueueItem.find_by_user_and_video(nil, video)).to be_nil
       end
     end
 
