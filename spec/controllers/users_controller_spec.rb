@@ -15,7 +15,7 @@ describe UsersController do
 
   describe 'POST create' do
     context "with valid input" do
-      before { fabricate_user_valid_credentials }
+      before { create_user_valid_credentials }
       it "creates a new user" do
         expect(User.count).to eq(1)
       end
@@ -28,7 +28,7 @@ describe UsersController do
       end
     end
     context "with invalid input" do
-      before { create_user_invalid_input }
+      before { create_user_invalid_credentials }
       it "does not create a new user" do
         expect(User.count).to eq(0)
       end
@@ -39,5 +39,15 @@ describe UsersController do
         expect(assigns(:user)).to be_instance_of(User)
       end
     end
+  end
+
+  private
+
+  def create_user_valid_credentials
+    post :create, user: Fabricate.attributes_for(:user)
+  end
+
+  def create_user_invalid_credentials
+    post :create, user: { password: 'joelevinger', full_name: 'Joe Levinger' }
   end
 end

@@ -14,4 +14,12 @@ class Video < ActiveRecord::Base
     average_rating = ratings.inject(:+).to_f / ratings.count
     reviews.empty? ? 0.0 : average_rating.round(1)
   end
+
+  def reviewed?(user)
+    !!reviews.where(user: user).first
+  end
+
+  def on_queue?(user)
+    !!queue_items.where(user: user).first
+  end
 end

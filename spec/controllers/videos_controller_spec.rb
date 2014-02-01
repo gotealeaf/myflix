@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe VideosController do
-  before { set_fabricated_user }
+  before { set_current_user }
   describe 'GET index' do
     it "builds a Categories collection" do
       biographies = Fabricate(:category, name: "Biographies")
@@ -13,10 +13,8 @@ describe VideosController do
       get :index
       expect(response).to render_template :index
     end
-    it "redirects to sign_in path if not logged in" do
-      session[:user_id] = nil
-      get :index
-      expect(response).to redirect_to sign_in_path
+    it_behaves_like "require sign in" do
+      let(:action) { get :index }
     end
   end
   describe 'GET show' do
@@ -25,11 +23,8 @@ describe VideosController do
       get :show, id: video.id
       expect(assigns(:video)).to eq(video)
     end
-    it "redirects to sign-in path if not logged in" do
-      session[:user_id] = nil
-      video = Fabricate(:video)
-      get :show, id: video.id
-      expect(response).to redirect_to sign_in_path
+    it_behaves_like "require sign in" do
+      let(:action) { video = Fabricate(:video); get :show, id: video.id }
     end
   end
   describe 'POST search' do
@@ -43,11 +38,8 @@ describe VideosController do
       post :search, search_term: 'Che'
       expect(assigns(:videos)).to eq([che])
     end
-    it "redirects to sign_in path if not logged in" do
-      session[:user_id] = nil
-      che = Fabricate(:video, title: 'Che')
-      post :search, search_term: 'Che'
-      expect(response).to redirect_to sign_in_path      
+    it_behaves_like "require sign in" do
+      let(:action) { che = Fabricate(:video, title: 'Che'); post :search, search_term: 'Che' }
     end
   end
 end
