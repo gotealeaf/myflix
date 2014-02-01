@@ -56,18 +56,14 @@ describe QueueItem do
 
     describe '::next_available_position' do
       it "returns a number that is one higher than the highest taken position in the given user's queue" do
-        user              = Fabricate(:user)
-        first_video       = Fabricate(:video)
         second_video      = Fabricate(:video)
-        user.queue_items.create(video: first_video, position: 1)
+        user.queue_items.create(video: video, position: 1)
         user.queue_items.create(video: second_video, position: 2)
         expect(QueueItem.next_available_position(user)).to eq(3)
       end
       it 'returns nil if the given user is invalid' do
-        user              = Fabricate(:user)
-        first_video       = Fabricate(:video)
         second_video      = Fabricate(:video)
-        user.queue_items.create(video: first_video, position: 1)
+        user.queue_items.create(video: video, position: 1)
         user.queue_items.create(video: second_video, position: 2)
         expect(QueueItem.next_available_position(nil)).to be_nil
       end
