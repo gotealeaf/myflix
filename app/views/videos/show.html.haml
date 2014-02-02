@@ -13,7 +13,7 @@
         %p #{@video.description}
         .actions
           %a.btn.btn-primary(href="") Watch Now
-          - if !QueueItem.find_by_user_and_video(current_user, @video).nil?
+          - if current_user.has_queued_video?(@video)
             = link_to '- My Queue', queue_item_path(QueueItem.find_by_user_and_video(current_user, @video)), method: :delete, class: 'btn btn-default'
           -else
             = link_to '+ My Queue', queue_items_path(video_id: @video.id), method: :post, class: 'btn btn-default'

@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
   has_secure_password validations: false
   validates_presence_of :password
 
+  def has_queued_video?(video)
+    self.queue_items.map(&:video).include?(video)
+  end
+
   def sort_queue_items_by_position
     self.break_position_ties
     self.fill_queue_item_position_gaps
