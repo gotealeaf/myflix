@@ -16,3 +16,7 @@
 
 # Ignore application configuration
 /config/application.yml
+
+#ignore zeus
+custom_plan.rb
+zeus.json
