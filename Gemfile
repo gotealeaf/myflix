@@ -21,6 +21,7 @@ group :test do
   gem 'fabrication'
   gem 'capybara'
   gem 'rack_session_access'
+  gem 'launchy'
 end
 
 group :development do
