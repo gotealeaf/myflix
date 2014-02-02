@@ -1,0 +1,7 @@
+%article.video_category
+  %h2= @category.title.to_s
+  .videos.row
+    - @category.videos.each do |video|
+      .video.col-sm-2
+        = link_to video.small_cover_url, nil do
+          %img(src="#{video.small_cover_url}")
