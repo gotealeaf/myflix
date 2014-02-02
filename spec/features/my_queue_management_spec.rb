@@ -6,12 +6,12 @@ feature 'My Queue management' do
   given!(:third_video) { Fabricate(:video) }
 
   background do
-    adam = Fabricate(:user)
-    sign_in(adam)
+    sign_in
   end
 
   scenario 'User adds a video to their queue and then access it from the queue' do
     find(:xpath, "//a[@href='#{video_path(first_video)}']").click
+    expect(page).to have_content(first_video.title)
     click_on '+ My Queue'
     click_on 'My Queue'
     expect(page).to have_content("#{first_video.title}")
