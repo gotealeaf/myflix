@@ -7,12 +7,7 @@ feature 'My Queue management' do
 
   background do
     adam = Fabricate(:user)
-
-    visit root_path
-    click_on 'Sign In'
-    fill_in 'Email Address', with: adam.email
-    fill_in 'Password', with: adam.password
-    click_on 'Sign in'
+    sign_in(adam)
   end
 
   scenario 'User adds a video to their queue and then access it from the queue' do
