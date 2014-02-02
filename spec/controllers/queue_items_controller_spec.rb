@@ -8,36 +8,31 @@ describe QueueItemsController do
   describe 'GET #index' do
     context 'authorized user' do
       it 'sets @queue_items' do
-        user              = Fabricate(:user)
-        session[:user_id] = user.id
-        queue_item1       = Fabricate(:queue_item, user: user)
-        queue_item2       = Fabricate(:queue_item, user: user)
+        set_current_user
+        queue_item1 = Fabricate(:queue_item, user: current_user)
+        queue_item2 = Fabricate(:queue_item, user: current_user)
         get :index
         expect(assigns(:queue_items)).to match_array([queue_item1, queue_item2])
       end
     end
 
-    context 'unauthorized user' do
-      it 'redirects to sign in page' do
-        get :index
-        expect(response).to redirect_to(sign_in_path)
-      end
+    it_behaves_like 'an unauthenticated user' do
+      let(:action) { get :index }
     end
   end
 
   describe 'POST #create' do
     context 'authorized user' do
       context 'with correct parameters' do
-        let(:user) { Fabricate(:user) }
         let(:video) { Fabricate(:video) }
 
         before do
-          session[:user_id] = user.id
+          set_current_user
           post :create, video_id: video.id
         end
 
         it 'creates a QueueItem that is associated with the user' do
-          expect(QueueItem.first.user_id).to eq(user.id)
+          expect(QueueItem.first.user_id).to eq(current_user.id)
         end
 
         it 'creates a QueueItem that is associated with the video' do
@@ -55,7 +50,7 @@ describe QueueItemsController do
         it 'assigns position automatically' do
           another_video = Fabricate(:video)
           post :create, video_id: another_video.id
-          expect(QueueItem.find_by_user_and_video(user, another_video).position).to eq (2)
+          expect(QueueItem.find_by_user_and_video(current_user, another_video).position).to eq (2)
         end
 
         it 'does not add the same video twice' do
@@ -65,10 +60,8 @@ describe QueueItemsController do
       end
 
       context 'with incorrect parameters' do
-        let(:user) { Fabricate(:user) }
-
         before do
-          session[:user_id] = user.id
+          set_current_user
           post :create
         end
 
@@ -86,24 +79,18 @@ describe QueueItemsController do
       end
     end
 
-    context 'unauthorized user' do
-      it 'redirects to the sign in page' do
-        user  = Fabricate(:user)
-        video = Fabricate(:video)
-        post :create, video_id: video.id
-        expect(response).to redirect_to(sign_in_path)
-      end
+    it_behaves_like 'an unauthenticated user' do
+      let(:action) { post :create, video_id: 1 }
     end
   end
 
   describe 'POST #destroy' do
-    let(:user) { Fabricate(:user) }
     let(:video) { Fabricate(:video) }
-    let(:queue_item) { Fabricate(:queue_item, video: video, user: user) }
+    let(:queue_item) { Fabricate(:queue_item, video: video, user: current_user) }
 
     context 'authorized user' do
       before do
-        session[:user_id] = user.id
+        set_current_user
       end
 
       context 'user owns QueueItem' do
@@ -126,8 +113,8 @@ describe QueueItemsController do
 
       context 'user does not own QueueItem' do
         before do
-          user2             = Fabricate(:user)
-          session[:user_id] = user2
+          queue_item.reload
+          session[:user_id] = Fabricate(:user).id
           post :destroy, id: queue_item.id
         end
 
@@ -145,12 +132,8 @@ describe QueueItemsController do
       end
     end
 
-    context 'unauthorized user' do
-      it 'redirects to the sign in page' do
-        post :destroy, id: queue_item.id
-
-        expect(response).to redirect_to(sign_in_path)
-      end
+    it_behaves_like 'an unauthenticated user' do
+      let(:action) { post :destroy, id: 1 }
     end
   end
 end

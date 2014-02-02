@@ -77,9 +77,8 @@ describe UsersController do
         end
 
         it 'does not change queue position if user does not own queue item' do
-          user2 = Fabricate(:user)
-          session[:user_id] = user2.id
-          patch :update_queue, id: user.id, user: { queue_item: { queue_item1.id => { position: 3 } } }
+          set_current_user
+          patch :update_queue, id: current_user.id, user: { queue_item: { queue_item1.id => { position: 3 } } }
           expect(queue_item1.reload.position).to eq(1)
         end
 
@@ -181,12 +180,9 @@ describe UsersController do
       context 'with both rating and position parameters'
     end
 
-    context 'unauthorized user' do
-      it 'redirects to sign in page' do
-        user = Fabricate(:user)
-        queue_item1 = Fabricate(:queue_item)
-        patch :update_queue, id: user.id, user: { queue_item: { queue_item1.id => { position: 2 } } }
-        expect(response).to redirect_to(sign_in_path)
+    it_behaves_like 'an unauthenticated user' do
+      let(:action) do
+        patch :update_queue, id: 1, user: { queue_item: { 1 => { position: 2 } } }
       end
     end
   end
