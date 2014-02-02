@@ -19,6 +19,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'faker'
   gem 'fabrication'
+  gem 'rack_session_access'
 end
 
 group :development do
