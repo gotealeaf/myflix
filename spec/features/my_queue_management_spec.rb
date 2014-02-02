@@ -13,6 +13,7 @@ feature 'My Queue management' do
     find(:xpath, "//a[@href='#{video_path(first_video)}']").click
     expect(page).to have_content(first_video.title)
     click_on '+ My Queue'
+    expect(page).not_to have_content('+ My Queue')
     click_on 'My Queue'
     expect(page).to have_content("#{first_video.title}")
   end
