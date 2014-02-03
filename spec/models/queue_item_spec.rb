@@ -18,21 +18,36 @@ describe QueueItem do
       end
     end
 
-    describe '#video_rating' do
+    describe '#rating' do
       it 'returns nil if there is no rating and no review' do
         queue_item = Fabricate(:queue_item, user: user, video: video)
-        expect(queue_item.video_rating(user)).to be_nil
+        expect(queue_item.rating).to be_nil
       end
 
       it 'returns rating from queue_item model if it exists' do
         queue_item = Fabricate(:queue_item, user: user, video: video, rating: 5)
-        expect(queue_item.video_rating(user)).to eq(5)
+        expect(queue_item.rating).to eq(5)
       end
 
       it 'returns rating from the last review that the user gave for the video, if any exist and no rating exists in the queue_item object' do
         queue_item = Fabricate(:queue_item, user: user, video: video)
         review     = Fabricate(:review, creator: user, video: video)
-        expect(queue_item.video_rating(user)).to eq(review.rating)
+        expect(queue_item.rating).to eq(review.rating)
+      end
+    end
+
+    describe '#rating=' do
+      it 'changes associated review rating' do
+        queue_item = Fabricate(:queue_item, user: user, video: video)
+        review     = Fabricate(:review, creator: user, video: video, rating: 1)
+        queue_item.rating = 5
+        expect(queue_item.rating).to eq(5)
+      end
+
+      it 'creates a blank review with specified rating, if no review exists' do
+        queue_item = Fabricate(:queue_item, user: user, video: video)
+        queue_item.rating = 5
+        expect(queue_item.rating).to eq(5)
       end
     end
 

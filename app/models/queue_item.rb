@@ -8,13 +8,20 @@ class QueueItem < ActiveRecord::Base
   delegate :title, to: :video, prefix: :video
   delegate :category, to: :video, prefix: :video
 
-  def video_rating(user)
-    return self.rating unless self.rating.nil?
+  def rating
+    review = Review.where(creator: user, video: self.video).order(created_at: :desc).first
 
-    if Review.where(creator: user, video: self.video).count > 0
-      Review.where(creator: user, video: self.video).order(created_at: :desc).first.rating
+    review.rating if review
+  end
+
+  def rating=(new_rating)
+    review = Review.where(creator: user, video: self.video).order(created_at: :desc).first
+
+    if review
+      review.update_attribute(:rating, new_rating)
     else
-      nil
+      review = Review.new(creator: user, video: self.video, rating: new_rating)
+      review.save(validate: false)
     end
   end
 

@@ -11,4 +11,8 @@ module ApplicationHelper
 
     options_for_select(options, selected_value)
   end
+
+  def reviews_with_rating_for_video(video)
+    video.reviews.select{ |review| review.rating }
+  end
 end

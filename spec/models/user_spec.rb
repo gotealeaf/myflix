@@ -34,4 +34,22 @@ describe User do
       expect(user.has_queued_video?(video)).to eq(false)
     end
   end
+
+  describe '#normalize_queue_positions' do
+    it 'takes out gaps in position numbering' do
+      queue_item1 = Fabricate(:queue_item, user: user, position: 1)
+      queue_item2 = Fabricate(:queue_item, user: user, position: 4)
+      user.normalize_queue_positions
+      expect(queue_item1.reload.position).to eq(1)
+      expect(queue_item2.reload.position).to eq(2)
+    end
+
+    it 'breaks position ties, newest queued item wins' do
+      queue_item1 = Fabricate(:queue_item, user: user, position: 1, created_at: 1.day.ago)
+      queue_item2 = Fabricate(:queue_item, user: user, position: 1)
+      user.normalize_queue_positions
+      expect(queue_item1.reload.position).to eq(2)
+      expect(queue_item2.reload.position).to eq(1)
+    end
+  end
 end

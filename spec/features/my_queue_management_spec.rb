@@ -38,12 +38,22 @@ feature 'My Queue management' do
     find(:xpath, "//a[@href='#{video_path(third_video)}']").click
     click_on '+ My Queue'
     click_on 'My Queue'
-    fill_in "user[queue_item][#{first_video.id}][position]", with: 3
-    fill_in "user[queue_item][#{second_video.id}][position]", with: 1
-    fill_in "user[queue_item][#{third_video.id}][position]", with: 2
+
+    within(:xpath, "//tr[contains(.,'#{first_video.title}')]") do
+      fill_in "queue_items[][position]", with: 3
+    end
+
+    within(:xpath, "//tr[contains(.,'#{second_video.title}')]") do
+      fill_in "queue_items[][position]", with: 1
+    end
+
+    within(:xpath, "//tr[contains(.,'#{third_video.title}')]") do
+      fill_in "queue_items[][position]", with: 2
+    end
+
     click_on 'Update Instant Queue'
-    expect(find_field("user_queue_item_#{first_video.id}_position").value).to eq('3')
-    expect(find_field("user_queue_item_#{second_video.id}_position").value).to eq('1')
-    expect(find_field("user_queue_item_#{third_video.id}_position").value).to eq('2')
+    expect(find(:xpath, "//tr[contains(.,'#{first_video.title}')]//input[@id='queue_items__position']").value).to eq('3')
+    expect(find(:xpath, "//tr[contains(.,'#{second_video.title}')]//input[@id='queue_items__position']").value).to eq('1')
+    expect(find(:xpath, "//tr[contains(.,'#{third_video.title}')]//input[@id='queue_items__position']").value).to eq('2')
   end
 end
