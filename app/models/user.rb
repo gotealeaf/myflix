@@ -18,4 +18,8 @@ class User < ActiveRecord::Base
       item.save
     end
   end
+
+  def reviews_with_rating
+    reviews.where.not(rating: nil)
+  end
 end

@@ -52,4 +52,30 @@ describe User do
       expect(queue_item2.reload.position).to eq(1)
     end
   end
+
+  describe '#reviews_with_rating' do
+    it 'returns an empty array if none of the given users reviews have ratings' do
+      review1 = Fabricate(:review, creator: user)
+      review1.rating = nil
+      review1.save(validate: false)
+      review2 = Fabricate(:review, creator: user)
+      review2.rating = nil
+      review2.save(validate: false)
+      expect(user.reviews_with_rating).to eq([])
+    end
+
+    it 'returns an array containing all reviews by given user that have a rating' do
+      review1 = Fabricate(:review, creator: user)
+      review2 = Fabricate(:review, creator: user)
+      expect(user.reviews_with_rating).to match_array([review1, review2])
+    end
+
+    it 'does not include any reviews that have a nil rating value' do
+      review1 = Fabricate(:review, creator: user)
+      review1.rating = nil
+      review1.save(validate: false)
+      review2 = Fabricate(:review, creator: user)
+      expect(user.reviews_with_rating).to eq([review2])
+    end
+  end
 end
