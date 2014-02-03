@@ -12,21 +12,10 @@ class User < ActiveRecord::Base
     self.queue_items.map(&:video).include?(video)
   end
 
-  def sort_queue_items_by_position
-    self.break_position_ties
-    self.fill_queue_item_position_gaps
-  end
-
-  def break_position_ties
-    self.queue_items.each_with_index { |item, index| item.position = index }
-  end
-
-  def fill_queue_item_position_gaps
-    self.queue_items.reload.each_with_index do |item, index|
-      if item.position != index + 1
-        item.position = index + 1
-        item.save
-      end
+  def normalize_queue_positions
+    self.queue_items.each_with_index do |item, index|
+      item.position = index + 1
+      item.save
     end
   end
 end

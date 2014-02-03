@@ -6,7 +6,7 @@
       .video_info.col-sm-3
         %header
           %h3 #{@video.title}
-          - if @video.reviews.any?
+          - if reviews_with_rating_for_video(@video).any?
             %span Rating: #{@video.average_rating}/5.0
           - else
             %span Rating: No ratings yet, #{link_to 'rate it now', '#reviews'}.
@@ -38,9 +38,9 @@
           = f.submit 'Submit', class: 'btn'
           = link_to 'Cancel', video_path(@video)
       %header
-        %h3 User Reviews (#{@video.reviews.count})
+        %h3 User Reviews (#{reviews_with_rating_for_video(@video).count})
       %ul
-        - @video.reviews.each do |review|
+        - reviews_with_rating_for_video(@video).each do |review|
           %article.review
             %li.row
               .col-sm-2
