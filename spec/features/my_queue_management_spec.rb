@@ -29,31 +29,44 @@ feature 'My Queue management' do
   end
 
   scenario 'User adds multiple videos to their queue and then reorders them' do
-    find(:xpath, "//a[@href='#{video_path(first_video)}']").click
-    click_on '+ My Queue'
-    click_on 'Videos'
-    find(:xpath, "//a[@href='#{video_path(second_video)}']").click
-    click_on '+ My Queue'
-    click_on 'Videos'
-    find(:xpath, "//a[@href='#{video_path(third_video)}']").click
-    click_on '+ My Queue'
-    click_on 'My Queue'
+    add_video_to_queue(first_video)
+    add_video_to_queue(second_video)
+    add_video_to_queue(third_video)
 
-    within(:xpath, "//tr[contains(.,'#{first_video.title}')]") do
-      fill_in "queue_items[][position]", with: 3
-    end
+    browse_my_queue
 
-    within(:xpath, "//tr[contains(.,'#{second_video.title}')]") do
-      fill_in "queue_items[][position]", with: 1
-    end
+    assign_position_to_video(3, first_video)
+    assign_position_to_video(1, second_video)
+    assign_position_to_video(2, third_video)
 
-    within(:xpath, "//tr[contains(.,'#{third_video.title}')]") do
-      fill_in "queue_items[][position]", with: 2
-    end
+    update_instant_queue
 
-    click_on 'Update Instant Queue'
-    expect(find(:xpath, "//tr[contains(.,'#{first_video.title}')]//input[@id='queue_items__position']").value).to eq('3')
-    expect(find(:xpath, "//tr[contains(.,'#{second_video.title}')]//input[@id='queue_items__position']").value).to eq('1')
-    expect(find(:xpath, "//tr[contains(.,'#{third_video.title}')]//input[@id='queue_items__position']").value).to eq('2')
+    expect_video_to_have_position(first_video, 3)
+    expect_video_to_have_position(second_video, 1)
+    expect_video_to_have_position(third_video, 2)
   end
+end
+
+def add_video_to_queue(video)
+  click_on 'Videos'
+  find(:xpath, "//a[@href='#{video_path(video)}']").click
+  click_on '+ My Queue'
+end
+
+def browse_my_queue
+  click_on 'My Queue'
+end
+
+def assign_position_to_video(position, video)
+  within(:xpath, "//tr[contains(.,'#{video.title}')]") do
+    fill_in "queue_items[][position]", with: position
+  end
+end
+
+def update_instant_queue
+  click_on 'Update Instant Queue'
+end
+
+def expect_video_to_have_position(video, position)
+  expect(find(:xpath, "//tr[contains(.,'#{video.title}')]//input[@id='queue_items__position']").value).to eq(position.to_s)
 end
