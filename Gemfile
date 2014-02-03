@@ -8,6 +8,8 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
+gem 'bootstrap_form'
+gem 'bcrypt-ruby', '~> 3.1.2'
 
 group :development do
   gem 'sqlite3'
@@ -21,5 +23,13 @@ end
 group :production do
   gem 'pg'
   gem 'rails_12factor'
+end
+
+group :test do
+  gem 'shoulda-matchers'
+end
+
+group :development, :test do
+  gem 'rspec-rails'
 end
 
