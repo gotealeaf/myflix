@@ -30,11 +30,7 @@ class QueueItemsController < ApplicationController
 
   def update_queue
     if positions_are_valid?
-      params[:queue_items].each do |item_data|
-        queue_item = QueueItem.find(item_data[:id])
-        queue_item.update_attributes!(position: item_data[:position], rating: item_data[:rating]) if current_user == queue_item.user
-      end
-
+      update_queue_items
       current_user.normalize_queue_positions
 
       flash[:success] = 'You have successfully updated your queue.'
@@ -46,6 +42,13 @@ class QueueItemsController < ApplicationController
   end
 
   private
+
+  def update_queue_items
+    params[:queue_items].each do |item_data|
+      queue_item = QueueItem.find(item_data[:id])
+      queue_item.update_attributes!(position: item_data[:position], rating:   item_data[:rating]) if current_user == queue_item.user
+    end
+  end
 
   def positions_are_valid?
     params[:queue_items].map{|item|item[:position]}.select{|position|!(position =~ /\A\d+\z/)}.empty?
