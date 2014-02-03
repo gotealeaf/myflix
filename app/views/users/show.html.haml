@@ -15,7 +15,7 @@
             - @user.queue_items.each do |item|
               %tr
                 %td
-                  = link_to "#{item.video.title}", item
+                  = link_to "#{item.video.title}", item.video
                 %td
                   = link_to "#{item.video.category.name}", item.video.category
 
