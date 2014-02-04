@@ -1,7 +1,4 @@
 Myflix::Application.routes.draw do
-  root to: 'pages#front'
-
-  get 'ui(/:action)', controller: 'ui'
 
   get '/home', to: 'videos#index'
   resources :videos, except: [:destroy] do
@@ -18,4 +15,8 @@ Myflix::Application.routes.draw do
   get '/sign_in', to: 'sessions#new'
   get '/sign_out', to: 'sessions#destroy'
   resources :sessions, only: [:create]
+
+  root to: 'pages#front'
+
+  get 'ui(/:action)', controller: 'ui'
 end
