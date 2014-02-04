@@ -1,5 +1,5 @@
 class QueueItem < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :user, cache_counter: true
   belongs_to :video
 
   delegate :category, to: :video

@@ -13,8 +13,6 @@ describe ForgotPasswordsController  do
         post :create, email: ''
         expect(flash[:error]).to eq("You must enter your email address.")
       end
-
-      
     end
 
     context "with an email not in the system" do
@@ -40,7 +38,7 @@ describe ForgotPasswordsController  do
         expect(ActionMailer::Base.deliveries.last.to).to eq([alice.email])
       end
       it "should have a tokenized link to the reset password page"  do
-        # expect(ActionMailer::Base.deliveries.last.body).to have_content(alice.token)
+        expect(ActionMailer::Base.deliveries.last.body).to have_content(alice.token)
       end
     end
   end
