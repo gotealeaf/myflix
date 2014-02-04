@@ -9,11 +9,10 @@ describe Category do
 end
 
 describe Category do
-  it "has videos asociated" do
-    video = Video.create(title: "Test video", description: 'This is a really long description video.')
-    category = Category.create(title: 'Scary movies')
-    video.category = category
-    video.save
-    expect(category.videos.first).to eq(video)
+  it "has many videos" do
+    scary_movies = Category.create(title: 'Scary movies')
+    south_park = Video.create(title: "South Part", description: 'ThiSouth Parkly long description video.', category: scary_movies)
+    happy_video = Video.create(title: "Happy Video", description: 'ThiSouth Parkally long description video.', category: scary_movies)
+    expect(scary_movies.videos).to eq([south_park, happy_video])
   end
 end
