@@ -15,7 +15,7 @@ describe ForgotPasswordsController do
 
     context "with existing email" do
       it "redirects to the forgot password confirmation page" do
-        sam = Fabricate(:user, email: "jenny@example.com")
+        Fabricate(:user, email: "jenny@example.com")
         post :create, email: "jenny@example.com" 
         expect(response).to redirect_to forgot_password_confirmation_path
       end

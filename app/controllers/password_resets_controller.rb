@@ -4,7 +4,7 @@ class PasswordResetsController < ApplicationController
     if user 
       @token = user.token
     else
-      redirect_to expired_token_path unless user
+      redirect_to expired_token_path
     end
   end
 
