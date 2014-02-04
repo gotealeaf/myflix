@@ -7,6 +7,11 @@ describe User do
   it { should validate_uniqueness_of(:email) }
   it { should have_many(:queue_items).order(:position) }
 
+  it "generates a random token when the user is created" do
+    sam = Fabricate(:user)
+    expect(sam.token).to be_present
+  end
+
   describe "#queued_video?" do
     it "returns trun when the user queued the video" do
       user = Fabricate(:user)
