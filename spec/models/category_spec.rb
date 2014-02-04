@@ -6,9 +6,7 @@ describe Category do
     category.save
     expect(Category.first).to eq(category)
   end
-end
 
-describe Category do
   it "has many videos" do
     scary_movies = Category.create(title: 'Scary movies')
     south_park = Video.create(title: "South Part", description: 'ThiSouth Parkly long description video.', category: scary_movies)
