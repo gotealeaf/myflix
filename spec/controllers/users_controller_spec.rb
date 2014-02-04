@@ -19,6 +19,28 @@ describe UsersController do
       it "redirects to the root page" do
         expect(response).to redirect_to root_path 
       end
+      it "makes the user follow the inviter" do
+        sam = Fabricate(:user) 
+        invitation = Fabricate(:invitation, inviter: sam, recipient_email: 'vivian@example.com')
+        post :create, user: { email: 'vivian@example.com', password: 'password', full_name: 'Vivian' }, invitation_token: invitation.token
+        vivian = User.where(email: 'vivian@example.com').first
+        expect(vivian.follows?(sam)).to be_true
+      end
+
+      it "makes the inviter follow the user" do
+        sam = Fabricate(:user) 
+        invitation = Fabricate(:invitation, inviter: sam, recipient_email: 'vivian@example.com')
+        post :create, user: { email: 'vivian@example.com', password: 'password', full_name: 'Vivian' }, invitation_token: invitation.token
+        vivian = User.where(email: 'vivian@example.com').first
+        expect(sam.follows?(vivian)).to be_true
+      end
+
+      it "expires the invitation upon acceptance" do
+        sam = Fabricate(:user) 
+        invitation = Fabricate(:invitation, inviter: sam, recipient_email: 'vivian@example.com')
+        post :create, user: { email: 'vivian@example.com', password: 'password', full_name: 'Vivian' }, invitation_token: invitation.token
+        expect(Invitation.first.token).to be_nil
+      end
     end
 
     context "with incalid input" do
@@ -61,6 +83,12 @@ describe UsersController do
       invitation = Fabricate(:invitation)
       get :new_with_invitation_token, token: invitation.token
       expect(assigns(:user).email).to eq(invitation.recipient_email)
+    end
+
+    it "sets @invitation token" do
+      invitation = Fabricate(:invitation)
+      get :new_with_invitation_token, token: invitation.token
+      expect(assigns(:invitation_token)).to eq(invitation.token)
     end
 
     it "redirets to expired token page for invalid tokens" do

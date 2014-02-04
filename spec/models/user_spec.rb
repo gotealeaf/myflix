@@ -42,4 +42,19 @@ describe User do
       expect(sam.follows?(vivian)).to be_false
     end
   end
+
+  describe "#follow" do
+    it "follows another user" do
+       sam = Fabricate(:user)
+       vivian = Fabricate(:user)
+       sam.follow(vivian)
+       expect(sam.follows?(vivian)).to be_true
+    end
+    it "does not follow oneself" do
+       sam = Fabricate(:user)
+       sam.follow(sam)
+       expect(sam.follows?(sam)).to be_false
+       
+    end
+  end
 end
