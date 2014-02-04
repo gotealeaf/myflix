@@ -6,10 +6,11 @@
         %header
           %h1 Reset Your Password
         %fieldset
-          = label_tag :password, "New Password"
-          = hidden_field_tag :token, @token
           .row
-            .col-sm-4
-              = password_field_tag
+            .form-group
+              .col-sm-4
+                = label_tag :password, "New Password"
+                = hidden_field_tag :token, @token
+                = password_field_tag :password, nil, class: 'form-control'
         %fieldset.form-group.action
           %input(type="submit" value="Reset Password" class="btn btn-default")
