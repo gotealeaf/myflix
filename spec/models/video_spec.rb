@@ -15,6 +15,6 @@ describe Video do
     video.category = category
     video.save
     video1 = Video.first
-    expect(video.category.title).to eq(category.title)
+    expect(video.category).to eq(category)
   end
 end
