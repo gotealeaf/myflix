@@ -8,6 +8,10 @@ describe User do
   it { should validate_presence_of :password }
   it { should have_many :reviews }
   it { should have_many :queue_items }
+  it { should have_many :relationships }
+  it { should have_many :leaders }
+  it { should have_many :inverse_relationships }
+  it { should have_many :followers }
 
   let(:user) { Fabricate(:user) }
   it 'retrieves reviews in reverse cronological order' do
