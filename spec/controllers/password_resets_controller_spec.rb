@@ -17,7 +17,9 @@ describe PasswordResetsController do
     end
 
     it "redirects to the expired token page if the token is not valid" do
-      get :show, id: '12345'
+      sam = Fabricate(:user)
+      sam.update_column(:token, '12345')
+      get :show, id: '123456'
       expect(response).to redirect_to expired_token_path
     end
   end
