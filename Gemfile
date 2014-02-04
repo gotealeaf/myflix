@@ -22,6 +22,10 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
 end
 
+group :test do
+  gem 'shoulda-matchers'
+end
+
 group :production do
   gem 'pg'
   gem 'rails_12factor'
