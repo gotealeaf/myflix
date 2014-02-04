@@ -4,6 +4,6 @@ describe Category do
   it "saves itself" do
     category = Category.new(title: "Documentaries")
     category.save
-    Category.first.title.should == 'Documentaries'
+    expect(Category.first).to eq(category)
   end
 end
