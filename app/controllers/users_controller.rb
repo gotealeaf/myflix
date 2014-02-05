@@ -5,6 +5,11 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def new_with_invitation_token
+    @invitation = Invitation.find(token: params[:token])
+    
+  end
+
   def create
     @user = User.new(user_params)
     if @user.save
@@ -18,6 +23,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
   end
+
 
   private
 

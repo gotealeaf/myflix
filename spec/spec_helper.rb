@@ -13,6 +13,7 @@ require 'rspec/rails'
 # require 'rspec/autorun'
 
 require 'capybara/rspec'
+require 'capybara/email/rspec'
 
 
 # Requires supporting ruby files with custom matchers and macros, etc,
