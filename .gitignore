@@ -17,3 +17,6 @@
 # Ignore vim cache file
 *.swp
 *.swo
+
+# Ignore email server info
+config/environments/production.rb
