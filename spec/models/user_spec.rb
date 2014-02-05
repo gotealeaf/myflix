@@ -82,4 +82,39 @@ describe User do
       expect(user.reviews_with_rating).to eq([review2])
     end
   end
+
+  describe '#follows?(leader)' do
+    it 'returns true if user follows given user' do
+      adam = Fabricate(:user)
+      bryan = Fabricate(:user)
+      Fabricate(:relationship, user: adam, leader: bryan)
+      expect(adam.follows?(bryan)).to eq(true)
+    end
+
+    it 'returns false if user does not follow given user' do
+      adam = Fabricate(:user)
+      bryan = Fabricate(:user)
+      expect(adam.follows?(bryan)).to eq(false)
+    end
+  end
+
+  describe '#can_follow?(user)' do
+    it 'returns false if user and given user are the same' do
+      adam = Fabricate(:user)
+      expect(adam.can_follow?(adam)).to eq(false)
+    end
+
+    it 'returns false if user already follows given user' do
+      adam = Fabricate(:user)
+      bryan = Fabricate(:user)
+      Fabricate(:relationship, user: adam, leader: bryan)
+      expect(adam.can_follow?(bryan)).to eq(false)
+    end
+
+    it 'returns true if user is not given user and does not follow given user' do
+      adam = Fabricate(:user)
+      bryan = Fabricate(:user)
+      expect(adam.can_follow?(bryan)).to eq(true)
+    end
+  end
 end

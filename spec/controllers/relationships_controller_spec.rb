@@ -58,6 +58,15 @@ describe RelationshipsController do
         post :create, leader_id: bryan.id
         expect(flash[:success]).not_to be_blank
       end
+
+      it 'does not create the relationship if a matching one already exists' do
+        adam = Fabricate(:user)
+        set_current_user(adam)
+        bryan = Fabricate(:user)
+        Fabricate(:relationship, user: adam, leader: bryan)
+        post :create, leader_id: bryan.id
+        expect(flash[:danger]).not_to be_blank
+      end
     end
 
     context 'with invalid parameters' do

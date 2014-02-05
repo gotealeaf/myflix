@@ -26,4 +26,12 @@ class User < ActiveRecord::Base
   def reviews_with_rating
     reviews.where.not(rating: nil)
   end
+
+  def follows?(leader)
+    self.leaders.include?(leader)
+  end
+
+  def can_follow?(user)
+    self != user && !self.follows?(user)
+  end
 end

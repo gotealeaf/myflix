@@ -5,7 +5,10 @@
         %header
           %img(src="http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(@user.email.downcase)}?s=40")
           %h2 #{@user.full_name}'s video collections (#{@user.queue_items.count})
-          = link_to 'Follow', relationships_path(leader_id: "#{@user.id}"), method: :post, class: 'button btn btn-default', style: 'float: right'
+          - if current_user.can_follow?(@user)
+            = link_to 'Follow', relationships_path(leader_id: "#{@user.id}"), method: :post, class: 'button btn btn-default', style: 'float: right'
+          - elsif current_user != @user
+            = link_to 'Unfollow', relationship_path(Relationship.find_by_user_and_leader(current_user, @user)), method: :delete, class: 'button btn btn-default', style: 'float: right'
         %table.table
           %thead
             %tr
