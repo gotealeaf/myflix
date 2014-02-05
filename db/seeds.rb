@@ -10,7 +10,7 @@ drama = Category.create(name: 'Drama')
 sci_fi = Category.create(name: 'Sci-fi')
 action = Category.create(name: 'Action')
 
-Video.create(title: 'South Park Season 1', description: 'An awesome show about 4 young boys...', small_cover_url: 'south_park.jpg', large_cover_url: 'south_park_large.jpg', category: comedy)
+south_park = Video.create(title: 'South Park Season 1', description: 'An awesome show about 4 young boys...', small_cover_url: 'south_park.jpg', large_cover_url: 'south_park_large.jpg', category: comedy)
 Video.create(title: 'South Park Season 2', description: 'An awesome show about 4 young boys...', small_cover_url: 'south_park.jpg', large_cover_url: 'south_park_large.jpg', category: comedy)
 Video.create(title: 'South Park Season 3', description: 'An awesome show about 4 young boys...', small_cover_url: 'south_park.jpg', large_cover_url: 'south_park_large.jpg', category: comedy)
 Video.create(title: 'South Park Season 4', description: 'An awesome show about 4 young boys...', small_cover_url: 'south_park.jpg', large_cover_url: 'south_park_large.jpg', category: comedy)
@@ -36,3 +36,17 @@ Video.create(title: 'Family Guy Season 5', description: 'About an all but normal
 Video.create(title: 'Family Guy Season 6', description: 'About an all but normal family...', small_cover_url: 'family_guy.jpg', large_cover_url: 'family_guy_large.jpg', category: drama)
 
 Video.create(title: 'Money', description: 'this guys sucks', small_cover_url: 'monk.jpg', large_cover_url: 'monk_large.jpg', category: comedy)
+
+santa = User.create(full_name: "Santa Claus", password: "password", email: "santa@northpole.com")
+Review.create(user: santa, video: south_park, rating: 3, content: "This is a really good show.")
+Review.create(user: santa, video: south_park, rating: 4, content: "The funniest show never.")
+
+
+
+
+
+
+
+
+
+
