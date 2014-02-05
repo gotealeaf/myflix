@@ -26,5 +26,5 @@ Myflix::Application.configure do
     password:             'brincellstime',
     authentication:       'plain',
     enable_starttls_auto: true  }  
-  config.action_mailer.default_url_options = {'http://pure-refuge-7304.herokuapp.com/'}
+  config.action_mailer.default_url_options = { host: 'http://pure-refuge-7304.herokuapp.com/'}
 end
