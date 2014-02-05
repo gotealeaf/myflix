@@ -12,6 +12,9 @@ gem 'bootstrap_form'
 gem 'bcrypt-ruby'
 gem 'faker'
 gem 'fabrication'
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'slim'
 
 group :development do
   gem 'sqlite3'
