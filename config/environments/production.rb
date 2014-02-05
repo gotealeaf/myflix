@@ -27,7 +27,7 @@ Myflix::Application.configure do
      :address => "smtp.mailgun.org",
      :port => 587,
      :domain => "sandbox23726.mailgun.org",
-     :user_name => "brincells@gmail.com",
-     :password => "xiay123456"
+     :user_name => "postmaster@sandbox23726.mailgun.org",
+     :password => "4bbst8iogcf2"
 }
 end
