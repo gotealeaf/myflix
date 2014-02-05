@@ -84,7 +84,7 @@ describe RelationshipsController do
     end
   end
 
-  describe 'POST #destroy' do
+  describe 'DELETE #destroy' do
     it_behaves_like 'an unauthenticated user' do
       let(:action) { post :destroy, id: 1 }
     end
