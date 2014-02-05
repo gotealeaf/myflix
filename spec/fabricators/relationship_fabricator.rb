@@ -1,4 +1,4 @@
 Fabricator(:relationship) do
-  user { Fabricate(:user) }
+  follower { Fabricate(:user) }
   leader { Fabricate(:user) }
 end

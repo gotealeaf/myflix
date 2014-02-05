@@ -87,7 +87,7 @@ describe User do
     it 'returns true if user follows given user' do
       adam = Fabricate(:user)
       bryan = Fabricate(:user)
-      Fabricate(:relationship, user: adam, leader: bryan)
+      Fabricate(:relationship, follower: adam, leader: bryan)
       expect(adam.follows?(bryan)).to eq(true)
     end
 
@@ -107,7 +107,7 @@ describe User do
     it 'returns false if user already follows given user' do
       adam = Fabricate(:user)
       bryan = Fabricate(:user)
-      Fabricate(:relationship, user: adam, leader: bryan)
+      Fabricate(:relationship, follower: adam, leader: bryan)
       expect(adam.can_follow?(bryan)).to eq(false)
     end
 

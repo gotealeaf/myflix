@@ -15,8 +15,8 @@ describe RelationshipsController do
       set_current_user(adam)
       bryan = Fabricate(:user)
       charles = Fabricate(:user)
-      relationship1 = Fabricate(:relationship, user: adam, leader: bryan)
-      relationship2 = Fabricate(:relationship, user: adam, leader: charles)
+      relationship1 = Fabricate(:relationship, follower: adam, leader: bryan)
+      relationship2 = Fabricate(:relationship, follower: adam, leader: charles)
       get :index
       expect(assigns(:relationships)).to match_array([relationship1, relationship2])
     end
@@ -63,7 +63,7 @@ describe RelationshipsController do
         adam = Fabricate(:user)
         set_current_user(adam)
         bryan = Fabricate(:user)
-        Fabricate(:relationship, user: adam, leader: bryan)
+        Fabricate(:relationship, follower: adam, leader: bryan)
         post :create, leader_id: bryan.id
         expect(flash[:danger]).not_to be_blank
       end
@@ -101,7 +101,7 @@ describe RelationshipsController do
     it 'deletes the relationship with the given id' do
       adam = Fabricate(:user)
       set_current_user(adam)
-      relationship = Fabricate(:relationship, user: adam)
+      relationship = Fabricate(:relationship, follower: adam)
       post :destroy, id: relationship.id
       expect(adam.relationships).to eq([])
     end
@@ -117,7 +117,7 @@ describe RelationshipsController do
     it 'sets a success message if the relationship is deleted' do
       adam = Fabricate(:user)
       set_current_user(adam)
-      relationship = Fabricate(:relationship, user: adam)
+      relationship = Fabricate(:relationship, follower: adam)
       post :destroy, id: relationship.id
       expect(flash[:success]).not_to be_blank
     end
@@ -132,7 +132,7 @@ describe RelationshipsController do
     it 'redirects to the previous page' do
       adam = Fabricate(:user)
       set_current_user(adam)
-      relationship = Fabricate(:relationship, user: adam)
+      relationship = Fabricate(:relationship, follower: adam)
       post :destroy, id: relationship.id
       expect(response).to redirect_to(request.env['HTTP_REFERER'])
     end
