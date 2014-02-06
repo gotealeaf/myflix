@@ -10,8 +10,8 @@ def clear_current_user
   session[:user_id] = nil
 end
 
-def sign_in
-  user = Fabricate(:user, password: "password")
+def sign_in(a_user=nil)
+  user = a_user || Fabricate(:user, password: "password")
   visit root_path
   expect(page).to have_content "Unlimited"
   click_link "Sign In"

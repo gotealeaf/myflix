@@ -17,8 +17,13 @@ c2 = Category.create(name: "Political Dramas")
 c3 = Category.create(name: "Romantic Dramas")
 
 user_1 = User.create(email: "jlevinger@jtonedesigns.com", password: "joelevinger", full_name: "Joe Levinger")
-user_2 = User.create(email: "steve@gotealeaf.com", password: "steveturczyn", full_name: "Steve Turczyn")
+user_2 = User.create(email: "steveturczyn2009@gmail.com", password: "steveturczyn", full_name: "Steve Turczyn")
 user_3 = User.create(email: "lisamurphy0205@earthlink.net", password: "lisamurphy", full_name: "Lisa Murphy")
+
+Relationship.create(follower: user_1, leader: user_2)
+Relationship.create(follower: user_1, leader: user_3)
+Relationship.create(follower: user_2, leader: user_1)
+Relationship.create(follower: user_2, leader: user_3)
 
 gandhi = Video.create(title: "Gandhi", description: "This awe-inspiring biopic about Mahatma Gandhi -- the diminutive lawyer who stood up against British rule in India and became an international symbol of nonviolence and understanding -- brilliantly underscores the difference one person can make.", small_cover_url: 'tmp/gandhi.jpg', large_cover_url: 'tmp/gandhi_large.jpg', category: c1)
 schindlerslist = Video.create(title: "Schindler's List", description: "Liam Neeson stars as Oskar Schindler, a greedy German factory owner made rich by exploiting cheap Jewish labor. But as World War II unfolds, he becomes an unlikely humanitarian, spending his entire fortune to help save 1,100 Jews from Auschwitz.", small_cover_url: 'tmp/schindlerslist.jpg', large_cover_url: 'tmp/schindlerslist_large.png', category: c1)

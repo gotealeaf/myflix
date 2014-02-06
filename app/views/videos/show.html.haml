@@ -38,6 +38,6 @@
                 %span Rating: #{rating(review)}
                 %p
                   by
-                  = link_to review.user.full_name, "#"
+                  = link_to review.user.full_name, review.user
               .col-sm-8
-                %p #{review.body}
+                %p #{review_or_not_entered(review)}

@@ -13,4 +13,8 @@ module ApplicationHelper
   def rating_option
     [0,5,4,3,2,1].map {|number| [number != 0 ? pluralize(number, "Star") : 'not yet rated', number]}
   end
+
+  def review_or_not_entered(review)
+    review.body.to_s.empty? ? "[no review provided]" : review.body
+  end
 end
