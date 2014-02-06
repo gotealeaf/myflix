@@ -8,6 +8,7 @@
       = link_to video_path(video), nil do
         %img(src="#{video.small_cover_url}")
        
+/railscasts 28 in_groups_of attempted here       
 - @category.remaining_videos.in_groups_of(6, false) do |video_row|
   .videos.row
     - for video in video_row do 
