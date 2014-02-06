@@ -7,3 +7,10 @@
     .video.col-sm-2
       = link_to video_path(video), nil do
         %img(src="#{video.small_cover_url}")
+       
+- @category.remaining_videos.in_groups_of(6, false) do |video_row|
+  .videos.row
+    - for video in video_row do 
+      .video.col-sm-2
+        = link_to video_path(video), nil do
+          %img(src="#{video.small_cover_url}")
