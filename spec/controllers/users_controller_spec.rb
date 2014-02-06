@@ -11,7 +11,9 @@ describe UsersController do
 
   describe 'POST #create' do
     context 'with valid input' do
-      before { post :create, user: Fabricate.attributes_for(:user) }
+      before do
+        post :create, user: Fabricate.attributes_for(:user)
+      end
 
       it 'creates the user' do
         expect(User.count).to eq(1)
@@ -27,6 +29,10 @@ describe UsersController do
 
       it 'redirects to home path' do
         expect(response).to redirect_to home_path
+      end
+
+      it 'sends welcome email' do
+        expect(ActionMailer::Base.deliveries).not_to be_empty
       end
     end
 

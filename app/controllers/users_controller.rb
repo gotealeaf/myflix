@@ -14,6 +14,7 @@ class UsersController < ApplicationController
 
     if @user.save
       session[:user_id] = @user.id
+      AppMailer.welcome_email(@user).deliver
       flash[:success] = 'Account created successfully, you have been logged in.'
       redirect_to home_path
     else

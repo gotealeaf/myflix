@@ -32,10 +32,10 @@ group :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem 'guard-rspec', require: false
+  gem 'letter_opener'
 end
 
 group :production do
   gem 'pg'
   gem 'rails_12factor'
 end
-
