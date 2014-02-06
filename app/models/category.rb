@@ -7,8 +7,7 @@ class Category < ActiveRecord::Base
   end
 
   def remaining_videos
-    # initial_videos = self.recent_videos
-    # videos - initial_videos
-    videos - self.recent_videos
+     remainder = self.videos - self.recent_videos
+     remainder.sort_by(&:title)
   end
 end

@@ -40,6 +40,12 @@ describe Category do
       6.times {Fabricate(:video, title: "Initial",  category: category1)}
        expect(category1.remaining_videos.count).to eq(0)
     end
+    it "should order remaining videos by title" do
+      6.times {Fabricate(:video, title: "Initial",  category: category1)}
+      12.times {Fabricate(:video, title: "Remaining",created_at: 1.day.ago,  category: category1)}
+      Fabricate(:video, title: "First_in_line",created_at: 1.month.ago,  category: category1)
+      expect(category1.remaining_videos.first.title).to eq("First_in_line")
+    end
   end
 
 end
