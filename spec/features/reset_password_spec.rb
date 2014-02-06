@@ -10,12 +10,7 @@ feature "reset_password" do
 
  scenario "user clicks forgot password button at sign in" do
     visit sign_in_path
-    
-     find("a[href='/forgot_password']").click
-     #why couldn't I get these to work?
-    # find("a[id='forgot_password']").click
-    # find("a[class='btn-default']").click
-    # click_button("forgot_pass")  for value
+    find("a[href='/forgot_password']").click
     page.should have_css 'h1', text: "Forgot Password?"
   end
 
@@ -67,8 +62,6 @@ feature "reset_password" do
 
     #retry expired token
     visit reset_password_path(old_token)
-    page.should have_css 'p', text: 'Your reset password link is expired.'
+    page.should have_css 'p', text: 'That link is invalid or has expired.'
   end
-
-
 end

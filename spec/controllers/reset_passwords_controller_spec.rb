@@ -18,7 +18,7 @@ describe ResetPasswordsController do
       alice = Fabricate(:user)
       alice.update_column(:token, "12345")
       get :show, id: "invalid_token"
-      expect(response).to redirect_to expired_token_path
+      expect(response).to redirect_to failed_token_path
     end
   end
 
@@ -64,7 +64,7 @@ describe ResetPasswordsController do
         alice = Fabricate(:user, password: 'old_password')
         alice.update_column(:token, "12345")
         post :create, token: "invalid_token", password: 'new_password'
-        expect(response).to redirect_to expired_token_path
+        expect(response).to redirect_to failed_token_path
       end
     end
   end

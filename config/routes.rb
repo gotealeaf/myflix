@@ -1,6 +1,7 @@
 Myflix::Application.routes.draw do
 
   root to: 'pages#front'
+  get 'failed_token', to: 'pages#failed_token'
   get 'home', to: 'videos#index'
 
   get 'people', to: 'relationships#index'
@@ -25,6 +26,8 @@ Myflix::Application.routes.draw do
   resources :categories, only: [:show]
 
   get 'register', to: 'users#new'
+  get 'register/:token', to: 'users#new_with_invitation_token', as: 'register_with_token'
+
   resources :users, only: [:create, :show]
 
   get 'forgot_password', to: 'forgot_passwords#new'
@@ -38,5 +41,7 @@ Myflix::Application.routes.draw do
   get 'sign_out', to: 'sessions#destroy'
   resources :sessions, only: [:create]
 
+  # get 'invite_a_friend', to: 'invitations#new
+  resources :invitations, only: [:new, :create]
   get 'ui(/:action)', controller: 'ui'
 end

@@ -1,6 +1,8 @@
-class User < ActiveRecord::Base
 
-  before_create :generate_token
+require_relative 'concerns/tokenable'
+
+class User < ActiveRecord::Base
+ include Tokenable
 
   has_secure_password validations: false
   has_many :queue_items, -> { order(:position) }
@@ -35,10 +37,9 @@ class User < ActiveRecord::Base
       !(self.follows?(leader) || self == leader)
   end
 
-  def generate_token
-    self.token = SecureRandom.urlsafe_base64
+  def follow(leader)
+    if self.can_follow?(leader)
+      Relationship.create(follower_id: self.id, leader_id: leader.id)
+    end
   end
-
 end
-
-

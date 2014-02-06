@@ -4,4 +4,10 @@ shared_examples "requires sign in" do
     action
     expect(response).to redirect_to sign_in_path
   end
- end
+end
+
+ shared_examples "tokenable" do
+  it "should generate a random token at create" do
+      expect(object.token).to be_present
+  end
+end

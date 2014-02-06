@@ -38,5 +38,7 @@ group :test do
   gem 'launchy'
   gem 'capybara' 
   gem 'shoulda-matchers' 
+  gem 'capybara-email'
+
   # gem 'letter_opener'
 end
