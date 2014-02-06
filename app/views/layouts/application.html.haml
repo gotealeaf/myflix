@@ -12,6 +12,10 @@
       = render 'shared/header'
      
     %section.content.clearfix
+    
+      /params display
+      = params.inspect if Rails.env.development?
+
       = render 'shared/messages'
       = yield
     %footer
