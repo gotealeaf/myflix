@@ -4,10 +4,9 @@ describe User do
 
   it {should have_many(:queue_items).order(:position)}
 
-  it "should generate a random token at create" do
-      alice = Fabricate(:user)
-      expect(alice.token).to be_present
-    end
+  it_behaves_like "tokenable" do
+    let(:object) {Fabricate(:user)} 
+  end
 
   describe '#queued_video_previsouly?' do
     let!(:user1) {Fabricate(:user)}
@@ -46,7 +45,19 @@ describe User do
     end
   end
 
-  describe "#generate_token" do
+
+  describe "#follow" do
+    it "should make the user follow the leader" do
+      cindy = Fabricate(:user)
+      dillon = Fabricate(:user)
+      cindy.follow(dillon)
+      expect(cindy.follows?(dillon)).to be_true
+    end
+    it "should not make the user follow himself" do
+      alice = Fabricate(:user)
+      alice.follow(alice)
+      expect(alice.follows?(alice)).to be_false
+    end
 
   end
 

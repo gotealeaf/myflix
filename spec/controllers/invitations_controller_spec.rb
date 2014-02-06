@@ -53,15 +53,12 @@ describe InvitationsController  do
        context "with invalid inputs" do
         before { post :create, invitation: {recipient_name: "Jim"}}
         it "should redirect back to the new page" do
-          # post :create, invitation: {recipient_name: "Jim"}
           expect(Invitation.count).to be(0)
         end
         it "should not create a new invitation" do
-             # post :create, invitation: {recipient_name: "Jim"}
           expect(Invitation.count).to eq(0)
         end
          it "should not send an invitation email"  do
-             # post :create, invitation: {recipient_name: "Jim"
              expect(ActionMailer::Base.deliveries.count).to eq(0)
         end
          it "sets the flash success message" do

@@ -1,28 +1,5 @@
 require 'spec_helper'
 
-feature "reset_password_refactor" do
-  let!(:alice) {Fabricate(:user, password: 'old_password')}
-
-  scenario "work-flow" do
-    visit sign_in_path
-    click_on("Forgot Password")
-
-    fill_in 'Email Address', with: alice.email
-    click_on 'Send Email'
-
-    open_email(alice.email)
-    current_email.click_link('Reset my password')
-
-    fill_in "New Password", with: "new_password"
-    click_on('Reset Password')
-
-    fill_in "Email Address", with: alice.email
-    fill_in "Password", with: "new_password"
-    click_on "Sign in"
-    page.should have_content alice.full_name
-  end
-end
-
 feature "reset_password" do
   let!(:alice) {Fabricate(:user, email: 'me@them.com')}
 
@@ -33,9 +10,8 @@ feature "reset_password" do
 
  scenario "user clicks forgot password button at sign in" do
     visit sign_in_path
-    
-     find("a[href='/forgot_password']").click
-     page.should have_css 'h1', text: "Forgot Password?"
+    find("a[href='/forgot_password']").click
+    page.should have_css 'h1', text: "Forgot Password?"
   end
 
   scenario "user enters valid, invalid and blank email and clicks for reset " do
@@ -86,8 +62,6 @@ feature "reset_password" do
 
     #retry expired token
     visit reset_password_path(old_token)
-    page.should have_css 'p', text: 'Your reset password link is expired.'
+    page.should have_css 'p', text: 'That link is invalid or has expired.'
   end
-
-
 end

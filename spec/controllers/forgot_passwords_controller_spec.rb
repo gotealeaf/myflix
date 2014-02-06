@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe ForgotPasswordsController  do
 
+
   describe "POST create"  do
+   # ActionMailer::Base.deliveries.clear
 
     context "with blank email" do
       it" redirects to the forgot passsword page" do
@@ -27,7 +29,7 @@ describe ForgotPasswordsController  do
     end
 
     context "with an email in the system" do 
-      let(:alice) {Fabricate(:user)}
+      let!(:alice) {Fabricate(:user)}
       it "should redirect to the confirm password reset page" do
         # alice = Fabricate(:user)
         post :create, email: alice.email
@@ -36,9 +38,6 @@ describe ForgotPasswordsController  do
       it "should send an email to the user" do
         post :create, email: alice.email
         expect(ActionMailer::Base.deliveries.last.to).to eq([alice.email])
-      end
-      it "should have a tokenized link to the reset password page"  do
-        expect(ActionMailer::Base.deliveries.last.body).to have_content(alice.token)
       end
     end
   end
