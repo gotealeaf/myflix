@@ -27,7 +27,7 @@ describe AppMailer do
 
     it 'sets the correct body' do
       body_string = "Welcome to myflix, #{user.full_name}.\nWe are currently expanding our video library, so make sure you check out the library often!"
-      expect(email.body.to_s.index(body_string)).not_to be_nil
+      expect(email.body.to_s).to include(body_string)
     end
   end
 end
