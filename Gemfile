@@ -17,6 +17,7 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
 gem 'redis'
+gem 'unicorn'
 
 
 group :development do
