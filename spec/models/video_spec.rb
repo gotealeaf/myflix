@@ -35,7 +35,7 @@ describe Video do
     end
   end
 
-  describe "average rating" do
+  describe "#average rating" do
     it "should return 0 if no ratings" do
       alice = Fabricate(:video)
       expect(alice.average_rating).to eq 0.0
@@ -48,13 +48,31 @@ describe Video do
     end
   end
 
-  describe "reviews" do
-    it "should return reviews in reverse chronological order" do
-      alice = Fabricate(:video)
-      review1 = Fabricate(:review, rating: 5, created_at: 1.day.ago, video: alice, user: Fabricate(:user))
-      review2 = Fabricate(:review, rating: 2, created_at: 0.days.ago, video: alice, user: Fabricate(:user))
-      expect(alice.reviews.first).to eq review2
+  describe "#on_queue?" do
+    it "returns true when the user has queued the video" do
+      user = Fabricate(:user)
+      video = Fabricate(:video)
+      Fabricate(:queue_item, user: user, video: video)
+      video.on_queue?(user).should eq true
+    end
+    it "returns false when the user hasn't queued the video" do
+      user = Fabricate(:user)
+      video = Fabricate(:video)
+      video.on_queue?(user).should eq false
     end
   end
 
+  describe "#reviewed?" do
+    it "returns true when the user has reviewed the video" do
+      user = Fabricate(:user)
+      video = Fabricate(:video)
+      Fabricate(:review, user: user, video: video)
+      video.reviewed?(user).should eq true
+    end
+    it "returns false when the user hasn't reviewed the video" do
+      user = Fabricate(:user)
+      video = Fabricate(:video)
+      video.reviewed?(user).should eq false
+    end
+  end
 end

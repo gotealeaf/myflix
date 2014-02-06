@@ -22,4 +22,8 @@ class Video < ActiveRecord::Base
   def on_queue?(user)
     !!queue_items.where(user: user).first
   end
+
+  def category_name
+    category.name if category
+  end
 end

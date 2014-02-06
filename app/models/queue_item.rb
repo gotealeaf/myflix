@@ -22,6 +22,8 @@ class QueueItem < ActiveRecord::Base
     category.name if category
   end
 
+  private
+
   def review
     @review ||= video.reviews.find_by_user_id(user_id)
   end
