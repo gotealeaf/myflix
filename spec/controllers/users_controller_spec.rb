@@ -51,6 +51,15 @@ describe UsersController do
         expect(assigns(:user)).to be_instance_of(User)
       end
     end
+    context "email sending" do
+      it "sends out the email" do
+        post :create, user: {email: 'alice@example.com', password: 'alice', full_name: 'Alice Humperdink'}
+        ActionMailer::Base.deliveries.should_not be_empty
+      end
+      it "sends to the right recipient"
+      it "has the right content"
+      it "does not send an email if the user record is invalid"
+    end
   end
 
   private
