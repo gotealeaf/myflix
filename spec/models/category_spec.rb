@@ -27,4 +27,19 @@ describe Category do
       expect(category1.recent_videos).not_to include elder
     end
   end
+
+  describe "remaining videos" do
+    let!(:category1) {Fabricate(:category, name: "Category1")}
+    it "should return the total less six videos" do
+      6.times {Fabricate(:video, title: "Initial",  category: category1)}
+      12.times {Fabricate(:video, title: "Remaining",created_at: 1.day.ago,  category: category1)}
+      expect(category1.remaining_videos.count).to eq(12)
+      expect(category1.remaining_videos.first.title).to eq("Remaining")
+    end
+    it "should return no videos if there are 6 or less" do
+      6.times {Fabricate(:video, title: "Initial",  category: category1)}
+       expect(category1.remaining_videos.count).to eq(0)
+    end
+  end
+
 end
