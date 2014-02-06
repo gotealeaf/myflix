@@ -1,5 +1,8 @@
+require 'sidekiq/web'
+
 Myflix::Application.routes.draw do
 
+  mount Sidekiq::Web, at: '/sidekiq'
   root to: 'pages#front'
   get 'failed_token', to: 'pages#failed_token'
   get 'home', to: 'videos#index'

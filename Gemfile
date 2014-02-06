@@ -12,14 +12,17 @@ gem 'bcrypt-ruby'
 gem 'bootstrap_form'
 gem 'fabrication'
 gem 'faker'
-gem 'figaro'
+gem 'figaro' # sets environment variables
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'slim'
+
 
 group :development do
   gem 'sqlite3'
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
-  # gem 'letter_opener'
 end
 
 group :production do
@@ -31,14 +34,12 @@ group :test, :development do
   gem 'pry'
   gem 'pry-nav'
   gem "rspec-rails"
-  gem 'letter_opener'
+  gem 'letter_opener' # opens emails in the browser
 end
 
 group :test do
-  gem 'launchy'
+  gem 'launchy'  # allows save_and_open_page for capybara
   gem 'capybara' 
   gem 'shoulda-matchers' 
   gem 'capybara-email'
-
-  # gem 'letter_opener'
 end
