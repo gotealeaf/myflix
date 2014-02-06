@@ -8,6 +8,10 @@ describe User do
   it { should validate_presence_of :password }
   it { should have_many :reviews }
   it { should have_many :queue_items }
+  it { should have_many :relationships }
+  it { should have_many :leaders }
+  it { should have_many :inverse_relationships }
+  it { should have_many :followers }
 
   let(:user) { Fabricate(:user) }
   it 'retrieves reviews in reverse cronological order' do
@@ -50,6 +54,67 @@ describe User do
       user.normalize_queue_positions
       expect(queue_item1.reload.position).to eq(2)
       expect(queue_item2.reload.position).to eq(1)
+    end
+  end
+
+  describe '#reviews_with_rating' do
+    it 'returns an empty array if none of the given users reviews have ratings' do
+      review1 = Fabricate(:review, creator: user)
+      review1.rating = nil
+      review1.save(validate: false)
+      review2 = Fabricate(:review, creator: user)
+      review2.rating = nil
+      review2.save(validate: false)
+      expect(user.reviews_with_rating).to eq([])
+    end
+
+    it 'returns an array containing all reviews by given user that have a rating' do
+      review1 = Fabricate(:review, creator: user)
+      review2 = Fabricate(:review, creator: user)
+      expect(user.reviews_with_rating).to match_array([review1, review2])
+    end
+
+    it 'does not include any reviews that have a nil rating value' do
+      review1 = Fabricate(:review, creator: user)
+      review1.rating = nil
+      review1.save(validate: false)
+      review2 = Fabricate(:review, creator: user)
+      expect(user.reviews_with_rating).to eq([review2])
+    end
+  end
+
+  describe '#follows?(leader)' do
+    it 'returns true if user follows given user' do
+      adam = Fabricate(:user)
+      bryan = Fabricate(:user)
+      Fabricate(:relationship, follower: adam, leader: bryan)
+      expect(adam.follows?(bryan)).to eq(true)
+    end
+
+    it 'returns false if user does not follow given user' do
+      adam = Fabricate(:user)
+      bryan = Fabricate(:user)
+      expect(adam.follows?(bryan)).to eq(false)
+    end
+  end
+
+  describe '#can_follow?(user)' do
+    it 'returns false if user and given user are the same' do
+      adam = Fabricate(:user)
+      expect(adam.can_follow?(adam)).to eq(false)
+    end
+
+    it 'returns false if user already follows given user' do
+      adam = Fabricate(:user)
+      bryan = Fabricate(:user)
+      Fabricate(:relationship, follower: adam, leader: bryan)
+      expect(adam.can_follow?(bryan)).to eq(false)
+    end
+
+    it 'returns true if user is not given user and does not follow given user' do
+      adam = Fabricate(:user)
+      bryan = Fabricate(:user)
+      expect(adam.can_follow?(bryan)).to eq(true)
     end
   end
 end

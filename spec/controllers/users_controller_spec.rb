@@ -46,4 +46,17 @@ describe UsersController do
       end
     end
   end
+
+  describe 'GET #show' do
+    before { set_current_user }
+    it_behaves_like 'an unauthenticated user' do
+      let(:action) { get :show, id: 1 }
+    end
+
+    it 'sets the @user variable based on the provided id' do
+      adam = Fabricate(:user)
+      get :show, id: adam.id
+      expect(assigns(:user)).to eq(adam)
+    end
+  end
 end
