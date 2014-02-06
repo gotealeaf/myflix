@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   end
 
   def allow_to_follow?(other_user)
-    !(following?(other_user) || self == other_user)
+    !following?(other_user) && self != other_user
   end
 
   private
