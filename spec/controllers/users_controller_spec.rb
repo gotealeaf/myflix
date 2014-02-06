@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe UsersController do
+  before do
+    ActionMailer::Base.deliveries.clear
+  end
 
   describe 'GET #new' do
     it 'should set up @user variable' do
@@ -49,6 +52,10 @@ describe UsersController do
 
       it 'sets @user' do
         expect(assigns(:user)).to be_instance_of(User)
+      end
+
+      it 'does not send welcome email' do
+        expect(ActionMailer::Base.deliveries).to be_empty
       end
     end
   end
