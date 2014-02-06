@@ -218,6 +218,7 @@ DEPENDENCIES
   pry-nav
   rails
   rails_12factor
+  redis
   rspec-rails
   sass-rails
   shoulda-matchers

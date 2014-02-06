@@ -16,6 +16,7 @@ gem 'figaro' # sets environment variables
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
+gem 'redis'
 
 
 group :development do
