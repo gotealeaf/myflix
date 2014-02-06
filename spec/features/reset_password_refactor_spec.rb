@@ -21,11 +21,6 @@ feature "reset_password" do
     visit sign_in_path
     sign_in(alice)
 
-
-    # fill_in 'Email Address', with: alice.email
-    # fill_in 'Password', with: "new_password"
-    # fill_in 'Password', with: alice.password_digest
-    # click_button "Sign in"
     page.should have_content alice.full_name
   end
 end

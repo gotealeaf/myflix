@@ -1,7 +1,5 @@
 class ResetPasswordsController < ApplicationController
 
-  
-
   def show
     @user = User.where(token: params[:id]).first
     @token = @user.token if @user

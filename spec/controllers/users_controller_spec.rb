@@ -34,6 +34,8 @@ describe UsersController do
   end
 
   describe "POST create" do
+after {ActionMailer::Base.deliveries.clear}
+
     context "with valid input" do
       before { post :create, user: Fabricate.attributes_for(:user)}
 
@@ -79,7 +81,6 @@ describe UsersController do
     end
 
     context "email sending" do
-      after {ActionMailer::Base.deliveries.clear}
   
       it "sends out the email" do
         post :create, user: Fabricate.attributes_for(:user)

@@ -45,7 +45,6 @@ describe User do
     end
   end
 
-
   describe "#follow" do
     it "should make the user follow the leader" do
       cindy = Fabricate(:user)
@@ -58,7 +57,5 @@ describe User do
       alice.follow(alice)
       expect(alice.follows?(alice)).to be_false
     end
-
   end
-
 end

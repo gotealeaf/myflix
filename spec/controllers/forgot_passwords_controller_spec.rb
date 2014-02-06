@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe ForgotPasswordsController  do
 
-
   describe "POST create"  do
    # ActionMailer::Base.deliveries.clear
 

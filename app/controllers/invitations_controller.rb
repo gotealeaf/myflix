@@ -1,7 +1,6 @@
 class InvitationsController < ApplicationController
 
   before_action :require_user
-
     
   def new
     @invitation = Invitation.new  
@@ -21,12 +20,9 @@ class InvitationsController < ApplicationController
     end
   end
 
-
-private
+  private
 
   def invitation_params
     params.require(:invitation).permit(:recipient_name, :recipient_email, :message, :inviter_id)
-    
   end
-
 end
