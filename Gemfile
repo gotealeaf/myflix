@@ -23,6 +23,7 @@ group :development do
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
+  gem 'letter_opener' # opens emails in the browser
 end
 
 group :production do
@@ -34,7 +35,7 @@ group :test, :development do
   gem 'pry'
   gem 'pry-nav'
   gem "rspec-rails"
-  gem 'letter_opener' # opens emails in the browser
+ 
 end
 
 group :test do

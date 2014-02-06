@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe InvitationsController  do 
+describe InvitationsController, sidekiq: :inline  do 
 
   describe "GET new"  do
     it_behaves_like "requires sign in" do

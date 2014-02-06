@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
- 
-  before_action :require_user, only: [:show ]
+    before_action :require_user, only: [:show ]
 
   def new
     @user = User.new
@@ -21,7 +20,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      AppMailer.welcome_email(@user).deliver
+      AppMailerWorker.perform_async(@user.id)
+      # other options
+      # AppMailer.delay.welcome_email(@user.id)
+      # AppMailer.welcome_email(@user.id).deliver
       handle_invitation
       sign_in_new_user
     else
@@ -38,8 +40,8 @@ class UsersController < ApplicationController
   def handle_invitation
     if params[:invitation_token].present?
       invitation = Invitation.where(token: params[:invitation_token]).first
-      @user.follow(invitation.inviter)
       invitation.inviter.follow(@user)
+      @user.follow(invitation.inviter)
       invitation.update_columns(token: nil)
     end
   end

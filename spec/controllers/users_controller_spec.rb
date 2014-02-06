@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-describe UsersController do
+
+describe UsersController, sidekiq: :inline do
 
   describe "GET new" do
     it "sets the @user variable" do
@@ -69,7 +70,7 @@ after {ActionMailer::Base.deliveries.clear}
         friend = User.where(email: invite.recipient_email).first
         expect(inviter.follows?(friend)).to be_true
       end
-      it "makes the inviter follow the user" do
+      it "resets the invitation token" do
         inviter = Fabricate(:user)
         invite = Fabricate(:invitation, inviter_id: inviter.id)
         user_attributes = Fabricate.attributes_for(:user, email: invite.recipient_email)
