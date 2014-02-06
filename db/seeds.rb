@@ -156,9 +156,9 @@ Review.create(rating: 5, body: 'Amazing!', creator: brandon, video: sons_of_anar
 
 Review.create(rating: 2, body: 'Blech!', creator: brandon, video: american_idol)
 
-brandon.queue_items.create(video: american_idol, position: brandon.next_available_position)
-brandon.queue_items.create(video: the_big_bang_theory, position: brandon.next_available_position)
-brandon.queue_items.create(video: sons_of_anarchy, position: brandon.next_available_position)
+brandon.queue_items.create(video: american_idol, position: QueueItem.next_available_position(brandon))
+brandon.queue_items.create(video: the_big_bang_theory, position: QueueItem.next_available_position(brandon))
+brandon.queue_items.create(video: sons_of_anarchy, position: QueueItem.next_available_position(brandon))
 
-adam = Fabricate(:user)
-Fabricate(:relationship, follower: brandon, leader: adam)
+adam = User.create(email: 'adam@email.com', password: 'password', full_name: 'Adam')
+Relationship.create(follower: brandon, leader: adam)
