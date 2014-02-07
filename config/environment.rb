@@ -6,3 +6,4 @@ Myflix::Application.initialize!
 
 #recognize haml templates
 # ActionMailer::Base.register_template_extension('haml')
+
