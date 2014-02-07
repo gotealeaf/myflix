@@ -52,13 +52,25 @@ describe UsersController do
       end
     end
     context "email sending" do
+      before { ActionMailer::Base.deliveries.clear }
       it "sends out the email" do
         post :create, user: {email: 'alice@example.com', password: 'alice', full_name: 'Alice Humperdink'}
         ActionMailer::Base.deliveries.should_not be_empty
       end
-      it "sends to the right recipient"
-      it "has the right content"
-      it "does not send an email if the user record is invalid"
+      it "sends to the right recipient" do
+        post :create, user: {email: 'alice@example.com', password: 'alice', full_name: 'Alice Humperdink'}
+        message = ActionMailer::Base.deliveries.last
+        expect(message.to).to eq(['alice@example.com'])
+      end
+      it "has the right content" do
+        post :create, user: {email: 'alice@example.com', password: 'alice', full_name: 'Alice Humperdink'}
+        message = ActionMailer::Base.deliveries.last
+        expect(message.body).to include('Alice Humperdink')
+      end
+      it "does not send an email if the user record is invalid" do
+        post :create, user: {email: 'alice@example.com', password: 'alice', full_name: ''}
+        expect(ActionMailer::Base.deliveries.count).to eq(0)
+      end
     end
   end
 

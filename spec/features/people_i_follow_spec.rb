@@ -26,7 +26,7 @@ feature "test people i follow functionality" do
   def go_to_video_from_home(video)
     click_link "Videos"
     expect(current_path).to eq(videos_path)
-    find("a[href='/videos/#{video.id}']").click
+    click_on_video_on_home_page(video)
     expect(current_path).to eq(video_path(video))
     expect(page).to have_content video.title
   end
@@ -52,7 +52,7 @@ feature "test people i follow functionality" do
   end
 
   def remove_user(user)
-    find("a[href='/relationships/#{user.id}']").click
+    find("a[data-method='delete']").click
   end
 
   def verify_user_not_on_list(user)
