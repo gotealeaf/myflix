@@ -4,7 +4,8 @@ class VideosController < ApplicationController
   end
 
   def search
-    @videos = Video.search_by_title(params[:search_term])
+    @videos = Video.search_by_title(params[:q])
+    binding.pry
     if @videos == []
       redirect_to :back
     else
