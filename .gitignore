@@ -19,4 +19,4 @@
 *.swo
 
 # Ignore email server info
-config/environments/production.rb
+# config/environments/production.rb
