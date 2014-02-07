@@ -7,9 +7,8 @@ describe User do
   it { should validate_uniqueness_of(:email) }
   it { should have_many(:queue_items).order(:position) }
 
-  it "generates a random token when the user is created" do
-    sam = Fabricate(:user)
-    expect(sam.token).to be_present
+  it_behaves_like "tokenable" do
+    let(:object) { Fabricate(:user) }
   end
 
   describe "#queued_video?" do
@@ -40,6 +39,21 @@ describe User do
       sam = Fabricate(:user)
       vivian = Fabricate(:user)
       expect(sam.follows?(vivian)).to be_false
+    end
+  end
+
+  describe "#follow" do
+    it "follows another user" do
+       sam = Fabricate(:user)
+       vivian = Fabricate(:user)
+       sam.follow(vivian)
+       expect(sam.follows?(vivian)).to be_true
+    end
+    it "does not follow oneself" do
+       sam = Fabricate(:user)
+       sam.follow(sam)
+       expect(sam.follows?(sam)).to be_false
+       
     end
   end
 end
