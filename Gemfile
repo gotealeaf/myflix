@@ -10,8 +10,7 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
-gem 'fabrication'
-gem 'faker'
+
 
 group :development do
   gem 'sqlite3'
@@ -29,6 +28,8 @@ end
 
 group :test, :development do
 	gem 'rspec-rails', '~> 2.0'
+  gem 'fabrication'
+  gem 'faker'
 end
 
 group :test do
