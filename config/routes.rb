@@ -9,6 +9,7 @@ Myflix::Application.routes.draw do
   end
 
   get '/genre/:id', to: 'categories#show', as: 'category'
+  resources :queue_items, only: [:create]
 
   get '/register', to: 'users#new'
   resources :users, only: [:create]
@@ -16,6 +17,8 @@ Myflix::Application.routes.draw do
   get '/sign_in', to: 'sessions#new'
   get '/sign_out', to: 'sessions#destroy'
   resources :sessions, only: [:create]
+
+  get '/my_queue', to: 'queue_items#index'
 
   root to: 'pages#front'
 
