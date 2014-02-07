@@ -8,4 +8,9 @@ module ApplicationHelper
   def already_queued?(video)
     current_user.queue_items.map(&:video).include?(video)
   end
+
+
+  def page_title(title_string)
+  content_for(:title) { title_string }
+  end
 end
