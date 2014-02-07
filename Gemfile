@@ -8,6 +8,21 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
+gem 'bcrypt-ruby'
+gem 'bootstrap_form'
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0.0.beta'
+end
+
+group :test do
+  gem 'shoulda-matchers'
+  gem 'faker'
+  gem 'fabrication'
+  gem 'capybara'
+  gem 'rack_session_access'
+  gem 'launchy'
+end
 
 group :development do
   gem 'sqlite3'
@@ -16,10 +31,11 @@ group :development do
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
+  gem 'guard-rspec', require: false
+  gem 'letter_opener'
 end
 
 group :production do
   gem 'pg'
   gem 'rails_12factor'
 end
-

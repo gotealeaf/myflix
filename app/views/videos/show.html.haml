@@ -1,0 +1,50 @@
+%article.video
+  .container
+    .row
+      .video_large_cover.col-sm-7.col-sm-offset-1
+        %img(src="#{@video.large_cover_url}")
+      .video_info.col-sm-3
+        %header
+          %h3 #{@video.title}
+          - if reviews_with_rating_for_video(@video).any?
+            %span Rating: #{@video.average_rating}/5.0
+          - else
+            %span Rating: No ratings yet, #{link_to 'rate it now', '#reviews'}.
+        %p #{@video.description}
+        .actions
+          %a.btn.btn-primary(href="") Watch Now
+          - if current_user.has_queued_video?(@video)
+            = link_to '- My Queue', queue_item_path(QueueItem.find_by_user_and_video(current_user, @video)), method: :delete, class: 'btn btn-default'
+          -else
+            = link_to '+ My Queue', queue_items_path(video_id: @video.id), method: :post, class: 'btn btn-default'
+
+
+%section.reviews.container#reviews
+  .row
+    .col-sm-10.col-sm-offset-1
+      = form_for [@video, @review] do |f|
+        %fieldset
+          .form-group
+            = f.label :rating, 'Rate this video'
+            .row
+              .col-sm-3
+                = f.select :rating, [['5 Stars', 5], ['4 Stars', 4], ['3 Stars', 3], ['2 Stars', 2], ['1 Star', 1]], {}, class: 'form-control'
+          .form-group
+            = f.label :body, 'Write Review'
+            .row
+              .col-sm-8
+                = f.text_area :body, rows: 6, class: 'form-control'
+        %fieldset.form-group.actions.clearfix
+          = f.submit 'Submit', class: 'btn'
+          = link_to 'Cancel', video_path(@video)
+      %header
+        %h3 User Reviews (#{reviews_with_rating_for_video(@video).count})
+      %ul
+        - reviews_with_rating_for_video(@video).each do |review|
+          %article.review
+            %li.row
+              .col-sm-2
+                %span Rating: #{review.rating} / 5
+                = link_to "#{review.creator.full_name}", user_path(review.creator)
+              .col-sm-8
+                %p #{review.body}
