@@ -18,6 +18,7 @@ gem 'sinatra', require: false
 gem 'slim'
 gem 'redis'
 gem 'unicorn'
+gem 'foreman'
 
 
 group :development do

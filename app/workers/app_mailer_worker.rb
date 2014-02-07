@@ -23,3 +23,6 @@ end
 # bump pool size in environmnets 
 # using the queue set it when starting the server with -q
   # bundle exec sidekiq -q high,5 mail,3, default,1 
+
+#to check if redis is srunning  redis-cli ping   if you get pong it is.
+#shut it down with redis-cli shutdown
