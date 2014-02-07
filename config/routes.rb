@@ -21,6 +21,7 @@ Myflix::Application.routes.draw do
   resources :sessions, only: [:create]
   resources :queue_items, only: [:index]
   resources :relationships, only: [:destroy]
+  resources :reset_password, only: [:index]
 
   get 'ui(/:action)', controller: 'ui'
 end

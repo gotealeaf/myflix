@@ -55,7 +55,7 @@ describe UsersController do
       before { ActionMailer::Base.deliveries.clear }
       it "sends out the email" do
         post :create, user: {email: 'alice@example.com', password: 'alice', full_name: 'Alice Humperdink'}
-        ActionMailer::Base.deliveries.should_not be_empty
+        expect(ActionMailer::Base.deliveries).to_not be_empty
       end
       it "sends to the right recipient" do
         post :create, user: {email: 'alice@example.com', password: 'alice', full_name: 'Alice Humperdink'}
