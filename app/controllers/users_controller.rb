@@ -27,8 +27,12 @@ class UsersController < ApplicationController
       render :forgot_password
     else
       user = User.find_by(email: params[:email_address])
-      user.generate_password_reset_token unless user.nil?
-      AppMailer.send_password_reset_email(user).deliver
+
+      if user
+        user.generate_password_reset_token
+        AppMailer.send_password_reset_email(user).deliver
+      end
+
       redirect_to confirm_password_reset_path
     end
   end

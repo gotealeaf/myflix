@@ -74,29 +74,38 @@ describe UsersController do
   end
 
   describe 'POST #forgot_password' do
-    it 'redirects to confirm_password_reset_path if an email address was provided' do
-      adam = Fabricate(:user)
-      post :forgot_password, email_address: adam.email
-      expect(response).to redirect_to(confirm_password_reset_path)
+    context 'with valid email address parameter' do
+      it 'redirects to confirm_password_reset_path if email address was provided' do
+        adam = Fabricate(:user)
+        post :forgot_password, email_address: adam.email
+        expect(response).to redirect_to(confirm_password_reset_path)
+      end
+
+      it 'creates a reset token' do
+        adam = Fabricate(:user)
+        expect(adam.password_reset_token).to be_nil
+        post :forgot_password, email_address: adam.email
+        expect(adam.reload.password_reset_token).not_to be_nil
+      end
+
+      it 'sends a password reset email' do
+        adam = Fabricate(:user)
+        expect(adam.password_reset_token).to be_nil
+        post :forgot_password, email_address: adam.email
+        expect(ActionMailer::Base.deliveries).not_to be_empty
+      end
     end
 
-    it 'renders the form again if no email was provided' do
-      post :forgot_password, email_address: ''
-      expect(response).to render_template(:forgot_password)
-    end
+    context 'with invalid email address parameter' do
+      it 'renders the form again if no email was provided' do
+        post :forgot_password, email_address: ''
+        expect(response).to render_template(:forgot_password)
+      end
 
-    it 'creates a reset token' do
-      adam = Fabricate(:user)
-      expect(adam.password_reset_token).to be_nil
-      post :forgot_password, email_address: adam.email
-      expect(adam.reload.password_reset_token).not_to be_nil
-    end
-
-    it 'sends a password reset email' do
-      adam = Fabricate(:user)
-      expect(adam.password_reset_token).to be_nil
-      post :forgot_password, email_address: adam.email
-      expect(ActionMailer::Base.deliveries).not_to be_empty
+      it 'redirects to confirm_password_reset_path if email address was provided' do
+        post :forgot_password, email_address: 'wrong@email.com'
+        expect(response).to redirect_to(confirm_password_reset_path)
+      end
     end
   end
 
