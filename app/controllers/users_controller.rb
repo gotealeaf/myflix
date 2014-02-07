@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params) 
     if @user.save
+      handle_invitation
       SendWelcomeWorker.perform_async(@user.id)
       # AppMailer.delay.send_welcome_email(@user)
       session[:user_id] = @user.id
