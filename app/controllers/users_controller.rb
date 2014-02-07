@@ -38,6 +38,12 @@ class UsersController < ApplicationController
   end
 
   def reset_password
+    user = User.find_by(password_reset_token: params[:token])
+
+    if !user
+      redirect_to invalid_password_reset_token_path and return
+    end
+
     if request.post?
       user = User.find_by(password_reset_token: params[:token])
       user.password = params[:password]

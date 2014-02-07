@@ -110,6 +110,11 @@ describe UsersController do
   end
 
   describe 'POST #reset_password' do
+    it 'redirects to invalid token page if token is not valid' do
+      post :reset_password, token: '123', password: 'password'
+      expect(response).to redirect_to(invalid_password_reset_token_path)
+    end
+
     it 'redirects to sign in page' do
       adam = Fabricate(:user)
       adam.generate_password_reset_token
