@@ -72,4 +72,68 @@ describe UsersController do
       expect(assigns(:user)).to eq(adam)
     end
   end
+
+  describe 'POST #forgot_password' do
+    it 'redirects to confirm_password_reset_path if an email address was provided' do
+      adam = Fabricate(:user)
+      post :forgot_password, email_address: adam.email
+      expect(response).to redirect_to(confirm_password_reset_path)
+    end
+
+    it 'renders the form again if no email was provided' do
+      post :forgot_password, email_address: ''
+      expect(response).to render_template(:forgot_password)
+    end
+
+    it 'creates a reset token' do
+      adam = Fabricate(:user)
+      expect(adam.password_reset_token).to be_nil
+      post :forgot_password, email_address: adam.email
+      expect(adam.reload.password_reset_token).not_to be_nil
+    end
+
+    it 'sends a password reset email' do
+      adam = Fabricate(:user)
+      expect(adam.password_reset_token).to be_nil
+      post :forgot_password, email_address: adam.email
+      expect(ActionMailer::Base.deliveries).not_to be_empty
+    end
+  end
+
+  describe 'POST #reset_password' do
+    it 'redirects to sign in page' do
+      adam = Fabricate(:user)
+      adam.generate_password_reset_token
+      post :reset_password, token: adam.password_reset_token, password: 'password'
+      expect(response).to redirect_to(sign_in_path)
+    end
+
+    it 'sets a success message if the password is changed successfully' do
+      adam = Fabricate(:user)
+      adam.generate_password_reset_token
+      post :reset_password, token: adam.password_reset_token, password: 'password'
+      expect(flash[:success]).not_to be_blank
+    end
+
+    it 'sets a failure message if the password if not changed successfully' do
+      adam = Fabricate(:user)
+      adam.generate_password_reset_token
+      post :reset_password, token: adam.password_reset_token, password: ''
+      expect(flash[:danger]).not_to be_blank
+    end
+
+    it 'resets the users password to the given password' do
+      adam = Fabricate(:user)
+      adam.generate_password_reset_token
+      post :reset_password, token: adam.password_reset_token, password: 'password'
+      expect(adam.reload.authenticate('password')).to be_instance_of(User)
+    end
+
+    it 'expires users password reset token' do
+      adam = Fabricate(:user)
+      adam.generate_password_reset_token
+      post :reset_password, token: adam.password_reset_token, password: 'password'
+      expect(adam.reload.password_reset_token).to be_nil
+    end
+  end
 end

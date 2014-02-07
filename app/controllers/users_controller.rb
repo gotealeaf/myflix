@@ -22,6 +22,32 @@ class UsersController < ApplicationController
     end
   end
 
+  def forgot_password
+    if params[:email_address].blank?
+      render :forgot_password
+    else
+      user = User.find_by(email: params[:email_address])
+      user.generate_password_reset_token unless user.nil?
+      AppMailer.send_password_reset_email(user).deliver
+      redirect_to confirm_password_reset_path
+    end
+  end
+
+  def reset_password
+    if request.post?
+      user = User.find_by(password_reset_token: params[:token])
+      user.password = params[:password]
+      user.password_reset_token = nil
+
+      if user.save
+        flash[:success] = 'Your password was changed successfully. You may now log in.'
+        redirect_to sign_in_path
+      else
+        flash[:danger] = 'There was a problem resetting your password.'
+      end
+    end
+  end
+
   private
 
   def user_params

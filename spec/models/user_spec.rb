@@ -117,4 +117,12 @@ describe User do
       expect(adam.can_follow?(bryan)).to eq(true)
     end
   end
+
+  describe '#generate_password_reset_token' do
+    it 'sets a users password reset token in the db' do
+      adam = Fabricate(:user)
+      adam.generate_password_reset_token
+      expect(adam.password_reset_token).not_to be_nil
+    end
+  end
 end

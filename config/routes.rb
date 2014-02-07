@@ -17,6 +17,11 @@ Myflix::Application.routes.draw do
   post 'register', to: 'users#create'
 
   resources :users, only: [:show, :edit, :update], path: '/account'
+  get 'forgot_password', to: 'users#forgot_password'
+  post 'forgot_password', to: 'users#forgot_password'
+  get 'confirm_password_reset', to: 'pages#confirm_password_reset'
+  get 'reset_password/:token', to: 'users#reset_password', as: 'reset_password'
+  post 'reset_password/:token', to: 'users#reset_password'
 
   get :people, to: 'relationships#index'
   resources :relationships, only: [:create, :destroy]
