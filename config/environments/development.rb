@@ -1,5 +1,6 @@
 Myflix::Application.configure do
   config.cache_classes = false
+   config.eager_load = false
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
@@ -8,6 +9,21 @@ Myflix::Application.configure do
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
 
+  config.action_mailer.delivery_method = :letter_opener
+
+  ENV["REDISTOGO_URL"] = 'redis://username:password@my.host:6389'
+
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  # address:              'smtp.gmail.com',
+  # port:                 587,
+  # # domain:               'gmail.com',
+  # user_name:            ENV['GMAIL_USERNAME'],
+  # password:             ENV['GMAIL_PASSWORD'],
+  # authentication:       'plain',
+  # enable_starttls_auto: true  }
+
+ config.action_mailer.default_url_options = { host: 'localhost:3000'}
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
@@ -17,5 +33,4 @@ Myflix::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  config.eager_load = false
 end

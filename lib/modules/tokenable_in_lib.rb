@@ -1,0 +1,1 @@
+# module located in models/concerns

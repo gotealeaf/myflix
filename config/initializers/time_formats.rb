@@ -1,0 +1,1 @@
+Time::DATE_FORMATS[:submitted] = "%b %d %Y"

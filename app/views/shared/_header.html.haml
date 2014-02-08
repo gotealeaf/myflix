@@ -1,22 +1,30 @@
 %section#top-header.row
   %h1.col-md-2
-    = link_to "MyFLiX"
-  %ul.col-md-4.clearfix
-    %li= link_to "Videos"
-    %li= link_to "My Queue"
-    %li= link_to "People"
-  %form.col-md-5.navbar-form(action="")
-    .form-group
-      %input.form-control(type="text" placeholder="Search for videos here")
-    %button.btn.btn-default(type="submit") Search
-  #user_links.pull-right
-    %ul
-      %li.dropdown
-        %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
-          Welcome, Philip J. Fry
-          %b.caret
-        %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
-          %li
-            %a(href="#") Account
-            %a(href="#") Plan and Billing
-            %a(href="#") Sign Out
+    = link_to "MyFLiX", root_path
+  - if current_user
+
+    %ul.col-md-4.clearfix
+      %li= link_to "Videos", videos_path
+      %li= link_to "My Queue", my_queue_path
+      %li= link_to "People", people_path
+      %li= link_to "Invite", new_invitation_path
+    .col-md-5.navbar-form
+      = form_tag search_videos_path do
+        = text_field_tag :search_term, params[:search_term], placeholder: "Search for videos here", class: 'form-control'
+        = submit_tag "Seach", name: nil, class: "btn btn-default"
+
+    #user_links.pull-right
+      %ul
+        %li.dropdown
+          %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
+            %b.caret
+            Welcome, #{current_user.full_name}
+            
+          %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
+            %li
+              %a(href="#") Account
+              %a(href="#") Plan and Billing
+              = link_to "Sign Out", sign_out_path
+
+                
+

@@ -1,0 +1,18 @@
+-page_title(@category.name)
+%header
+
+%h1.category_title
+  = @category.name.capitalize
+.videos.row
+  - @category.recent_videos.each do |video|
+    .video.col-sm-2
+      = link_to video_path(video), nil do
+        %img(src="#{video.small_cover_url}")
+       
+/railscasts 28 in_groups_of attempted here       
+- @category.remaining_videos.in_groups_of(6, false) do |video_row|
+  .videos.row
+    - for video in video_row do 
+      .video.col-sm-2
+        = link_to video_path(video), nil do
+          %img(src="#{video.small_cover_url}")
