@@ -48,8 +48,12 @@
                 %p 
                   by
                   = link_to review.user.full_name, review.user
+                  %br
+                  = review.created_at.to_s(:submitted) 
               .col-sm-8
                 %p= review.content
-                / %span.pull-right= review.created_at.to_s(:submitted) 
                
-                %span.pull-right= review.created_at.to_s(format: :submitted)
+               
+                / %span.pull-right= review.created_at.to_s(format: :short)
+                / %span.pull-right= review.created_at, format: :submitted 
+
