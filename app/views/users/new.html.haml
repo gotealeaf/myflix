@@ -3,6 +3,8 @@
   :javascript
     Stripe.setPublishableKey(\#{ENV['STRIPE_PUBLISHABLE_KEY']})
 
+= javascript_include_tag 'payment'
+
 %section.register.container
   .row
     .col-sm-10.col-sm-offset-1
@@ -19,11 +21,11 @@
           .form-group
             %label.control-label.col-sm-2 Credit Card Number
             .col-sm-6
-              %input.form-control(type="text" data-stripe="number")
+              %input.form-control#card-number(type="text" data-stripe="number")
           .form-group
             %label.control-label.col-sm-2 Security Code
             .col-sm-6
-              %input.form-control(type="text" data-stripe="cvc")
+              %input.form-control#card-cvc(type="text" data-stripe="cvc")
           .form-group
             %label.control-label.col-sm-2 Expiration
             .col-sm-3
