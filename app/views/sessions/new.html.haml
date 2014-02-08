@@ -4,20 +4,21 @@
       = form_tag sessions_path, class: 'sign_in' do
         %header
           %h1 Sign in
-        %fieldset
-          .form_group
-            .row
-              .col-sm-4
-                = label_tag :email, "Email Address", class: 'small_label'
-                = email_field_tag :email, "#{params[:email].to_s}", class: 'form-control'
-            .row
-              .form-group
-                .col-sm-4
-                  = label_tag :password
-                  = password_field_tag :password, "#{params[:password].to_s}", class: 'form-control'
-        %br
-        %fieldset
-          .form-group
-            .action
-              %input(type="submit" value="Sign in" class="btn btn-default")
-              = link_to "Reset Password", reset_password_index_path
+        .form_group
+          = label_tag :email, "Email Address", class: 'small_label'
+          .row
+            .col-sm-4
+              = email_field_tag :email, "#{params[:email].to_s}", class: 'form-control'
+        .form-group
+          %br
+          = label_tag :password
+          .row
+            .col-sm-4
+              = password_field_tag :password, "#{params[:password].to_s}", class: 'form-control'
+        .form-group.action
+          %br
+          %input(type="submit" value="Sign in" class="btn btn-default")
+          .row
+            .col-sm-4
+              %br
+              = link_to "Forgot your password?", forgot_password_path

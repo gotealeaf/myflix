@@ -52,7 +52,7 @@ feature "test people i follow functionality" do
   end
 
   def remove_user(user)
-    find("a[data-method='delete']").click
+    find("a[href='/relationships/#{user.id}']").click
   end
 
   def verify_user_not_on_list(user)

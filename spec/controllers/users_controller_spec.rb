@@ -17,7 +17,7 @@ describe UsersController do
     it "should have a user object" do
       set_current_user
       user = Fabricate(:user)
-      get :show, id: user.id
+      get :show, id: user.token
       expect(assigns(:user)).to eq(user)
     end
     it_behaves_like "require sign in" do
