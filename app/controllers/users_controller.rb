@@ -11,7 +11,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params) 
     if @user.save
       handle_invitation
-      AppMailer.send_welcome_email(@user).deliver
+      SendWelcomeWorker.perform_async(@user.id)
+      # AppMailer.delay.send_welcome_email(@user)
       session[:user_id] = @user.id
       redirect_to root_path 
     else
