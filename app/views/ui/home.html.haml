@@ -1,24 +1,12 @@
-%article.video_category
-  %header
-    %h3= link_to "TV Commedies"
-  .videos.row
-    - 6.times do
-      .video.col-sm-2
-        = link_to "", nil do
-          %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
+- @categories.all.each do |cat|
+  %article.video_category
+    %header
+      %h3= link_to cat.name, "genre/#{cat.id}" 
+    .videos.row
+      - cat.videos.each do |video|
+        .video.col-sm-2
+          = link_to "", nil do
+            %img(src="#{video.small_cover}")
 
-%article.video_category
-  %header
-    %h3= link_to "TV Dramas"
-  .videos.row
-    - 6.times do
-      .video.col-sm-2
-        %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
 
-%article.video_category
-  %header
-    %h3= link_to "Reality TV"
-  .videos.row
-    - 6.times do
-      .video.col-sm-2
-        %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
+
