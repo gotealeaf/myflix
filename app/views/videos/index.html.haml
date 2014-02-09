@@ -1,7 +1,12 @@
-@title.each do |title|
-.videos.row
-  title.videos.each do |video|
-  .video.col-sm-2
-  %img{:src => "#{video.small_cover_url}"}
-  <br/><br/><br/>
+%article.video_category
+  .videos.row
+    - @videos.each do |video|
+      .video.col-sm-2
+        = link_to video.small_cover_url, nil do
+          %img(src="#{video.small_cover_url}")
+
+
+
+
+
 
