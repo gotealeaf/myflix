@@ -8,7 +8,7 @@ describe Category do
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:description) }
 
-  describe "display_most_recent_videos" do
+  describe "#display_most_recent_videos" do
     it 'returns an empty array if there are no videos' do
       category = Category.create(title: 'Animation', description: "This is for drawn shows." )
       expect(Category.first.display_most_recent_videos).to eq([])
@@ -31,7 +31,7 @@ describe Category do
       video7 = Video.create(title: 'Vid 412', description: "This is a show about a family.", category: category)
       video8 = Video.create(title: 'Vid 4122', description: "This is a show about a family.", category: category)
       video9 = Video.create(title: 'Vid 41223', description: "This is a show about a family.", category: category)
-      expect(category.display_most_recent_videos).to include(video9, video8, video7, video6, video5, video4)
+      expect(category.display_most_recent_videos.count).to eq(6)
     end
     it 'returns an array ordered by created_at' do
       category = Category.create(title: 'Animation', description: "This is for drawn shows." )
