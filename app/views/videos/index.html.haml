@@ -1,0 +1,7 @@
+@title.each do |title|
+.videos.row
+  title.videos.each do |video|
+  .video.col-sm-2
+  %img{:src => "#{video.small_cover_url}"}
+  <br/><br/><br/>
+
