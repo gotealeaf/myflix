@@ -7,4 +7,8 @@ class UiController < ApplicationController
 
   def index
   end
+
+  def home
+    @videos = Video.all
+  end
 end
