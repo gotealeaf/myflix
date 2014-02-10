@@ -1,10 +1,38 @@
 %article.video
-	.container
-		.row
-			.video_large_cover.col-sm-7.col-sm-offset-1
-				%img(src="#{@video.large_cover_url}")
-			.video_info.col-sm-3
-				%header
-					%h3= @video.title
-					%span Rating: 
-				%p= @video.description
+  .container
+    .row
+      .video_large_cover.col-sm-7.col-sm-offset-1
+        %img(src="#{@video.large_cover_url}")
+      .video_info.col-sm-3
+        %header
+          %h3= @video.title
+          %span Rating: 
+        %p= @video.description
+
+%section.reviews.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = bootstrap_form_for [@video, Review.new] do |f|
+        %fieldset
+          .row
+            .col-sm-3
+              .form-group
+              = f.select :rating, (options_for_select([5,4,3,2,1].map {|number| [pluralize(number, "Star")]})), {}, label: "Rate this video"
+          .form-group
+            .row
+              .col-sm-8
+                =f.text_area :content, rows: 6, class: "span6", label: "Write Review"
+        %fieldset.form-group.actions.clearfix
+          %input(type="submit" value="Submit" class="btn")
+          = link_to "Cancel", @video
+      %header
+        %h3 User Reviews (#{@reviews.count})
+      %ul
+        - @reviews.each do |review|
+          %article.review
+            %li.row
+              .col-sm-2
+                %span Rating: #{review.rating} / 5
+                %p by <a href="">#{review.user.full_name}</a>
+              .col-sm-8
+                %p #{review.content}

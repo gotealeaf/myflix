@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
     before_action :set_category, only: [:show]
+    before_filter :require_user
 
   def show
   end
