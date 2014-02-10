@@ -5,7 +5,7 @@ module StripeWrapper
         amount: options[:amount], 
         currency: 'usd',
         card: options[:card],
-        description: options[:description]
+        description: options  [:description]
         )
     end
   end

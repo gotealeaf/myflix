@@ -38,9 +38,11 @@ group :test do
   gem 'shoulda-matchers'
   gem 'capybara'
   gem 'capybara-email'
-  gem 'launchy'
   gem 'vcr'
+  gem 'launchy'
   gem 'webmock', '1.11.0'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 
 group :production do

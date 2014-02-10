@@ -16,7 +16,7 @@ end
     resources :videos, only: [:new, :create]
   end
 
-  resources :users, only: [:show]
+  
   resources :relationships, only: [:destroy, :create]
   get 'people', to: 'relationships#index'
 

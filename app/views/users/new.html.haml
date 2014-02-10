@@ -16,17 +16,18 @@ Stripe.setPublishableKey("#{ENV['STRIPE_PUBLISHABLE_KEY']}");
           = f.email_field :email, label: "Email Address"
           = f.password_field :password
           = f.text_field :full_name, label: "Full Name"
-          = hidden_field_tag :invitation_token, @invitation_token 
+          = hidden_field_tag :invitation_token, @invitation_token
+          %hr
         %fieldset.credit_card
           %span.payment-errors
           .control-group
-            %label.control-label Credit Card Number
+            %label.control-label(for="credit-card-number") Credit Card Number
             .controls
-              %input.span3(type="text" data-stripe="number")
+              %input.span3#credit-card-number(type="text" data-stripe="number")
           .control-group
-            %label.control-label Security Code
+            %label.control-label(for="security-code") Security Code
             .controls
-              %input.span3(type="text" data-stripe="cvc")
+              %input.span3#security-code(type="text" data-stripe="cvc")
           .control-group
             %label.control-label Expiration
             .controls
