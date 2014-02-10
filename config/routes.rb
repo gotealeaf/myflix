@@ -3,6 +3,8 @@ Myflix::Application.routes.draw do
   get '/home', to: 'videos#index'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
+  get '/', to: 'sessions#front'
+  get '/register', to: 'users#new'
 
   resources :videos, only: [:show, :index] do
     collection do
