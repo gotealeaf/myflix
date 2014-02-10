@@ -5,6 +5,7 @@ Myflix::Application.routes.draw do
   post '/login', to: 'sessions#create'
   get '/', to: 'sessions#front'
   get '/register', to: 'users#new'
+  post '/register', to: 'users#create'
 
   resources :videos, only: [:show, :index] do
     collection do
