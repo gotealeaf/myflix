@@ -25,6 +25,6 @@
                 %td
                   = link_to queue_item.category_name, queue_item.category
                 %td
-                  = link_to "", method: :post do
+                  = link_to queue_item, method: :delete, confirm: "Are you sure you want to remove #{queue_item.video_title} from your queue?" do
                     %i.glyphicon.glyphicon-remove
         = button_to "Update Instant Queue", nil, class: "btn btn-default"
