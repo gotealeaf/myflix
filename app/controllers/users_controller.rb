@@ -17,10 +17,13 @@ class UsersController < ApplicationController
           :card => params[:stripeToken],
           :description => "Sign up charge for #{@user.email}"
         )
+        flash[:success] = "We're glad you're here!"
+        AppMailer.delay.send_welcome_email(@user.id)
+        redirect_to sign_in_path
       rescue Stripe::CardError => e
+        flash[:error] = e.message
+        redirect_to register_path
       end
-      AppMailer.delay.send_welcome_email(@user.id)
-  		redirect_to sign_in_path
   	else
   		render :new
   	end
@@ -44,7 +47,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:full_name, :password, :email)
+    params.require(:user).permit!
   end
 
   def handle_invitation

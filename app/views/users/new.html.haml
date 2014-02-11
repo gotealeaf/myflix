@@ -1,9 +1,8 @@
-= content_for :head do
-  %script{:src => "https://js.stripe.com/v2/", :type => "text/javascript"}
-  :javascript
-    Stripe.setPublishableKey(\#{ENV['STRIPE_PUBLISHABLE_KEY']})
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">Stripe.setPublishableKey('pk_test_BTdW2YjdWicvFpeF6Yrh2jrn');
+</script>
 
-= javascript_include_tag 'payment'
+= javascript_include_tag "payment"
 
 %section.register.container
   .row
@@ -21,17 +20,17 @@
           .form-group
             %label.control-label.col-sm-2 Credit Card Number
             .col-sm-6
-              %input.form-control#card-number(type="text" data-stripe="number")
+              = text_field_tag(nil, nil, class: 'form-control', data: {stripe: "number"})
           .form-group
             %label.control-label.col-sm-2 Security Code
             .col-sm-6
-              %input.form-control#card-cvc(type="text" data-stripe="cvc")
+              = text_field_tag(nil, nil, class: 'form-control', data: {stripe: "cvc"})
           .form-group
             %label.control-label.col-sm-2 Expiration
             .col-sm-3
               = select_month(Date.today, {add_month_numbers: true},  class: 'form-control', data: {stripe: "exp-month"})
             .col-sm-2
               = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'form-control', data: {stripe: "exp-year"})
-          %fieldset.actions.control-group.col-sm-offset-2
-            .controls
-              %input(type="submit" value="Sign Up" class="btn button")
+        %fieldset.actions.control-group.col-sm-offset-2
+          .controls
+            %input(type="submit" value="Sign Up" class="btn button")
