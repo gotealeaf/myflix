@@ -1,8 +1,8 @@
-<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-<script type="text/javascript">Stripe.setPublishableKey('pk_test_BTdW2YjdWicvFpeF6Yrh2jrn');
-</script>
-
-= javascript_include_tag "payment"
+= content_for :head do
+  %script{:src => "https://js.stripe.com/v2/", :type => "text/javascript"}
+  %script{:type => "text/javascript"}
+    Stripe.setPublishableKey("#{ENV['STRIPE_PUBLISHABLE_KEY']}");
+  = javascript_include_tag "payment"
 
 %section.register.container
   .row
