@@ -6,16 +6,18 @@ class SessionsController < ApplicationController
   def create
     @user = User.where(email: params[:user][:email]).first
     user = @user
-    binding.pry
     if user && user.authenticate(params[:user][:password])
-      binding.pry
+      flash[:error] = 'This is a testing error message'
       session[:user_id] = user.id
       redirect_to home_path
     else
-      binding.pry
-      flash[:eror]
-      redirect_to :back
+      flash[:error] = "Your login did not authenticate."
+      render :new
     end
-    binding.pry
+  end
+
+  def logout
+    session[:user_id] = nil
+    redirect_to root_path
   end
 end
