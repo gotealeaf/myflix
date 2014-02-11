@@ -18,6 +18,10 @@ class UsersController < ApplicationController
           :description => "Sign up charge for #{@user.email}"
         )
         flash[:success] = "We're glad you're here!"
+
+        StripeWrapper::Charge.create(
+
+          )
         AppMailer.delay.send_welcome_email(@user.id)
         redirect_to sign_in_path
       rescue Stripe::CardError => e
