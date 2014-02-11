@@ -27,6 +27,6 @@ class ApplicationController < ActionController::Base
   end
 
   def display_message_for_access_denied
-    flash[:error] = 'Sorry, you cannot perform this action.'
+    flash[:danger] = 'Sorry, you cannot perform this action.'
   end
 end

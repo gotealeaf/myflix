@@ -7,11 +7,11 @@ class SessionsController < ApplicationController
     @user = User.where(email: params[:user][:email]).first
     user = @user
     if user && user.authenticate(params[:user][:password])
-      flash[:error] = 'This is a testing error message'
+      flash[:danger] = 'You are now logged in.'
       session[:user_id] = user.id
       redirect_to home_path
     else
-      flash[:error] = "Your login did not authenticate."
+      flash[:danger] = "Your login did not authenticate."
       render :new
     end
   end
