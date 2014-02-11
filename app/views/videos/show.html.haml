@@ -1,0 +1,8 @@
+%article.video
+  .row
+  .video_large_cover.col-sm-10
+    %img(src= "#{@video.large_cover_url}")
+  .video_description.col-sm-5
+    %header
+      %h.4= @video.title
+      %p= @video.description
