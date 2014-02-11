@@ -3,10 +3,6 @@ class SessionsController < ApplicationController
     @user = User.new
   end
 
-  def front
-
-  end
-
   def create
     @user = User.where(email: params[:user][:email]).first
     user = @user

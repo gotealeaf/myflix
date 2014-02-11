@@ -7,5 +7,6 @@
           %h1 Register
         %fieldset
           = f.email_field :email
+          = f.text_field :fullname, label: "Full Name"
           = f.password_field :password
           = f.submit("Submit")
