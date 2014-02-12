@@ -30,7 +30,7 @@ describe SessionsController do
       end
 
       it "sets the notice" do
-        expect(flash[:notice]).to_not be_blank
+        expect(flash[:success]).to_not be_blank
       end
     end
 
@@ -49,7 +49,7 @@ describe SessionsController do
       end
 
       it "sets the error message" do
-        expect(flash[:error]).to_not be_blank
+        expect(flash[:danger]).to_not be_blank
       end
     end
   end
@@ -69,7 +69,7 @@ describe SessionsController do
     end
 
     it "sets the notice" do
-      expect(flash[:notice]).not_to be_blank
+      expect(flash[:success]).not_to be_blank
     end
   end
 end
