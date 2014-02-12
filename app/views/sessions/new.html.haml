@@ -1,0 +1,10 @@
+%section.sign_in.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = bootstrap_form_for(@user, url: login_path) do |f|
+        %header
+          %h1 Sign In
+        %fieldset
+          = f.email_field :email
+          = f.password_field :password
+          = f.submit("Submit")

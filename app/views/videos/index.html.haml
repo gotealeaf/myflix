@@ -1,6 +1,9 @@
 %article.video_category
-  .videos.row
-    - @videos.each do |video|
-      .video.col-sm-2
-        = link_to video.small_cover_url, nil do
-          %img(src="#{video.small_cover_url}")
+  - @category.each do |category|
+    %header
+      %h3= category.title
+      .videos.row
+        - category.display_most_recent_videos.each do |video|
+          .video.col-sm-2
+            = link_to video.small_cover_url, nil do
+              %img(src="#{video.small_cover_url}")
