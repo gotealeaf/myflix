@@ -8,6 +8,9 @@
           %h3= @video.title
           %span Rating: 
         %p= @video.description
+        .actions
+          %a.btn.btn-primary.active(href="") Watch Now
+          = link_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: "btn btn-default active"
 
 %section.reviews.container
   .row
@@ -23,7 +26,7 @@
               .col-sm-8
                 =f.text_area :content, rows: 6, class: "span6", label: "Write Review"
         %fieldset.form-group.actions.clearfix
-          %input(type="submit" value="Submit" class="btn")
+          %input(type="submit" value="Submit" class="btn btn-default active")
           = link_to "Cancel", @video
       %header
         %h3 User Reviews (#{@reviews.count})
