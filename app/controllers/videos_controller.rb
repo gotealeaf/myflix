@@ -1,9 +1,10 @@
 class VideosController < ApplicationController
-  before_action :require_user
+  before_action :require_user, :find_user
 
   def index
     @videos = Video.all
     @category = Category.all
+    binding.pry
   end
 
   def search
@@ -17,5 +18,11 @@ class VideosController < ApplicationController
 
   def show
     @video = Video.find_by id: params[:id]
+  end
+
+  private
+
+  def find_user
+    @user = User.find(session[:user_id])
   end
 end
