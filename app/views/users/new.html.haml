@@ -18,13 +18,13 @@
         %fieldset.credit_card
           %span.payment-errors
           .form-group
-            %label.control-label.col-sm-2 Credit Card Number
+            %label.control-label.col-sm-2(for="credit-card-number") Credit Card Number
             .col-sm-6
-              = text_field_tag(nil, nil, class: 'form-control', data: {stripe: "number"})
+              = text_field_tag("credit-card-number", nil, class: 'form-control', data: {stripe: "number"})
           .form-group
-            %label.control-label.col-sm-2 Security Code
+            %label.control-label.col-sm-2(for="security-code") Security Code
             .col-sm-6
-              = text_field_tag(nil, nil, class: 'form-control', data: {stripe: "cvc"})
+              = text_field_tag("security-code", nil, class: 'form-control', data: {stripe: "cvc"})
           .form-group
             %label.control-label.col-sm-2 Expiration
             .col-sm-3
