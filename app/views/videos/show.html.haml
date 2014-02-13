@@ -20,7 +20,7 @@
             %label Rate this video
             .row
               .col-sm-3
-                = f.select :rating, options_for_select([5,4,3,2,1].map {|number| [pluralize(number, "Star")]})
+                = f.select :rating, options_for_video_reviews
           .form-group
             %label Write Review
             .row
