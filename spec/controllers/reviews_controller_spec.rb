@@ -4,16 +4,16 @@ describe ReviewsController do
   describe "POST create" do
     let(:video) { Fabricate(:video) }
 
+    it_behaves_like "requires sign in" do
+      let(:action) { post :create, review: { rating: 3 }, video_id: video.id }
+    end
+
     context "with authenticated users" do
       let(:alice) { Fabricate(:user) }
-
       before { set_current_user(alice) }
 
       context "with valid input" do
-
-        before do
-          post :create, review: Fabricate.attributes_for(:review), video_id: video.id
-        end
+        before { post :create, review: Fabricate.attributes_for(:review), video_id: video.id }
 
         it "redirects to the video show page" do
           expect(response).to redirect_to video
@@ -33,7 +33,6 @@ describe ReviewsController do
       end
 
       context "with invalid input" do
-
         before { post :create, review: { rating: 3 }, video_id: video.id }
 
         it "does not create a review" do
@@ -53,12 +52,6 @@ describe ReviewsController do
           post :create, review: { rating: 3 }, video_id: video.id
           expect(assigns(:reviews)).to match_array([review])
         end
-      end
-    end
-
-    context "with unauthenticated users" do
-      it_behaves_like "requires sign in" do
-          let(:action) { post :create, review: { rating: 3 }, video_id: video.id }
       end
     end
   end
