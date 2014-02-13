@@ -12,7 +12,7 @@ describe UsersController do
 
   describe "POST create" do
     context "with valid input" do
-      before { post :create, user: Fabricate.attributes_for(:user) }
+      before { post :create, user: Fabricate.attributes_for(:user)  }
 
       it "creates a user record" do
         expect(User.count).to eq(1)

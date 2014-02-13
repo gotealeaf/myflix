@@ -5,7 +5,13 @@ describe Video do
   it { should belong_to(:category) }
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:description) }
-  it { should have_many(:reviews).order("created_at DESC") }
+  it { should have_many(:reviews) }
+  it "returns the reviews in created_at DESC order" do
+    video = Fabricate(:video)
+    review1 = video.reviews.create(content: "cool movie", rating: 4, created_at: 1.day.ago)
+    review2 = video.reviews.create(content: "pool movie", rating: 3, created_at: Time.now)
+    expect(video.reviews).to eq([review2, review1])
+  end
 
   describe "search_by_title" do
     it "returns empty array if there is no match" do
