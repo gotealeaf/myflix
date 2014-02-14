@@ -3,4 +3,9 @@ Fabricator(:user) do
   password 'password'
   full_name { Faker::Name.name }
   token '12345' 
+  admin false
+end
+
+Fabricator(:admin, from: :user) do
+  admin true
 end
