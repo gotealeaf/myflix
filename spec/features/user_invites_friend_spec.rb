@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'faker'
 
 feature 'User invites friend' do
   scenario 'User successfully invites friend and invitation is accepted', { js: true, vcr: true } do
@@ -29,7 +28,6 @@ feature 'User invites friend' do
       current_email.click_link "Accept this invitation"
       fill_in "Password", with: "password"
       fill_in "Full Name", with: "John Doe"
-      click_button "Sign in"
       fill_in "Credit Card Number", with: "4242424242424242"
       fill_in "Security Code", with: "123"
       select "7 - July", from: "date_month"

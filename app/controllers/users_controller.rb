@@ -1,5 +1,5 @@
     class UsersController < ApplicationController
-      before_action :require_user, except: [:new, :create]
+      before_action :require_user, only: [:show]
       
       
 
@@ -9,17 +9,24 @@
 
       def create
         @user = User.new(users_params)
-        if @user.save
-          handle_invitation
-          Stripe.api_key = ENV['STRIPE_SECRET_KEY']
-          StripeWrapper::Charge.create(
+        if @user.valid?
+          charge = StripeWrapper::Charge.create(
             :amount => 999,
             :card => params[:stripeToken],
             :description => "Sign up charge for #{@user.email}"
           )
-          AppMailer.delay.send_welcome_email(@user)
-          redirect_to sign_in_path
+          if charge.successful?
+            @user.save
+            handle_invitation
+            AppMailer.delay.send_welcome_email(@user)
+            flash[:success] = "Thanks for signing up for my shitty app. The videos are actually just PICTURES LOL. Thanks for the money!"
+            redirect_to sign_in_path
         else
+          flash[:error] = charge.error_message
+          render :new
+        end
+      else
+          flash[:error] = "Invalid user information. Please do it right this time."
           render :new
         end
       end

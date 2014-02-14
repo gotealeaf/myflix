@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/charges
+    body:
+      encoding: US-ASCII
+      string: amount=999&currency=usd&card=tok_103Ut62nsCLSc89fMJjma5pJ&description=Sign%20up%20charge%20for%20bill%40example.com
+    headers:
+      Accept:
+      - '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.10.1
+      Authorization:
+      - Bearer sk_test_5wuKXBDYou3thIf4GE6htyrF
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.10.1","lang":"ruby","lang_version":"2.0.0 p247 (2013-06-27)","platform":"x86_64-darwin10.8.0","publisher":"stripe","uname":"Darwin
+        mark-hustads-imac-4.local 10.8.0 Darwin Kernel Version 10.8.0: Tue Jun  7
+        16:33:36 PDT 2011; root:xnu-1504.15.3~1/RELEASE_I386 i386"}'
+      Content-Length:
+      - '115'
+  response:
+    status:
+      code: 402
+      message: Payment Required
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 14 Feb 2014 21:17:11 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '162'
+      Connection:
+      - keep-alive
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "error": {
+            "message": "Your card was declined.",
+            "type": "card_error",
+            "code": "card_declined",
+            "charge": "ch_103Ut62nsCLSc89fx0yCC69V"
+          }
+        }
+    http_version: 
+  recorded_at: Fri, 14 Feb 2014 21:16:13 GMT
+recorded_with: VCR 2.8.0
