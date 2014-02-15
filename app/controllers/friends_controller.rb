@@ -10,7 +10,7 @@ class FriendsController < ApplicationController
     @friend = Friend.new(friend_param)
     @friend.user_id = current_user.id
     if @friend.email != current_user.email && @friend.save
-      AppMailer.send_friend_email(email, @friend, link_for_reset(@friend.token)).deliver
+      AppMailer.delay.send_friend_email(email, @friend, link_for_reset(@friend.token))
       flash[:success] = "#{@friend.full_name} has been invited to be your friend!"
       redirect_to new_friend_path
     else

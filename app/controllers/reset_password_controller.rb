@@ -4,7 +4,7 @@ class ResetPasswordController < ApplicationController
     email = params[:email]
     user = User.where(email: email).first
     if user
-      AppMailer.send_reset_password_email(email, user, link_for_reset(user.token)).deliver
+      AppMailer.delay.send_reset_password_email(email, user, link_for_reset(user.token))
     else 
       flash[:error] = email.empty? ? "Please enter an email address." : "There is no user with that email address."
       redirect_to forgot_password_path

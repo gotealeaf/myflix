@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     if @user.save
       handle_friendship
       @friend_full_name = @friend.user.full_name if @friend
-      AppMailer.send_welcome_email(@user, @friend_full_name).deliver
+      AppMailer.delay.send_welcome_email(@user, @friend_full_name)
       session[:user_id] = @user.id
       redirect_to root_path
     else
