@@ -23,7 +23,7 @@ class QueueItemsController < ApplicationController
 			update_queue_items
 			current_user.normalize_queue_item_positions
 		rescue ActiveRecord::RecordInvalid
-			flash[:error] = "Invalid position numbers"
+			flash[:danger] = "Invalid position numbers"
 			redirect_to my_queue_path
 			return
 		end
