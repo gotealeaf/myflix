@@ -12,6 +12,7 @@ gem 'bootstrap_form'
 # gem 'bootstrap_forms'
 gem 'bcrypt-ruby', '3.1.2'
 gem "htmlbeautifier", "~> 0.0.9"
+gem 'fabrication'
 
 group :development do
   gem 'sqlite3'

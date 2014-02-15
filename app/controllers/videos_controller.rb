@@ -4,7 +4,6 @@ class VideosController < ApplicationController
   def index
     @videos = Video.all
     @category = Category.all
-    binding.pry
   end
 
   def search
@@ -18,6 +17,7 @@ class VideosController < ApplicationController
 
   def show
     @video = Video.find_by id: params[:id]
+    binding.pry
   end
 
   private
