@@ -14,10 +14,9 @@ feature "Admin adds new video" do
 		fill_in "Title", with: "Monk Video"
 		select "Dramas", from: "Category"
 		fill_in "Description", with: "SF detective"
-		attach_file "Large cover", "spec/support/uploads/monk_large.jpg"
-		attach_file "Small cover", "spec/support/uploads/monk.jpg"
+		attach_file "Large cover", File.join(Rails.root, "spec/support/uploads/monk_large.jpg")
+		attach_file "Small cover", File.join(Rails.root, "spec/support/uploads/monk.jpg")
 		fill_in "Video URL", with: "http://www.example.com/my_video.mp4"
-		save_and_open_page
 		click_button "Add Video"
 
 		sign_out
