@@ -16,6 +16,8 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
 gem 'unicorn'
+gem 'carrierwave'
+gem 'mini_magick'
 
 group :development do
   gem 'sqlite3'
