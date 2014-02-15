@@ -4,7 +4,11 @@ feature "Admin adds new video" do
 	scenario "Admin successfully adds a new video" do
 		admin = Fabricate(:admin)
 		dramas = Fabricate(:category, name: "Dramas")
-		sign_in(admin)
+		visit sign_in_path
+	  fill_in "Email Address", with: admin.email
+	  fill_in "Password", with: admin.password
+	  click_button "Sign in"
+
 		visit new_admin_video_path
 
 		fill_in "Title", with: "Monk Video"
