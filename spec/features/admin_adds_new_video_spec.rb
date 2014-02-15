@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "Admin adds new video" do
-	scenario "Admin successfully adds a new video" do
+	scenario "Admin successfully adds a new video", js: true do
 		admin = Fabricate(:admin)
 		dramas = Fabricate(:category, name: "Dramas")
 		visit sign_in_path
@@ -17,8 +17,8 @@ feature "Admin adds new video" do
 		attach_file "Large cover", "spec/support/uploads/monk_large.jpg"
 		attach_file "Small cover", "spec/support/uploads/monk.jpg"
 		fill_in "Video URL", with: "http://www.example.com/my_video.mp4"
+		save_and_open_page
 		click_button "Add Video"
-
 
 		sign_out
 		sign_in
