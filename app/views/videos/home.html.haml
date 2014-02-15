@@ -1,11 +1,14 @@
 %article.video_category
-  / %header
-  /   %h3= link_to "TV Commedies"
-  .videos.row
-    - @videos.each do |video|
-      .video.col-sm-2
-        = link_to video_path(video), nil do
-          %img(src="#{video.short_image_url}")
+  - @categories.each do |category|
+    %header
+      %h3= link_to category.name, category_path(category)
+    .videos.row
+      - single_video = @videos.where(category: category)
+      - single_video.each do |video|
+        .video.col-sm-2
+          = link_to video_path(video), nil do
+            %img(src="#{video.short_image_url}")
+          %br
 
 / %article.video_category
 /   %header
