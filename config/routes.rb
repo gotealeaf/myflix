@@ -9,6 +9,7 @@ Myflix::Application.routes.draw do
   end
 
   get '/register', to: 'users#new'
+  get '/register/:token', to: 'users#new_with_token'
   
   get '/sign_in', to: 'sessions#new'
   get '/sign_out', to: 'sessions#destroy'
@@ -30,6 +31,7 @@ Myflix::Application.routes.draw do
   resources :queue_items, only: [:index]
   resources :relationships, only: [:destroy]
   resources :reset_password_followup, only: [:show, :create]
+  resources :friends, only: [:new, :create]
 
   get 'ui(/:action)', controller: 'ui'
 end

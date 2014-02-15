@@ -1,16 +1,17 @@
 %section#top-header.row
-  %h1.col-md-2
+  %h1.col-md-1
     = link_to "MyFLiX"
   - if signed_in?
-    %ul.col-md-4.clearfix
+    %ul.col-md-4
       %li= link_to "Videos", videos_path
       %li= link_to "My Queue", queue_items_path
       %li= link_to "People", people_path
-    = form_tag search_videos_path, class: 'col-md-5 navbar-form' do
+      %li= link_to "Invite a Friend", new_friend_path
+    = form_tag search_videos_path, class: 'col-md-4 navbar-form' do
       .form-group
         %input.form-control(type="text" placeholder="Search for videos here" name="search_term")
       %button.btn.btn-default(type="submit") Search
-    #user_links.pull-right
+    #user_links.pull-right.text-right
       %ul
         %li.dropdown
           %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")

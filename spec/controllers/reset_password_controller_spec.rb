@@ -29,17 +29,27 @@ describe ResetPasswordController do
         post :create, email: "bob@example.com"
         expect(ActionMailer::Base.deliveries.count).to eq(0)
       end
-      it "should not send an email if the email is blank" do
-        post :create, email: ""
-        expect(ActionMailer::Base.deliveries.count).to eq(0)
-      end
       it "should show an error message if email doesn't exist in database" do
         post :create, email: "bob@example.com"
-        expect(flash[:error]).to be_present
+        expect(flash[:error]).to eq("There is no user with that email address.")
       end
-      it "should redirect to forgot_password_path if email doesn't exist" do
+      it "should redirect to forgot_password_path" do
         post :create, email: "bob@example.com"
         expect(response).to redirect_to forgot_password_path
+      end
+    end
+    context "blank input" do
+      it "should redirect to the forgot password page" do
+        post :create, email: ""
+        expect(response).to redirect_to forgot_password_path
+      end
+      it "shows an error message" do
+        post :create, email: ""
+        expect(flash[:error]).to eq("Please enter an email address.")
+      end
+      it "should not send an email" do
+        post :create, email: ""
+        expect(ActionMailer::Base.deliveries.count).to eq(0)
       end
     end
   end
