@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20140214224604) do
   end
 
   create_table "videos", force: true do |t|
-    t.string   "name"
+    t.string   "title"
     t.text     "description"
     t.string   "short_image_url"
     t.string   "large_image_url"
