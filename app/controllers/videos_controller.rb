@@ -1,6 +1,6 @@
 class VideosController < ApplicationController
   def index
-    @categories = Category.all.sort_by{|x| x.title}
+    @categories = Category.all.sort_by { |x| x.title }
   end
 
   def show
