@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "User interacts with the queue" do
-	scenario "User adds and reorders videos in the queue" do
+	scenario "User adds and reorders videos in the queue", js: true do
 		comedies = Fabricate(:category)
 		monk = Fabricate(:video, title: "Monk", category: comedies)
 		south_park = Fabricate(:video, title: "South Park", category: comedies)

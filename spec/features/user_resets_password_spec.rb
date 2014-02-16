@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'User resets password' do
-	scenario 'user successfully resets the password' do
+	scenario 'user successfully resets the password', js: true do
 		alice = Fabricate(:user, password: 'old_password')
 		visit sign_in_path
 		click_link "Forgot Password?"
