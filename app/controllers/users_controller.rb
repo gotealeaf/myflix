@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
   def create
   	@user = User.new(user_params)
-  	result = UserSignup.new(@user).sign_up(sign_up_params)
+  	result = UserSignup.new(@user).sign_up(params[:stripeToken], params[:invitation_token])
     if result.successful?
       flash[:success] = "We're glad you're here!"
       redirect_to sign_in_path
@@ -37,9 +37,5 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:full_name, :email, :password, :invitation_token, :stripeToken)
-  end
-
-  def sign_up_params
-    params.permit(:invitation_token, :stripeToken)
   end
 end
