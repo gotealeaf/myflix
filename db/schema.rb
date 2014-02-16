@@ -26,9 +26,9 @@ ActiveRecord::Schema.define(version: 20140214224604) do
     t.string   "large_image_url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "categories_id"
+    t.integer  "category_id"
   end
 
-  add_index "videos", ["categories_id"], name: "index_videos_on_categories_id"
+  add_index "videos", ["category_id"], name: "index_videos_on_category_id"
 
 end

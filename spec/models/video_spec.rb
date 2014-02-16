@@ -10,5 +10,7 @@ describe Video do
     Video.first.short_image_url.should == '/tmp/test.jpg'
   end
 
-  it "belongs_to Category model"
+  it "belongs_to Category model" do
+    should belong_to(:category)
+  end
 end
