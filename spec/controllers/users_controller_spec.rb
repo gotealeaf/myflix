@@ -7,9 +7,37 @@ describe UsersController do
       expect(assigns(:user)).to be_new_record
       expect(assigns(:user)).to be_instance_of(User)
     end
-    it "renders the Register page" do
+    it "should render the Register page" do
       get :new
       expect(response).to render_template :new
+    end
+  end
+
+  describe 'GET new_with_token' do
+    it "should render the Register page" do
+      user = Fabricate(:user)
+      friend = Fabricate(:friend, user: user)
+      get :new_with_token, token: friend.token
+      expect(response).to render_template :new
+    end
+    it "should populate the form's fields with the user name and email address" do
+      user = Fabricate(:user)
+      friend = Fabricate(:friend, user: user)
+      get :new_with_token, token: friend.token
+      expect(assigns(:user).email).to eq(friend.email)
+      expect(assigns(:user).full_name).to eq(friend.full_name)
+    end
+    it "should set the @token instance variable" do
+      user = Fabricate(:user)
+      friend = Fabricate(:friend, user: user)
+      get :new_with_token, token: friend.token
+      expect(assigns(:token)).to eq(friend.token)
+    end
+    it "should redirect the user to the Expired Token page if the token is invalid" do
+      user = Fabricate(:user)
+      friend = Fabricate(:friend, user: user)
+      get :new_with_token, token: "12345"
+      expect(response).to redirect_to expired_token_path
     end
   end
 
@@ -37,6 +65,24 @@ describe UsersController do
       it "creates a new session" do
         post :create, user: {email: 'jlevinger@jtonedesigns.com', password: 'joelevinger', full_name: 'Joe Levinger'}
         expect(session[:user_id]).not_to eq nil
+      end
+      it "should make sure that the new user follows the person who invited him if a token is present" do
+        joe = Fabricate(:user)
+        friend = Fabricate(:friend, full_name: "Alice Humperdink", user: joe)
+        post :create, user: {email: friend.email, full_name: friend.full_name, password: "alice"}, token: friend.token
+        expect(User.last.following?(joe)).to eq(true)
+      end
+      it "should make sure that the person who invited the new user follows him if a token is present" do
+        joe = Fabricate(:user)
+        friend = Fabricate(:friend, full_name: "Alice Humperdink", user: joe)
+        post :create, user: {email: friend.email, full_name: friend.full_name, password: "alice"}, token: friend.token
+        expect(joe.following?(User.last)).to eq(true)
+      end
+      it "expires the invitation upon acceptance" do
+        joe = Fabricate(:user)
+        friend = Fabricate(:friend, full_name: "Alice Humperdink", user: joe)
+        post :create, user: {email: friend.email, full_name: friend.full_name, password: "alice"}, token: friend.token
+        expect(friend.reload.token).to eq(nil)
       end
     end
     context "with invalid input" do

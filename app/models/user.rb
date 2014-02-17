@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  before_create :generate_token
+  include Tokenable
   
   has_many :reviews, -> { order('created_at DESC') }
   has_many :queue_items, -> { order('ranking') }
@@ -40,10 +40,6 @@ class User < ActiveRecord::Base
 
   def to_param
     token
-  end
-
-  def generate_token
-    self.token = SecureRandom.urlsafe_base64
   end
 
   private

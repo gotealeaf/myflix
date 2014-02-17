@@ -13,6 +13,8 @@ describe User do
   it { should have_many(:follower_relationships).order("created_at DESC") }
   it { should have_many(:followers) }
 
+  it_behaves_like "tokenable", :user
+
   describe "#following?" do
     it "returns true if following" do
       alice = Fabricate(:user)

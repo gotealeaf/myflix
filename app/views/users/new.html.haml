@@ -5,6 +5,7 @@
         %header
           %h1 Register
         %fieldset
+          = hidden_field_tag :token, @token
           .form-group
             = f.email_field :email, label: "Email Address"
           .form-group

@@ -1,5 +1,9 @@
 Myflix::Application.routes.draw do
   root to: 'pages#front'
+  
+  require 'sidekiq/web'
+  mount Sidekiq::Web=>'/sidekiq'
+
   resources :videos, only: [:index, :show] do
     collection do
       post :search
@@ -8,7 +12,12 @@ Myflix::Application.routes.draw do
     resources :queue_items, only: [:create, :destroy]
   end
 
+  namespace :admin do
+    resources :videos, only: [:new, :create]
+  end
+
   get '/register', to: 'users#new'
+  get '/register/:token', to: 'users#new_with_token'
   
   get '/sign_in', to: 'sessions#new'
   get '/sign_out', to: 'sessions#destroy'
@@ -18,7 +27,7 @@ Myflix::Application.routes.draw do
   get '/forgot_password', to: 'reset_password#new'
   post '/forgot_password', to: 'reset_password#create'
   get '/confirm_password', to: 'reset_password#confirm'
-  get '/password_followup_expired', to: 'reset_password_followup#expired'
+  get '/password_followup_expired', to: 'reset_password_followup#expired', as: 'expired_token'
 
   post '/queue_list', to: 'queue_items#update_queue_list'
 
@@ -30,6 +39,7 @@ Myflix::Application.routes.draw do
   resources :queue_items, only: [:index]
   resources :relationships, only: [:destroy]
   resources :reset_password_followup, only: [:show, :create]
+  resources :friends, only: [:new, :create]
 
   get 'ui(/:action)', controller: 'ui'
 end

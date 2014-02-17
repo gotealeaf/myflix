@@ -11,12 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140207183114) do
+ActiveRecord::Schema.define(version: 20140217185749) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "friends", force: true do |t|
+    t.string   "full_name"
+    t.string   "email"
+    t.text     "message"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "token"
   end
 
   create_table "queue_items", force: true do |t|
@@ -50,6 +60,7 @@ ActiveRecord::Schema.define(version: 20140207183114) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "token"
+    t.boolean  "admin"
   end
 
   create_table "videos", force: true do |t|

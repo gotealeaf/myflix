@@ -11,6 +11,8 @@ gem 'jquery-rails'
 gem 'bootstrap_form'
 gem 'bcrypt-ruby'
 gem 'figaro'
+gem 'sidekiq'
+gem 'sinatra', require: false
 
 group :development do
   gem 'sqlite3'
@@ -23,6 +25,7 @@ end
 group :test do
   gem 'shoulda-matchers'
   gem 'capybara'
+  gem 'capybara-email'
   gem 'launchy'
 end
 
@@ -37,5 +40,6 @@ end
 group :production do
   gem 'pg'
   gem 'rails_12factor'
+  gem 'unicorn'
 end
 
