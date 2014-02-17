@@ -12,6 +12,10 @@ Myflix::Application.routes.draw do
     resources :queue_items, only: [:create, :destroy]
   end
 
+  namespace :admin do
+    resources :videos, only: [:new, :create]
+  end
+
   get '/register', to: 'users#new'
   get '/register/:token', to: 'users#new_with_token'
   
@@ -23,7 +27,7 @@ Myflix::Application.routes.draw do
   get '/forgot_password', to: 'reset_password#new'
   post '/forgot_password', to: 'reset_password#create'
   get '/confirm_password', to: 'reset_password#confirm'
-  get '/password_followup_expired', to: 'reset_password_followup#expired'
+  get '/password_followup_expired', to: 'reset_password_followup#expired', as: 'expired_token'
 
   post '/queue_list', to: 'queue_items#update_queue_list'
 

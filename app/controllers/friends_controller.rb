@@ -7,8 +7,7 @@ class FriendsController < ApplicationController
 
   def create
     email = params[:email]
-    @friend = Friend.new(friend_param)
-    @friend.user_id = current_user.id
+    @friend = Friend.new(friend_param.merge(user_id: current_user.id))
     if @friend.email != current_user.email && @friend.save
       AppMailer.delay.send_friend_email(email, @friend, link_for_reset(@friend.token))
       flash[:success] = "#{@friend.full_name} has been invited to be your friend!"

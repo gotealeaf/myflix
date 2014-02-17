@@ -5,7 +5,7 @@ class ResetPasswordFollowupController < ApplicationController
     if user
       @token = user.token
     else
-      redirect_to password_followup_expired_path
+      redirect_to expired_token_path
     end
   end
 
@@ -18,7 +18,7 @@ class ResetPasswordFollowupController < ApplicationController
       flash[:success] = "Your password has been saved."
       redirect_to sign_in_path
     else
-      redirect_to password_followup_expired_path
+      redirect_to expired_token_path
     end
   end
 end

@@ -27,11 +27,17 @@ describe UsersController do
       expect(assigns(:user).email).to eq(friend.email)
       expect(assigns(:user).full_name).to eq(friend.full_name)
     end
+    it "should set the @token instance variable" do
+      user = Fabricate(:user)
+      friend = Fabricate(:friend, user: user)
+      get :new_with_token, token: friend.token
+      expect(assigns(:token)).to eq(friend.token)
+    end
     it "should redirect the user to the Expired Token page if the token is invalid" do
       user = Fabricate(:user)
       friend = Fabricate(:friend, user: user)
       get :new_with_token, token: "12345"
-      expect(response).to redirect_to password_followup_expired_path
+      expect(response).to redirect_to expired_token_path
     end
   end
 
@@ -71,6 +77,12 @@ describe UsersController do
         friend = Fabricate(:friend, full_name: "Alice Humperdink", user: joe)
         post :create, user: {email: friend.email, full_name: friend.full_name, password: "alice"}, token: friend.token
         expect(joe.following?(User.last)).to eq(true)
+      end
+      it "expires the invitation upon acceptance" do
+        joe = Fabricate(:user)
+        friend = Fabricate(:friend, full_name: "Alice Humperdink", user: joe)
+        post :create, user: {email: friend.email, full_name: friend.full_name, password: "alice"}, token: friend.token
+        expect(friend.reload.token).to eq(nil)
       end
     end
     context "with invalid input" do

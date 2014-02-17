@@ -43,6 +43,18 @@ describe FriendsController do
         post :create, friend: {full_name: "Alice Humperdink", email: "alice@example.com"}
         expect(response).to render_template :new
       end
+      it "does not create an invitation" do
+        post :create, friend: {full_name: "Alice Humperdink", email: "alice@example.com"}
+        expect(Friend.count).to eq(0)
+      end
+      it "does not send out an email" do
+        post :create, friend: {full_name: "Alice Humperdink", email: "alice@example.com"}
+        expect(ActionMailer::Base.deliveries).to be_empty
+      end
+      it "sets the @friends instance variable" do
+        post :create, friend: {full_name: "Alice Humperdink", email: "alice@example.com"}
+        expect(assigns(:friend)).to be_present
+      end
       it "displays a Flash message indicating what input is invalid" do
         post :create, friend: {full_name: "Alice Humperdink", email: "alice@example.com"}
         expect(flash[:error]).to eq("Please fix the errors below:")

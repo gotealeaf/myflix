@@ -16,7 +16,7 @@ describe ResetPasswordFollowupController do
     it "should show the Expired Token page if not valid" do
       user = Fabricate(:user)
       get :show, id: "12345"
-      expect(response).to redirect_to password_followup_expired_path
+      expect(response).to redirect_to expired_token_path
     end
   end
   describe "POST create" do
@@ -47,7 +47,7 @@ describe ResetPasswordFollowupController do
       it "redirects to the Expired page" do
         user = Fabricate(:user)
         post :create, token: "123", password: "new_password"
-        expect(response).to redirect_to password_followup_expired_path
+        expect(response).to redirect_to expired_token_path
       end
     end
   end
