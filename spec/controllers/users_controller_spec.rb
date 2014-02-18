@@ -13,24 +13,32 @@ describe UsersController do
       expect(response).to redirect_to home_path
     end
   end
+
   describe "POST #create" do
     before(:each) do
+      @user_sample_params = Fabricate.attributes_for(:user)
     end
     it 'sets up the @user with the user_params' do
-      user_sample_params = Fabricate.attributes_for(:user)
-      post :create, user: user_sample_params
-      user = User.find_by(email: user_sample_params[:email])
-      expect(user.authenticate(user_sample_params[:password])).to be_instance_of(User)
+      post :create, user: @user_sample_params
+      user = User.find_by(email: @user_sample_params[:email])
+      expect(user.authenticate(@user_sample_params[:password])).to be_instance_of(User)
     end
     it 'it fails to save if params incorrect' do
       post :create, user: Fabricate.attributes_for(:user, fullname: nil)
       expect(User.count).to eq(0)
     end
-
-    context 'attempts to save @user' do
-      it 'sets the session[user_id] if sucessfully saved'
-      it 'redirects the user if save was successful'
-      it 'renders #new if the save was not successful'
+    it 'sets the session[user_id] if sucessfully saved' do
+      post :create, user: @user_sample_params
+      user = User.first
+      expect(session[:user_id]).to eq(user.id)
+    end
+    it 'renders #new if the save was not successful' do
+      post :create, user: Fabricate.attributes_for(:user, fullname: nil)
+      expect(response).to render_template :new
+    end
+    it 'redirects the user if the save was sucessful' do
+      post :create, user: Fabricate.attributes_for(:user)
+      expect(response).to redirect_to home_path
     end
   end
 end
