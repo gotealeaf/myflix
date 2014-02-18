@@ -11,13 +11,12 @@ class VideosController < ApplicationController
     if @videos == []
       redirect_to :back
     else
-      render :index
+      render :search
     end
   end
 
   def show
     @video = Video.find_by id: params[:id]
-    binding.pry
   end
 
   private

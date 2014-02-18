@@ -13,6 +13,7 @@ gem 'bootstrap_form'
 gem 'bcrypt-ruby', '3.1.2'
 gem "htmlbeautifier", "~> 0.0.9"
 gem 'fabrication'
+gem 'faker'
 
 group :development do
   gem 'sqlite3'
