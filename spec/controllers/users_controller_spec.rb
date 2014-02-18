@@ -7,7 +7,11 @@ describe UsersController do
       get :new
       expect(assigns(:user)).to be_a_new(User)
     end
-    it 'redirects the user if they are logged in already'
+    it 'redirects the user if they are logged in already' do
+      session[:user_id] = Fabricate(:user).id
+      get :new
+      expect(response).to redirect_to home_path
+    end
   end
   describe "POST #create" do
     it 'sets up the @user with the user_params'
