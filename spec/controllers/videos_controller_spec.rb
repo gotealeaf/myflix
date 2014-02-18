@@ -19,6 +19,12 @@ describe VideosController do
       get :show, id: @futurama.id
       expect(response).to render_template :show
     end
+
+    it 'redirects unauthenticated user to sign in page' do
+      session[:user_id] = nil
+      get :show, id: @futurama.id
+      expect(response).to redirect_to login_path
+    end
   end
 
   describe 'GET #search' do
