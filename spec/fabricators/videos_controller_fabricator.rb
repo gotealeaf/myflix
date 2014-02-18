@@ -1,4 +1,4 @@
 Fabricator(:video) do
-  title 'Future'
-  description 'This is the future.'
+  title { Faker::Lorem.words(5) }
+  description { Faker::Lorem.paragraphs(3) }
 end
