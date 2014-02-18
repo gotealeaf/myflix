@@ -27,7 +27,7 @@ describe VideosController do
     end
   end
 
-  describe 'GET #search' do
+  describe 'POST #search' do
     before(:each) do
       @simpsons = Video.create(title: 'The Simpsons!', description: 'A family that loves living together.')
       @futurama = Video.create(title: 'Futurama!', description: 'This is a crazy place where people live in the future.')
@@ -38,22 +38,22 @@ describe VideosController do
 
     it 'sets the @videos object correctly' do
       session[:user_id] = '1'
-      get :search, q: 'futur'
+      post :search, q: 'futur'
       expect(assigns(:videos)).to match_array([@future, @futurama])
     end
 
     it 'if no results return empty array' do
-      get :search, q: 'ttyl4499'
+      post :search, q: 'ttyl4499'
       expect(assigns(:videos)).to match_array([])
     end
 
     it 'redirects :back if no results are returned.' do
-      get :search, q: 'ttyl4499'
+      post :search, q: 'ttyl4499'
       expect(response).to redirect_to(home_path)
     end
 
     it 'renders the :index template if results are found' do
-      get :search, q: 'futur'
+      post :search, q: 'futur'
       expect(response).to render_template(:search)
     end
   end
