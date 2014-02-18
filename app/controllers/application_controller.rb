@@ -18,9 +18,9 @@ class ApplicationController < ActionController::Base
   end
 
   def access_denied
-    display_message_for_access_denied #this is in application_helper.rb
+    display_message_for_access_denied
     if !logged_in?
-      redirect_to root_path
+      redirect_to login_path
     else
       redirect_to home_path
     end
