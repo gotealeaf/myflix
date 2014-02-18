@@ -29,9 +29,9 @@ describe VideosController do
 
   describe 'POST #search' do
     before(:each) do
-      @simpsons = Video.create(title: 'The Simpsons!', description: 'A family that loves living together.')
-      @futurama = Video.create(title: 'Futurama!', description: 'This is a crazy place where people live in the future.')
-      @future = Video.create(title: "Future", description: "This is the future.")
+      @simpsons = Fabricate(:video, title: "Simpsons")
+      @futurama = Fabricate(:video, title: "Futurama")
+      @future = Fabricate(:video, title: "Future")
       session[:user_id] = Fabricate(:user).id
       request.env["HTTP_REFERER"] = home_path
     end
@@ -55,6 +55,12 @@ describe VideosController do
     it 'renders the :index template if results are found' do
       post :search, q: 'futur'
       expect(response).to render_template(:search)
+    end
+
+    it 'redirects user to login_path if unauthenticated' do
+      session[:user_id] = nil
+      post :search, q: 'futur'
+      expect(response).to redirect_to login_path
     end
   end
 end
