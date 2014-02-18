@@ -1,4 +1,4 @@
 Fabricator(:video) do
-  title { Faker::Lorem.words(5) }
-  description { Faker::Lorem.paragraphs(3) }
+  title { Faker::Lorem.words(1).join('') }
+  description { Faker::Lorem.paragraphs(1).join('') }
 end
