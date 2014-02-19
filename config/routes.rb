@@ -10,7 +10,7 @@ Myflix::Application.routes.draw do
 
   get '/genre/:id', to: 'categories#show', as: 'category'
 
-  resources :relationships, only: [:destroy]
+  resources :relationships, only: [:create, :destroy]
   get '/people', to: 'relationships#index'
 
   resources :queue_items, only: [:create, :destroy]
