@@ -8,11 +8,28 @@ describe SessionsController do
       expect(assigns(:user)).to be_a_new(User)
     end
   end
-  # describe 'POST #create' do
-  #   it 'sets @user object correctly'
-  #   post :create, user: Fabricate.attributes_for(:user)
+  describe 'POST #create' do
+    before(:each) do
+      @adam_params = Fabricate.attributes_for(:user)
+      @adam = User.create(@adam_params)
+    end
+    it 'sets @user object correctly' do
+      post :create, user: @adam_params
+      expect(assigns(:user).email).to eq(@adam_params[:email])
+    end
+    it 'returns user object is authentication passes' do
+      post :create, user: @adam_params
+      expect(assigns(:user)).authenticate(@adam_params[:password]).to eq(@adam)
+    end
+    it 'returns false if authentication fails' do
 
-  # end
+    end
+    it 'sets the session[:user_id] to the user.id'
+    it 'displays flash[:success] if authentication is sucessful'
+    it 'redirect_to home_path if authentication is complete'
+    it 'displays flash[:danger] if authentication fails'
+    it 'renders new template if authentication fails'
+  end
 
   describe 'GET #logout' do
     it 'sets user_id to nil' do
