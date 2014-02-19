@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.stripe.com/v1/customers
+    uri: https://api.stripe.com/v1/tokens
     body:
       encoding: US-ASCII
-      string: card=tok_103WRs2bKYmLLeQN1U3oGxLN&email=john%40example.com&plan=base
+      string: card[number]=4242424242424242&card[exp_month]=2&card[exp_year]=2018&card[cvc]=314
     headers:
       Accept:
       - '*/*; q=0.5, application/xml'
@@ -22,7 +22,7 @@ http_interactions:
         Jacks-iMac.local 12.5.0 Darwin Kernel Version 12.5.0: Sun Sep 29 13:33:47
         PDT 2013; root:xnu-2050.48.12~1/RELEASE_X86_64 x86_64"}'
       Content-Length:
-      - '68'
+      - '81'
   response:
     status:
       code: 200
@@ -31,19 +31,19 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 19 Feb 2014 01:17:05 GMT
+      - Wed, 19 Feb 2014 01:02:11 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
-      - '2059'
+      - '570'
       Connection:
       - keep-alive
       Access-Control-Max-Age:
       - '300'
-      Access-Control-Allow-Methods:
-      - GET, POST, HEAD, OPTIONS, DELETE
       Cache-Control:
       - no-cache, no-store
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
       Access-Control-Allow-Credentials:
       - 'true'
       Strict-Transport-Security:
@@ -52,21 +52,100 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
+          "id": "tok_103WRd2bKYmLLeQNBsxJk0br",
+          "livemode": false,
+          "created": 1392771731,
+          "used": false,
+          "object": "token",
+          "type": "card",
+          "card": {
+            "id": "card_103WRd2bKYmLLeQNwAv2mdUC",
+            "object": "card",
+            "last4": "4242",
+            "type": "Visa",
+            "exp_month": 2,
+            "exp_year": 2018,
+            "fingerprint": "mZXT5I2fZ31RqptF",
+            "customer": null,
+            "country": "US",
+            "name": null,
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null
+          }
+        }
+    http_version: 
+  recorded_at: Wed, 19 Feb 2014 01:02:15 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers
+    body:
+      encoding: US-ASCII
+      string: card=tok_103WRd2bKYmLLeQNBsxJk0br&email=sheila%40mertz.name&plan=base
+    headers:
+      Accept:
+      - '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.10.1
+      Authorization:
+      - Bearer sk_test_vMbU0m4stwU8Iv83rubhefyU
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.10.1","lang":"ruby","lang_version":"2.0.0 p247 (2013-06-27)","platform":"x86_64-darwin12.3.0","publisher":"stripe","uname":"Darwin
+        Jacks-iMac.local 12.5.0 Darwin Kernel Version 12.5.0: Sun Sep 29 13:33:47
+        PDT 2013; root:xnu-2050.48.12~1/RELEASE_X86_64 x86_64"}'
+      Content-Length:
+      - '69'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 19 Feb 2014 01:02:12 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '2060'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
           "object": "customer",
-          "created": 1392772624,
-          "id": "cus_3WRsNk7ya3qvgC",
+          "created": 1392771732,
+          "id": "cus_3WRdlOcGll0YL8",
           "livemode": false,
           "description": null,
-          "email": "john@example.com",
+          "email": "sheila@mertz.name",
           "delinquent": false,
           "metadata": {},
           "subscriptions": {
             "object": "list",
             "count": 1,
-            "url": "/v1/customers/cus_3WRsNk7ya3qvgC/subscriptions",
+            "url": "/v1/customers/cus_3WRdlOcGll0YL8/subscriptions",
             "data": [
               {
-                "id": "sub_3WRsBaEi2mjvAr",
+                "id": "sub_3WRdyAgVrJ4M2K",
                 "plan": {
                   "interval": "month",
                   "name": "The Base Plan",
@@ -81,12 +160,12 @@ http_interactions:
                   "metadata": {}
                 },
                 "object": "subscription",
-                "start": 1392772624,
+                "start": 1392771732,
                 "status": "active",
-                "customer": "cus_3WRsNk7ya3qvgC",
+                "customer": "cus_3WRdlOcGll0YL8",
                 "cancel_at_period_end": false,
-                "current_period_start": 1392772624,
-                "current_period_end": 1395191824,
+                "current_period_start": 1392771732,
+                "current_period_end": 1395190932,
                 "ended_at": null,
                 "trial_start": null,
                 "trial_end": null,
@@ -103,17 +182,17 @@ http_interactions:
           "cards": {
             "object": "list",
             "count": 1,
-            "url": "/v1/customers/cus_3WRsNk7ya3qvgC/cards",
+            "url": "/v1/customers/cus_3WRdlOcGll0YL8/cards",
             "data": [
               {
-                "id": "card_103WRs2bKYmLLeQNjGWlqU7Q",
+                "id": "card_103WRd2bKYmLLeQNwAv2mdUC",
                 "object": "card",
                 "last4": "4242",
                 "type": "Visa",
-                "exp_month": 7,
-                "exp_year": 2016,
+                "exp_month": 2,
+                "exp_year": 2018,
                 "fingerprint": "mZXT5I2fZ31RqptF",
-                "customer": "cus_3WRsNk7ya3qvgC",
+                "customer": "cus_3WRdlOcGll0YL8",
                 "country": "US",
                 "name": null,
                 "address_line1": null,
@@ -128,8 +207,8 @@ http_interactions:
               }
             ]
           },
-          "default_card": "card_103WRs2bKYmLLeQNjGWlqU7Q"
+          "default_card": "card_103WRd2bKYmLLeQNwAv2mdUC"
         }
     http_version: 
-  recorded_at: Wed, 19 Feb 2014 01:17:09 GMT
+  recorded_at: Wed, 19 Feb 2014 01:02:16 GMT
 recorded_with: VCR 2.8.0
