@@ -27,7 +27,10 @@ describe SessionsController do
       obj = assigns(:user).authenticate(Faker::Lorem.characters(char_count = 8))
       expect(obj).to eq(false)
     end
-    it 'sets the session[:user_id] to the user.id'
+    it 'sets the session[:user_id] to the user.id' do
+      post :create, user: @adam_params
+      expect(session[:user_id]).to eq(2)
+    end
     it 'displays flash[:success] if authentication is sucessful'
     it 'redirect_to home_path if authentication is complete'
     it 'displays flash[:danger] if authentication fails'
