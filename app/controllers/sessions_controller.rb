@@ -5,10 +5,9 @@ class SessionsController < ApplicationController
 
   def create
     @user = User.where(email: params[:user][:email]).first
-    user = @user
-    if user && user.authenticate(params[:user][:password])
+    if @user && @user.authenticate(params[:user][:password])
       flash[:success] = 'You are now logged in.'
-      session[:user_id] = user.id
+      session[:user_id] = @user.id
       redirect_to home_path
     else
       flash[:danger] = "Your login did not authenticate."
