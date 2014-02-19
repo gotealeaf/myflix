@@ -19,10 +19,13 @@ describe SessionsController do
     end
     it 'returns user object is authentication passes' do
       post :create, user: @adam_params
-      expect(assigns(:user)).authenticate(@adam_params[:password]).to eq(@adam)
+      obj = assigns(:user).authenticate(@adam_params[:password])
+      expect(obj).to eq(@adam)
     end
     it 'returns false if authentication fails' do
-
+      post :create, user: @adam_params
+      obj = assigns(:user).authenticate(Faker::Lorem.characters(char_count = 8))
+      expect(obj).to eq(false)
     end
     it 'sets the session[:user_id] to the user.id'
     it 'displays flash[:success] if authentication is sucessful'
