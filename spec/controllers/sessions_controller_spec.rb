@@ -51,13 +51,16 @@ describe SessionsController do
   end
 
   describe 'GET #logout' do
-    it 'sets user_id to nil' do
-      session[:user_id] = 1
+    before do
+      session[:user_id] = Fabricate(:user).id
       get :logout
-      expect(session[:user_id]).to eq(nil)
     end
+
+    it 'sets user_id to nil' do
+      expect(session[:user_id]).to be_nil
+    end
+
     it 'redirect_to root_path' do
-      get :logout
       expect(response).to redirect_to root_path
     end
   end
