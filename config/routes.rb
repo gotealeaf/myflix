@@ -10,12 +10,15 @@ Myflix::Application.routes.draw do
 
   get '/genre/:id', to: 'categories#show', as: 'category'
 
+  resources :relationships, only: [:create, :destroy]
+  get '/people', to: 'relationships#index'
+
   resources :queue_items, only: [:create, :destroy]
   get '/my_queue', to: 'queue_items#index'
   post 'update_queue', to: 'queue_items#update_queue'
 
   resources :sessions, only: [:create]
-  resources :users, only: [:create]
+  resources :users, only: [:show, :create]
   get '/register', to: 'users#new'
   get '/sign_in', to: 'sessions#new'
   get '/sign_out', to: 'sessions#destroy'
