@@ -8,7 +8,7 @@ class VideosController < ActionController::Base
 	end
 
 	def video
-		@show = Video.find_by(params[:id])
+		@video = Video.find_by(params[:id])
 	end
 
 end
