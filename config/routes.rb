@@ -15,7 +15,9 @@ Myflix::Application.routes.draw do
     collection do
       get :search, to: 'videos#search'
     end
+
   end
+
 
   resources :users, only: [:show, :create, :edit, :update]
 

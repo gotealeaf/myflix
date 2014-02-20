@@ -19,6 +19,7 @@ class VideosController < ApplicationController
     @video = Video.find_by id: params[:id]
     @reviews = @video.reviews
     @review = Review.new
+    session[:video_id] = params[:id]
   end
 
   private
