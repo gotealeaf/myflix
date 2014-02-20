@@ -1,4 +1,3 @@
-
 %article.video_category
   %header
     %h3= link_to "TV Commedies"
@@ -14,7 +13,8 @@
   .videos.row
     - 6.times do
       .video.col-sm-2
-        %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
+        = link_to "", nil do
+          %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
 
 %article.video_category
   %header
@@ -22,4 +22,5 @@
   .videos.row
     - 6.times do
       .video.col-sm-2
-        %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
+        = link_to "", nil do
+          %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
