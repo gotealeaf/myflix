@@ -4,7 +4,7 @@
   .videos.row
     - 6.times do
       .video.col-sm-2
-        = link_to "/video/:id", nil do
+        = link_to "/videos/:id", nil do
           %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
 
 %article.video_category
@@ -13,7 +13,7 @@
   .videos.row
     - 6.times do
       .video.col-sm-2
-        = link_to "/video", nil do
+        = link_to "/videos/:id", nil do
           %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
 
 %article.video_category
@@ -22,5 +22,5 @@
   .videos.row
     - 6.times do
       .video.col-sm-2
-        = link_to "/video", nil do
+        = link_to "/videos/:id", nil do
           %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
