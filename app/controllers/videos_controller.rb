@@ -7,8 +7,8 @@ class VideosController < ActionController::Base
 		#@tv_dramas = Video.last(6)
 	end
 
-	def show
-		@show = Video.find(params[:id])
+	def video
+		@show = Video.find_by(params[:id])
 	end
 
 end
