@@ -8,6 +8,8 @@ describe VideosController do
         @simpsons = Video.create(title: 'The Simpsons!', description: 'A family that loves living together.')
         @futurama = Video.create(title: 'Futurama!', description: 'This is a crazy place where people live in the future.')
         @future = Video.create(title: "Future", description: "This is the future.")
+        @review1 = Fabricate(:review, video_id: @futurama.id)
+        @review2 = Fabricate(:review, video_id: @futurama.id)
         session[:user_id] = Fabricate(:user).id
         get :show, id: @futurama.id
       end
@@ -21,9 +23,8 @@ describe VideosController do
       end
 
       it 'sets the @reviews instance variable' do
-        expect(assigns(:reviews)).to be_instance_of(:reviews)
+        expect(assigns(:reviews)).to match_array([@review1, @review2])
       end
-      it 'finds all the reviews related to the correct video'
     end
 
     context 'without valid user' do
@@ -48,7 +49,7 @@ describe VideosController do
 
       it 'sets the @videos object correctly' do
         post :search, q: 'futur'
-        expect(assigns(:videos)).to match_array([@future, @futurama])
+        expect(assigns(:videos)).to include(@future, @futurama)
       end
 
       it 'if no results return empty array' do

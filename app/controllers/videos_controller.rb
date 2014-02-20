@@ -17,7 +17,7 @@ class VideosController < ApplicationController
 
   def show
     @video = Video.find_by id: params[:id]
-    @reviews = Review.find_by video_id: params[:id]
+    @reviews = @video.reviews
   end
 
   private
