@@ -18,6 +18,7 @@ class VideosController < ApplicationController
   def show
     @video = Video.find_by id: params[:id]
     @reviews = @video.reviews
+    @review = Review.new
   end
 
   private

@@ -14,6 +14,10 @@ describe VideosController do
         get :show, id: @futurama.id
       end
 
+      it 'sets up a new review object' do
+        expect(assigns(:review)).to be_a_new(Review)
+      end
+
       it 'sets the @video correctly' do
         expect(assigns(:video)).to eq @futurama
       end
