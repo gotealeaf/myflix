@@ -4,61 +4,70 @@ require 'pry'
 describe ReviewsController do
   describe 'POST #create' do
     context 'user signed in' do
+      context 'with valid input'
       before do
         session[:user_id] = Fabricate(:user).id
+        @video = Fabricate(:video)
+        request.env["HTTP_REFERER"] = video_path(@video.id)
+        @review_valid = Fabricate.attributes_for(:review)
+        post :create, video_id: @video.id, review: @review_valid
       end
       it 'sets the @review object correct' do
-        review1 = Fabricate.attributes_for(:review)
-        post :create, review: review1
         expect(assigns(:review)).to be_instance_of(Review)
       end
 
       it 'saves valid input' do
-        review1 = Fabricate.attributes_for(:review)
-        post :create, review: review1
         expect(Review.count).to eq(1)
       end
 
-      it 'does not save valid input' do
-        review1 = Fabricate.attributes_for(:review, content: nil, rating: nil)
-        post :create, review: review1
-        expect(Review.count).to eq(0)
+      it 'assigns the user correctly' do
+        expect(assigns(:review).video_id).to eq(@video.id)
       end
 
+      it 'assigns the video correctly'
+
       it 'shows confirmation if save successful' do
-        review1 = Fabricate.attributes_for(:review)
-        post :create, review: review1
         expect(flash[:success]).to be_present
       end
 
-      it 'shows failure message if save fails' do
-        review1 = Fabricate.attributes_for(:review, content: nil, rating: nil)
-        post :create, review: review1
-        expect(flash[:danger]).to be_present
-      end
-
       it 'renders videos#show page after save attempt successful' do
-        review1 = Fabricate.attributes_for(:review)
-        post :create, review: review1
-        expect(response).to render_template 'videos/show'
+        expect(response).to redirect_to video_path(@video.id)
       end
     end
-    context 'no user signed in' do
-      it 'prevents the user from saving' do
-        review1 = Fabricate.attributes_for(:review, rating: nil)
-        post :create, review: review1
+    context 'without valid input' do
+      before do
+        @video = Fabricate(:video)
+        request.env["HTTP_REFERER"] = video_path(@video.id)
+        @review_invalid = Fabricate.attributes_for(:review, rating: nil)
+        post :create, video_id: @video.id, review: @review_invalid
+      end
+      it 'does not save invalid input' do
         expect(Review.count).to eq(0)
       end
-      it 'redirects the user to the home page' do
-        review1 = Fabricate.attributes_for(:review, rating: nil)
-        post :create, review: review1
-        expect(response).to redirect_to login_path
-      end
-      it 'flashes correct message to user' do
-        review1 = Fabricate.attributes_for(:review, rating: nil)
-        post :create, review: review1
+
+      it 'shows failure message if save fails' do
         expect(flash[:danger]).to be_present
       end
     end
+  end
+  context 'no user signed in' do
+    before do
+      session[:user_id] = nil
+      @video = Fabricate(:video)
+      request.env["HTTP_REFERER"] = video_path(@video.id)
+      @review_valid = Fabricate.attributes_for(:review)
+      post :create, video_id: @video.id, review: @review_valid
+    end
+    it 'prevents the user from saving' do
+      expect(Review.count).to eq(0)
+    end
+    it 'redirects the user to the home page' do
+      expect(response).to redirect_to login_path
+    end
+    # it 'flashes correct message to user' do
+    #   review1 = Fabricate.attributes_for(:review, rating: nil)
+    #   post :create, review: review1
+    #   expect(flash[:danger]).to be_present
+    # end
   end
 end

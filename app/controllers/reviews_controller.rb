@@ -2,11 +2,10 @@ class ReviewsController < ApplicationController
   before_action :require_user
 
   def create
-    @video = Video.find_by id: session[:video_id]
+    @video = Video.find_by id: params[:video_id]
     @review = Review.new(review_params)
-    @review.video = @video
-    @review.user = User.find_by id: session[:user_id]
-    binding.pry
+    @review[:video_id] = @video.id
+    @review[:user_id] = session[:user_id]
     if @review.save
       flash[:success] = "Your review has been added."
       redirect_to :back
@@ -19,7 +18,7 @@ class ReviewsController < ApplicationController
   private
 
   def review_params
-    params.require(:review).permit(:rating, :content)
+    params.require(:review).permit(:rating, :content, :user_id, :video_id)
   end
 
 end
