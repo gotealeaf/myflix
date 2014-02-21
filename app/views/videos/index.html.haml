@@ -1,11 +1,17 @@
 %article.video_category
   %header
-    %h3= link_to "TV Commedies"
+    %h3
+      = link_to "TV Commedies"
   .videos.row
     - @videos.limit(6).each do |a|
       .video.col-sm-2
         = link_to video_path(a), nil do
-          %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
+          - if a.title == "Futurama"
+            %img(src="/tmp/#{'futurama'}.jpg") 
+          - if a.title == "South Park"
+            %img(src="/tmp/#{'south_park'}.jpg")
+          - if a.title == "Family Guy"
+            %img(src="/tmp/#{'family_guy'}.jpg")
 
 %article.video_category
   %header
@@ -14,7 +20,12 @@
     - @videos.limit(6).each do |a|
       .video.col-sm-2
         = link_to video_path(a), nil do
-          %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
+          - if a.title == "Futurama"
+            %img(src="/tmp/#{'futurama'}.jpg") 
+          - if a.title == "South Park"
+            %img(src="/tmp/#{'south_park'}.jpg")
+          - if a.title == "Family Guy"
+            %img(src="/tmp/#{'family_guy'}.jpg")
 
 %article.video_category
   %header
@@ -23,4 +34,9 @@
     - @videos.limit(6).each do |a|
       .video.col-sm-2
         = link_to video_path(a), nil do
-          %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
+          - if a.title == "Futurama"
+            %img(src="/tmp/#{'futurama'}.jpg") 
+          - if a.title == "South Park"
+            %img(src="/tmp/#{'south_park'}.jpg")
+          - if a.title == "Family Guy"
+            %img(src="/tmp/#{'family_guy'}.jpg")
