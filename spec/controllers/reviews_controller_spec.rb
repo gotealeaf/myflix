@@ -20,11 +20,13 @@ describe ReviewsController do
         expect(Review.count).to eq(1)
       end
 
-      it 'assigns the user correctly' do
+      it 'assigns the user_id correctly' do
         expect(assigns(:review).video_id).to eq(@video.id)
       end
 
-      it 'assigns the video correctly'
+      it 'assigns the video_id correctly' do
+        expect(assigns(:review).user_id).to eq(session[:user_id])
+      end
 
       it 'shows confirmation if save successful' do
         expect(flash[:success]).to be_present
