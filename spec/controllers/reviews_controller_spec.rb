@@ -6,9 +6,9 @@ describe ReviewsController do
     context 'user signed in' do
       context 'with valid input'
       before do
-        session[:user_id] = Fabricate(:user).id
         @video = Fabricate(:video)
         request.env["HTTP_REFERER"] = video_path(@video.id)
+        session[:user_id] = Fabricate(:user).id
         @review_valid = Fabricate.attributes_for(:review)
         post :create, video_id: @video.id, review: @review_valid
       end
@@ -54,9 +54,9 @@ describe ReviewsController do
   end
   context 'no user signed in' do
     before do
-      session[:user_id] = nil
       @video = Fabricate(:video)
       request.env["HTTP_REFERER"] = video_path(@video.id)
+      session[:user_id] = nil
       @review_valid = Fabricate.attributes_for(:review)
       post :create, video_id: @video.id, review: @review_valid
     end
@@ -66,10 +66,8 @@ describe ReviewsController do
     it 'redirects the user to the home page' do
       expect(response).to redirect_to login_path
     end
-    # it 'flashes correct message to user' do
-    #   review1 = Fabricate.attributes_for(:review, rating: nil)
-    #   post :create, review: review1
-    #   expect(flash[:danger]).to be_present
-    # end
+    it 'flashes correct message to user' do
+      expect(flash[:danger]).to be_present
+    end
   end
 end
