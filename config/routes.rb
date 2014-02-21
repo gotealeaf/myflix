@@ -5,6 +5,7 @@ Myflix::Application.routes.draw do
   #get '/video/:id', to: 'videos#video'
 
   resources :videos	
+  resources :categories
 
 
 
