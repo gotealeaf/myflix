@@ -24,7 +24,7 @@ describe ReviewsController do
         expect(assigns(:review).video_id).to eq(@video.id)
       end
 
-      it 'assigns the video_id correctly' do
+      it 'assigns the user_id correctly' do
         expect(assigns(:review).user_id).to eq(session[:user_id])
       end
 
