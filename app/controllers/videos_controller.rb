@@ -4,7 +4,6 @@ class VideosController < ApplicationController
   def index
     @videos = Video.all
     @category = Category.all
-    binding.pry
   end
 
   def search
@@ -12,12 +11,15 @@ class VideosController < ApplicationController
     if @videos == []
       redirect_to :back
     else
-      render :index
+      render :search
     end
   end
 
   def show
     @video = Video.find_by id: params[:id]
+    @reviews = @video.reviews
+    @review = Review.new
+    session[:video_id] = params[:id]
   end
 
   private

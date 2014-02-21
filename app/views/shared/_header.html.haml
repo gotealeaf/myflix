@@ -11,12 +11,13 @@
       = submit_tag("Search", class: 'btton btn btn-default')
     #user_links.pull-right
       %ul
-        %li.dropdown
-          %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
-            = @user.fullname
-            %b.caret
-          %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
-            %li
-              %a(href="#") Account
-              %a(href="#") Plan and Billing
-              %a= link_to("Logout", logout_path)
+        - if logged_in? && @user != nil
+          %li.dropdown
+            %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
+              = @user.fullname
+              %b.caret
+            %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
+              %li
+                %a(href="#") Account
+                %a(href="#") Plan and Billing
+                %a= link_to("Logout", logout_path)
