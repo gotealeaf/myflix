@@ -1,7 +1,7 @@
 %article.video_category
   %header
     %h3
-      = link_to "#{@comedy_obj.name}", category_path(@comedy_obj)
+      = link_to "#{@comedy_obj.name}", comedies_path(@comedy)
   .videos.row
     - @comedy.limit(6).each do |a|
       .video.col-sm-2
@@ -11,7 +11,7 @@
 %article.video_category
   %header
     %h3
-      = link_to "#{@drama_obj.name}", category_path(@drama_obj)
+      = link_to "#{@drama_obj.name}", dramas_path(@drama)
   .videos.row
     - @drama.limit(6).each do |a|
       .video.col-sm-2
@@ -20,7 +20,7 @@
 %article.video_category
   %header
     %h3
-      = link_to "#{@reality_obj.name}", category_path(@reality_obj)
+      = link_to "#{@reality_obj.name}", realities_path(@reality)
   .videos.row
     - @reality.limit(6).each do |a|
       .video.col-sm-2

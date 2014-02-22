@@ -5,9 +5,9 @@ class VideosController < ApplicationController
 		@comedy_obj = Category.find(1)
 		@drama_obj = Category.find(2)
 		@reality_obj = Category.find(3)
-		@comedy = Video.comedy
-		@drama = Video.drama
-		@reality = Video.reality
+		@comedy = @videos.comedy
+		@drama = @videos.drama
+		@reality = @videos.reality
 		#@tv_comedies = Video.first(6)
 		#@tv_dramas = Video.last(6)
 	end
