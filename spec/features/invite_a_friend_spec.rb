@@ -2,17 +2,15 @@ require "spec_helper"
 
 feature "test invite a friend functionality" do
 
-  scenario "invite a friend" do
+  scenario "user successfully invites a friend, and invitation is accepted" do
     joe = new_logged_in_user
     invite_friend
-    verify_invitation_page
-    sign_out
-    process_email
-    register_new_user
+    friend_accepts_invitation
     visit_people_page(joe.full_name)
     sign_out
     sign_in(joe)
     visit_people_page("Alice Humperdink")
+    clear_email
   end
 
   private
@@ -29,18 +27,13 @@ feature "test invite a friend functionality" do
     fill_in "Friend's Email Address", with: "alice@example.com"
     fill_in "Invitation Message", with: "Please join!"
     click_button "Send Invitation"
-  end
-
-  def verify_invitation_page
     expect(page).to have_content "Alice Humperdink has been invited to be your friend!"
+    sign_out
   end
 
-  def process_email
+  def friend_accepts_invitation
     open_email("alice@example.com")
     current_email.click_link("Sign Me Up!")
-  end
-
-  def register_new_user
     expect(page).to have_content "Register"
     fill_in "Password", with: "alice"
     click_button "Sign Up"

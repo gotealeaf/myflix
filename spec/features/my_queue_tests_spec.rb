@@ -52,7 +52,7 @@ feature "test queue functionality" do
     click_on_video_on_home_page(video)
     expect(current_path).to eq(video_path(video))
     expect(page).to have_content video.title
-    click_button "+ My Queue"
+    click_link "+ My Queue"
   end
 
   def expect_video_to_be_in_queue(video)

@@ -1,5 +1,4 @@
 class Friend < ActiveRecord::Base
-
   include Tokenable
   
   belongs_to :user

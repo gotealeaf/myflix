@@ -1,24 +1,25 @@
 %section#top-header.row
-  %h1.col-md-1
+  %h1.col-md-2
     = link_to "MyFLiX"
   - if signed_in?
-    %ul.col-md-4
+    %ul.col-md-3
       %li= link_to "Videos", videos_path
       %li= link_to "My Queue", queue_items_path
       %li= link_to "People", people_path
-      %li= link_to "Invite a Friend", new_friend_path
     = form_tag search_videos_path, class: 'col-md-4 navbar-form' do
       .form-group
         %input.form-control(type="text" placeholder="Search for videos here" name="search_term")
       %button.btn.btn-default(type="submit") Search
-    #user_links.pull-right.text-right
+    #user_links.pull-right
       %ul
         %li.dropdown
           %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
             = "Welcome, #{current_user.full_name}" if signed_in?
             %b.caret
-          %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
+          %ul.dropdown-menu
             %li
+              = link_to "Add Videos", new_admin_video_path if current_user.admin?
+              = link_to "Invite a Friend", new_friend_path
               %a(href="#") Account
               %a(href="#") Plan and Billing
               = link_to "Sign Out", sign_out_path
