@@ -2,9 +2,9 @@ class VideosController < ApplicationController
 
 	def index
 		@videos = Video.all
-		@comedy_obj = Category.find(1)
-		@drama_obj = Category.find(2)
-		@reality_obj = Category.find(3)
+		@comedy_category = Category.find(1)
+		@drama_category = Category.find(2)
+		@reality_category = Category.find(3)
 		@comedy = @videos.comedy
 		@drama = @videos.drama
 		@reality = @videos.reality

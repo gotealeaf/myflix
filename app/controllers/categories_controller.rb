@@ -1,8 +1,8 @@
 class CategoriesController < ApplicationController
 	def show
-		@categories = Category.all
+		#@categories = Category.all
 		@videos = Video.all
-		#@categories = Category.find_by(params[:id])
+		@categories = Category.find(params[:id])
 		@comedy = Video.comedy
 		@drama = Video.drama
 		@reality = Video.reality
