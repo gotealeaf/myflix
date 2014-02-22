@@ -20,13 +20,18 @@ describe User do
       alice = Fabricate(:user)
       bob = Fabricate(:user)
       relationship = Fabricate(:relationship, follower_id: bob.id, leader_id: alice.id)
-      expect(bob.following?(alice)).to eq true
+      expect(bob.following?(alice)).to eq(true)
 
     end
     it "returns false if not following" do
       alice = Fabricate(:user)
       bob = Fabricate(:user)
-      expect(bob.following?(alice)).to eq false
+      expect(bob.following?(alice)).to eq(false)
+    end
+
+    it "does not allow a user to follow himself" do
+      alice = Fabricate(:user)
+      expect(alice.allow_to_follow?(alice)).to eq(false)
     end
   end
 end

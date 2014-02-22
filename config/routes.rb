@@ -27,7 +27,7 @@ Myflix::Application.routes.draw do
   get '/forgot_password', to: 'reset_password#new'
   post '/forgot_password', to: 'reset_password#create'
   get '/confirm_password', to: 'reset_password#confirm'
-  get '/password_followup_expired', to: 'reset_password_followup#expired', as: 'expired_token'
+  get '/password_followup_expired', to: 'pages#expired_token', as: 'expired_token'
 
   post '/queue_list', to: 'queue_items#update_queue_list'
 

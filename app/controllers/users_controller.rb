@@ -19,12 +19,26 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+      token = params[:stripeToken]
+      begin
+        charge = Stripe::Charge.create(
+          :amount => 999,
+          :currency => "usd",
+          :card => token,
+          :description => "Sign-up charge for #{@user.email}"
+        )
+        flash[:success] = "Thanks for becoming a member of MyFLix!"
+        redirect_to root_path
+      rescue Stripe::CardError => e
+        flash.now[:error] = e.message
+        render :new
+      end
       handle_friendship
       @friend_full_name = @friend.user.full_name if @friend
       AppMailer.delay.send_welcome_email(@user, @friend_full_name)
       session[:user_id] = @user.id
       @friend.update_column(:token, nil) if @friend
-      redirect_to root_path
     else
       render :new
     end

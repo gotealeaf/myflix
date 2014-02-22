@@ -13,6 +13,10 @@ gem 'bcrypt-ruby'
 gem 'figaro'
 gem 'sidekiq'
 gem 'sinatra', require: false
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'fog'
+gem 'stripe'
 
 group :development do
   gem 'sqlite3'
