@@ -23,7 +23,8 @@
                   %td
                     = link_to queue_item.video_title, queue_item.video 
                   %td
-                    = button_to "Play", nil, class: "btn btn-default"
+                    -# = button_to("Play", queue_item.video.video_url) class: "btn btn-default"
+                    %a.btn.btn-default(href="#{ queue_item.video.video_url }") Play 
                   %td
                     = select_tag "queue_items[][rating]", options_for_video_reviews(queue_item.rating), { include_blank: true, class: "form-control" }
                   %td
