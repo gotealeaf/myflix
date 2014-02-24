@@ -12,8 +12,6 @@ describe Video do
 		true_detective = Video.new(title: "True Detective", description: "this movie is hilarious....", category: dramas)
 		expect(true_detective.category).to eq(dramas)
 	end
-
-
 end
 
 

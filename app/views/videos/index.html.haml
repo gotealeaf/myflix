@@ -1,27 +1,9 @@
-%article.video_category
-  %header
-    %h3
-      = link_to "#{@comedy_category.name}", category_path(@comedy_category)
-  .videos.row
-    - @comedy_category.videos.first(6).each do |a|
-      .video.col-sm-2
-        = link_to image_tag("#{a.small_cover}"), video_path(a)
-          
-
-%article.video_category
-  %header
-    %h3
-      = link_to "#{@drama_category.name}", category_path(@drama_category)
-  .videos.row
-    - @drama_category.videos.first(6).each do |a|
-      .video.col-sm-2
-        = link_to image_tag("#{a.small_cover}"), video_path(a)
-
-%article.video_category
-  %header
-    %h3
-      = link_to "#{@reality_category.name}", category_path(@reality_category)
-  .videos.row
-    - @reality_category.videos.first(6).each do |a|
-      .video.col-sm-2
-        = link_to image_tag("#{a.small_cover}"), video_path(a)
+- @categories.each do |category|
+  %article.video_category
+    %header
+      %h3
+        = link_to "#{category.name}", category_path(category)
+    .videos.row
+      - category.videos.first(6).each do |a|
+        .video.col-sm-2
+          = link_to image_tag("#{a.small_cover}"), video_path(a)
