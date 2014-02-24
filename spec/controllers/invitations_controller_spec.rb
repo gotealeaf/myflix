@@ -1,0 +1,83 @@
+require 'spec_helper'
+
+describe InvitationsController do
+	describe "GET new" do
+		it "sets @invitation to a new invitation" do
+			set_current_user
+			get :new
+			expect(assigns(:invitation)).to be_new_record
+			expect(assigns(:invitation)).to be_instance_of Invitation
+		end
+		
+		it_behaves_like "requires sign in" do
+			let(:action) { get :new }
+		end
+	end
+
+	describe "POST create" do
+		it_behaves_like "requires sign in" do
+			let(:action) { post :create }
+		end
+
+		context "with valid input" do
+			it "redirects to the invitation new page" do
+				set_current_user
+				post :create, invitation: { recipient_name: "Alice Johnson", recipient_email: "alice@example.com", message: "Hey join MyFlix!" }
+				expect(response).to redirect_to new_invitation_path
+			end
+
+			it "creates an invitation" do
+				set_current_user
+				post :create, invitation: { recipient_name: "Alice Johnson", recipient_email: "alice@example.com", message: "Hey join MyFlix!" }
+				expect(Invitation.count).to eq(1)
+			end
+
+			it "sends the email to the recipient" do
+				set_current_user
+				post :create, invitation: { recipient_name: "Alice Johnson", recipient_email: "alice@example.com", message: "Hey join MyFlix!" }
+				expect(ActionMailer::Base.deliveries.last.to).to eq(["alice@example.com"])
+			end
+
+			it "sets the flash sucess message" do
+				set_current_user
+				post :create, invitation: { recipient_name: "Alice Johnson", recipient_email: "alice@example.com", message: "Hey join MyFlix!" }
+				expect(flash[:success]).to be_present
+			end
+		end
+
+		context "with invalid input" do
+
+			after { ActionMailer::Base.deliveries.clear }
+
+			it "renders the :new template" do
+				set_current_user
+				post :create, invitation: { recipient_email: "alice@example.com", message: "Hey join MyFlix!" }
+				expect(response).to render_template :new
+			end
+
+			it "doesn't create an invitation" do
+				set_current_user
+				post :create, invitation: { recipient_email: "alice@example.com", message: "Hey join MyFlix!" }
+				expect(Invitation.count).to eq(0)
+			end
+
+			it "doesn't send out an email" do
+				set_current_user
+				post :create, invitation: { recipient_email: "alice@example.com", message: "Hey join MyFlix!" }
+				expect(ActionMailer::Base.deliveries).to be_empty
+			end
+
+			it "sets the flash danger message" do
+				set_current_user
+				post :create, invitation: { recipient_email: "alice@example.com", message: "Hey join MyFlix!" }
+				expect(flash[:danger]).to be_present
+			end
+
+			it "sets @invitation" do
+				set_current_user
+				post :create, invitation: { recipient_email: "alice@example.com", message: "Hey join MyFlix!" }
+				expect(assigns(:invitation)).to be_present
+			end
+		end
+	end
+end
