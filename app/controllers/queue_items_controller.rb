@@ -35,7 +35,7 @@ class QueueItemsController < ApplicationController
 
   def update_position
     binding.pry
-    @check_video.update(position: params[:qitem][:position])
+    @check_video.update(position: params[:qitem][:position].to_i)
   end
 
 end
