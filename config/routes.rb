@@ -12,6 +12,8 @@ Myflix::Application.routes.draw do
   resources :sessions, only: [:create]
   resources :queue_items, only: [:create, :destroy]
   
+  post 'update_queue', to: "queue_items#update_queue"
+  
   get 'ui(/:action)', controller: 'ui'
   get 'home', to: "videos#index"
   get 'show', to: "videos#show"
