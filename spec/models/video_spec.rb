@@ -33,12 +33,11 @@ describe Video do
       family_guy_2 = Video.create(title: "Family Guy", description: "A really twisted versino of the Simpsons")
       expect(Video.search_by_title("Family Guy")).to eq([family_guy, family_guy_2])
     end
-    it "should return an array of all videos" do
-      family_guy = Video.create(title: "Family Guy", description: "A really twisted versino of the Simpsons")
-      south_park = Video.create(title: "South Park", description: "A funny video")
-      family_guy_2 = Video.create(title: "Family Guy", description: "A really twisted versino of the Simpsons")
-      family_guy_3 = Video.create(title: "Family Guy", description: "A really twisted versino of the Simpsons")
-      expect(Video.search_by_title("Family Guy")).to eq([family_guy, family_guy_2, family_guy_3])
+    it "should return an array of all matches oredered by created_at" do
+      family_guy = Video.create(title: "Family Guy", description: "A really twisted versino of the Simpsons", created_at: 3.day.ago)
+      south_park = Video.create(title: "South Park", description: "A funny video", created_at: 2.day.ago)
+      family_matters = Video.create(title: "Family Matters", description: "Steve Urkel...Yay!", created_at: 1.day.ago)
+      expect(Video.search_by_title("family")).to eq([family_guy, family_matters])
     end 
   end
 end
