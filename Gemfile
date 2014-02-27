@@ -29,6 +29,7 @@ group :test, :development do
   gem 'pry-nav'
 	gem 'rspec-rails'
   gem 'launchy'
+  gem 'capybara-email'
 end
 
 group :test do
