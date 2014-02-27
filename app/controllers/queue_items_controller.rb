@@ -7,13 +7,24 @@ class QueueItemsController < ApplicationController
     @exist = is_previous_item?
     if is_previous_item?
       flash[:danger] = "You already have this video queued."
-      if same_position?
-        @same_position = true
-        flash[:danger] = 'Your item is already queued in the same position, it will not be updated'
+      if @qitem[:position] != nil
+        if same_position?
+          @same_position = true
+          flash[:danger] = 'Your item is already queued in the same position, it will not be updated'
+        else
+          update_position
+          save_qitem
+        end
       else
-        update_position
+        select_last_position(@qitem)
+        flash[:success] = "Your item has queue number #{@qitem[:position]}"
+        save_qitem
       end
     end
+    if @qitem.errors?
+      flash[:danger] = "Your item failed to save."
+    end
+
     redirect_to queue_items_path
   end
 
@@ -33,9 +44,18 @@ class QueueItemsController < ApplicationController
     !check_video.blank? #returns true if there is a video matching
   end
 
+  def select_last_position(array)
+    number_to_set = @check_video.count + 1
+    @qitem[:position] = number_to_set
+  end
+
+  def save_qitem
+    @qitem.save
+    true
+  end
+
   def update_position
-    binding.pry
-    @check_video.update(position: params[:qitem][:position].to_i)
+    @check_video.update_all(position: params[:qitem][:position].to_i)
   end
 
 end

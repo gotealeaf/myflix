@@ -65,37 +65,75 @@ describe QueueItemsController do
           post :create, qitem: qitem3
           expect(QueueItem.first.position).to eq(qitem3[:position])
         end
+
+        it 'saves position if different' do
+          qitem3 = Fabricate.attributes_for(:queue_item, position: 3, video_id: @video.id, user_id: @user.id)
+          post :create, qitem: qitem3
+          expect(QueueItem.count).to eq(2)
+        end
       end
 
       context 'if no position is set' do
-        it 'sets position to number after last allocated'
-      end
-
-      context 'other video already in that position' do
-        it 'moves all other videos down 1 step'
-        it 'sets video position as specified by user'
-      end
-
-      context 'save success' do
-        it 'sucessfully updates QueueItem'
-        it 'redirects user to queue_item_path'
-        it 'shows positive confirmation'
-      end
-
-      context 'if not already in queue' do
-        before do
-          10.times do Fabricate(:queue_item) end
-          post :create, qitem: @qitem
+        it 'sets position to number after last allocated' do
+          qitem4 = Fabricate(:queue_item, position: 1, video_id: @video.id, user_id: @user.id)
+          qitem5 = Fabricate(:queue_item, position: 2, video_id: @video.id, user_id: @user.id)
+          qitem6 = Fabricate(:queue_item, position: 3, video_id: @video.id, user_id: @user.id)
+          qitem_to_test = Fabricate.attributes_for(:queue_item, position: nil, video_id: @video.id, user_id: @user.id)
+          post :create, qitem: qitem_to_test
+          expect(assigns(:qitem)[:position]).to eq(4)
         end
-        it 'redirects to queue_items_path' do
-          expect(assigns(:exist)).to eq(false)
-        end
-      end
 
-      context 'invalid params' do
-        it 'fails to save QueueItem'
-        it 'redirects user to video_show_path'
-        it 'shows error message'
+        context 'save success' do
+          it 'saves valid item' do
+            qitem4 = Fabricate(:queue_item, position: 1, video_id: @video.id, user_id: @user.id)
+            qitem5 = Fabricate(:queue_item, position: 2, video_id: @video.id, user_id: @user.id)
+            qitem6 = Fabricate(:queue_item, position: 3, video_id: @video.id, user_id: @user.id)
+            qitem_to_test = Fabricate.attributes_for(:queue_item, position: nil, video_id: @video.id, user_id: @user.id)
+            post :create, qitem: qitem_to_test
+            expect(QueueItem.count).to eq(4)
+          end
+
+          it 'redirects user to queue_item_path' do
+            qitem4 = Fabricate(:queue_item, position: 1, video_id: @video.id, user_id: @user.id)
+            qitem5 = Fabricate(:queue_item, position: 2, video_id: @video.id, user_id: @user.id)
+            qitem6 = Fabricate(:queue_item, position: 3, video_id: @video.id, user_id: @user.id)
+            qitem_to_test = Fabricate.attributes_for(:queue_item, position: nil, video_id: @video.id, user_id: @user.id)
+            post :create, qitem: qitem_to_test
+            expect(response).to redirect_to queue_items_path
+          end
+          it 'shows positive confirmation' do
+            qitem4 = Fabricate(:queue_item, position: 1, video_id: @video.id, user_id: @user.id)
+            qitem5 = Fabricate(:queue_item, position: 2, video_id: @video.id, user_id: @user.id)
+            qitem6 = Fabricate(:queue_item, position: 3, video_id: @video.id, user_id: @user.id)
+            qitem_to_test = Fabricate.attributes_for(:queue_item, position: nil, video_id: @video.id, user_id: @user.id)
+            post :create, qitem: qitem_to_test
+            expect(flash[:success]).to be_present
+          end
+        end
+
+        context 'if not already in queue' do
+          before do
+            10.times do Fabricate(:queue_item) end
+            post :create, qitem: @qitem
+          end
+          it 'redirects to queue_items_path' do
+            expect(assigns(:exist)).to eq(false)
+          end
+        end
+
+        context 'invalid params' do
+          it 'fails to save QueueItem' do
+            qitem3 = Fabricate.attributes_for(:queue_item, position: 3, video_id: nil, user_id: @user.id)
+            post :create, qitem: qitem3
+            expect(QueueItem.count).to eq(0)
+          end
+          it 'shows error message' do
+            qitem3 = Fabricate.attributes_for(:queue_item, position: 3, video_id: nil, user_id: @user.id)
+            post :create, qitem: qitem3
+            binding.pry
+            expect(flash[:danger]).to be_present
+          end
+        end
       end
     end
   end
