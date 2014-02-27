@@ -7,4 +7,4 @@
     %p
     "#{@friend.message}"
     %p
-    %p Please click on this link to join: <a href='#{@reset_link}'>Sign Me Up!</a>
+    %p Please click on this link to join: #{link_to "Sign Me Up!", invited_url(@token)}

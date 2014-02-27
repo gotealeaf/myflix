@@ -17,7 +17,7 @@ Myflix::Application.routes.draw do
   end
 
   get '/register', to: 'users#new'
-  get '/register/:token', to: 'users#new_with_token'
+  get '/register/:token', to: 'users#new_with_token', as: 'invited'
   
   get '/sign_in', to: 'sessions#new'
   get '/sign_out', to: 'sessions#destroy'

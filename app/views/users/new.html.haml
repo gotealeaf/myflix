@@ -17,14 +17,14 @@ Stripe.setPublishableKey("#{ENV['STRIPE_PUBLIC_KEY']}");
           = f.text_field :full_name, label: "Full Name"
         %fieldset.credit_card
           .form-group
-            %label.control-label.col-sm-2 Credit Card Number
+            %label.col-sm-2.control-label(for="cc-number") Credit Card Number
             %span.payment-errors
             .col-sm-6
-              %input.form-control(type="text" data-stripe="number")
+              %input.form-control#cc-number(type="text" data-stripe="number")
           .form-group
-            %label.control-label.col-sm-2 Security Code
+            %label.col-sm-2.control-label(for="security_code") Security Code
             .col-sm-6
-              %input.form-control(type="text" data-stripe="cvc")
+              %input.form-control#security_code(type="text" data-stripe="cvc")
           .form-group
             %label.control-label.col-sm-2 Expiration
             .col-sm-3
