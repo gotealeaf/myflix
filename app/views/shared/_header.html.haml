@@ -7,7 +7,7 @@
     %li= link_to "People"
   = form_tag("/videos/search", method: 'get') do
     %p
-      = text_field_tag :search_term, params[:title]
+      = text_field_tag :search_term
       = submit_tag "Search", name: nil
   #user_links.pull-right
     %ul
