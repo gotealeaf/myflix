@@ -6,10 +6,10 @@ describe Category do
 
   describe "#recent_videos" do
     it "should returns videos by order of their creation date" do
-      @videos = Video.create([{title: "Family Guy", description: "A really twisted versino of the Simpsons", created_at: 3.day.ago, category: @comedy},
-                              {title: "True Detective", description: "A dark representation of crime and its investigation", created_at: 2.day.ago, category: @drama},
-                              {title: "Breaking Bad", description: "A high school chemistry teacher cooks meth to pay for his medical bills", created_at: 5.day.ago, category: @drama},
-                              {title: "Family Matters", description: "Steve Urkel...Yay!", created_at: 1.day.ago, category: @comedy}])
+      @comedy = Category.create(name: "Comedy")
+      @family_guy = Video.create(title: "Family Guy", description: "A really twisted versino of the Simpsons", created_at: 3.day.ago, category: @comedy)
+      @family_matters = Video.create(title: "Family Matters", description: "Steve Urkel...Yay!", created_at: 1.day.ago, category: @comedy)
+      expect(@comedy.recent_videos).to eq([@family_matters, @family_guy])
       
     end
     it "should returns all videos if there are less than six in the category"
