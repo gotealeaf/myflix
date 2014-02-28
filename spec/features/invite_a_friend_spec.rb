@@ -2,7 +2,7 @@ require "spec_helper"
 
 feature "test invite a friend functionality" do
 
-  scenario "user successfully invites a friend, and invitation is accepted" do
+  scenario "user successfully invites a friend, and invitation is accepted", { js: true, vcr: true } do
     joe = new_logged_in_user
     invite_friend
     friend_accepts_invitation
@@ -36,6 +36,11 @@ feature "test invite a friend functionality" do
     current_email.click_link("Sign Me Up!")
     expect(page).to have_content "Register"
     fill_in "Password", with: "alice"
+    fill_in "Credit Card Number", with: "4242424242424242"
+    fill_in "Security Code", with: "123"
+    select "3 - March", from: "date_month"
+    select "2016", from: "date_year"
+
     click_button "Sign Up"
     expect(page).to have_content "Welcome, Alice Humperdink"
   end

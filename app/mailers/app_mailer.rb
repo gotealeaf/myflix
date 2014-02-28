@@ -13,7 +13,8 @@ class AppMailer < ActionMailer::Base
     mail from: 'info@myflix.com', to: email, subject: "Reset Your Password"
   end
 
-  def send_friend_email(email, friend, reset_link)
+  def send_friend_email(email, friend, reset_link, token)
+    @token = token
     @email = email
     @friend = friend
     @reset_link = reset_link

@@ -14,17 +14,8 @@ def clear_current_user
   session[:user_id] = nil
 end
 
-def sign_in(a_user=nil)
-  user = a_user || Fabricate(:user, password: "password")
-  follow_links_to_sign_in
-  fill_in "Email", with: user.email
-  fill_in "Password", with: user.password
-  click_button "Sign in"
-  expect(page).to have_content user.full_name
-end
-
-def sign_in_admin(a_user=nil)
-  user = a_user || Fabricate(:admin, password: "password")
+def sign_in(a_user=nil, admin=:user)
+  user = a_user || Fabricate(admin, password: "password")
   follow_links_to_sign_in
   fill_in "Email", with: user.email
   fill_in "Password", with: user.password
