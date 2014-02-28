@@ -1,0 +1,11 @@
+- 3.times do
+  - category = @categories.sample
+  %article.video_category
+    %header
+      %h3= link_to category.name, category_path(category)
+    .videos.row
+      - 6.times do
+        .video.col-sm-2
+          - video = category.videos.sample
+          = link_to video_path(video) do
+            %img(src="#{video.small_cover_url}")
