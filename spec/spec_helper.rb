@@ -61,7 +61,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.strategy = :deletion
   end
 
   config.before(:each, js: true) do
@@ -78,3 +78,5 @@ RSpec.configure do |config|
 
   # config.raise_errors_for_deprecations!
 end
+
+Capybara.server_port = 52662

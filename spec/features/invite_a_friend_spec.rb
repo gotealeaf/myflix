@@ -4,6 +4,7 @@ feature "test invite a friend functionality" do
 
   scenario "user successfully invites a friend, and invitation is accepted", { js: true, vcr: true } do
     joe = new_logged_in_user
+    click_on "Welcome, #{joe.full_name}"
     invite_friend
     friend_accepts_invitation
     visit_people_page(joe.full_name)
