@@ -6,7 +6,7 @@ class VideosController < ApplicationController
   end
 
   def search
-    @videos = Video.search_by_title(params[:search])
+    @videos = Video.search_by_title(params[:title])
   end
 
   def show

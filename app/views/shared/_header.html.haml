@@ -8,7 +8,7 @@
       %li= link_to "People"
 
     = form_tag search_videos_path, class: "span5 for-search" do
-      %input.search-query(name="search" type="text" placeholder="Search for videos here.")  
+      %input.search-query(name="title" type="text" placeholder="Search for videos here.")  
       %button.btn.btn-default(type="submit") Search
 
     #user_links.pull-right
