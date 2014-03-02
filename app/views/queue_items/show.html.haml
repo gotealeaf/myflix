@@ -14,42 +14,19 @@
               %th(width="15%") Genre
               %th(width="15%") Remove
           %tbody
-            %tr
-              %td
-                %input.form-control(type="text" value="1")
-              %td
-                = link_to "Futurama"
-              %td
-                = button_to "Play", nil, class: "btn btn-default"
-              %td
-                %select.form-group(name="")
-                  %option(value="5") 5 Stars
-                  %option(value="4") 4 Stars
-                  %option(value="3") 3 Stars
-                  %option(value="2") 2 Stars
-                  %option(value="1") 1 Star
-              %td
-                = link_to "TV Shows"
-              %td
-                = link_to "", method: :post do
-                  %i.glyphicon.glyphicon-remove
-            %tr
-              %td
-                %input.form-control(type="text" value="2")
-              %td
-                = link_to "Family Guy"
-              %td
-                = button_to "Play", nil, class: "btn btn-default"
-              %td
-                %select(name="")
-                  %option(value="5") 5 Stars
-                  %option(value="4") 4 Stars
-                  %option(value="3") 3 Stars
-                  %option(value="2") 2 Stars
-                  %option(value="1") 1 Star
-              %td
-                = link_to "TV Shows"
-              %td
-                = link_to "", method: :post do
-                  %i.glyphicon.glyphicon-remove
-        = button_to "Update Instant Queue", nil, class: "btn btn-default"
+            - @queue_items.each do | qi |
+              %tr
+                %td
+                  %input.form-control(type="text" value="1")
+                %td
+                  = link_to("#{qi.video.title}", video_path(qi.video.id))
+                %td
+                  = button_to "Play", nil, class: "btn btn-default"
+                %td
+                  = qi.position
+                %td
+                  = link_to("#{qi.video.category.title}", category_path(qi.video.category.id))
+                %td
+                  = link_to "", method: :post do
+                    %i.glyphicon.glyphicon-remove
+          = button_to "Update Instant Queue", nil, class: "btn btn-default"

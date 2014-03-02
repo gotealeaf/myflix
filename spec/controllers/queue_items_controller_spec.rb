@@ -2,6 +2,34 @@ require 'spec_helper'
 require 'pry'
 
 describe QueueItemsController do
+  describe 'GET #index' do
+    context 'with valid user' do
+      it 'sets the @queue_items instance variable correctly' do
+        adam = Fabricate(:user)
+        qitem = Fabricate(:queue_item, user: adam)
+        qitem2 = Fabricate(:queue_item, user: adam)
+        session[:user_id] = adam.id
+        get :show
+        expect(assigns(:queue_items)).to match_array([qitem, qitem2])
+      end
+
+      it 'renders the show template' do
+        adam = Fabricate(:user)
+        qitem = Fabricate(:queue_item, user: adam)
+        qitem2 = Fabricate(:queue_item, user: adam)
+        session[:user_id] = adam.id
+        get :show
+        expect(response).to render_template(:show)
+      end
+    end
+    context 'with invalid user' do
+      it 'redirects user' do
+        get :show
+        expect(response).to redirect_to login_path
+      end
+    end
+  end
+
   describe 'POST #create' do
     context 'invalid user' do
       it 'redirects user to login_path' do
@@ -130,7 +158,6 @@ describe QueueItemsController do
           it 'shows error message' do
             qitem3 = Fabricate.attributes_for(:queue_item, position: 3, video_id: nil, user_id: @user.id)
             post :create, qitem: qitem3
-            binding.pry
             expect(flash[:danger]).to be_present
           end
         end

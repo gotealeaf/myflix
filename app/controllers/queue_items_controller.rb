@@ -1,5 +1,10 @@
 class QueueItemsController < ApplicationController
-  before_action :require_user
+  before_action :require_user, :current_user
+
+  def show
+    @queue_items = get_queue_items_for_user
+    render
+  end
 
   def create
     @qitem = QueueItem.new(queue_params)
@@ -21,7 +26,7 @@ class QueueItemsController < ApplicationController
         save_qitem
       end
     end
-    if @qitem.errors?
+    if !@qitem.save
       flash[:danger] = "Your item failed to save."
     end
 
@@ -47,6 +52,10 @@ class QueueItemsController < ApplicationController
   def select_last_position(array)
     number_to_set = @check_video.count + 1
     @qitem[:position] = number_to_set
+  end
+
+  def get_queue_items_for_user
+    current_user.queue_items
   end
 
   def save_qitem
