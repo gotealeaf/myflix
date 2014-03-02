@@ -1,6 +1,9 @@
 class VideosController < ApplicationController
   def index
-    @videos = Video.all
+    @category_videos = {}
+    Category.all.each do |category|
+      @category_videos.merge!(category.name => category.videos)
+    end
   end
 
   def show
