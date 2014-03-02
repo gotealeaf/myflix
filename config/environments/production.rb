@@ -17,4 +17,17 @@ Myflix::Application.configure do
   config.i18n.fallbacks = true
 
   config.active_support.deprecation = :notify
+  config.action_mailer.default_url_options = { host: 'http://myflix-neil.herokuapp.com'}
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.smtp_settings = {
+     :authentication => :plain,
+     :address => "smtp.mailgun.org",
+     :port => 587,
+     :domain => "sandbox23726.mailgun.org",
+     :user_name => ENV['MAIL_USERNAME'],
+     :password => ENV['MAIL_PASSWORD']
+}
 end

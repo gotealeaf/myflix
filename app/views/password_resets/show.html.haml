@@ -1,0 +1,16 @@
+%section.confirm_password_reset.container
+%section.reset_password.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = form_tag password_resets_path do
+        %header
+          %h1 Reset Your Password
+        %fieldset
+          .row
+            .form-group
+              .col-sm-4
+                = label_tag :password, "New Password"
+                = hidden_field_tag :token, @token
+                = password_field_tag :password, nil, class: 'form-control'
+        %fieldset.form-group.action
+          %input(type="submit" value="Reset Password" class="btn btn-default")

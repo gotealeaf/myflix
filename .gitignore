@@ -13,3 +13,10 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Ignore vim cache file
+*.swp
+*.swo
+
+# Ignore email server info
+# config/environments/production.rb
