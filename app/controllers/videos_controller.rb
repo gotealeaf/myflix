@@ -1,4 +1,5 @@
 class VideosController < ApplicationController
+  before_action :current_user, :authorize
 
 	def index
 		@categories = Category.all

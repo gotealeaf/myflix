@@ -1,13 +1,18 @@
 class UsersController < ApplicationController
+  before_action 
 
-  def new  
-    @user = User.new
+  def new
+    if current_user
+      redirect_to videos_path 
+    else
+      @user = User.new
+    end
   end
 
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to sign_in_path, notice: "Thank you for signing up"
+      redirect_to videos_path, notice: "Thank you for signing up"
     else
       render "new"
     end
@@ -16,6 +21,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:full_name, :email, :password, :salt, :encrypted_password)
+    params.require(:user).permit(:full_name, :email, :password)
   end
 end
