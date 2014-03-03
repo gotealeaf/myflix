@@ -1,0 +1,37 @@
+%section.user.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %article
+        %header
+          %img(src="http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(@user.email.downcase)}?s=40")
+          %h2 #{@user.full_name}'s video collections (#{@user.queue_items.count})
+          - if current_user.allow_to_follow?(@user)
+            = button_to "Follow", user_relationships_path(@user.id), class: "btn btn-default"
+        %table.table
+          %thead
+            %tr
+              %th(width="30%") Video Title
+              %th(width="15%") Genre
+          %tbody
+            - @user.videos.each do |video|
+              %tr
+                %td
+                  = link_to video.title, video
+                %td
+                  = link_to video.category_name, video.category 
+
+%section.user_reviews.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %header
+        %h3 #{@user.full_name}'s Reviews (#{@user.reviews.count})
+      %ul
+        - @user.reviews.each do |review|
+          %article.review
+            %li.row
+              .col-sm-2
+                %p
+                  = link_to review.video.title, review.video
+                %col Rating: #{rating(review)}
+              .col-sm-8
+                %p #{review_or_not_entered(review)}
