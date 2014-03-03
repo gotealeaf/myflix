@@ -18,6 +18,7 @@ describe Category do
       @family_matters = Video.create(title: "Family Matters", description: "Steve Urkel...Yay!", created_at: 1.day.ago, category: @comedy)
       expect(@comedy.recent_videos.count).to eq(2)
     end
+
     it "should returns only 6 videos if there are more than 6 videos in the category" do
       @comedy = Category.create(name: "Comedy")
       @family_guy = Video.create(title: "Family Guy", description: "A really twisted versino of the Simpsons", created_at: 3.day.ago, category: @comedy)
@@ -30,6 +31,7 @@ describe Category do
       @beavis_butthead = Video.create(title: "Beavis and Butthead", description: "too much mtv", created_at: 10.day.ago, category: @comedy)
       expect(@comedy.recent_videos.count).to eq(6)
     end
+
     it "should return the most recent 6 videos" do
       @comedy = Category.create(name: "Comedy")
       @family_guy = Video.create(title: "Family Guy", description: "A really twisted versino of the Simpsons", created_at: 3.day.ago, category: @comedy)
@@ -42,6 +44,7 @@ describe Category do
       @beavis_butthead = Video.create(title: "Beavis and Butthead", description: "too much mtv", created_at: 10.day.ago, category: @comedy)
       expect(@comedy.recent_videos).to eq([@family_matters, @always_sunny, @family_guy, @simpsons, @the_office, @king_of_hill])
     end
+
     it "should return an empty array if the category does not have any videos" do
       @comedy = Category.create(name: "Comedy")
       @drama = Category.create(name: "Drama")
