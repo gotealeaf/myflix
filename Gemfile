@@ -22,6 +22,10 @@ group :test, :development do
   gem "rspec-rails", "~> 2.0"
 end
 
+group :test do
+  gem 'shoulda-matchers'
+end
+
 group :production do
   gem 'pg'
   gem 'rails_12factor'
