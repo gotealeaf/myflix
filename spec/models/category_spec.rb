@@ -10,8 +10,8 @@ describe Category do
   it "has many videos" do
     comedies = Category.create(name: "TV Comedies")
     # doing the same thing, multiple ways
-    south_park = Video.create(title: "South Park", description: "haha", category: comedies)
-    futurama = Video.create(title: "Futurama", description: "Fry", category: comedies)
+    south_park = Video.create(title: "South Park", description: "super funny!", category: comedies)
+    futurama = Video.create(title: "Futurama", description: "Fry is a cool dude", category: comedies)
     # different tests:
     expect(Category.first.videos.length).to eq(2)
     expect(comedies.videos).to include(futurama, south_park)
