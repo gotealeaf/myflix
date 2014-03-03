@@ -7,7 +7,7 @@ describe VideosController do
     it "sets the @video variable" do
       south_park = Fabricate(:video)
 
-      get :show, use_route: 'video_path'
+      get :show
       expect(assigns(:videos)).to eq(south_park)
     end
 
