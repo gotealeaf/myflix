@@ -18,27 +18,13 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.valid?
-      Stripe.api_key = ENV['STRIPE_SECRET_KEY']
-      token = params[:stripeToken]
-      charge = StripeWrapper::Charge.create(
-        :amount => 999,
-        :card => token
-      )
-      if charge.successful?
-        @user.save
-        flash[:success] = "Thanks for becoming a member of MyFLix!"
-        redirect_to root_path
-        handle_friendship
-        @friend_full_name = @friend.user.full_name if @friend
-        AppMailer.delay.send_welcome_email(@user, @friend_full_name)
-        session[:user_id] = @user.id
-        @friend.update_column(:token, nil) if @friend
-      else
-        flash[:error] = charge.error_message
-        render :new
-      end
+    sign_up = UserSignUp.new(@user, params[:stripeToken], params[:token]).user_sign_up
+    if sign_up.successful?
+      session[:user_id] = sign_up.user.id
+      flash[:success] = "Thanks for becoming a member of MyFLix!"
+      redirect_to root_path
     else
+      flash[:error] = sign_up.error_message
       render :new
     end
   end
@@ -51,13 +37,5 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, :password, :full_name)
-  end
-
-  def handle_friendship
-    @friend = Friend.where(token: params[:token]).first if params[:token]
-    if @friend
-      @user.leaders << @friend.user if @user.allow_to_follow?(@friend.user)
-      @friend.user.leaders << @user if @friend.user.allow_to_follow?(@user)
-    end
   end
 end
