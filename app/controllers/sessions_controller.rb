@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       redirect_to videos_path, notice: "You are logged in."
     else 
       flash[:error] = "email and/or password are not correct."
-      render :new
+      redirect_to sign_in_path
     end
   end
 
