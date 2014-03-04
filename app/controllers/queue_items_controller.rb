@@ -7,64 +7,29 @@ class QueueItemsController < ApplicationController
   end
 
   def create
-    @qitem = QueueItem.new(queue_params)
-    @qitem.user_id = session[:user_id]
-    @exist = is_previous_item?
-    if is_previous_item?
-      flash[:danger] = "You already have this video queued."
-      if @qitem[:position] != nil
-        if same_position?
-          @same_position = true
-          flash[:danger] = 'Your item is already queued in the same position, it will not be updated'
-        else
-          update_position
-          save_qitem
-        end
-      else
-        select_last_position(@qitem)
-        flash[:success] = "Your item has queue number #{@qitem[:position]}"
-        save_qitem
-      end
+    binding.pry
+    @queue_item = QueueItem.new(queue_item_params)
+    if is_video_already_in_queue? == true
+      flash[:danger] = 'This video is already in your queue. It will not be saved.'
+      redirect_to my_queue_path
+    else
+      redirect_to my_queue_path
     end
-    if !@qitem.save
-      flash[:danger] = "Your item failed to save."
-    end
-
-    redirect_to queue_items_path
   end
 
   private
-
-  def queue_params
-    params.require(:qitem).permit(:user_id, :video_id, :position)
-  end
-
-  def is_previous_item?
-    @check_video = QueueItem.where(video_id: params[:qitem][:video_id].to_i, user_id: session[:user_id])
-    !@check_video.blank? #returns true if there is a video matching
-  end
-
-  def same_position?
-    check_video = QueueItem.where(video_id: params[:qitem][:video_id].to_i, user_id: session[:user_id], position: params[:qitem][:position])
-    !check_video.blank? #returns true if there is a video matching
-  end
-
-  def select_last_position(array)
-    number_to_set = @check_video.count + 1
-    @qitem[:position] = number_to_set
-  end
 
   def get_queue_items_for_user
     current_user.queue_items
   end
 
-  def save_qitem
-    @qitem.save
-    true
+  def is_video_already_in_queue? #true if already in queue
+    items = QueueItem.where(video_id: queue_item_params[:video_id], user_id: queue_item_params[:user_id])
+    !items.blank? #returns true if there are videos
   end
 
-  def update_position
-    @check_video.update_all(position: params[:qitem][:position].to_i)
+  def queue_item_params
+    params.require(:qitem).permit(:position, :video_id, :user_id)
   end
 
 end
