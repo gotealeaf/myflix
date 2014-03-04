@@ -19,8 +19,8 @@ http_interactions:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"1.10.1","lang":"ruby","lang_version":"2.0.0 p353 (2013-11-22)","platform":"x86_64-darwin13.0.0","publisher":"stripe","uname":"Darwin
-        Josephs-MacBook-Pro.local 13.0.0 Darwin Kernel Version 13.0.0: Thu Sep 19
-        22:22:27 PDT 2013; root:xnu-2422.1.72~6/RELEASE_X86_64 x86_64"}'
+        192.168.1.10 13.1.0 Darwin Kernel Version 13.1.0: Thu Jan 16 19:40:37 PST
+        2014; root:xnu-2422.90.20~2/RELEASE_X86_64 x86_64"}'
       Content-Length:
       - '81'
   response:
@@ -31,7 +31,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 26 Feb 2014 21:47:29 GMT
+      - Mon, 03 Mar 2014 18:30:20 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
@@ -52,14 +52,14 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_103ZOJ2Px4Wvfu2A7Uki84mv",
+          "id": "tok_103bDG2Px4Wvfu2AhUmHOBZI",
           "livemode": false,
-          "created": 1393451249,
+          "created": 1393871420,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_103ZOJ2Px4Wvfu2Ap75owy26",
+            "id": "card_103bDG2Px4Wvfu2Aaccljhjs",
             "object": "card",
             "last4": "0002",
             "type": "Visa",
@@ -78,13 +78,13 @@ http_interactions:
           }
         }
     http_version: 
-  recorded_at: Wed, 26 Feb 2014 21:47:29 GMT
+  recorded_at: Mon, 03 Mar 2014 18:30:19 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/charges
     body:
       encoding: US-ASCII
-      string: amount=999&currency=usd&card=tok_103ZOJ2Px4Wvfu2A7Uki84mv&description=an%20invalid%20charge
+      string: amount=999&currency=usd&card=tok_103bDG2Px4Wvfu2AhUmHOBZI&description=an%20invalid%20charge
     headers:
       Accept:
       - '*/*; q=0.5, application/xml'
@@ -98,8 +98,8 @@ http_interactions:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"1.10.1","lang":"ruby","lang_version":"2.0.0 p353 (2013-11-22)","platform":"x86_64-darwin13.0.0","publisher":"stripe","uname":"Darwin
-        Josephs-MacBook-Pro.local 13.0.0 Darwin Kernel Version 13.0.0: Thu Sep 19
-        22:22:27 PDT 2013; root:xnu-2422.1.72~6/RELEASE_X86_64 x86_64"}'
+        192.168.1.10 13.1.0 Darwin Kernel Version 13.1.0: Thu Jan 16 19:40:37 PST
+        2014; root:xnu-2422.90.20~2/RELEASE_X86_64 x86_64"}'
       Content-Length:
       - '91'
   response:
@@ -110,21 +110,21 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 26 Feb 2014 21:47:30 GMT
+      - Mon, 03 Mar 2014 18:30:21 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
       - '162'
       Connection:
       - keep-alive
+      Cache-Control:
+      - no-cache, no-store
       Access-Control-Allow-Credentials:
       - 'true'
       Access-Control-Max-Age:
       - '300'
       Access-Control-Allow-Methods:
       - GET, POST, HEAD, OPTIONS, DELETE
-      Cache-Control:
-      - no-cache, no-store
     body:
       encoding: UTF-8
       string: |
@@ -133,9 +133,9 @@ http_interactions:
             "message": "Your card was declined.",
             "type": "card_error",
             "code": "card_declined",
-            "charge": "ch_103ZOJ2Px4Wvfu2AQYxgoSMT"
+            "charge": "ch_103bDG2Px4Wvfu2A8ZlOTcfp"
           }
         }
     http_version: 
-  recorded_at: Wed, 26 Feb 2014 21:47:30 GMT
+  recorded_at: Mon, 03 Mar 2014 18:30:20 GMT
 recorded_with: VCR 2.8.0
