@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  before_action 
 
   def new
     if current_user
