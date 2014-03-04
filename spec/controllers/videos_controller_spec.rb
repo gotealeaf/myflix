@@ -7,7 +7,7 @@ describe VideosController do
       session[:user_id] = Fabricate(:user).id
       south_park = Fabricate(:video)
 
-      get :show, id: 1
+      get :show, id: video.id
       expect(assigns(:video)).to eq(south_park)
     end
     it "renders the show template" do
@@ -29,7 +29,7 @@ describe VideosController do
 
     it "sets the @results variable by search term" do
       session[:user_id] = Fabricate(:user).id
-      results = Fabricate(:video)
+      results = Fabricate(:video, title: "South Park")
 
       get :search, search_term: 'park'
       expect(assigns(:results)).to match_array([results])

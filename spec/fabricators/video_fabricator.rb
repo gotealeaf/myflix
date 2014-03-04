@@ -1,6 +1,6 @@
 Fabricator(:video) do
-  title { "South Park" }
-  description { "What a delightful show" }
+  description { Faker::Lorem.paragraph(2)}
+  title { Faker::Lorem.words(3) }
   category 
   
 end
