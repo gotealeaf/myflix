@@ -2,7 +2,5 @@
   %header
     - if !@category.videos.empty?
       %h1= @category.name
-  .videos.row
-    - @category.videos.each do |v|
-      .video.col-sm-2
-        = link_to image_tag("#{v.small_cover_url}", height: '236', width: '166'), video_path(v)
+  = render 'videos/videos', cat: @category
+  
