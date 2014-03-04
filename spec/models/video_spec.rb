@@ -6,34 +6,42 @@ describe Video do
   it { should validate_presence_of(:description) }
 
   describe "search_by_title" do
-    it "takes in a string as an argument and returns an empty array if the string does not match any titles" do
+    it "returns an empty array if string does not match any titles" do
+      futurama = Video.create(title: "Futurama", description: "Philip J. Fry etc.")
+      back_to_future = Video.create(title: "Back to Future", description: "time travel")
       search = "unmatched_title"
       expect(Video.search_by_title(search)).to eq([])
     end
-    it "takes in a string as an argument and returns a single-element array containing a video if the string matches one title" do
-      @eleven_am = Time.parse("2011-1-2 11:00:00")
-      Time.stub(:now) { @eleven_am }
-      futurama = Video.create(title: "Futurama", description: "Philip J. Fry etc.", created_at: @eleven_am, updated_at: @eleven_am)
+
+    it "returns a one-video array if the string exactly matches one title" do
+      futurama = Video.create(title: "Futurama", description: "Philip J. Fry etc.")
+      back_to_future = Video.create(title: "Back to Future", description: "time travel")
       search = "futurama"
       expect(Video.search_by_title(search)).to eq([futurama])
     end
-    it "takes in a string as an argument and returns an array containing multiple videos if the string matches more than one title" do
-      @eleven_am = Time.parse("2011-1-2 11:00:00")
-      Time.stub(:now) { @eleven_am }
-      futurama = Video.create(title: "Futurama", description: "Philip J. Fry etc.", created_at: @eleven_am, updated_at: @eleven_am)
-      family_guy = Video.create(title: "Family Guy", description: "Peter Griffin etc.", created_at: @eleven_am, updated_at: @eleven_am)
-      family_comedy = Video.create(title: "Family Comedy", description: "So generic! etc.", created_at: @eleven_am, updated_at: @eleven_am)
-      search = "family"
-      expect(Video.search_by_title(search)).to eq([family_guy, family_comedy])
+
+    it "returns an array of one video for a partial match" do
+      futurama = Video.create(title: "Futurama", description: "Philip J. Fry etc.")
+      family_guy = Video.create(title: "Family Guy", description: "Peter Griffin etc.")
+      family_comedy = Video.create(title: "Family Comedy", description: "So generic! etc.")
+      search = "futur"
+      expect(Video.search_by_title(search)).to eq([futurama])
     end
-    it "takes in a string as an argument and returns an array containing multiple videos if the string matches more than one title" do
-      @eleven_am = Time.parse("2011-1-2 11:00:00")
-      Time.stub(:now) { @eleven_am }
-      futurama = Video.create(title: "Futurama", description: "Philip J. Fry etc.", created_at: @eleven_am, updated_at: @eleven_am)
-      family_guy = Video.create(title: "Family Guy", description: "Peter Griffin etc.", created_at: @eleven_am, updated_at: @eleven_am)
-      family_comedy = Video.create(title: "Family Comedy", description: "So generic! etc.", created_at: @eleven_am, updated_at: @eleven_am)
-      search = "guy"
-      expect(Video.search_by_title(search)).to eq([family_guy])
+
+    it "returns an array of all matches, ordered by created_at" do
+      futurama = Video.create(title: "Futurama", description: "Philip J. Fry etc.")
+      family_guy = Video.create(title: "Family Guy", description: "Peter Griffin etc.", created_at: 1.day.ago)
+      family_comedy = Video.create(title: "Family Comedy", description: "So generic! etc.")
+      search = "family"
+      expect(Video.search_by_title(search)).to eq([family_comedy, family_guy])
+    end
+
+    it "returns an empty array when search term is empty string" do
+      futurama = Video.create(title: "Futurama", description: "Philip J. Fry etc.")
+      family_guy = Video.create(title: "Family Guy", description: "Peter Griffin etc.")
+      family_comedy = Video.create(title: "Family Comedy", description: "So generic! etc.")
+      search = ""
+      expect(Video.search_by_title(search)).to eq([])
     end
   end
 end
