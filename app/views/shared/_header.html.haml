@@ -9,7 +9,7 @@
   
   .col-md-5.navbar-form
     .form-group
-      = form_tag('/videos/search') do
+      = form_tag search_videos_path, method: :get do
         .control-group
           = text_field_tag 'search_term', nil, placeholder: 'Search'
           = submit_tag 'Search now', class: 'btn'  
