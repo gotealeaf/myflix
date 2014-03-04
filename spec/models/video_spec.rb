@@ -13,30 +13,52 @@ describe Video do
   it {should validate_presence_of(:title)} #shoulda-matchers
   it {should validate_presence_of(:description)} #shoulda-matchers
 
+  describe "search_by_title" do
+    it "returns empty array if no video titles contain the search string" do
+      chak = Video.create(title: "chak_de", description: "chak de description")
+      monk = Video.create(title: "monk", description: "monk description")
+      
+      expect(Video.search_by_title("zoo")).to eq([])
 
-  #Following code for writing the test line by line
-  #it "belongs to a category" do
-  #  thriller = Category.create(name: "thriller")
-  #  video = Video.new(title: "xyz", description: "more xyz", small_cover_url: "test short",
-  #    large_cover_url: "test large cover", category: thriller)
-  #  expect(video.category).to eq(thriller)
 
+    end
 
-  #end
-
-  #it "will not save without a title" do
-  #  video = Video.create( description: "abc description")
+    it "returns arrays of one video if one video title exactly matches the search string" do
+      chak = Video.create(title: "chak_de", description: "chak de description")
+      monk = Video.create(title: "monk", description: "monk description")
     
-  #  expect(Video.count).to eq(0)
+      expect(Video.search_by_title("monk")).to eq([monk])
 
-  #end
-
-  #it "will not save without a description" do
-  #  video = Video.create( title: "abc")
+    end
     
-  #  expect(Video.count).to eq(0)
+    it "returns array of one video if one video title partially contains the search string" do
+      chak = Video.create(title: "chak_de", description: "chak de description")
+      monk = Video.create(title: "monk", description: "monk description")
+    
+      expect(Video.search_by_title("mon")).to eq([monk])
 
-  #end
+    end
+    
+
+    it "returns all the videos whose titles contain the search string ordered by created_at" do
+      chak = Video.create(title: "chak_de", description: "chak de description", created_at: 1.day.ago)
+      monk = Video.create(title: "monk", description: "monk description")
+    
+      expect(Video.search_by_title("k")).to eq([monk, chak])
+
+    end
+
+    it "returns an empty array for a search with empty string" do
+      chak = Video.create(title: "chak_de", description: "chak de description")
+      monk = Video.create(title: "monk", description: "monk description")
+    
+      expect(Video.search_by_title("")).to eq([])
+
+    end
+    
+
+
+  end
 
    
 
