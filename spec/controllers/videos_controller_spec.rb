@@ -3,31 +3,29 @@ require 'spec_helper'
 describe VideosController do 
   
   describe "GET show" do
-    it "sets the @video variable" do
+    it "sets the @video variable when user is authenticated" do
       session[:user_id] = Fabricate(:user).id
-      south_park = Fabricate(:video)
+      video = Fabricate(:video, title: "South Park")
 
       get :show, id: video.id
-      expect(assigns(:video)).to eq(south_park)
+      expect(assigns(:video)).to eq(video)
     end
-    it "renders the show template" do
-      session[:user_id] = Fabricate(:user).id
-      south_park = Fabricate(:video)
-      get :show, id: 1
-      expect(response).to render_template :show
+    it "redirects user when inauthenticated" do
+      video = Fabricate(:video, title: "South Park")
+      get :show, id: video.id
+      expect(response).to redirect_to sign_in_path
     end
   end
 
   describe "GET search" do
-    it "renders the search template" do
-      session[:user_id] = Fabricate(:user).id
-      south_park = Fabricate(:video)
+    it "redirects user when inauthenticated" do
+      south_park = Fabricate(:video, title: "South Park")
       
       get :search
-      expect(response).to render_template :search
+      expect(response).to redirect_to sign_in_path
     end
 
-    it "sets the @results variable by search term" do
+    it "sets the @results variable by search term when user is authenticated" do
       session[:user_id] = Fabricate(:user).id
       results = Fabricate(:video, title: "South Park")
 
