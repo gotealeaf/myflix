@@ -1,0 +1,6 @@
+- @categories.each do |cat|
+  - if !cat.videos.empty?
+    %article.video_category
+      %header
+        %h3= link_to cat.name, category_path(cat)
+      = render 'videos', cat: cat

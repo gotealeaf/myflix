@@ -1,0 +1,9 @@
+.videos.row
+  - if @results.blank?
+    %h1.text-center "No results found"
+  - else
+    .text-center
+      %h1= "Displaying search results for '#{params[:search_term]}'"
+    - @results.each do |v|
+      .video.col-sm-2
+        = link_to image_tag("#{v.small_cover_url}", height: '236', width: '166'), video_path(v)

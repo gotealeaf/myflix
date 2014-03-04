@@ -1,0 +1,9 @@
+%article.video
+  .container
+    .row
+      .video_large_cover.col-md-6
+        = image_tag("#{@video.large_cover_url}", height: '375', width: '665')
+      .video_info.col-md-5.pull-right
+        %header
+          %h3= @video.title
+        %p= @video.description
