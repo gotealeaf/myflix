@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Category do
   it { should have_many(:videos) }
 
-  describe "recent videos" do
+  describe "#recent_videos" do
     it "should return an empty array if the category contains no videos" do
       category = Category.create(name: "TV Comedies")
       expect(category.recent_videos).to eq([])
@@ -16,7 +16,7 @@ describe Category do
       expect(category.recent_videos).to eq([family_guy, futurama])
     end
 
-    it "should return the videos within a category sorted by date" do
+    it "should return the videos within a category sorted by date created with most recent video first" do
       category = Category.create(name: "TV Comedies")
       family_guy = Video.create(title: "Family Guy", description: "Peter Griffin etc.", category_id: category.id, created_at: 1.day.ago)
       futurama = Video.create(title: "Futurama", description: "Philip Fry etc.", category_id: category.id, created_at: 2.days.ago)
@@ -27,7 +27,7 @@ describe Category do
       expect(category.recent_videos).to eq([family_guy, futurama, simpsons, south_park, monk, archer])
     end
 
-    it "should return the most recent 6 videos in a category if the category contains more than 6 videos" do
+    it "should return only the most recently created 6 videos in a category if the category contains more than 6 videos" do
       category = Category.create(name: "TV Comedies")
       family_guy = Video.create(title: "Family Guy", description: "Peter Griffin etc.", category_id: category.id, created_at: 1.day.ago)
       futurama = Video.create(title: "Futurama", description: "Philip Fry etc.", category_id: category.id, created_at: 2.days.ago)
