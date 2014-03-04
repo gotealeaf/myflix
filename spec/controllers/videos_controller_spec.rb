@@ -17,4 +17,23 @@ describe VideosController do
       expect(response).to render_template :show
     end
   end
+
+  describe "GET search" do
+    it "renders the search template" do
+      session[:user_id] = Fabricate(:user).id
+      south_park = Fabricate(:video)
+      
+      get :search
+      expect(response).to render_template :search
+    end
+
+    it "sets the @results variable by search term" do
+      session[:user_id] = Fabricate(:user).id
+      results = Fabricate(:video)
+
+      get :search, search_term: 'park'
+      expect(assigns(:results)).to match_array([results])
+    end
+
+  end
 end
