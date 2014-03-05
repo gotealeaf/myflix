@@ -57,7 +57,7 @@ describe UsersController do
     context "with valid input" do
       before do
         sign_up = double(:sign_up, successful?: true, user: Fabricate(:user))
-        UserSignUp.any_instance.should_receive(:user_sign_up).and_return(sign_up)
+        expect_any_instance_of(UserSignUp).to receive(:user_sign_up).and_return(sign_up)
       end
       it "redirects to the root" do
         create_user_valid_credentials
@@ -75,7 +75,7 @@ describe UsersController do
     context "with invalid input" do
       before do
         sign_up = double(:sign_up, successful?: false, error_message: "There is something wrong with your input.")
-        UserSignUp.any_instance.should_receive(:user_sign_up).and_return(sign_up)
+        expect_any_instance_of(UserSignUp).to receive(:user_sign_up).and_return(sign_up)
       end
       it "returns a flash error message" do
         create_user_invalid_credentials

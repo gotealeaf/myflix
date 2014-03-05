@@ -16,6 +16,7 @@ class UserSignUp
         email: @user.email
       )
       if customer.successful?
+        @user.stripe_customer = customer.stripe_customer
         @user.save
         handle_friendship
         friend_full_name = @friend.user.full_name if @friend
