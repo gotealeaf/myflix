@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-  def front; end
-
   def new
     @user = User.new
   end
@@ -9,8 +7,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       flash[:success] = "You registered! Welcome, #{params[:user][:full_name]}!"
-      #session[:user_id] = @user.id
-      redirect_to home_path
+      redirect_to login_path
     else
       render :new
     end
