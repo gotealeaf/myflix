@@ -1,8 +1,5 @@
 class PagesController < ApplicationController  
   def front
-    if logged_in?
-      @categories = Category.all
-      render 'videos/index'
-    end
+    redirect_to home_path if logged_in?
   end
 end
