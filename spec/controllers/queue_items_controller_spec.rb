@@ -60,6 +60,7 @@ describe QueueItemsController do
       it 'redirects unauthenticated user to the login page' do
         queue_item_2 = Fabricate(:queue_item)
         delete :destroy, id: queue_item_2.id
+        expect(response).to redirect_to login_path
       end
     end
   end
