@@ -1,0 +1,42 @@
+%section.register.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      .form-horizontal
+        %fieldset
+          = bootstrap_form_for(@user, layout: :horizontal) do |f|
+            %header
+              %h1 Register
+            = f.alert_message "Please correct the following errors:"
+            .form-group
+              .control-label.col-sm-2
+                = f.label :email, "Email Address"
+              .col-sm-6
+                = f.text_field :email, hide_label: true, class: "form-control"
+            .form-group
+              %label.control-label.col-sm-2
+                = f.label :password, "Password"
+              .col-sm-6
+                = f.password_field :password, hide_label: true, class: "form-control"
+            .form-group
+              %label.control-label.col-sm-2
+                = f.label :full_name, "Full Name"
+              .col-sm-6
+                = f.text_field :full_name, hide_label: true, class: "form-control"
+            %fieldset.credit_card
+              .form-group
+                %label.control-label.col-sm-2 Credit Card Number
+                .col-sm-6
+                  %input.form-control(type="text")
+              .form-group
+                %label.control-label.col-sm-2 Security Code
+                .col-sm-6
+                  %input.form-control(type="text")
+              .form-group
+                %label.control-label.col-sm-2 Expiration
+                .col-sm-3
+                  = select_month(Date.today, {add_month_numbers: true},  class: 'form-control')
+                .col-sm-2
+                  = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'form-control')
+            %fieldset.actions.control-group.col-sm-offset-2
+              .controls
+                %input(type="submit" value="Register" class="btn btn-default")
