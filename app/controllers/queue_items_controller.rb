@@ -1,6 +1,6 @@
 class QueueItemsController < ApplicationController
   before_action :require_user, :current_user
-  def show
+  def index
     @queue_items = get_queue_items_for_user
     render
   end
@@ -19,10 +19,12 @@ class QueueItemsController < ApplicationController
   end
 
   def destroy
-    if does_queue_item_belong_to_user?
+    binding.pry
+    if queue_item_belong_to_user?
       QueueItem.delete(params[:id])
+      flash[:success] = "The video was successfully removed from your queue."
     else
-      flash[:danger] = "That video deos not exist in your queue."
+      flash[:danger] = "There was an error removing the video from your queue. Please try again."
     end
     redirect_to my_queue_path
   end
@@ -33,9 +35,8 @@ class QueueItemsController < ApplicationController
     get_queue_items_for_user.count
   end
 
-  def does_queue_item_belong_to_user?
-    items = QueueItem.where(id: params[:id], user_id: session[:user_id])
-    !items.blank?
+  def queue_item_belong_to_user?
+    QueueItem.where(id: params[:id], user_id: session[:user_id]).any?
   end
 
   def set_position
@@ -47,8 +48,7 @@ class QueueItemsController < ApplicationController
   end
 
   def is_video_already_in_queue? #true if already in queue
-    items = QueueItem.get_queue_items_for_video_and_user(queue_item_params[:video_id], queue_item_params[:user_id])
-    !items.blank? #returns true if there are videos
+    QueueItem.get_queue_items_for_video_and_user(queue_item_params[:video_id], queue_item_params[:user_id]).any?
   end
 
   def queue_item_params

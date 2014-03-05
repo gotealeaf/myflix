@@ -11,19 +11,19 @@ describe QueueItemsController do
       it 'sets the @queue_items instance variable correctly' do
         qitem = Fabricate(:queue_item, user: adam)
         qitem2 = Fabricate(:queue_item, user: adam)
-        get :show
+        get :index
         expect(assigns(:queue_items)).to match_array([qitem, qitem2])
       end
       it 'renders the show template' do
         qitem = Fabricate(:queue_item, user: adam)
         qitem2 = Fabricate(:queue_item, user: adam)
-        get :show
-        expect(response).to render_template(:show)
+        get :index
+        expect(response).to render_template(:index)
       end
     end
     context 'with invalid user' do
       it 'redirects user' do
-        get :show
+        get :index
         expect(response).to redirect_to login_path
       end
     end
@@ -45,12 +45,16 @@ describe QueueItemsController do
         delete :destroy, id: QueueItem.first.id
         expect(QueueItem.count).to eq(0)
       end
+      it 'shows a confirmation msg to the user if the deletion is successful' do
+        delete :destroy, id: QueueItem.first.id
+        expect(flash[:success]).to be_present
+      end
       it 'prevents a user from deleting another users queue item' do
         queue_item_2 = Fabricate(:queue_item, video: monk)
         delete :destroy, id: queue_item_2.id
         expect(QueueItem.count).to eq(2)
       end
-      it 'displays an error if there is no queue item to delete' do
+      it 'displays an error if the user does not own the queue item' do
         queue_item_2 = Fabricate(:queue_item, video: monk)
         delete :destroy, id: queue_item_2.id
         expect(flash[:danger]).to be_present
