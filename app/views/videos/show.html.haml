@@ -8,6 +8,8 @@
           %h3= @video.title
           %span Rating: NA
         %p= @video.description
+        .actions
+          = link_to "+ My Queue", queue_items_path(qitem: {"video_id"=>@video.id, "user_id"=>session[:user_id]}), method: :post, class: "btn btn-default"
 
 %section.reviews.container
   .row
