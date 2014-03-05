@@ -14,10 +14,10 @@ class SessionsController < ApplicationController
     end
   end
 
-  # have not wired up logout yet
   def destroy
+    flash[:success] = "You've logged out, #{current_user.full_name}! Thanks"\
+                      " for stopping by!"
     session[:user_id] = nil
-    flash[:success] = "You've logged out! Thanks for stopping by!"
     redirect_to root_path
   end
 end
