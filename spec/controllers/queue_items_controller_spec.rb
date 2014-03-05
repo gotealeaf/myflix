@@ -4,163 +4,127 @@ require 'pry'
 describe QueueItemsController do
   describe 'GET #index' do
     context 'with valid user' do
+      let(:adam) { Fabricate(:user) }
+      before do
+        session[:user_id] = adam.id
+      end
       it 'sets the @queue_items instance variable correctly' do
-        adam = Fabricate(:user)
         qitem = Fabricate(:queue_item, user: adam)
         qitem2 = Fabricate(:queue_item, user: adam)
-        session[:user_id] = adam.id
-        get :show
+        get :index
         expect(assigns(:queue_items)).to match_array([qitem, qitem2])
       end
-
       it 'renders the show template' do
-        adam = Fabricate(:user)
         qitem = Fabricate(:queue_item, user: adam)
         qitem2 = Fabricate(:queue_item, user: adam)
-        session[:user_id] = adam.id
-        get :show
-        expect(response).to render_template(:show)
+        get :index
+        expect(response).to render_template(:index)
       end
     end
     context 'with invalid user' do
       it 'redirects user' do
-        get :show
+        get :index
+        expect(response).to redirect_to login_path
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    context 'user logged in' do
+      let(:adam) { Fabricate(:user) }
+      let(:monk) { Fabricate(:video) }
+      before do
+        session[:user_id] = adam.id
+        Fabricate(:queue_item, user: adam, video: monk)
+      end
+      it 'redirects the user to the my queue page' do
+        delete :destroy, id: QueueItem.first.id
+        expect(response).to redirect_to my_queue_path
+      end
+      it 'deletes the video from the users queue' do
+        delete :destroy, id: QueueItem.first.id
+        expect(QueueItem.count).to eq(0)
+      end
+      it 'shows a confirmation msg to the user if the deletion is successful' do
+        delete :destroy, id: QueueItem.first.id
+        expect(flash[:success]).to be_present
+      end
+      it 'prevents a user from deleting another users queue item' do
+        queue_item_2 = Fabricate(:queue_item, video: monk)
+        delete :destroy, id: queue_item_2.id
+        expect(QueueItem.count).to eq(2)
+      end
+      it 'displays an error if the user does not own the queue item' do
+        queue_item_2 = Fabricate(:queue_item, video: monk)
+        delete :destroy, id: queue_item_2.id
+        expect(flash[:danger]).to be_present
+      end
+    end
+    context 'user not logged in' do
+      it 'redirects unauthenticated user to the login page' do
+        queue_item_2 = Fabricate(:queue_item)
+        delete :destroy, id: queue_item_2.id
         expect(response).to redirect_to login_path
       end
     end
   end
 
   describe 'POST #create' do
-    context 'invalid user' do
-      it 'redirects user to login_path' do
-        post :create
-        expect(response).to redirect_to login_path
-      end
-      it 'displays error message to user'
-    end
-    context 'signed in user' do
+    let(:adam) { Fabricate :user }
+    let(:monk) { Fabricate :video }
+    let(:sample_queue_item) { Fabricate.attributes_for(:queue_item, user_id: adam.id, video_id: monk.id) }
+    context 'user signed in' do
       before do
-        @user = Fabricate(:user)
-        @video = Fabricate(:video)
-        @qitem = Fabricate.attributes_for(:queue_item, position: 1, video: @video, user_id: nil)
-        session[:user_id] = @user.id
+        session[:user_id] = adam.id
       end
-
-      context 'assignment validation' do
+      context 'the video is already in the queue' do
+        let!(:monk_queue_item) { Fabricate(:queue_item, user_id: adam.id, video_id: monk.id) }
         before do
-          post :create, qitem: @qitem
+          post :create, qitem: sample_queue_item
         end
-        it 'sets the QueueItem object correctly based on params' do
-          expect(assigns(:qitem)).to be_instance_of(QueueItem)
+        it 'fails to save the video to the queue' do
+          expect(QueueItem.count).to eq(1)
         end
-        it 'assigns the user_id correctly' do
-          expect(assigns(:qitem).user_id).to eq(session[:user_id])
-        end
-        it 'assigns the video_id correctly' do
-          expect(assigns(:qitem).video_id).to eq(@video.id)
-        end
-      end
-
-      context 'already in queue' do
-        before do
-          qitem2 = Fabricate(:queue_item, position: 1, user_id: @user.id, video_id: @video.id)
-          post :create, qitem: @qitem
-        end
-        it 'checks if item is already in queue' do
-          expect(assigns(:exist)).to eq(true)
-        end
-        it 'shows error message' do
+        it 'shows a error message to the user' do
           expect(flash[:danger]).to be_present
         end
-        it 'redirects user to queue page' do
-          expect(response).to redirect_to queue_items_path
+        it 'redirect the user to the the queue page' do
+          expect(response).to redirect_to my_queue_path
         end
       end
-
-      context 'position set' do
-        before do
-          qitem2 = Fabricate(:queue_item, position: 2, video_id: @video.id, user_id: @user.id)
+      context 'the video is not already in the queue' do
+        it 'saves the video to the queue' do
+          post :create, qitem: sample_queue_item
+          expect(QueueItem.count).to eq(1)
         end
-
-        it 'checks if the same position is set' do
-          qitem3 = Fabricate.attributes_for(:queue_item, position: 2, video_id: @video.id, user_id: @user.id)
-          post :create, qitem: qitem3
-          expect(assigns(:same_position)).to eq(true)
+        it 'adds the queue to the back of the queue' do
+          @position = 0
+          2.times do
+            Fabricate(:queue_item, user_id: adam.id, position: @position + 1)
+            @position = @position + 1
+          end
+          post :create, qitem: sample_queue_item
+          expect(assigns(:queue_item).position).to eq(3)
         end
-
-        it 'updates position if different' do
-          qitem3 = Fabricate.attributes_for(:queue_item, position: 3, video_id: @video.id, user_id: @user.id)
-          post :create, qitem: qitem3
-          expect(QueueItem.first.position).to eq(qitem3[:position])
+        it 'shows a save confirmation message to the user' do
+          post :create, qitem: sample_queue_item
+          expect(flash[:success]).to be_present
         end
-
-        it 'saves position if different' do
-          qitem3 = Fabricate.attributes_for(:queue_item, position: 3, video_id: @video.id, user_id: @user.id)
-          post :create, qitem: qitem3
-          expect(QueueItem.count).to eq(2)
+        it 'redirects the user to the queue page' do
+          post :create, qitem: sample_queue_item
+          expect(response).to redirect_to my_queue_path
         end
       end
-
-      context 'if no position is set' do
-        it 'sets position to number after last allocated' do
-          qitem4 = Fabricate(:queue_item, position: 1, video_id: @video.id, user_id: @user.id)
-          qitem5 = Fabricate(:queue_item, position: 2, video_id: @video.id, user_id: @user.id)
-          qitem6 = Fabricate(:queue_item, position: 3, video_id: @video.id, user_id: @user.id)
-          qitem_to_test = Fabricate.attributes_for(:queue_item, position: nil, video_id: @video.id, user_id: @user.id)
-          post :create, qitem: qitem_to_test
-          expect(assigns(:qitem)[:position]).to eq(4)
-        end
-
-        context 'save success' do
-          it 'saves valid item' do
-            qitem4 = Fabricate(:queue_item, position: 1, video_id: @video.id, user_id: @user.id)
-            qitem5 = Fabricate(:queue_item, position: 2, video_id: @video.id, user_id: @user.id)
-            qitem6 = Fabricate(:queue_item, position: 3, video_id: @video.id, user_id: @user.id)
-            qitem_to_test = Fabricate.attributes_for(:queue_item, position: nil, video_id: @video.id, user_id: @user.id)
-            post :create, qitem: qitem_to_test
-            expect(QueueItem.count).to eq(4)
-          end
-
-          it 'redirects user to queue_item_path' do
-            qitem4 = Fabricate(:queue_item, position: 1, video_id: @video.id, user_id: @user.id)
-            qitem5 = Fabricate(:queue_item, position: 2, video_id: @video.id, user_id: @user.id)
-            qitem6 = Fabricate(:queue_item, position: 3, video_id: @video.id, user_id: @user.id)
-            qitem_to_test = Fabricate.attributes_for(:queue_item, position: nil, video_id: @video.id, user_id: @user.id)
-            post :create, qitem: qitem_to_test
-            expect(response).to redirect_to queue_items_path
-          end
-          it 'shows positive confirmation' do
-            qitem4 = Fabricate(:queue_item, position: 1, video_id: @video.id, user_id: @user.id)
-            qitem5 = Fabricate(:queue_item, position: 2, video_id: @video.id, user_id: @user.id)
-            qitem6 = Fabricate(:queue_item, position: 3, video_id: @video.id, user_id: @user.id)
-            qitem_to_test = Fabricate.attributes_for(:queue_item, position: nil, video_id: @video.id, user_id: @user.id)
-            post :create, qitem: qitem_to_test
-            expect(flash[:success]).to be_present
-          end
-        end
-
-        context 'if not already in queue' do
-          before do
-            10.times do Fabricate(:queue_item) end
-            post :create, qitem: @qitem
-          end
-          it 'redirects to queue_items_path' do
-            expect(assigns(:exist)).to eq(false)
-          end
-        end
-
-        context 'invalid params' do
-          it 'fails to save QueueItem' do
-            qitem3 = Fabricate.attributes_for(:queue_item, position: 3, video_id: nil, user_id: @user.id)
-            post :create, qitem: qitem3
-            expect(QueueItem.count).to eq(0)
-          end
-          it 'shows error message' do
-            qitem3 = Fabricate.attributes_for(:queue_item, position: 3, video_id: nil, user_id: @user.id)
-            post :create, qitem: qitem3
-            expect(flash[:danger]).to be_present
-          end
-        end
+    end
+    context 'user not signed in' do
+      before do
+        post :create, qitem: sample_queue_item
+      end
+      it 'displays and error message to the user' do
+        expect(flash[:danger]).to be_present
+      end
+      it 'redirects the user to the login page' do
+        expect(response).to redirect_to login_path
       end
     end
   end

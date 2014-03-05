@@ -16,17 +16,16 @@
           %tbody
             - @queue_items.each do | qi |
               %tr
-                %td
-                  %input.form-control(type="text" value="1")
+                %td= qi.position
                 %td
                   = link_to("#{qi.video.title}", video_path(qi.video.id))
                 %td
                   = button_to "Play", nil, class: "btn btn-default"
                 %td
-                  = qi.position
+                  
                 %td
                   = link_to("#{qi.video.category.title}", category_path(qi.video.category.id))
                 %td
-                  = link_to "", method: :post do
+                  = link_to qi, method: :delete do
                     %i.glyphicon.glyphicon-remove
           = button_to "Update Instant Queue", nil, class: "btn btn-default"
