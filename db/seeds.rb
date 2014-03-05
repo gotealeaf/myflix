@@ -6,5 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.create(email: "paq@paq.com", password: "12345678", full_name: "Paquito")
+paquito = User.create(email: "paq@paq.com", full_name: "Paquito", password: "12345678", password_confirmation: "12345678", full_name: "Paquito")
+curro = Video.create(title: "Curro Jimenez", description: "Brasas brasas brasas.", small_cover: "/tmp/family_guy.jpg", large_cover: "tmp/mok_large.jpg" )
+Review.create(creator: paquito, video: curro, rating: 5, content: "Really good serie.")
+Review.create(creator: paquito, video: curro, rating: 3, content: "Not that good.")
 

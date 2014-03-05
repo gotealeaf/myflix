@@ -29,12 +29,24 @@ describe VideosController do
   end
 
   describe "GET show" do
+
     it "sets @video with authenticated users" do
       session[:user_id] = Fabricate(:user).id
 
       video = Fabricate :video
       get :show, id: video.id
       expect(assigns :video).to eq video
+    end
+
+    it "sets @reviews with authenticated users" do
+      session[:user_id] = Fabricate(:user).id
+
+      video = Fabricate :video
+      review1 = Fabricate(:review, video: video)
+      review2 = Fabricate(:review, video: video)
+
+      get :show, id: video.id
+      expect(assigns :reviews).to match_array ([review1, review2])
     end
 
     it "renders the show template with authenticated users" do
