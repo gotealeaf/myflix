@@ -28,6 +28,42 @@ describe QueueItemsController do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    context 'user logged in' do
+      let(:adam) { Fabricate(:user) }
+      let(:monk) { Fabricate(:video) }
+      before do
+        session[:user_id] = adam.id
+        Fabricate(:queue_item, user: adam, video: monk)
+      end
+      it 'redirects the user to the my queue page' do
+        delete :destroy, id: QueueItem.first.id
+        expect(response).to redirect_to my_queue_path
+      end
+      it 'deletes the video from the users queue' do
+        delete :destroy, id: QueueItem.first.id
+        expect(QueueItem.count).to eq(0)
+      end
+      it 'prevents a user from deleting another users queue item' do
+        queue_item_2 = Fabricate(:queue_item, video: monk)
+        delete :destroy, id: queue_item_2.id
+        expect(QueueItem.count).to eq(2)
+      end
+      it 'displays an error if there is no queue item to delete' do
+        queue_item_2 = Fabricate(:queue_item, video: monk)
+        delete :destroy, id: queue_item_2.id
+        expect(flash[:danger]).to be_present
+      end
+    end
+    context 'user not logged in' do
+      it 'redirects unauthenticated user to the login page' do
+        queue_item_2 = Fabricate(:queue_item)
+        delete :destroy, id: queue_item_2.id
+      end
+    end
+  end
+
   describe 'POST #create' do
     let(:adam) { Fabricate :user }
     let(:monk) { Fabricate :video }

@@ -1,6 +1,5 @@
 class QueueItemsController < ApplicationController
   before_action :require_user, :current_user
-
   def show
     @queue_items = get_queue_items_for_user
     render
@@ -19,10 +18,24 @@ class QueueItemsController < ApplicationController
     end
   end
 
+  def destroy
+    if does_queue_item_belong_to_user?
+      QueueItem.delete(params[:id])
+    else
+      flash[:danger] = "That video deos not exist in your queue."
+    end
+    redirect_to my_queue_path
+  end
+
   private
 
   def number_of_queue_items
     get_queue_items_for_user.count
+  end
+
+  def does_queue_item_belong_to_user?
+    items = QueueItem.where(id: params[:id], user_id: session[:user_id])
+    !items.blank?
   end
 
   def set_position
@@ -41,5 +54,4 @@ class QueueItemsController < ApplicationController
   def queue_item_params
     params.require(:qitem).permit(:position, :video_id, :user_id)
   end
-
 end
