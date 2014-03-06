@@ -1,6 +1,6 @@
 Myflix::Application.routes.draw do
 
-  root to: 'videos#front'
+  root to: 'public_pages#front'
   get '/register', to: 'users#new'
 
   get 'ui(/:action)', controller: 'ui'
