@@ -13,7 +13,7 @@ class UsersController < ApplicationController
 			Stripe::Charge.create(
 				:amount => 999, 
 				:currency => "usd", 
-				:card => params[:stripeToken], # obtained with Stripe.js 
+				:card => params[:stripeToken], 
 				:description => "Sign up charge for #{@user.email}" )
 			AppMailer.delay.send_welcome_email(@user)
 			redirect_to sign_in_path
