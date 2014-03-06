@@ -14,7 +14,8 @@ class Video < ActiveRecord::Base
   end
 
   def average_rating    
-    reviews.select(:rating).map {|r| r.rating}
+    collection = reviews.select(:rating).map {|r| r.rating}
+    collection.inject{ |sum, el| sum +el }.to_f / collection.size
   end
 
 end

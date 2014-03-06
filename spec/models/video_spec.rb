@@ -95,19 +95,21 @@ describe Video do
   end
 
   describe '#average_rating' do
-    it "should return the rating of a video's review" do
+    it "should return the rating of a video's review if there is only one" do
       video = Fabricate(:video)
       review = Fabricate(:review, rating: 4.5, video: video)
 
-      expect(video.average_rating).to eq([4.5])
+      expect(video.average_rating).to eq(4.5)
     end
-    it "should return the ratings from a video's reviews" do
+
+    it "should average the ratings from a video's reviews if there are more than one review" do
       video = Fabricate(:video)
       review = Fabricate(:review, rating: 4.5, video: video)
       review2 = Fabricate(:review, rating: 5.0, video: video)
 
-      expect(video.average_rating).to eq([5.0, 4.5])
+      expect(video.average_rating).to eq(4.75)
     end
+
   end
 end
 
