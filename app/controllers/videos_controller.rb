@@ -1,5 +1,10 @@
 class VideosController < ApplicationController
 
+
+  def front
+
+  end
+
   def home
     @videos = Video.all
     @categories = Category.all
@@ -14,8 +19,9 @@ class VideosController < ApplicationController
   def search
     
     @results = Video.search_by_title(params[:search_term])
-
     
   end
+
+
 
 end

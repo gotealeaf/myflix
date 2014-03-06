@@ -53,5 +53,31 @@
     surreal humor that satirizes a wide range of topics. The ongoing narrative revolves around 
     four boys—Stan Marsh, Kyle Broflovski, Eric Cartman, and Kenny McCormick—and their bizarre 
     adventures in and around the titular Colorado town.", small_cover_url: "/tmp/south_park.jpg",
-  large_cover_url: "/tmp/south_park_large.jpg")                        
+  large_cover_url: "/tmp/south_park_large.jpg")         
+
+  Video.create(title: "The Big Bang Theory", description: "The show is primarily centered on five 
+    characters living in Pasadena, California: roommates Leonard Hofstadter and Sheldon Cooper, 
+    both physicists; Penny, a waitress and aspiring actress who lives across the hall; and Leonard 
+    and Sheldon's equally geeky and socially awkward friends and co-workers, mechanical engineer 
+    Howard Wolowitz and astrophysicist Raj Koothrappali. The geekiness and intellect of the four 
+    guys is contrasted for comic effect with Penny's social skills and common sense.[7][8]", 
+    small_cover_url: "/tmp/bbt.jpg",  large_cover_url: "/tmp/bbt_large.jpg")                        
+
+  Video.create(title: "Modern Family", description: "Modern Family is an American sitcom which 
+    debuted on ABC on September 23, 2009. Presented in mockumentary style, the fictional characters 
+    frequently talk directly into the camera. ", small_cover_url: "/tmp/modern_family.jpg",
+  large_cover_url: "/tmp/modern_family_large.jpg")                        
+    
+  Video.create(title: "Seinfeld", description: "Set predominantly in an apartment block in 
+    Manhattan's Upper West Side in New York City, the show features a handful of Jerry's friends 
+    and acquaintances, particularly best friend George Costanza (Jason Alexander), former girlfriend 
+    Elaine Benes (Julia Louis-Dreyfus), and neighbor across the hall Cosmo Kramer (Michael Richards).", 
+    small_cover_url: "/tmp/seinfeld.jpg", large_cover_url: "/tmp/seinfeld_large.jpg")                        
+  
+  Video.create(title: "The Simpsons", description: "The Simpsons is an American adult animated sitcom 
+    created by Matt Groening for the Fox Broadcasting Company.[1][2][3] The series is a satirical 
+    parody of a middle class American lifestyle epitomized by its family of the same name, which 
+    consists of Homer, Marge, Bart, Lisa, and Maggie. The show is set in the fictional town of 
+    Springfield and parodies American culture, society, television, and many aspects of the human 
+    condition.", small_cover_url: "/tmp/simpsons.png", large_cover_url: "/tmp/simpsons_large.jpg")                        
   
