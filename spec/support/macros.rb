@@ -21,6 +21,7 @@ def sign_in(a_user=nil, admin=:user)
   fill_in "Password", with: user.password
   click_button "Sign in"
   expect(page).to have_content user.full_name
+  user
 end
 
 def sign_out

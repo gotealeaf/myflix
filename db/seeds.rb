@@ -11,6 +11,7 @@ Category.delete_all
 User.delete_all
 Review.delete_all
 QueueItem.delete_all
+Payment.delete_all
 
 c1 = Category.create(name: "Biographies")
 c2 = Category.create(name: "Political Dramas")
@@ -56,7 +57,7 @@ Video.create(title: "Tristan & Isolde", description: "When gallant English knigh
 Video.create(title: "Chocolat", description: "A single mother and her young daughter move into a peaceful French village and open a chocolate shop during the height of Lent. At first, the shop's rich, sensuous desserts scandalize the town. But the villagers soon learn to savor the sweetness.", small_cover: File.open(Rails.root.join('public/tmp/chocolat.jpg')), large_cover: File.open(Rails.root.join('public/tmp/chocolat_large.jpg')), category: c3)
 
 schindlerslist = Video.create(title: "Schindler's List", description: "Liam Neeson stars as Oskar Schindler, a greedy German factory owner made rich by exploiting cheap Jewish labor. But as World War II unfolds, he becomes an unlikely humanitarian, spending his entire fortune to help save 1,100 Jews from Auschwitz.", small_cover: File.open(Rails.root.join('public/tmp/schindlerslist.jpg')), large_cover: File.open(Rails.root.join('public/tmp/schindlerslist_large.png')), category: c1)
-gandhi = Video.create(title: "Gandhi", description: "This awe-inspiring biopic about Mahatma Gandhi -- the diminutive lawyer who stood up against British rule in India and became an international symbol of nonviolence and understanding -- brilliantly underscores the difference one person can make.", small_cover: File.open(Rails.root.join('public/tmp/gandhi.jpg')), large_cover: File.open(Rails.root.join('public/tmp/gandhi_large.jpg')), category: c1)
+gandhi = Video.create(title: "Gandhi", description: "This awe-inspiring biopic about Mahatma Gandhi -- the diminutive lawyer who stood up against British rule in India and became an international symbol of nonviolence and understanding -- brilliantly underscores the difference one person can make.", small_cover: File.open(Rails.root.join('public/tmp/gandhi.jpg')), large_cover: File.open(Rails.root.join('public/tmp/gandhi_large.jpg')), video_url: "https://s3.amazonaws.com/myflix-joe/gandhi.mp4", category: c1)
 reds = Video.create(title: "Reds", description: "Radical journalist and socialist John Reed (Warren Beatty), along with his paramour, protofeminist Louise Bryant (Diane Keaton), gets swept up in the world-changing spirit, euphoria and aftermath of Russia's 1917 Bolshevik Revolution and the newly founded Soviet Union. Jack Nicholson, Paul Sorvino, Edward Herrmann, M. Emmet Walsh and Maureen Stapleton co-star in this Beatty-directed, Oscar-winning epic.", small_cover: File.open(Rails.root.join('public/tmp/reds.jpg')), large_cover: File.open(Rails.root.join('public/tmp/reds_large.jpg')), category: c2)
 
 Review.create(body: "No doubt one of the very best historical and biographical films ever made. Gandhi, as portrayed by Ben Kingsley, is completely accessible and lovable. The man had important things to say, and he did so in little ways. Don't worry, this is not a preachy film, unless you consider a film about someone who will go to any lengths to live by his basic principles, preachy. Mohandas K. Gandhi is an inspiration to all of us, especially those of us who call ourselves Christian and see how this little half-clothed man, a Hindu, practiced the teachings of Jesus more than most of us. No wonder Martin Luther King was inspired by his teachings and life. If you do not see this DVD (with excellent cinematography and music, by the way), you are depriving yourself of a most extraordinary experience. I'm serious!", rating: 5, video: gandhi, user: user_1)
@@ -74,3 +75,8 @@ QueueItem.create(ranking: 3, video: johnadams, user: user_2)
 QueueItem.create(ranking: 1, video: w, user: user_3)
 QueueItem.create(ranking: 2, video: burymyheart, user: user_3)
 QueueItem.create(ranking: 3, video: mrsmith, user: user_3)
+
+Payment.create(amount: 999, reference: "ch_103bcd2Px4Wvfu2AzsItsJ8p", user: user_1)
+Payment.create(amount: 999, reference: "ch_103bcZ2Px4Wvfu2AkbK0t0US", user: user_2)
+Payment.create(amount: 999, reference: "ch_103bdc2Px4Wvfu2AmzI5ddPf", user: user_3)
+

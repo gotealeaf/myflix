@@ -13,14 +13,13 @@ class ApplicationController < ActionController::Base
 
   def require_user
     unless signed_in?
-      flash[:error] = "You must be logged in to do that."
+      flash[:error] = "You must be logged in to do that." 
       redirect_to sign_in_path
+      return
     end
-  end
-
-  def require_admin
-    unless current_user.admin?
-      flash[:error] = "You are not authorized to do that."
+    if current_user.locked?
+      flash[:error] = "Your account has been locked. Please contact MyFLix to resolve this issue." 
+      session[:user_id] = nil
       redirect_to root_path
     end
   end

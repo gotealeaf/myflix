@@ -20,4 +20,10 @@ class AppMailer < ActionMailer::Base
     @reset_link = reset_link
     mail from: 'info@myflix.com', to: friend.email, subject: "#{@friend.user.full_name} Has Invited You to Join MyFLix!"
   end
+
+  def send_customer_locked_email(email, full_name)
+    @email = email
+    @full_name = full_name
+    mail from: 'info@myflix.com', to: @email, subject: "Your MyFLix Account Has Been Locked"
+  end
 end
