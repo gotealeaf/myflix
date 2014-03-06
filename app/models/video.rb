@@ -13,4 +13,8 @@ class Video < ActiveRecord::Base
     reviews.limit(8)
   end
 
+  def average_rating    
+    reviews.select(:rating).map {|r| r.rating}
+  end
+
 end

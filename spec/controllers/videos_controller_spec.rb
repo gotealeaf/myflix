@@ -10,6 +10,7 @@ describe VideosController do
       get :show, id: video.id
       expect(assigns(:video)).to eq(video)
     end
+
     it "redirects user when inauthenticated" do
       video = Fabricate(:video, title: "South Park")
       get :show, id: video.id

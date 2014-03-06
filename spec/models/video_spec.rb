@@ -93,6 +93,22 @@ describe Video do
       expect(video.recent_reviews).to eq([])
     end
   end
+
+  describe '#average_rating' do
+    it "should return the rating of a video's review" do
+      video = Fabricate(:video)
+      review = Fabricate(:review, rating: 4.5, video: video)
+
+      expect(video.average_rating).to eq([4.5])
+    end
+    it "should return the ratings from a video's reviews" do
+      video = Fabricate(:video)
+      review = Fabricate(:review, rating: 4.5, video: video)
+      review2 = Fabricate(:review, rating: 5.0, video: video)
+
+      expect(video.average_rating).to eq([5.0, 4.5])
+    end
+  end
 end
 
 
