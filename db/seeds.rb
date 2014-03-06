@@ -25,3 +25,12 @@ Video.create!(title: "Family Guy", description: "A cartoon that exhibits much of
 Video.create!(title: "Family Guy", description: "A cartoon that exhibits much of its humor in the form of cutaway gags...", category_id: 3, small_cover: "/tmp/family_guy.jpg", large_cover: "/tmp/monk_large.jpg", created_at: 2.day.ago)
 Video.create!(title: "Family Guy", description: "A cartoon that exhibits much of its humor in the form of cutaway gags...", category_id: 3, small_cover: "/tmp/family_guy.jpg", large_cover: "/tmp/monk_large.jpg", created_at: 3.day.ago)
 Video.create!(title: "Family Guy", description: "A cartoon that exhibits much of its humor in the form of cutaway gags...", category_id: 3, small_cover: "/tmp/family_guy.jpg", large_cover: "/tmp/monk_large.jpg", created_at: 4.day.ago)
+
+Review.destroy_all
+
+2.times { Fabricate(:review, rating: 2.3)}
+2.times { Fabricate(:review, rating: 4.3)}
+2.times { Fabricate(:review, rating: 5.0)}
+2.times { Fabricate(:review, rating: 4.2)}
+2.times { Fabricate(:review, rating: 3.1)}
+
