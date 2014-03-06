@@ -1,5 +1,6 @@
 class Video < ActiveRecord::Base
 	belongs_to :category
+  has_many :reviews, -> { order('created_at DESC') } 
 
   validates_presence_of :title, :description
 
@@ -7,4 +8,9 @@ class Video < ActiveRecord::Base
     return [] if search_term.blank?
     where("title LIKE ?", "%#{search_term}%")
   end
+
+  def recent_reviews
+    reviews.limit(8)
+  end
+
 end

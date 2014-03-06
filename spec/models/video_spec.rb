@@ -40,6 +40,59 @@ describe Video do
       expect(Video.search_by_title("Family")).to eq([family_guy, family_matters])
     end 
   end
+
+  describe '#recent_reviews' do
+    it "should return reviews by order of their creation date" do
+      video = Fabricate(:video)
+      review1 = Fabricate(:review, rating: 3.5, created_at: 1.day.ago, video: video)
+      review2 = Fabricate(:review, rating: 4.5, created_at: 2.day.ago, video: video)
+      expect(video.recent_reviews).to eq([review1, review2])
+    end
+    it "should return all reviews if there are less than eight" do
+      video = Fabricate(:video)
+      review4 = Fabricate(:review, rating: 4.5, created_at: 4.day.ago, video: video)
+      review5 = Fabricate(:review, rating: 3.5, created_at: 5.day.ago, video: video)
+      review1 = Fabricate(:review, rating: 3.5, created_at: 1.day.ago, video: video)
+      review2 = Fabricate(:review, rating: 4.5, created_at: 2.day.ago, video: video)
+      review3 = Fabricate(:review, rating: 3.5, created_at: 3.day.ago, video: video)
+      review6 = Fabricate(:review, rating: 4.5, created_at: 6.day.ago, video: video)
+      review7 = Fabricate(:review, rating: 3.5, created_at: 7.day.ago, video: video)
+      review8 = Fabricate(:review, rating: 4.5, created_at: 8.day.ago, video: video)
+      expect(video.recent_reviews).to eq([review1, review2, review3, review4, review5, review6, review7, review8])
+    end
+    it "should return only eight reviews if there are more than eight" do
+      video = Fabricate(:video)
+      review4 = Fabricate(:review, rating: 4.5, created_at: 4.day.ago, video: video)
+      review5 = Fabricate(:review, rating: 3.5, created_at: 5.day.ago, video: video)
+      review1 = Fabricate(:review, rating: 3.5, created_at: 1.day.ago, video: video)
+      review2 = Fabricate(:review, rating: 4.5, created_at: 2.day.ago, video: video)
+      review3 = Fabricate(:review, rating: 3.5, created_at: 3.day.ago, video: video)
+      review6 = Fabricate(:review, rating: 4.5, created_at: 6.day.ago, video: video)
+      review9 = Fabricate(:review, rating: 4.5, created_at: 9.day.ago, video: video)
+      review10 = Fabricate(:review, rating: 4.5, created_at: 10.day.ago, video: video)
+      review7 = Fabricate(:review, rating: 3.5, created_at: 7.day.ago, video: video)
+      review8 = Fabricate(:review, rating: 4.5, created_at: 8.day.ago, video: video)
+      expect(video.recent_reviews).to eq([review1, review2, review3, review4, review5, review6, review7, review8])
+    end
+    it "should return the most recent eight reviews" do
+      video = Fabricate(:video)
+      review4 = Fabricate(:review, rating: 4.5, created_at: 4.day.ago, video: video)
+      review5 = Fabricate(:review, rating: 3.5, created_at: 5.day.ago, video: video)
+      review1 = Fabricate(:review, rating: 3.5, created_at: 1.day.ago, video: video)
+      review2 = Fabricate(:review, rating: 4.5, created_at: 2.day.ago, video: video)
+      review3 = Fabricate(:review, rating: 3.5, created_at: 3.day.ago, video: video)
+      review6 = Fabricate(:review, rating: 4.5, created_at: 6.day.ago, video: video)
+      review9 = Fabricate(:review, rating: 4.5, created_at: 9.day.ago, video: video)
+      review10 = Fabricate(:review, rating: 4.5, created_at: 10.day.ago, video: video)
+      review7 = Fabricate(:review, rating: 3.5, created_at: 7.day.ago, video: video)
+      review8 = Fabricate(:review, rating: 4.5, created_at: 8.day.ago, video: video)
+      expect(video.recent_reviews).to eq([review1, review2, review3, review4, review5, review6, review7, review8])
+    end
+    it "should return an empty array if the video does not have any reviews" do
+      video = Fabricate(:video)
+      expect(video.recent_reviews).to eq([])
+    end
+  end
 end
 
 
