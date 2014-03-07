@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
+ruby '2.1.0'
 
 gem 'bootstrap-sass'
 gem 'coffee-rails'
@@ -8,6 +8,7 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
+gem 'therubyracer'
 
 group :development do
   gem 'sqlite3'
