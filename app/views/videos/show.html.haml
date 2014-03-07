@@ -7,7 +7,8 @@
         %header
           %h3 
             = @video.title
-          %span Rating: 4.5/5.0
+          %span 
+            = @video.average_rating
         %p 
           = @video.description
         .actions
@@ -38,14 +39,16 @@
           %input(type="submit" value="Submit" class="btn")
           %a(href="") Cancel
       %header
-        %h3 User Reviews (253)
+        %h3 
+          User Reviews #{"#{@video.reviews.count}"}
       %ul
-        - 8.times do
+        - @video.recent_reviews.each do |vid|
           %article.review
             %li.row
               .col-sm-2
-                %span Rating: 5 / 5
+                %span 
+                  = "#{vid.rating}"
                 %p by <a href="">John A. Zoidberg</a>
               .col-sm-8
                 %p 
-                  In my opinion, this is one of the best shows ever made. It's not only funny, but despite being so frequently silly, it's very smart as well. Math, science, history, all get referenced. The best parts of the show are the subtle things, those little things in the background or just on screen for a couple of seconds that just make you laugh out loud if you were paying attention. The writers even appear to have been thinking ahead, because if you play close attention to the first episode, you can see a literal shadow of an event revealed seasons later.
+                  = "#{vid.user_review}"

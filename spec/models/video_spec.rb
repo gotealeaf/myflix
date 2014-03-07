@@ -95,6 +95,7 @@ describe Video do
   end
 
   describe '#average_rating' do
+
     it "should return the rating of a video's review if there is only one" do
       video = Fabricate(:video)
       review = Fabricate(:review, rating: 4.5, video: video)
