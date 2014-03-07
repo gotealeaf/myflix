@@ -12,6 +12,7 @@ gem 'therubyracer'
 gem 'bcrypt-ruby', '~> 3.1.0'
 gem 'bootstrap_form'
 
+
 group :development do
   gem 'sqlite3'
   gem 'pry'

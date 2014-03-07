@@ -1,9 +1,6 @@
 class VideosController < ApplicationController
+  before_action :require_user
 
-
-  def front
-
-  end
 
   def home
     @videos = Video.all
@@ -13,7 +10,7 @@ class VideosController < ApplicationController
 
   def show
     @video = Video.find(params[:id])
-  
+   
   end
 
   def search
