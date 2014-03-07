@@ -1,9 +1,9 @@
 %article.video
   .container
     .row
-      .video_large_cover.col-sm-7.col-sm-offset-1
+      .video_large_cover.col-sm-6.col-sm-offset-1
         = image_tag("#{@video.large_cover}")
-      .video_info.col-sm-3
+      .video_info.col-sm-3.col-md-push-2
         %header
           %h3 
             = @video.title
