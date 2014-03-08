@@ -20,6 +20,7 @@ describe VideosController do
     context "when the user has not reviewed the video" do
       it "sets a @review variable" do
         video = Fabricate(:video, title: "South Park")
+        review = Fabricate.build(:review)
 
         get :show, id: video.id
         expect(assigns(:review)).to be_instance_of(Review)

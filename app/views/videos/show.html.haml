@@ -21,7 +21,7 @@
       %form
         %fieldset
           .form-group
-            %label Rate this video
+            %label Rate this video 
             .row
               .col-sm-3
                 %select.form-control(name="")
@@ -31,7 +31,8 @@
                   %option(value="2") 2 Stars
                   %option(value="1") 1 Star
           .form-group
-            %label Write Review
+            %label 
+              = "Write Review #{@review}"
             .row
               .col-sm-8
                 %textarea.form-control(name="" rows="6")
