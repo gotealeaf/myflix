@@ -16,6 +16,19 @@ describe VideosController do
       get :show, id: video.id
       expect(response).to redirect_to sign_in_path
     end
+
+    context "when the user has not reviewed the video" do
+      it "sets a @review variable" do
+        video = Fabricate(:video, title: "South Park")
+
+        get :show, id: video.id
+        expect(assigns(:review)).to be_instance_of(Review)
+      end
+    end
+
+    context "when the user has reviewed the video"
+      it "does not set a @review variable" 
+
   end
 
   describe "GET search" do
