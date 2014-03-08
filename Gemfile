@@ -20,6 +20,11 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+  gem "fuubar"
+  gem 'spring-commands-rspec'
+  gem 'guard-rspec'
+  gem "terminal-notifier-guard"
+  gem 'rb-fsevent', require: false
 end
 
 group :production do
