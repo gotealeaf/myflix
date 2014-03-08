@@ -2,7 +2,6 @@ class VideosController < ApplicationController
   before_action :require_user
 
   def index
-    #binding.pry
     @categories = Category.all
   end
 
