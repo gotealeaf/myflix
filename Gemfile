@@ -38,6 +38,8 @@ group :test, :development do
 	gem 'rspec-rails'
   gem 'launchy'
   gem 'capybara-email'
+  gem 'webmock', '1.15.0'
+  gem 'vcr'
 end
 
 group :test do
