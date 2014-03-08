@@ -48,7 +48,8 @@
               .col-sm-2
                 %span 
                   = "#{vid.rating}"
-                %p by <a href="">John A. Zoidberg</a>
+                %p 
+                  = "#{vid.user.full_name}"
               .col-sm-8
                 %p 
                   = "#{vid.user_review}"
