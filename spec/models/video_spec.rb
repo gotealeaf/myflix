@@ -9,6 +9,7 @@ describe Video do
 
   #end
   
+  #testing validations
   it {should belong_to(:category)}  #using shoulda-matchers: Checking that Video belongs_to Category
   it {should validate_presence_of(:title)} #shoulda-matchers
   it {should validate_presence_of(:description)} #shoulda-matchers
