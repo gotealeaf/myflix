@@ -19,6 +19,7 @@ describe VideosController do
 
     context "when the user has not reviewed the video" do
       it "sets a @review variable" do
+        session[:user_id] = Fabricate(:user).id
         video = Fabricate(:video, title: "South Park")
         review = Fabricate.build(:review)
 
@@ -29,7 +30,6 @@ describe VideosController do
 
     context "when the user has reviewed the video"
       it "does not set a @review variable" 
-
   end
 
   describe "GET search" do

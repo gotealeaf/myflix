@@ -12,4 +12,9 @@ class ApplicationController < ActionController::Base
     redirect_to sign_in_path, alert: "Not authortized" if current_user.nil?
   end
 
+  def reviewed?
+    if @current_user.reviews
+    
+  end
+
 end

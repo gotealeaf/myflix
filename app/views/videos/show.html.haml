@@ -18,21 +18,11 @@
 %section.reviews.container
   .row
     .col-sm-10.col-sm-offset-1
-      %form
-        %fieldset
+      = form_for [@review] do |f|
+        = f.collection_select(:user_id, Review.order(:rating), :id, :rating, prompt: true)
+        %br
           .form-group
-            %label Rate this video 
-            .row
-              .col-sm-3
-                %select.form-control(name="")
-                  %option(value="5") 5 Stars
-                  %option(value="4") 4 Stars
-                  %option(value="3") 3 Stars
-                  %option(value="2") 2 Stars
-                  %option(value="1") 1 Star
-          .form-group
-            %label 
-              = "Write Review #{@review}"
+            %label Write Review
             .row
               .col-sm-8
                 %textarea.form-control(name="" rows="6")
