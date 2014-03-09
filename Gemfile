@@ -11,6 +11,7 @@ gem 'jquery-rails'
 gem 'therubyracer'
 gem 'bcrypt-ruby', '~> 3.1.0'
 gem 'bootstrap_form'
+gem 'fabrication'
 
 
 group :development do
