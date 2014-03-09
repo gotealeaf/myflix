@@ -2,7 +2,7 @@ class VideosController < ApplicationController
   def index
     @category_videos = {}
     Category.all.each do |category|
-      @category_videos.merge!(category => category.videos)
+      @category_videos.merge!(category => category.recent_videos)
     end
   end
 
