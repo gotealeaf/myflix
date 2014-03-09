@@ -6,7 +6,7 @@ describe Video do
   it { should validate_presence_of(:description) }
 
   context "search_by_title" do
-    before(:all) do
+    before(:each) do
       Video.create(title: "Monk",     description: "Monk")
       Video.create(title: "Family Guy",   description: "Family Guy")
       Video.create(title: "Futurama", description: "Futurama")
