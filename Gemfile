@@ -23,3 +23,11 @@ group :production do
   gem 'rails_12factor'
 end
 
+group :test, :development do
+  gem 'rspec-rails'
+end
+
+group :test do
+  gem 'shoulda-matchers'
+end
+
