@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 3.1.1'
 gem 'coffee-rails'
 gem 'rails'
 gem 'haml-rails'
@@ -9,6 +9,9 @@ gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'therubyracer'
+gem 'bcrypt-ruby', '~> 3.1.0'
+gem 'bootstrap_form'
+
 
 group :development do
   gem 'sqlite3'
