@@ -2,7 +2,7 @@ class VideosController < ApplicationController
   before_action :require_user
 
 
-  def home
+  def index
     @videos = Video.all
     @categories = Category.all
     
