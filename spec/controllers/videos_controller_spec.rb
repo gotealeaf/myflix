@@ -1,14 +1,16 @@
 require 'spec_helper'
 
 describe VideosController do
-  context "with authenticated users" do
-      before (:each) do
-        #user = User.create(email: "ex@example.com", full_name: "exe", password: "password")
-        user = Fabricate(:user)
-        session[:user_id] = user.id
-      end
   
-    describe 'GET #index' do 
+  
+    describe 'GET #index' do
+
+       before (:each) do
+          user = User.create(email: "ex@example.com", full_name: "exe", password: "password")
+          #user = Fabricate(:user)
+          session[:user_id] = user.id
+        end
+
       it "sets the @videos variable" do
         vids = Fabricate.times(2, :video)
         get :index
@@ -33,6 +35,11 @@ describe VideosController do
 
     describe 'GET #show' do
       
+      context "with authenticated users" do
+        before (:each) do
+          
+          session[:user_id] = Fabricate(:user).id
+        end
     
         let(:video) {Fabricate(:video)}
         it 'sets @video variable for a requested video' do
@@ -42,18 +49,35 @@ describe VideosController do
           expect(assigns(:video)).to eq video
         end
         
-        it " renders show template" do
+        it " renders show template" do  #essentially testing rails convention and not our code
           
           get :show, id: video.id
           
           expect(response).to render_template :show
         end
-      
+      end #end context
+
+      context "with un-authenticated users" do
+        let(:video) {Fabricate(:video)}
+        it 'redirects unauthenticated user to root_path' do
+          
+          get :show, id: video.id
+          expect(response).to render_template root_path
+          
+        end
+        
+      end #end context
+
     end #end show
 
     describe 'GET #search' do
+       before (:each) do
+          user = User.create(email: "ex@example.com", full_name: "exe", password: "password")
+          #user = Fabricate(:user)
+          session[:user_id] = user.id
+        end
       let(:video) {Video.create(title: "monk", description: "monk description")}
-      it "sets @returns variable based on a search term" do
+      it "sets @returns variable based on a search term for authenticated users" do
         
 
         get :search, search_term: "mo"
@@ -71,6 +95,6 @@ describe VideosController do
 
       end
     end #end search
-  end #end context
+  
 
 end
