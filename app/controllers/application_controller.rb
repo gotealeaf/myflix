@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   def reviewed?
-    if @current_user.reviews
+    
     
   end
 

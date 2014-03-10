@@ -18,29 +18,30 @@
 %section.reviews.container
   .row
     .col-sm-10.col-sm-offset-1
-      = form_for [@review] do |f|
-        = f.collection_select(:user_id, Review.order(:rating), :id, :rating, prompt: true)
-        %br
-          .form-group
-            %label Write Review
-            .row
-              .col-sm-8
-                %textarea.form-control(name="" rows="6")
-        %fieldset.form-group.actions.clearfix
-          %input(type="submit" value="Submit" class="btn")
-          %a(href="") Cancel
-      %header
-        %h3 
-          User Reviews #{"#{@video.reviews.count}"}
-      %ul
-        - @video.recent_reviews.each do |vid|
-          %article.review
-            %li.row
-              .col-sm-2
-                %span 
-                  = "#{vid.rating}"
-                %p 
-                  = "#{vid.user.full_name}"
-              .col-sm-8
-                %p 
-                  = "#{vid.user_review}"
+      = form_for [@video, Review.new] do |f|
+        = f.select :rating, options_for_select([5,4,3,2,1].map {|number| [pluralize(number, "Star")]})
+        %label Write Review
+        = f.text_area :content, rows: 6, class: "span6"
+        = f.submit
+        = link_to "Cancel", @video
+        .row
+          .col-sm-8
+            %textarea.form-control(name="" rows="6")
+    %fieldset.form-group.actions.clearfix
+      %input(type="submit" value="Submit" class="btn")
+      %a(href="") Cancel
+  %header
+    %h3 
+      User Reviews #{"#{@video.reviews.count}"}
+  %ul
+    - @video.recent_reviews.each do |vid|
+      %article.review
+        %li.row
+          .col-sm-2
+            %span 
+              = "#{vid.rating}"
+            %p 
+              = "#{vid.user.full_name}"
+          .col-sm-8
+            %p 
+              = "#{vid.user_review}"
