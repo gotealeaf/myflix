@@ -3,7 +3,7 @@ class ReviewsController < ApplicationController
 
   def create
     video = Video.find_by(params[:id])
-    review = Review.new(params[review_params])
+    review = Review.new(params[review_params].merge!(user_id: current_user, video_id: video))
     review = video.reviews.create
 
     redirect_to video_path(video)
