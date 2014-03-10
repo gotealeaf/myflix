@@ -1,4 +1,6 @@
 class VideosController < ApplicationController
+  before_filter :user_required!
+
   def index
     @category_videos = {}
     Category.all.each do |category|

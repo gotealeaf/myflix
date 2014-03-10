@@ -1,7 +1,7 @@
 %section.sign_in.container
   .row
     .col-sm-10.col-sm-offset-1
-      %form.sign_in
+      = form_tag sessions_path, class: "sign_in" do
         %header
           %h1 Sign in
         %fieldset
@@ -9,11 +9,11 @@
             %label Email Address
             .row
               .col-sm-4
-                %input.form-control(type="email")
+                = email_field_tag :email, "", class: "form-control"
           .form-group
             %label Password
             .row
               .col-sm-4
-                %input.form-control(type="password")
+                = password_field_tag :password, "", class: "form-control"
         %fieldset.form-group.action
-          %input(type="submit" value="Sign in" class="btn btn-default")
+          = submit_tag "Sign in", class: "btn btn-default"
