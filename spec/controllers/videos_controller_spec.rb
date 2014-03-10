@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 
 describe VideosController do 
   describe "GET show" do
@@ -63,6 +62,5 @@ describe VideosController do
       get :search, search: "futurama"
       expect(response).to redirect_to(:login)
     end
-
   end
 end
