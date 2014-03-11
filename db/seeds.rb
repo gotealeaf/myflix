@@ -65,18 +65,25 @@
 #              large_cover_url: "/tmp/iron_man_3_large.jpg",
 #              category_id: 3)
 
-Video.create(title: "King of the Hill", description: "Mike Judge blah blah",
-             small_cover_url: "/tmp/king_of_the_hill.jpg",
-             large_cover_url: "/tmp/king_of_the_hill_large.jpg",
-             category_id: 1)
+# Video.create(title: "King of the Hill", description: "Mike Judge blah blah",
+#              small_cover_url: "/tmp/king_of_the_hill.jpg",
+#              large_cover_url: "/tmp/king_of_the_hill_large.jpg",
+#              category_id: 1)
 
-Video.create(title: "Archer", description: "H. Jon Benjamin blah blah",
-             small_cover_url: "/tmp/archer.jpg",
-             large_cover_url: "/tmp/archer_large.jpg",
-             category_id: 1)
+# Video.create(title: "Archer", description: "H. Jon Benjamin blah blah",
+#              small_cover_url: "/tmp/archer.jpg",
+#              large_cover_url: "/tmp/archer_large.jpg",
+#              category_id: 1)
 
-Video.create(title: "Bob's Burgers", description: "Yum burgers blah blah",
-             small_cover_url: "/tmp/bobs_burgers.jpg",
-             large_cover_url: "/tmp/bobs_burgers_large.jpg",
-             category_id: 1)
+# Video.create(title: "Bob's Burgers", description: "Yum burgers blah blah",
+#              small_cover_url: "/tmp/bobs_burgers.jpg",
+#              large_cover_url: "/tmp/bobs_burgers_large.jpg",
+#              category_id: 1)
+
+# require "Fabrication"
+# require "Faker"
+
+# 15.times do
+#   Fabricate(:review)
+# end
 

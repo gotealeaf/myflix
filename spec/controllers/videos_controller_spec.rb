@@ -13,6 +13,31 @@ describe VideosController do
         expect(assigns(:video)).to eq(video)
       end
 
+      context "no reviews" do
+        it "sets the @reviews variable to an empty array" do
+          get :show, id: video.id
+          expect(assigns(:reviews)).to eq([])
+        end
+      end
+
+      context "one review" do
+        it "sets the @reviews variable to an array contain the review" do
+          review = Fabricate(:review, user_id: 1, video_id: 1)
+          get :show, id: video.id
+          expect(assigns(:reviews)).to eq([review])
+        end
+      end
+
+      context "several reviews" do
+        it "sets the @reviews variable to a list of reviews for the video" do
+          review_1 = Fabricate(:review, user_id: 1, video_id: 1)
+          review_2 = Fabricate(:review, user_id: 1, video_id: 1)
+          review_3 = Fabricate(:review, user_id: 1, video_id: 1)
+          get :show, id: video.id
+          expect(assigns(:reviews)).to eq([review_3, review_2, review_1])
+        end
+      end
+
       # can get rid of this - not testing our code, rails convention
       # note that if you cut this, should probably eliminate context
       # just keeping it here for an example of that org. technique.
