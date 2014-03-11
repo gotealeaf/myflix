@@ -23,9 +23,9 @@ describe ReviewsController do
         end
 
         it "creates a review associated with the video" do
-          video = Fabricate(:video, title: "South Park")
+          video = Fabricate(:video)
 
-          post :create, review: Fabricate(:review, rating: 3.0, video_id: video.id).attributes, video_id: video
+          post :create, review: Fabricate.attributes_for(:review, rating: 3.0, video_id: video.id), video_id: video.id
           expect(Review.first.video).to eq(video)
         end
 
@@ -59,7 +59,7 @@ describe ReviewsController do
         it "sets @video" do
           video = Fabricate(:video)
 
-          post :create, review: { rating: 3 }, video_id: video.id
+          post :create, review: { rating: 3, video_id: video }, video_id: video
           expect(assigns(video)).to eq(video)
         end
         it "sets @review"
