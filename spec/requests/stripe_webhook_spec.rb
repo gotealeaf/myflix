@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Create Payment", :vcr do
+describe "Stripe Webhook", :vcr do
   describe "payment successful" do
     let(:event_data) do {
       "id" => "evt_103ba12Px4Wvfu2AlXDVkBos",
