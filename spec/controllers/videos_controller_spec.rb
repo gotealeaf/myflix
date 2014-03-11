@@ -13,6 +13,12 @@ describe VideosController do
         expect(assigns(:video)).to eq(video)
       end
 
+      it "sets the @review variable to Review.new" do
+        get :show, id: video.id
+        expect(assigns(:review)).to be_new_record
+        expect(assigns(:review)).to be_instance_of(Review)
+      end
+
       context "no reviews" do
         it "sets the @reviews variable to an empty array" do
           get :show, id: video.id
@@ -29,7 +35,7 @@ describe VideosController do
       end
 
       context "several reviews" do
-        it "sets the @reviews variable to a list of reviews for the video" do
+        it "sets the @reviews variable to a list of reviews for the video, most recent first" do
           review_1 = Fabricate(:review, user_id: 1, video_id: 1)
           review_2 = Fabricate(:review, user_id: 1, video_id: 1)
           review_3 = Fabricate(:review, user_id: 1, video_id: 1)

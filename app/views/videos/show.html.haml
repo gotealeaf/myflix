@@ -8,9 +8,7 @@
           %h3 
             = @video.title
           %span 
-            Rating: 
-            = @video.average_rating
-            \/ 5
+            Rating: #{@video.average_rating} / 5
         %p 
           = @video.description
         .actions
@@ -20,44 +18,32 @@
 %section.reviews.container
   .row
     .col-sm-10.col-sm-offset-1
-      %form
+      = bootstrap_form_for [@video, @review] do |f|
         %fieldset
           .form-group
-            %label Rate this video
+            = f.label "Rate this video"
             .row
               .col-sm-3
-                %select.form-control(name="")
-                  %option(value="5") 5 Stars
-                  %option(value="4") 4 Stars
-                  %option(value="3") 3 Stars
-                  %option(value="2") 2 Stars
-                  %option(value="1") 1 Star
+                = f.select :rating, [["5 stars", 5], ["4 Stars", 4], ["3 stars", 3], ["2 stars", 2], ["1 star", 1]]
           .form-group
-            %label Write Review
+            = f.label "Write Review"
             .row
               .col-sm-8
-                %textarea.form-control(name="" rows="6")
+                = f.text_area :review_text, rows: 6, class: "form-control"
         %fieldset.form-group.actions.clearfix
-          %input(type="submit" value="Submit" class="btn")
-          %a(href="") Cancel
+          = f.submit "Submit" 
       %header
         %h3 
-          User Reviews ( 
-          = @reviews.count
-          )
+          User Reviews (#{@reviews.count})
       %ul
         - @reviews.each do |review|
           %article.review
             %li.row
               .col-sm-2
                 %span 
-                  Rating: 
-                  = review.rating
-                  \/ 5
+                  Rating: #{review.rating}/ 5
                 %p 
-                  by <a href="">
-                  = review.user.full_name
-                  </a>
+                  by <a href="">#{review.creator.full_name}</a>
               .col-sm-8
                 %p 
                   = review.review_text
