@@ -76,7 +76,7 @@ describe ReviewsController do
       context "user has already submitted a review" do
         before do
           video = Fabricate(:video)
-          Fabricate(:review, video_id: video.id, user_id: session[:user_id])
+          review = Fabricate(:review, video_id: video.id, user_id: session[:user_id])
           post :create, review: Fabricate.attributes_for(:review), video_id: video.id, user_id: session[:user_id]
         end
 
@@ -86,12 +86,24 @@ describe ReviewsController do
           expect(assigns(:review).save).not_to be_true
           expect(Review.count).to eq(1)
         end
+
         it "sets a special error message telling user they've already reviewed the video" do
           expect(flash[:danger]).not_to be_blank
           expect(flash[:danger]).to eq("Sorry, you can only review a video once.")
         end
+
         it "renders the video show page" do
           expect(response).to render_template 'videos/show'
+        end
+
+        it "sets @video" do
+          post :create, review: Fabricate.attributes_for(:review, review_text: ""), video_id: Video.first.id
+          expect(assigns(:video)).to eq(Video.first)
+        end
+
+        it "sets @reviews" do
+          post :create, review: Fabricate.attributes_for(:review, review_text: ""), video_id: Video.first.id
+          expect(assigns(:reviews)).to eq([Review.first])
         end
       end     
     end
