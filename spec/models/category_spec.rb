@@ -7,12 +7,7 @@ describe Category do
     expect(Category.first).to eq(category)
   end
 
-  it "has many videos" do
-    comedies = Category.create(name: "Comedy")
-    south_park = Video.create(title: "South Park", description: "Funny show!")
-    futurama = Video.create(title: "Futurama", description: "Funny show!")
-    south_park.categories << comedies
-    futurama.categories << comedies
-    expect(comedies.videos).to include(south_park, futurama)
-  end
+  it { should have_many(:video_categories) }
+  it { should have_many(:videos).through(:video_categories) }
+  
 end
