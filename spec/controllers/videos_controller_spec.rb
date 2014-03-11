@@ -13,12 +13,6 @@ describe VideosController do
         expect(assigns(:video)).to eq(video)
       end
 
-      it "sets the @review variable to Review.new" do
-        get :show, id: video.id
-        expect(assigns(:review)).to be_new_record
-        expect(assigns(:review)).to be_instance_of(Review)
-      end
-
       context "no reviews" do
         it "sets the @reviews variable to an empty array" do
           get :show, id: video.id
