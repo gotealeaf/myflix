@@ -18,11 +18,7 @@
             %tbody
               - @payments.each do |payment|
                 %tr
-                  %td 
-                    = payment.user.full_name
-                  %td 
-                    = payment.user.email
-                  %td 
-                    = number_to_currency(payment.amount / 100.0)
-                  %td 
-                    = payment.reference
+                  %td= payment.user.full_name
+                  %td= payment.user.email
+                  %td= number_to_currency(payment.amount / 100.0)
+                  %td= payment.reference
