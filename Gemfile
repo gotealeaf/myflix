@@ -37,12 +37,14 @@ group :test, :development do
   gem 'pry-nav'
 	gem 'rspec-rails'
   gem 'launchy'
-  gem 'capybara-email'
+  gem 'capybara-email', '2.1.2'
   gem 'webmock', '1.15.0'
   gem 'vcr'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 
 group :test do
 	gem 'shoulda-matchers'
-	gem 'capybara'
+	gem 'capybara', '2.1.0'
 end
