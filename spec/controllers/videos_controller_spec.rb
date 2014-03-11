@@ -6,8 +6,8 @@ describe VideosController do
     describe 'GET #index' do
 
        before (:each) do
-          user = User.create(email: "ex@example.com", full_name: "exe", password: "password")
-          #user = Fabricate(:user)
+          #user = User.create(email: "ex@example.com", full_name: "exe", password: "password")
+          user = Fabricate(:user)
           session[:user_id] = user.id
         end
 
@@ -57,16 +57,15 @@ describe VideosController do
         end
       end #end context
 
-      context "with un-authenticated users" do
-        let(:video) {Fabricate(:video)}
+      
         it 'redirects unauthenticated user to root_path' do
-          
+          video = Fabricate(:video)
           get :show, id: video.id
-          expect(response).to render_template root_path
+          expect(response).to redirect_to root_path
           
         end
         
-      end #end context
+      
 
     end #end show
 

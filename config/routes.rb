@@ -7,7 +7,7 @@ Myflix::Application.routes.draw do
   get 'ui(/:action)', controller: 'ui'
   get '/home', to: 'videos#index'
   get '/sign_in', to: 'sessions#new'
-  #post '/sign_in', to: 'sessions#create'
+  
   get '/sign_out', to: 'sessions#destroy'
 
   resources :videos, only: [:show] do
@@ -16,7 +16,7 @@ Myflix::Application.routes.draw do
     end
   end
   resources :categories, only: [:show]
-  resources :users, except: [:destroy]
+  resources :users, except: [:destroy, :new]
   resources :sessions, only: [:create]
   
 end
