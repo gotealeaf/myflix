@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/bootstrap-ruby/rails-bootstrap-forms.git
+  revision: e6d1bc38dfff15a9bbca021b544472f3166cc693
+  specs:
+    bootstrap_form (2.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -27,6 +33,7 @@ GEM
       tzinfo (~> 0.3.37)
     arel (4.0.1)
     atomic (1.1.14)
+    bcrypt-ruby (3.1.2)
     better_errors (1.0.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -149,9 +156,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt-ruby (~> 3.1.2)
   better_errors
   binding_of_caller
   bootstrap-sass
+  bootstrap_form!
   coffee-rails
   haml-rails
   jquery-rails
