@@ -2,11 +2,14 @@ class ReviewsController < ApplicationController
   before_action :current_user
 
   def create
-    #binding.pry
     @video = Video.find_by(params[:id])
-    @review = @video.reviews.create(review_params.merge!(user: current_user, video_id: @video))
+    review = @video.reviews.create(review_params.merge!(user: current_user, video_id: @video.id))
 
-    redirect_to video_path(@video)
+    if review.save
+      redirect_to @video
+    else
+      render 'videos/show'
+    end
   end
 
   private 

@@ -48,8 +48,20 @@ describe ReviewsController do
           post :create, review: { user: current_user }, user_id: current_user, video_id: video
           expect(Review.count).to eq(0)
         end
-        it "renders the videos/show template" 
-        it "sets @video"
+        it "renders the videos/show template" do
+          current_user = Fabricate(:user)
+          session[:user_id] = current_user.id
+          video = Fabricate(:video, title: "South Park")
+
+          post :create, review: { user: current_user }, user_id: current_user, video_id: video
+          expect(response).to render_template 'videos/show'
+        end
+        it "sets @video" do
+          video = Fabricate(:video)
+
+          post :create, review: { rating: 3 }, video_id: video.id
+          expect(assigns(video)).to eq(video)
+        end
         it "sets @review"
       end
     end
