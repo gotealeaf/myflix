@@ -4,8 +4,7 @@ class ReviewsController < ApplicationController
   def create
     #binding.pry
     @video = Video.find_by(params[:id])
-    @review = Review.new(review_params.merge!(user: current_user))
-    @review = @video.reviews.create
+    @review = @video.reviews.create(review_params.merge!(user: current_user, video_id: @video))
 
     redirect_to video_path(@video)
   end
