@@ -15,5 +15,8 @@ describe Video do
     it "returns an array of one video for a partial match" do
       
     end
+    it "returns an array of all matched ordered by created_at" do
+      
+    end
   end
 end
