@@ -5,9 +5,8 @@ describe ReviewsController do
   describe "POST create" do
     context "with authenticated users" do
       context "with valid input" do
-        it "redirects to the video show page" do
-          current_user = Fabricate(:user)
-          session[:user_id] = current_user.id
+
+        it "redirects to the video show page" do    
           video = Fabricate(:video, title: "South Park")
 
           post :create, review: Fabricate.attributes_for(:review), video_id: video
@@ -16,8 +15,6 @@ describe ReviewsController do
         end
 
         it "creates a review" do
-          current_user = Fabricate(:user)
-          session[:user_id] = current_user.id
           video = Fabricate(:video, title: "South Park")
 
           post :create, review: Fabricate.attributes_for(:review), video_id: video
@@ -25,8 +22,6 @@ describe ReviewsController do
         end
 
         it "creates a review associated with the video" do
-          current_user = Fabricate(:user)
-          session[:user_id] = current_user.id
           video = Fabricate(:video, title: "South Park")
 
           post :create, review: Fabricate.attributes_for(:review), video_id: video
@@ -38,7 +33,7 @@ describe ReviewsController do
           session[:user_id] = current_user.id
           video = Fabricate(:video, title: "South Park")
 
-          post :create, review: Fabricate.attributes_for(:review), video_id: video, user_id: current_user
+          post :create, review: Fabricate(:review, user: current_user).attributes, user_id: current_user, video_id: video
           expect(Review.first.user).to eq(current_user)
         end
       end

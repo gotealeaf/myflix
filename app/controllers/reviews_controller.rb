@@ -3,7 +3,7 @@ class ReviewsController < ApplicationController
 
   def create
     video = Video.find_by(params[:id])
-    review = Review.new(params[review_params].merge!(user_id: current_user, video_id: video))
+    review = Review.new(review_params.merge!(user: current_user))
     review = video.reviews.create
 
     redirect_to video_path(video)
@@ -12,6 +12,6 @@ class ReviewsController < ApplicationController
   private 
 
     def review_params
-      params.require(:review).permit(:user_review, :rating, :video_id, :user_id)
+      params.require(:review).permit(:user_review, :rating, :video, :user)
     end
 end
