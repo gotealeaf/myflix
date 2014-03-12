@@ -1,0 +1,22 @@
+%section.register.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %form.form-horizontal
+        %header
+          %h1 Register
+        %fieldset
+          .form-group
+            %label.control-label.col-sm-2 Email Address
+            .col-sm-6
+              %input.form-control(type="email")
+          .form-group
+            %label.control-label.col-sm-2 Password
+            .col-sm-6
+              %input.form-control(type="password")
+          .form-group
+            %label.control-label.col-sm-2 Full Name
+            .col-sm-6
+              %input.form-control(type="text")
+        %fieldset.actions.control-group.col-sm-offset-2
+          .controls
+            %input(type="submit" value="Sign Up" class="btn btn-default")
