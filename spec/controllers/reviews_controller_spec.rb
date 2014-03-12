@@ -68,10 +68,10 @@ describe ReviewsController do
           current_user = Fabricate(:user)
           session[:user_id] = current_user.id
           video = Fabricate(:video)
-          review = Fabricate(:review, rating: 3.0, user_review: "yay", video: video, user_id: current_user)
+          review = Fabricate(:review, rating: 3.0, user_review: "yay", video: video, user_id: current_user.id)
 
           post :create, review: { rating: 3.0 }, video_id: video
-          expect(:reviews).to match_array([review])
+          expect(Review.first).to eq(review)
         end
       end
     end
