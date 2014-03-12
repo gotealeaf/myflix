@@ -2,12 +2,13 @@ class ReviewsController < ApplicationController
   before_action :current_user
 
   def create
-    @video = Video.find_by(params[:id])
+    @video = Video.find(params[:video_id])
     review = @video.reviews.create(review_params.merge!(user: current_user, video_id: @video.id))
 
     if review.save
-      redirect_to @video
+      redirect_to video_path(@video)
     else
+      @reviews = @video.reviews
       render 'videos/show'
     end
   end

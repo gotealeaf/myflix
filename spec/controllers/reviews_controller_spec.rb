@@ -61,10 +61,18 @@ describe ReviewsController do
           session[:user_id] = current_user.id
           video = Fabricate(:video)
 
-          post :create, review: { rating: 3, video_id: video.id }, user_id: current_user, video_id: video.id
-          expect(assigns(video)).to eq(video)
+          post :create, review: { rating: 3.0 }, video_id: video
+          expect(assigns(:video)).to eq(video)
         end
-        it "sets @review"
+        it "sets @reviews" do
+          current_user = Fabricate(:user)
+          session[:user_id] = current_user.id
+          video = Fabricate(:video)
+          review = Fabricate(:review, rating: 3.0, user_review: "yay", video: video, user_id: current_user)
+
+          post :create, review: { rating: 3.0 }, video_id: video
+          expect(:reviews).to match_array([review])
+        end
       end
     end
     context "with unauthenticated users"
