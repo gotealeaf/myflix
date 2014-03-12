@@ -2,8 +2,8 @@
 
 This is a proof-of-concept app based on the Netflix site, demonstrating: 
 
-Testing (TDD; unit, function, and integration tests; macros; shared examples; feature specs; Capybara; test doubles and method stubs; fully integrated and isolated API tests; and stubs and mocks) 
+* Testing (TDD; unit, function, and integration tests; macros; shared examples; feature specs; Capybara; test doubles and method stubs; fully integrated and isolated API tests; and stubs and mocks) 
 
-Building Applications (seeding data; skinny controller, fat model; authentication from scratch; wrapping APIs; Sidekiq; Amazon S3; responding to webhooks; collecting credit card payments; recurring billing; handling callback events; and policy and service objects) 
+* Building Applications (seeding data; skinny controller, fat model; authentication from scratch; wrapping APIs; Sidekiq; Amazon S3; responding to webhooks; collecting credit card payments; recurring billing; handling callback events; and policy and service objects) 
 
-Front-End Frameworks (Haml; SASS; Twitter Bootstrap; and jQuery) 
+* Front-End Frameworks (Haml; SASS; Twitter Bootstrap; and jQuery) 
