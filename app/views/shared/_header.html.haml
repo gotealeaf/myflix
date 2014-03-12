@@ -1,22 +1,59 @@
 %section#top-header.row
   %h1.col-md-2
-    = link_to "MyFLiX"
-  %ul.col-md-4.clearfix
-    %li= link_to "Videos"
-    %li= link_to "My Queue"
-    %li= link_to "People"
-  %form.col-md-5.navbar-form(action="")
-    .form-group
-      %input.form-control(type="text" placeholder="Search for videos here")
-    %button.btn.btn-default(type="submit") Search
-  #user_links.pull-right
-    %ul
-      %li.dropdown
-        %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
-          Welcome, Philip J. Fry
-          %b.caret
-        %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
-          %li
-            %a(href="#") Account
-            %a(href="#") Plan and Billing
-            %a(href="#") Sign Out
+    / = link_to "MyFLiX", videos_path
+    .bs-example
+      / Button HTML (to Trigger Modal)
+      %a.btn.btn-sm.btn-warning{"data-toggle" => "modal", :href => "#myModal"} Read Me First
+      / Modal HTML
+      #myModal.modal.fade
+        .modal-dialog
+          .modal-content
+            .modal-header
+              %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
+              %h4.modal-title INSTRUCTIONS
+            .modal-body
+              %small
+                This is a proof-of-concept app based on the Netflix site, demonstrating:
+              %br
+              %br
+              %small
+                Testing (TDD; unit, function, and integration tests; macros; shared examples; feature specs; Capybara; test doubles and method stubs; fully integrated and isolated API tests; and stubs and mocks)
+              %br
+              %br
+              %small
+                Building Applications (seeding data; skinny controller, fat model; authentication from scratch; wrapping APIs; Sidekiq; Amazon S3; responding to webhooks; collecting credit card payments; recurring billing; handling callback events; and policy and service objects)
+              %br
+              %br
+              %small
+                Front-End Frameworks (Haml; SASS; Twitter Bootstrap; and jQuery)
+              %br
+              %br
+              %small
+                To register as a new user, you will need to enter dummy credit card information. Enter any expiration date as long as it is in the future, any 3-digit security code code that you wish, and the following dummy credit card number: 4242 4242 4242 4242. Registered users can search for videos, view streaming videos (see the Gandhi video), add videos to the queue, re-order the queue, rate videos, remove videos from the queue, and invite friends to join.
+              %br
+              %br
+              %small
+                To view the site's Admin functionality, please sign in with my login credentials. My Username is jlevinger@jtonedesigns.com, and my password is "joelevinger". The Admin can add a video and view recent payments.
+            .modal-footer
+              %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+  - if signed_in?
+    %ul.col-md-3
+      %li= link_to "Videos", videos_path
+      %li= link_to "My Queue", queue_items_path
+      %li= link_to "People", people_path
+    = form_tag search_videos_path, class: 'col-md-4 navbar-form' do
+      .form-group
+        %input.form-control(type="text" placeholder="Search for videos here" name="search_term")
+      %button.btn.btn-default(type="submit") Search
+    #user_links.pull-right
+      %ul
+        %li.dropdown
+          %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
+            = "Welcome, #{current_user.full_name}" if signed_in?
+            %b.caret
+          %ul.dropdown-menu
+            %li
+              = link_to "Add Videos", new_admin_video_path if current_user.admin?
+              = link_to "Invite a Friend", new_friend_path
+              = link_to "Recent Payments", admin_payments_path if current_user.admin?
+              = link_to "Sign Out", sign_out_path
