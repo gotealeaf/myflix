@@ -18,6 +18,10 @@ class QueueItemsController < ApplicationController
     end
   end
 
+  def update_order
+
+  end
+
   def destroy
     binding.pry
     if queue_item_belong_to_user?

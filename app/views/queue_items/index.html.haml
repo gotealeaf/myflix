@@ -4,28 +4,30 @@
       %article
         %header
           %h2 My Queue
-        %table.table
-          %thead
-            %tr
-              %th(width="10%") List Order
-              %th(width="30%") Video Title
-              %th(width="10%") Play
-              %th(width="20%") Rating
-              %th(width="15%") Genre
-              %th(width="15%") Remove
-          %tbody
-            - @queue_items.each do | qi |
+        =form_tag update_form_path do
+          %table.table
+            %thead
               %tr
-                %td= qi.position
-                %td
-                  = link_to("#{qi.video.title}", video_path(qi.video.id))
-                %td
-                  = button_to "Play", nil, class: "btn btn-default"
-                %td
-                  
-                %td
-                  = link_to("#{qi.video.category.title}", category_path(qi.video.category.id))
-                %td
-                  = link_to qi, method: :delete do
-                    %i.glyphicon.glyphicon-remove
-          = button_to "Update Instant Queue", nil, class: "btn btn-default"
+                %th(width="10%") List Order
+                %th(width="30%") Video Title
+                %th(width="10%") Play
+                %th(width="20%") Rating
+                %th(width="15%") Genre
+                %th(width="15%") Remove
+            %tbody
+              - @queue_items.each do | qi |
+                %tr
+                  = hidden_field_tag "queue_items[][id]", qi.id
+                  %td= text_field_tag "queue_items[][position]", qi.position
+                  %td
+                    = link_to("#{qi.video.title}", video_path(qi.video.id))
+                  %td
+                    = button_to "Play", nil, class: "btn btn-default"
+                  %td
+                    
+                  %td
+                    = link_to("#{qi.video.category.title}", category_path(qi.video.category.id))
+                  %td
+                    = link_to qi, method: :delete do
+                      %i.glyphicon.glyphicon-remove
+          = submit_tag "Update Instant Queue", class: "btn btn-default"
