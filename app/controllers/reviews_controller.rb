@@ -9,7 +9,7 @@ class ReviewsController < ApplicationController
       flash[:success] = "Thanks for the review, #{current_user.full_name}!"
       redirect_to video_path(@video)
     else
-      if @video.reviews.find_by(creator: current_user)
+      if @review.errors.messages[:user_id]
         flash[:danger] = "Sorry, you can only review a video once."
       else
         flash[:danger] = "Sorry, your review needs revision to be accepted."
