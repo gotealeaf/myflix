@@ -77,7 +77,7 @@ describe ReviewsController do
         before do
           video = Fabricate(:video)
           review = Fabricate(:review, video_id: video.id, user_id: session[:user_id])
-          post :create, review: Fabricate.attributes_for(:review), video_id: video.id, user_id: session[:user_id]
+          post :create, review: Fabricate.attributes_for(:review), video_id: video.id
         end
 
         it "does not create a new review" do

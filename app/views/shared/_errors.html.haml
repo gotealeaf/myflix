@@ -1,5 +1,7 @@
-- if obj.errors.any?
+- if object.errors.any?
   .row.alert.alert-danger.span6
-    %h5
-      Incorrect email or password. Please try again.
+    %ul
+      - object.errors.full_messages.each do |msg|      
+        %li
+          msg      
 

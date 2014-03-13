@@ -1,4 +1,5 @@
 %article.video
+
   .container
     .row
       .video_large_cover.col-sm-7.col-sm-offset-1
@@ -18,10 +19,9 @@
 %section.reviews.container
   .row
     .col-sm-10.col-sm-offset-1
-      = bootstrap_form_for [@video, Review.new] do |f|
+      = bootstrap_form_for [@video, @review] do |f|
         %fieldset
           .form-group
-            = f.label "Rate this video"
             .row
               .col-sm-3
                 = f.select :rating, ([5,4,3,2,1].map { |number| [pluralize(number, "Star")]})
@@ -29,7 +29,7 @@
             = f.label "Write Review"
             .row
               .col-sm-8
-                = f.text_area :review_text, rows: 6, class: "form-control"
+                = f.text_area :review_text, rows: 6, class: "form-control", hide_label: true
         %fieldset.form-group.actions.clearfix
           = f.submit "Submit" 
       %header
