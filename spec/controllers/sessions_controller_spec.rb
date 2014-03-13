@@ -17,19 +17,14 @@ describe SessionsController do
 
   describe 'POST create' do
     context "with valid credentials" do
+      
+      let(:user) { Fabricate(:user) }
+      
       before do
-        user = Fabricate(:user)
         post :create, {email: user.email, password: user.password}
       end
 
       it "sets the user in the session if user is authenticated" do
-=begin this test only works when I repeat the code that I have in the before block.
-       if I remove it, assuming that the code in the block will take care of everything, 
-       the test breaks. 
-=end 
-        user = Fabricate(:user)
-        post :create, {email: user.email, password: user.password}
-
         expect(session[:user_id]).to eq(user.id)
       end
 
