@@ -69,6 +69,76 @@ describe QueueItemsController do
     end
   end
 
+  describe 'POST update_order' do
+    context 'invalid inputs' do
+      it 'shows error if queue item is no valid number' do
+        adam = Fabricate(:user)
+        session[:user_id] = adam.id
+        queue_item1 = Fabricate(:queue_item, user: adam, position: 1)
+        queue_item2 = Fabricate(:queue_item, user: adam, position: 2)
+        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", "position"=>"/7."}, {'id'=>"#{queue_item2.id}", "position"=>"1"}]
+        expect(flash[:danger]).to be_present
+      end
+    end
+    context 'valid inputs' do
+      let(:adam) { Fabricate :user }
+      let(:queue_item1) { Fabricate(:queue_item, user_id: adam.id, position: 1)}
+      let(:queue_item2) { Fabricate(:queue_item, user_id: adam.id, position: 2)}
+      before do
+        session[:user_id] = adam.id
+        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>"3"}, {"id"=>"#{queue_item2.id}", 'position'=>'1'}]
+      end
+      it 'redirects the user to the my queue page' do
+        expect(response).to redirect_to my_queue_path
+      end
+      it 'updates the order of the queue' do
+        expect(QueueItem.find(queue_item1.id).position).to eq(2)
+        expect(QueueItem.find(queue_item2.id).position).to eq(1)
+      end
+      it 'resets the order of the queue items' do
+        expect(QueueItem.find(queue_item1.id).position).to eq(2)
+        expect(QueueItem.find(queue_item2.id).position).to eq(1)
+      end
+      it 'shows a confirmation message' do
+        expect(flash[:success]).to be_present
+      end
+    end
+    context 'unauthenticated users' do
+      let(:queue_item1) { Fabricate(:queue_item, position: 1)}
+      let(:queue_item2) { Fabricate(:queue_item, position: 2)}
+      before do
+        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>"3"}, {"id"=>"#{queue_item2.id}", 'position'=>'1'}]
+      end
+      it 'redirects the user to the login page' do
+        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>"3"}, {"id"=>"#{queue_item2.id}", 'position'=>'1'}]
+        expect(response).to redirect_to login_path
+      end
+      it 'displays an error message' do
+        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>"3"}, {"id"=>"#{queue_item2.id}", 'position'=>'1'}]
+        expect(flash[:danger]).to be_present
+      end
+    end
+    context 'user submits queue_item that they do not own' do
+      let(:adam) { Fabricate :user }
+      let(:queue_item1) { Fabricate(:queue_item, user_id: adam.id, position: 1)}
+      let(:queue_item2) { Fabricate(:queue_item, user_id: adam.id, position: 2)}
+      let(:queue_item3) { Fabricate(:queue_item, position: 15) }
+      before do
+        session[:user_id] = adam.id
+        post :update_order, queue_items: [{'id'=>"#{queue_item3.id}", 'position'=>'2'}]
+      end
+      it 'fails to update queue' do
+        expect(QueueItem.find(queue_item3.id).position).to eq(15)
+      end
+      it 'redirect_to my_queue_path' do
+        expect(response).to redirect_to my_queue_path
+      end
+      it 'shows error message' do
+        expect(flash[:danger]).to be_present
+      end
+    end
+  end
+
   describe 'POST #create' do
     let(:adam) { Fabricate :user }
     let(:monk) { Fabricate :video }

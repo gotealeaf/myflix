@@ -19,11 +19,33 @@ class QueueItemsController < ApplicationController
   end
 
   def update_order
-
+    queue_items = params[:queue_items]
+    positions = queue_items.map { |e| e[:position]}
+    non_valid_items = positions.select{|item|item[/(\.| |0|\D)/]}
+    if non_valid_items != []
+      flash[:danger] = "There was a problem updating your queue. Please try again using only whole numbers."
+    else
+      queue_items.each do |queue_item|
+        queue_item_found = QueueItem.find(queue_item[:id])
+        if queue_item_found.user_id == session[:user_id]
+          queue_items.each do |queue_item|
+            QueueItem.find(queue_item[:id]).update_attribute(:position, queue_item[:position])
+          end
+          @queue_count = 0
+          current_user.queue_items.each do |queue_item|
+            @queue_count = @queue_count + 1
+            QueueItem.find(queue_item[:id]).update_attribute(:position, @queue_count)
+          end
+          flash[:success] = "The order of the videos in your queue has been updasted."
+        else
+          flash[:danger] = "There was an error updating your queue item. Please try again."
+        end
+      end
+    end
+    redirect_to my_queue_path
   end
 
   def destroy
-    binding.pry
     if queue_item_belong_to_user?
       QueueItem.delete(params[:id])
       flash[:success] = "The video was successfully removed from your queue."
