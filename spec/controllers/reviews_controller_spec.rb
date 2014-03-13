@@ -10,30 +10,31 @@ describe ReviewsController do
     context "with authenticated users" do
       context "with valid input" do
 
-        it "redirects to the video show page" do    
+        before do
+          current_user = Fabricate(:user)
+          session[:user_id] = current_user.id
+        end
 
+        it "redirects to the video show page" do    
           post :create, review: Fabricate.attributes_for(:review, rating: 3.0), video_id: video
           expect(response).to redirect_to video_path(video)
-
         end
 
         it "creates a review" do
-
           post :create, review: { user_review: "test 123", rating: 3.0}, video_id: video
           expect(Review.count).to eq(1)
         end
 
         it "creates a review associated with the video" do
-
           post :create, review: Fabricate.attributes_for(:review, rating: 3.0, video_id: video.id), video_id: video.id
           expect(Review.first.video).to eq(video)
         end
 
         it "creates a review associated with the signed in user" do
-          current_user = Fabricate(:user)
-          session[:user_id] = current_user.id
+          #current_user = Fabricate(:user)
+          #session[:user_id] = current_user.id
 
-          post :create, review: Fabricate(:review, user: current_user, rating: 3.0).attributes, user_id: current_user, video_id: video
+          post :create, review: Fabricate.attributes_for(:review, user: current_user, rating: 3.0), user_id: current_user, video_id: video
           expect(Review.first.user).to eq(current_user)
         end
       end
@@ -71,5 +72,8 @@ describe ReviewsController do
       end
     end
     context "with unauthenticated users"
+      it "redirects the visitor to sign in page" do
+        expect(response).to render_template('sessions/new')
+      end
   end
 end
