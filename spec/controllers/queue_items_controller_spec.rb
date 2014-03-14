@@ -125,7 +125,7 @@ describe QueueItemsController do
       let(:queue_item3) { Fabricate(:queue_item, position: 15) }
       before do
         session[:user_id] = adam.id
-        post :update_order, queue_items: [{'id'=>"#{queue_item3.id}", 'position'=>'2'}]
+        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>'34'}, {'id'=>"#{queue_item3.id}", "position"=>"14"}]
       end
       it 'fails to update queue' do
         expect(QueueItem.find(queue_item3.id).position).to eq(15)

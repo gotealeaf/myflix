@@ -21,25 +21,16 @@ class QueueItemsController < ApplicationController
   def update_order
     queue_items = params[:queue_items]
     positions = queue_items.map { |e| e[:position]}
-    non_valid_items = positions.select{|item|item[/(\.| |0|\D)/]}
+    non_valid_items = validates_position_is_integer(positions)
     if non_valid_items != []
       flash[:danger] = "There was a problem updating your queue. Please try again using only whole numbers."
     else
-      queue_items.each do |queue_item|
-        queue_item_found = QueueItem.find(queue_item[:id])
-        if queue_item_found.user_id == session[:user_id]
-          queue_items.each do |queue_item|
-            QueueItem.find(queue_item[:id]).update_attribute(:position, queue_item[:position])
-          end
-          @queue_count = 0
-          current_user.queue_items.each do |queue_item|
-            @queue_count = @queue_count + 1
-            QueueItem.find(queue_item[:id]).update_attribute(:position, @queue_count)
-          end
-          flash[:success] = "The order of the videos in your queue has been updasted."
-        else
-          flash[:danger] = "There was an error updating your queue item. Please try again."
-        end
+      if queue_items_are_owned_by_user(queue_items) == true
+        update_attributes(queue_items)
+        normalise_queue(queue_items)
+        flash[:success] = "The order of the videos in your queue has been updasted."
+      else
+        flash[:danger] = "There was an error saving your queue items."
       end
     end
     redirect_to my_queue_path
@@ -56,6 +47,35 @@ class QueueItemsController < ApplicationController
   end
 
   private
+
+  def queue_items_are_owned_by_user(queue_items)
+    queue_items.each do |queue_item|
+      queue_item_found = QueueItem.find(queue_item[:id])
+      @contains_non_user_queue_items = []
+      if queue_item_found.user_id != session[:user_id]
+        @contains_non_user_queue_items << queue_item_found
+      end
+    end
+    @contains_non_user_queue_items.empty? #true means
+  end
+
+  def normalise_queue(queue_items)
+    @queue_count = 0
+    current_user.queue_items.each do |queue_item|
+      @queue_count = @queue_count + 1
+      QueueItem.find(queue_item[:id]).update_attribute(:position, @queue_count)
+    end
+  end
+
+  def validates_position_is_integer(position)
+    position.select{|item|item[/(\.|\s|0|\D)/]}
+  end
+
+  def update_attributes(queue_items)
+    queue_items.each do |queue_item|
+      QueueItem.find(queue_item[:id]).update_attribute(:position, queue_item[:position])
+    end
+  end
 
   def number_of_queue_items
     get_queue_items_for_user.count

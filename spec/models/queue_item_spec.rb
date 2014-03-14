@@ -10,6 +10,7 @@ describe QueueItem do
   it { should validate_presence_of(:position) }
   it { should validate_presence_of(:user_id) }
   it { should validate_presence_of(:video_id) }
+  it { should validate_numericality_of(:position).only_integer }
 
   describe 'self.get_queue_items_for_video_and_user' do
     it 'returns queue_items for that user and video' do
