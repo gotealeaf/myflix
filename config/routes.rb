@@ -11,7 +11,8 @@ Myflix::Application.routes.draw do
     end
     resources :reviews, only: [:create]
   end
-  
+
+  resources :ques, only: [:index]
   resources :categories, only: [:show] 
   resources :users, only: [:create]
   
