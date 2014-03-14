@@ -1,7 +1,5 @@
-class PagesController <  ApplicationController
+class PagesController < ApplicationController
   def front
-    if session[:user_id]
-      redirect_to home_path
-    end
+    redirect_to home_path if logged_in?
   end
 end
