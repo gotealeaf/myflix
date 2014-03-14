@@ -15,7 +15,7 @@
         %li.dropdown
           %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
             Welcome,
-            = User.find_by(id: session[:user_id]).fullname
+            = current_user.fullname
             %b.caret
           %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
             %li
