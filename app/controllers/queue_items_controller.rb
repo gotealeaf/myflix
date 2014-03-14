@@ -19,27 +19,25 @@ class QueueItemsController < ApplicationController
   end
 
   def update_order
-    queue_items = params[:queue_items]
-    positions = queue_items.map { |e| e[:position]}
-    non_valid_items = validates_position_is_integer(positions)
-    if non_valid_items != []
-      flash[:danger] = "There was a problem updating your queue. Please try again using only whole numbers."
-    else
-      if queue_items_are_owned_by_user(queue_items) == true
+    begin
+      ActiveRecord::Base.transaction do
+        queue_items = params[:queue_items]
         update_attributes(queue_items)
-        normalise_queue(queue_items)
+        normalise_queue
         flash[:success] = "The order of the videos in your queue has been updasted."
-      else
-        flash[:danger] = "There was an error saving your queue items."
       end
+      redirect_to my_queue_path
+    rescue
+      flash[:danger] = "There was an error saving your queue items."
+      redirect_to my_queue_path
     end
-    redirect_to my_queue_path
   end
 
   def destroy
     if queue_item_belong_to_user?
       QueueItem.delete(params[:id])
       flash[:success] = "The video was successfully removed from your queue."
+      normalise_queue
     else
       flash[:danger] = "There was an error removing the video from your queue. Please try again."
     end
@@ -47,6 +45,15 @@ class QueueItemsController < ApplicationController
   end
 
   private
+
+  def setup_queue_items
+    queue_items = params[:queue_items]
+    queue_items.each do |queue_item|
+      @queue_items = []
+      queue_item = QueueItem.find(queue_item[:id])
+      @queue_items << queue_item
+    end
+  end
 
   def queue_items_are_owned_by_user(queue_items)
     queue_items.each do |queue_item|
@@ -56,10 +63,10 @@ class QueueItemsController < ApplicationController
         @contains_non_user_queue_items << queue_item_found
       end
     end
-    @contains_non_user_queue_items.empty? #true means
+    @contains_non_user_queue_items.empty?
   end
 
-  def normalise_queue(queue_items)
+  def normalise_queue
     @queue_count = 0
     current_user.queue_items.each do |queue_item|
       @queue_count = @queue_count + 1
@@ -73,7 +80,11 @@ class QueueItemsController < ApplicationController
 
   def update_attributes(queue_items)
     queue_items.each do |queue_item|
-      QueueItem.find(queue_item[:id]).update_attribute(:position, queue_item[:position])
+      final_item = QueueItem.find(queue_item[:id])
+      final_item.update_attributes!("position"=>"#{queue_item[:position]}") if final_item.user == current_user
+      if queue_items_are_owned_by_user(queue_items) != true
+        raise "The user is trying to alter queue items they do not own."
+      end
     end
   end
 
