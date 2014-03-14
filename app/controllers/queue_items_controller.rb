@@ -81,7 +81,7 @@ class QueueItemsController < ApplicationController
   def update_attributes(queue_items)
     queue_items.each do |queue_item|
       final_item = get_queue_item(queue_item)
-      final_item.update_attributes!("position"=>"#{queue_item[:position]}") if final_item.user == current_user
+      final_item.update_queue_item_attributes(queue_item) if final_item.user == current_user
       if queue_items_are_owned_by_user(queue_items) != true
         raise "The user is trying to alter queue items they do not own."
       end
