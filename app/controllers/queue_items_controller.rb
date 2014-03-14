@@ -50,14 +50,14 @@ class QueueItemsController < ApplicationController
     queue_items = params[:queue_items]
     queue_items.each do |queue_item|
       @queue_items = []
-      queue_item = QueueItem.find(queue_item[:id])
+      queue_item = get_queue_item(queue_item)
       @queue_items << queue_item
     end
   end
 
   def queue_items_are_owned_by_user(queue_items)
     queue_items.each do |queue_item|
-      queue_item_found = QueueItem.find(queue_item[:id])
+      queue_item_found = get_queue_item(queue_item)
       @contains_non_user_queue_items = []
       if queue_item_found.user_id != session[:user_id]
         @contains_non_user_queue_items << queue_item_found
@@ -70,7 +70,7 @@ class QueueItemsController < ApplicationController
     @queue_count = 0
     current_user.queue_items.each do |queue_item|
       @queue_count = @queue_count + 1
-      QueueItem.find(queue_item[:id]).update_attribute(:position, @queue_count)
+      QueueItem.normalise_position_number(queue_item, @queue_count)
     end
   end
 
@@ -80,12 +80,16 @@ class QueueItemsController < ApplicationController
 
   def update_attributes(queue_items)
     queue_items.each do |queue_item|
-      final_item = QueueItem.find(queue_item[:id])
+      final_item = get_queue_item(queue_item)
       final_item.update_attributes!("position"=>"#{queue_item[:position]}") if final_item.user == current_user
       if queue_items_are_owned_by_user(queue_items) != true
         raise "The user is trying to alter queue items they do not own."
       end
     end
+  end
+
+  def get_queue_item(queue_item)
+    QueueItem.find(queue_item[:id])
   end
 
   def number_of_queue_items

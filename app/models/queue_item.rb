@@ -11,11 +11,14 @@ class QueueItem < ActiveRecord::Base
   end
 
   def update_position
-    binding.pry
     final_item = QueueItem.find(queue_item[:id])
     final_item.update_attributes!("position"=>"#{queue_item[:position]}") if final_item.user == current_user
     if queue_items_are_owned_by_user(queue_items) != true
       raise "The user is trying to alter queue items they do not own."
     end
+  end
+
+  def self.normalise_position_number(queue_item, queue_count)
+    find(queue_item[:id]).update_attribute(:position, queue_count)
   end
 end
