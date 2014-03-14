@@ -11,8 +11,7 @@ class QueueItemsController < ApplicationController
       flash[:danger] = 'This video is already in your queue. It will not be saved.'
       redirect_to my_queue_path
     else
-      @queue_item[:position] = set_position
-      @queue_item.save
+      save_queue_item
       flash[:success] = "The video has been added to the queue."
       redirect_to my_queue_path
     end
@@ -45,6 +44,11 @@ class QueueItemsController < ApplicationController
   end
 
   private
+
+  def save_queue_item
+    @queue_item[:position] = set_position
+    @queue_item.save
+  end
 
   def setup_queue_items
     queue_items = params[:queue_items]
