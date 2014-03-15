@@ -3,7 +3,9 @@ Myflix::Application.routes.draw do
   post 'log_in', to: 'sessions#create'
   get 'register', to: 'users#new'
   get 'log_out', to: 'sessions#destroy', as: 'log_out'
-  root to: 'welcome#index'  
+  get 'que_items', to: 'que_items#index', as: 'que_items'
+  post 'que_item', to: 'que_items#create', as: 'video_que_item'
+  root to: 'welcome#index' 
 
   resources :videos, only: [:index, :show] do
     collection do
@@ -12,7 +14,6 @@ Myflix::Application.routes.draw do
     resources :reviews, only: [:create]
   end
 
-  resources :que_items, only: [:index]
   resources :categories, only: [:show] 
   resources :users, only: [:create]
   

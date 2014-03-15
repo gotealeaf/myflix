@@ -13,7 +13,7 @@
           = @video.description
         .actions
           %a.btn.btn-primary(href="") Watch Now
-          %a.btn.btn-default(href="") + My Queue
+          = button_to "+ My Queue", video_que_item_path(@video), method: :post 
 
 %section.reviews.container
   .row
