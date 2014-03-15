@@ -18,7 +18,7 @@ describe VideosController do
       end
     end
 
-    context "signing in" do
+    context "signed in" do
       before(:each) do
         session[:user_id] = Fabricate(:user)
         get "show", id: video.id
@@ -35,7 +35,7 @@ describe VideosController do
   end
 
   context "GET 'search'" do
-    context "without signing in" do
+    context "not signed in" do
       before(:each) do
         get "search", q: video.title
       end
