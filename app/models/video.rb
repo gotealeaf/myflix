@@ -14,9 +14,13 @@ class Video < ActiveRecord::Base
     reviews.limit(8)
   end
 
-  def average_rating    
-    collection = reviews.select(:rating).map {|r| r.rating}
-    collection.inject{ |sum, el| sum + el }.to_f / collection.size
+  def average_rating
+    if reviews.empty?
+      puts "unrated"
+    else    
+      collection = reviews.select(:rating).map {|r| r.rating}
+      collection.inject{ |sum, el| sum + el }.to_f / collection.size 
+    end
   end
 
 end
