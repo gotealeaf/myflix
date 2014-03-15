@@ -18,10 +18,6 @@ class QueueItem < ActiveRecord::Base
     end
   end
 
-  def self.normalise_position_number(queue_item, queue_count)
-    find(queue_item[:id]).update_attribute(:position, queue_count)
-  end
-
   def update_queue_item_attributes(queue_item)
     update_attributes!("position"=>"#{queue_item[:position]}")
   end

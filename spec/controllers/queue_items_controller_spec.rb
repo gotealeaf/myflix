@@ -123,9 +123,11 @@ describe QueueItemsController do
       let(:queue_item1) { Fabricate(:queue_item, user_id: adam.id, position: 1)}
       let(:queue_item2) { Fabricate(:queue_item, user_id: adam.id, position: 2)}
       let(:queue_item3) { Fabricate(:queue_item, position: 15) }
+      let(:queue_item4) { Fabricate(:queue_item, position: 14) }
+      let(:queue_item5) { Fabricate(:queue_item, position: 68) }
       before do
         session[:user_id] = adam.id
-        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>'34'}, {'id'=>"#{queue_item3.id}", "position"=>"14"}]
+        post :update_order, queue_items: [{'id'=>"#{queue_item5.id}", "position"=>"14"}, {'id'=>"#{queue_item1.id}", 'position'=>'34'}, {'id'=>"#{queue_item3.id}", "position"=>"14"}, {'id'=>"#{queue_item4.id}", "position"=>"14"}]
       end
       it 'fails to update queue' do
         expect(QueueItem.find(queue_item3.id).position).to eq(15)
