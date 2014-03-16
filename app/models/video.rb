@@ -1,5 +1,6 @@
 class Video < ActiveRecord::Base
   belongs_to :category
+  has_many :reviews, -> { order "created_at DESC" }
 
   default_scope { order("created_at") }
 

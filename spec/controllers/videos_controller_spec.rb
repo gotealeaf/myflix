@@ -16,6 +16,10 @@ describe VideosController do
       it "will not set @video" do
         assigns(:video).should == nil
       end
+
+      it "will not set @reviews" do
+        assigns(:reveiws).should be_nil
+      end
     end
 
     context "signed in" do
@@ -30,6 +34,12 @@ describe VideosController do
 
       it "sets @video" do
         assigns(:video).should == video
+      end
+
+      it "@review ordered by created_at DESC" do
+        review_1 = Fabricate(:review, video: video, created_at: 2.day.ago)
+        review_2 = Fabricate(:review, video: video, created_at: 1.day.ago)
+        assigns(:reviews).should == [review_2, review_1]
       end
     end
   end
