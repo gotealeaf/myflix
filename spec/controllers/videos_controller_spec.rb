@@ -10,11 +10,11 @@ describe VideosController do
       end
 
       it "redirects to sign in page" do
-        response.should redirect_to(sign_in_path)
+        expect(response).to redirect_to sign_in_path
       end
 
       it "will not set @video" do
-        assigns(:video).should == nil
+        expect(assigns(:video)).to be_nil
       end
 
       it "will not set @reviews" do
@@ -29,17 +29,17 @@ describe VideosController do
       end
 
       it "returns http success" do
-        response.should be_success
+        expect(response).to be_success
       end
 
       it "sets @video" do
-        assigns(:video).should == video
+        expect(assigns(:video)).to eq(video)
       end
 
       it "@review ordered by created_at DESC" do
         review_1 = Fabricate(:review, video: video, created_at: 2.day.ago)
         review_2 = Fabricate(:review, video: video, created_at: 1.day.ago)
-        assigns(:reviews).should == [review_2, review_1]
+        expect(assigns(:reviews)).should eq([review_2, review_1])
       end
     end
   end
@@ -51,7 +51,7 @@ describe VideosController do
       end
 
       it "redirects to sign in page" do
-        response.should redirect_to(sign_in_path)
+        expect(response).to redirect_to sign_in_path
       end
 
       it "will not set @videos" do
@@ -66,11 +66,11 @@ describe VideosController do
       end
 
       it "returns http success" do
-        response.should be_success
+        expect(response).to be_success
       end
 
       it "sets @videos" do
-        assigns(:videos).should == [video]
+        expect(assigns(:videos)).should eq([video])
       end
     end
   end

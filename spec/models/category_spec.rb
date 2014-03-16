@@ -29,29 +29,29 @@ describe Category do
       sherlock        = Video.find_by_title("Sherlock")
       the_sopranos    = Video.find_by_title("The Sopranos")
 
-      dramas.recent_videos.should == [sherlock, game_of_thrones, the_sopranos]
+      expect(dramas.recent_videos).to eq([sherlock, game_of_thrones, the_sopranos])
     end
 
     it "returns only 6 videos if there are more than 6" do
       animation = Category.find_by_name("Animation")
-      animation.recent_videos.size.should == 6
+      expect(animation.recent_videos.size).to eq(6)
     end
 
     it "returns all of the videos if there are less than 6" do
       dramas = Category.find_by_name("TV Dramas")
-      dramas.recent_videos.size.should == 3
+      expect(dramas.recent_videos.size).to eq(3)
     end
 
     it "doesn't include the 7th recent video" do
       animation = Category.find_by_name("Animation")
       frozen = Video.find_by_title("Frozen")
 
-      animation.recent_videos.should_not include(frozen)
+      expect(animation.recent_videos).not_to include(frozen)
     end
 
     it "returns an empty array if the category does not have any videos" do
       reality = Category.find_by_name("Reality TV")
-      reality.recent_videos.should == []
+      expect(reality.recent_videos).to eq([])
     end
   end
 end
