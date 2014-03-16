@@ -4,7 +4,7 @@ describe SessionsController do
   let(:user) { Fabricate.create(:user) }
 
   describe "GET 'new'" do
-    it "renders :new tempalte" do
+    it "renders :new template" do
       get "new"
       response.should render_template(:new)
     end
