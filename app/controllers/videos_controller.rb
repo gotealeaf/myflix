@@ -7,14 +7,10 @@ class VideosController < ApplicationController
 
 	def show
 		@video = Video.find(params[:id])
-    @reviews = @video.reviews
-    
+    @reviews = @video.reviews   
 	end
 
   def search
-    if params[:search_term]
-      @results = Video.search_by_title(params[:search_term])
-    end
+    @results = Video.search_by_title(params[:search_term]) if params[:search_term]
   end
-
 end

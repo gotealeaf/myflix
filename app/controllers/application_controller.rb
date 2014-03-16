@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize
-    redirect_to sign_in_path, alert: "Not authortized" if current_user.nil?
+    redirect_to sign_in_path, alert: "Not authortized" unless current_user
   end
 
   def reviewed?
