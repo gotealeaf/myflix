@@ -11,7 +11,8 @@ class VideosController < ApplicationController
   def show
     @video   = Video.find(params[:id])
     @reviews = @video.reviews
-    @rating  = @reviews.average(:rating).round(1)
+    @new_review = Review.new
+    @rating  = @reviews.any? ? @reviews.average(:rating).round(1) : 0
   end
 
   def search

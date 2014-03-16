@@ -15,26 +15,21 @@
 %section.reviews.container
   .row
     .col-sm-10.col-sm-offset-1
-      %form
+      = form_for [@video, @new_review] do |f|
         %fieldset
           .form-group
             %label Rate this video
             .row
               .col-sm-3
-                %select.form-control(name="")
-                  %option(value="5") 5 Stars
-                  %option(value="4") 4 Stars
-                  %option(value="3") 3 Stars
-                  %option(value="2") 2 Stars
-                  %option(value="1") 1 Star
+                = f.select :rating, [["5 Starts", 5], ["4 Starts", 4], ["3 Starts", 3], ["2 Starts", 2], ["1 Start", 1]], {}, class: "form-control"
           .form-group
             %label Write Review
             .row
               .col-sm-8
-                %textarea.form-control(name="" rows="6")
+                = f.text_area :comment, class: "form-control", rows: "6"
         %fieldset.form-group.actions.clearfix
-          %input(type="submit" value="Submit" class="btn")
-          %a(href="") Cancel
+          = f.submit "Submit", class: "btn"
+          = link_to "Cancel", video_path(@video)
       %header
         %h3 User Reviews (#{@reviews.size})
       %ul
