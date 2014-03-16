@@ -1,0 +1,10 @@
+= form_for(@user) do |f|
+  = f.label :email
+  = f.text_field :email, class: "form-control"
+  = f.label :password
+  = f.password_field :password, class: "form-control"
+  = f.label :name
+  = f.text_field :name, class: "form-control"
+  = f.submit "submit", class:'btn btn-default'
+
+
