@@ -6,13 +6,13 @@ describe SessionsController do
   describe "GET 'new'" do
     it "renders :new template" do
       get "new"
-      response.should render_template(:new)
+      expect(response).to render_template :new
     end
 
     it "redirects to home_path if already signed in" do
       session[:user_id] = user.id
       get "new"
-      response.should redirect_to(home_path)
+      expect(response).to redirect_to home_path
     end
   end
 
@@ -24,15 +24,15 @@ describe SessionsController do
       end
 
       it "doesn't set session[:uesr_id]" do
-        session[:user_id].should be_nil
+        expect(session[:user_id]).to be_nil
       end
 
       it "sets error" do
-        flash[:error].should == "Invalid email or password"
+        expect(flash[:error]).to eq("Invalid email or password")
       end
 
       it "redirects to sign_in_path" do
-        response.should redirect_to(sign_in_path)
+        expect(response).to redirect_to sign_in_path
       end
     end
 
@@ -42,15 +42,15 @@ describe SessionsController do
       end
 
       it "sets session[:user_id]" do
-        session[:user_id].should == user.id
+        expect(session[:user_id]).to eq(user.id)
       end
 
       it "sets notice" do
-        flash[:notice].should == "You are signed in, enjoy!"
+        expect(flash[:notice]).to eq("You are signed in, enjoy!")
       end
 
       it "redirects to home_path" do
-        response.should redirect_to(home_path)
+        expect(response).to redirect_to home_path
       end
     end
   end
@@ -64,7 +64,7 @@ describe SessionsController do
 
     it "redirects to root_path" do
       get "destroy"
-      response.should redirect_to(root_path)
+      expect(response).to redirect_to root_path
     end
   end
 
