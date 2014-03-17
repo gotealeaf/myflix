@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :queue_items, -> { order 'position ASC' }
   validates :email, uniqueness: true, presence: true
   validates :fullname, presence: true
+  has_many :reviews
 
   def normalise_queue
     queue_count = 0

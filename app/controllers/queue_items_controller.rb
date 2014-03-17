@@ -21,6 +21,7 @@ class QueueItemsController < ApplicationController
     begin
       ActiveRecord::Base.transaction do
         queue_items = params[:queue_items]
+        find_video_for(queue_items)
         update_attributes(queue_items)
         current_user.normalise_queue
         flash[:success] = "The order of the videos in your queue has been updasted."
@@ -54,6 +55,15 @@ class QueueItemsController < ApplicationController
     position.select{|item|item[/(\.|\s|0|\D)/]}
   end
 
+  def find_video_for(queue_items)
+    queue_items.each do |queue_item|
+      final_queue_item = get_queue_item(queue_item)
+      review = Review.where(user: current_user, video: final_queue_item.video)
+      binding.pry
+      review.update_review_attributes(queue_item)
+    end
+  end
+
   def update_attributes(queue_items)
     queue_items.each do |queue_item|
       final_item = get_queue_item(queue_item)
@@ -85,7 +95,7 @@ class QueueItemsController < ApplicationController
     current_user.queue_items
   end
 
-  def is_video_already_in_queue? #true if already in queue
+  def is_video_already_in_queue?
     QueueItem.get_queue_items_for_video_and_user(queue_item_params[:video_id], queue_item_params[:user_id]).any?
   end
 
