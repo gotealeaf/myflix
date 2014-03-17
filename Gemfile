@@ -9,6 +9,10 @@ gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
 
+group :test, :development do
+  gem 'rspec-rails'
+end
+
 group :development do
   gem 'sqlite3'
   gem 'pry'
