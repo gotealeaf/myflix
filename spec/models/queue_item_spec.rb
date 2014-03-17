@@ -32,7 +32,7 @@ describe QueueItem do
       review = Fabricate(:review, rating: 5.0, video: video, user: user)
       queue_item = Fabricate(:queue_item, user: user, video: video)
 
-      expect(queue_item.video_rating).to eq(4.0)
+      expect(queue_item.video_rating).to eq(5.0)
     end
     it "does not return returns the user's rating of a video in the que item's associated video's review if review is nil" do
       user = Fabricate(:user)

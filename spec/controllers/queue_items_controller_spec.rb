@@ -33,8 +33,9 @@ describe QueueItemsController do
     it "redirects to the my que page" do
       current_user = Fabricate(:user)
       session[:user_id] = current_user.id
+      video = Fabricate(:video)
 
-      post :create
+      post :create#, queue_item: {video: video, user: current_user}, video_id: video.id
       expect(response).to redirect_to(queue_items_path)
     end
 
@@ -52,7 +53,7 @@ describe QueueItemsController do
       session[:user_id] = current_user.id
       video = Fabricate(:video)
 
-      post :create, que_item: { video_id: video.id }, video_id: video.id
+      post :create, queue_item: { video_id: video.id }, video_id: video.id
       expect(QueueItem.first.video).to eq(video)
     end
 
@@ -61,7 +62,7 @@ describe QueueItemsController do
       session[:user_id] = current_user.id
       video = Fabricate(:video)
 
-      post :create, que_item: { video_id: video.id, user_id: current_user.id }, video_id: video.id, user_id: current_user
+      post :create, queue_item: { video_id: video.id, user_id: current_user.id }, video_id: video.id, user_id: current_user
       expect(QueueItem.first.user).to eq(current_user)
     end
 
