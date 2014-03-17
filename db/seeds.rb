@@ -30,8 +30,8 @@ suzie = User.create(full_name: "suzie", password: "password", email: "suzie@exam
 
 
 Review.destroy_all
-Review.create(user_id: bob.id, video_id: south_park.id, rating: 5.0, user_review: "boy o boy what film!")
-Review.create(user_id: suzie.id, video_id: south_park.id, rating: 2.0, user_review: "not so good!")
+Review.create(user_id: bob.id, video_id: south_park.id, rating: 5.0, content: "boy o boy what film!")
+Review.create(user_id: suzie.id, video_id: south_park.id, rating: 2.0, content: "not so good!")
 
 
 =begin
