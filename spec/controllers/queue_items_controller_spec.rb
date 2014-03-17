@@ -61,7 +61,7 @@ describe QueueItemsController do
       session[:user_id] = current_user.id
       video = Fabricate(:video)
 
-      post :create, que_item: { video_id: video.id, user_id: current_user.id }, video_id: video.id, user_id: current_user.id
+      post :create, que_item: { video_id: video.id, user_id: current_user.id }, video_id: video.id, user_id: current_user
       expect(QueueItem.first.user).to eq(current_user)
     end
 

@@ -18,12 +18,12 @@ describe ReviewsController do
       context "with valid input" do
 
         it "redirects to the video show page" do    
-          post :create, review: Fabricate.attributes_for(:review, rating: 3.0), video_id: video
-          expect(response).to redirect_to video_path(video)
+          post :create, review: {rating: 3.0}, video_id: video
+          expect(response).to render_template('videos/show')
         end
 
         it "creates a review" do         
-          post :create, review: { user_review: "test 123", rating: 3.0}, video_id: video
+          post :create, review: { content: "test 123", rating: 3.0}, video_id: video.id
           expect(Review.count).to eq(1)
         end
 
@@ -33,7 +33,7 @@ describe ReviewsController do
         end
 
         it "creates a review associated with the signed in user" do                
-          post :create, review: Fabricate.attributes_for(:review, user: current_user, rating: 3.0), user_id: current_user, video_id: video
+          post :create, review: {user: current_user, rating: 3.0, content: "test"}, user_id: current_user, video_id: video
           expect(Review.first.user).to eq(current_user)
         end
       end
@@ -56,7 +56,7 @@ describe ReviewsController do
         end
 
         it "sets @reviews" do
-          review = Fabricate(:review, rating: 3.0, user_review: "yay", video: video, user_id: current_user.id)
+          review = Fabricate(:review, rating: 3.0, content: "yay", video: video, user_id: current_user.id)
 
           post :create, review: { rating: 3.0 }, video_id: video
           expect(assigns(:reviews)).to match_array([review])
@@ -67,7 +67,7 @@ describe ReviewsController do
       it "redirects the visitor to sign in page" do
         current_user = Fabricate(:user)
 
-        post :create, review: { rating: 3.0, user_review: "test" }, video_id: video
+        post :create, review: { rating: 3.0, content: "test" }, video_id: video
         expect(response).to redirect_to(sign_in_path)
       end
   end
