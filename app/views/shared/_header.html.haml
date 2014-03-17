@@ -4,7 +4,7 @@
   - if current_user
     %ul.col-md-8.clearfix
       %li= link_to "Videos", videos_path
-      %li= link_to "My Queue", que_items_path
+      %li= link_to "My Queue", queue_items_path
       %li= link_to "People"
       = form_tag("/videos/search", method: 'get') do
         %p

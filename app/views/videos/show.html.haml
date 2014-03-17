@@ -13,7 +13,7 @@
           = @video.description
         .actions
           %a.btn.btn-primary(href="") Watch Now
-          = link_to "+ My Queue", que_items_path(@video), method: :post 
+          = link_to "+ My Queue", queue_items_path(@video), method: :post 
 
 %section.reviews.container
   .row
@@ -23,7 +23,7 @@
         %label Write Review
         .row
           .col-sm-10.col-sm-offset-1
-            = f.text_area :user_review, rows: 10, class: "span10"
+            = f.text_area :content, rows: 10, class: "span10"
             = f.submit
             = link_to "Cancel", @video
   %header
