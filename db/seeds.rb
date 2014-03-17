@@ -83,9 +83,14 @@ Video.create(title: "Bob's Burgers", description: "Yum burgers blah blah",
 require "Fabrication"
 require "Faker"
 
-15.times do
-  Fabricate(:review, user_id: 1, video_id: 1)
+Fabricate(:user, full_name: "Pete Sanchez", email: "pete@sanchez.com", password: "petepass")
+
+video_id = 1
+10.times do
+  Fabricate(:review, user_id: 1, video_id: video_id)
+  Fabricate(:user_video, user_id: 1, video_id: video_id)
+  video_id += 1
 end
 
-Fabricate(:user, full_name: "Pete Sanchez", email: "pete@sanchez.com", password: "petepass")
+
 

@@ -1,6 +1,8 @@
 class Video < ActiveRecord::Base
   belongs_to :category
   has_many :reviews, -> { order("created_at DESC") }
+  has_many :user_videos
+  has_many :users, through: :user_videos
 
   validates :title, presence: true
   validates :description, presence: true, length: {minimum: 10}, uniqueness:true

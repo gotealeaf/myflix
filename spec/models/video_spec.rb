@@ -4,6 +4,7 @@ describe Video do
   it { should belong_to(:category) }
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:description) }
+  it { should have_many(:users).through(:user_videos) }
 
   describe "search_by_title" do
     it "returns an empty array if string does not match any titles" do
@@ -67,9 +68,11 @@ describe Video do
       it "returns the average rating, rounded to one decimal place" do
         video = Fabricate(:video)
         sum, review_count = 0, 15
+        user_id = 1
         review_count.times do
           rating = rand(1..5).to_f
-          review = Fabricate(:review, rating: rating, video_id: video.id)
+          review = Fabricate(:review, rating: rating, video_id: video.id, user_id: user_id)
+          user_id += 1
           sum += rating
         end
         expect(video.average_rating).to eq((sum / review_count).round(1).to_s)
