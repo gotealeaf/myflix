@@ -14,20 +14,19 @@
               %th(width="15%") Genre
               %th(width="15%") Remove
           %tbody
-            - @user_videos.each do |video|
-              - video_rating = @user_reviews.where(video_id: video.id).present? ? "#{@user_reviews.find(video.id).rating} Stars" : "Unrated"
+            - @queue_items.each do |queue_item|
               %tr
                 %td
-                  %input.form-control(type="text" value="1")
+                  %input.form-control(type="text" value="#{queue_item.position}")
                 %td
-                  = link_to "#{video.title}", video_path(video)
+                  = link_to queue_item.video_title, queue_item.video
                 %td
                   = button_to "Play", nil, class: "btn btn-default"
                 %td
-                  = link_to "#{video_rating}"
+                  = link_to queue_item.rating
                 %td
-                  = link_to "#{video.category.name}"
+                  = link_to queue_item.category_name, queue_item.category
                 %td
-                  = link_to queue_path(video), method: :delete do
+                  = link_to "", method: :delete do
                     %i.glyphicon.glyphicon-remove
         = button_to "Update Instant Queue", nil, class: "btn btn-default"

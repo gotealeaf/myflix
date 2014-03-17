@@ -31,8 +31,8 @@ describe VideosController do
       context "several reviews" do
         it "sets the @reviews variable to a list of reviews for the video, most recent first" do
           review_1 = Fabricate(:review, user_id: 1, video_id: 1)
-          review_2 = Fabricate(:review, user_id: 1, video_id: 1)
-          review_3 = Fabricate(:review, user_id: 1, video_id: 1)
+          review_2 = Fabricate(:review, user_id: 2, video_id: 1)
+          review_3 = Fabricate(:review, user_id: 3, video_id: 1)
           get :show, id: video.id
           expect(assigns(:reviews)).to eq([review_3, review_2, review_1])
         end

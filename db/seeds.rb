@@ -86,10 +86,12 @@ require "Faker"
 Fabricate(:user, full_name: "Pete Sanchez", email: "pete@sanchez.com", password: "petepass")
 
 video_id = 1
+position = 1
 10.times do
   Fabricate(:review, user_id: 1, video_id: video_id)
-  Fabricate(:user_video, user_id: 1, video_id: video_id)
+  Fabricate(:queue_item, position: position, user_id: 1, video_id: video_id)
   video_id += 1
+  position += 1
 end
 
 
