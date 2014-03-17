@@ -6,6 +6,6 @@ class Review < ActiveRecord::Base
 
   def update_review_attributes(queue_item)
     binding.pry
-    update_attributes!(rating: "#{queue_item[:position]}")
+    update_attributes!(rating: "#{queue_item[:rating]}")
   end
 end

@@ -86,7 +86,7 @@ describe QueueItemsController do
       let(:queue_item2) { Fabricate(:queue_item, user_id: adam.id, position: 2)}
       before do
         session[:user_id] = adam.id
-        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>"3"}, {"id"=>"#{queue_item2.id}", 'position'=>'1'}]
+        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>"3"}, {"id"=>"#{queue_item2.id}", 'position'=>'5'}]
       end
       it 'redirects the user to the my queue page' do
         expect(response).to redirect_to my_queue_path
@@ -144,13 +144,13 @@ describe QueueItemsController do
       let(:video1) { Fabricate :video }
       let(:queue_item1) { Fabricate(:queue_item, user_id: adam.id, position: 1, video_id: video1.id)}
       let(:queue_item2) { Fabricate(:queue_item, user_id: adam.id, position: 2)}
-      # let(:queue_item3) { Fabricate(:queue_item, position: 15) }
-      # let(:queue_item4) { Fabricate(:queue_item, position: 14) }
-      # let(:queue_item5) { Fabricate(:queue_item, position: 68) }
+      let(:queue_item3) { Fabricate(:queue_item, position: 15) }
+      let(:queue_item4) { Fabricate(:queue_item, position: 14) }
+      let(:queue_item5) { Fabricate(:queue_item, position: 68) }
       before do
         session[:user_id] = adam.id
         Fabricate(:review, video_id: video1.id, rating: 1, content: "this is a really good review", user_id: adam.id)
-        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>'34', 'rating'=>'3'}]
+        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>'34', 'rating'=>'2'}]
       end
       it 'updates the video ratings'  do
         expect(Review.first.rating).to eq(2)
