@@ -7,11 +7,11 @@ describe QueueItemsController do
       it "sets the @queue_items variable" do
         current_user = Fabricate(:user)
         session[:user_id] = current_user.id
-        queue1 = Fabricate(:queue_item)
-        queue2 = Fabricate(:queue_item)
+        queue1 = Fabricate(:queue_item, user: current_user)
+        queue2 = Fabricate(:queue_item, user: current_user)
 
         get :index
-        expect(assigns(:queue_items)).to match_array([queue2, queue1])
+        expect(assigns(:queue_items)).to match_array([queue1, queue2])
       end
 
       it "sets the @video variable"
@@ -74,7 +74,7 @@ describe QueueItemsController do
       que2 = Fabricate(:queue_item, video_id: family_guy.id, user_id: current_user.id)
       que1 = Fabricate(:queue_item, video_id: south_park.id, user_id: current_user.id)
 
-      expect(QueueItem.all).to match_array([que2, que1])
+      expect(current_user.queue_items.all).to match_array([que2, que1])
     end
 
     it "does not add the video to the que if the video is already in the que" do
@@ -96,7 +96,20 @@ describe QueueItemsController do
       post :create, queue_item: { video_id: south_park.id, user_id: current_user.id }, video_id: south_park.id, user_id: current_user.id
       expect(response).to redirect_to(sign_in_path)
     end
+  end
 
+  describe "POST destroy" do
+    it "removes a queue item from the current user's que page" do
+      current_user = Fabricate(:user)
+      session[:user_id] = current_user.id
+      family_guy = Fabricate(:video)
+      south_park = Fabricate(:video)
+      q1 = Fabricate(:queue_item, video: family_guy, user: current_user)
+      q2 = Fabricate(:queue_item, video: south_park, user: current_user)
+
+      delete :destroy, queue_item: { queue_item: q1 }, queue_item_id: q1.id
+      expect(current_user.queue_items).to eq(1)
+    end
   end
   
 end
