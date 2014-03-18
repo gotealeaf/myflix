@@ -21,3 +21,5 @@ v8 = Video.create(title: "South Park", description: "Follows the misadventures o
 v9 = Video.create(title: "Monk", description: "Adrian Monk is a brilliant San Francisco detective, whose obsessive compulsive disorder just happens to get in the way.", small_cover_url: "/tmp/monk.jpg", large_cover_url: "/tmp/monk_large.jpg", categories: [dramas])
 v10 = Video.create(title: "Monk", description: "Adrian Monk is a brilliant San Francisco detective, whose obsessive compulsive disorder just happens to get in the way.", small_cover_url: "/tmp/monk.jpg", large_cover_url: "/tmp/monk_large.jpg", categories: [dramas])
 v11 = Video.create(title: "Monk", description: "Adrian Monk is a brilliant San Francisco detective, whose obsessive compulsive disorder just happens to get in the way.", small_cover_url: "/tmp/monk.jpg", large_cover_url: "/tmp/monk_large.jpg", categories: [dramas])
+
+zac = User.create(email: "zacclay@gmail.com", full_name: "Zac Clay", password: "password")
