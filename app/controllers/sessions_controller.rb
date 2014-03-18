@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
 
   def new
+
     redirect_to home_path if current_user
   end
 
@@ -13,8 +14,9 @@ class SessionsController < ApplicationController
       flash[:success] = "You are logged in"
       redirect_to home_path
     else
+      
       flash[:danger] = "There is something wrong with your email or password"
-      render :new
+      redirect_to sign_in_path 
     end
 
 
