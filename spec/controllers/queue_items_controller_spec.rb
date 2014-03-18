@@ -86,7 +86,7 @@ describe QueueItemsController do
       let(:queue_item2) { Fabricate(:queue_item, user_id: adam.id, position: 2)}
       before do
         session[:user_id] = adam.id
-        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>"3"}, {"id"=>"#{queue_item2.id}", 'position'=>'5'}]
+        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>"7"}, {"id"=>"#{queue_item2.id}", 'position'=>'5'}]
       end
       it 'redirects the user to the my queue page' do
         expect(response).to redirect_to my_queue_path
@@ -150,12 +150,19 @@ describe QueueItemsController do
       before do
         session[:user_id] = adam.id
         Fabricate(:review, video_id: video1.id, rating: 1, content: "this is a really good review", user_id: adam.id)
-        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>'34', 'rating'=>'2'}]
+        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>'34', 'rating'=>'2  Stars'}, {'id'=>"#{queue_item4.id}", "rating"=>"3", "position"=>"96"}]
       end
       it 'updates the video ratings'  do
         expect(Review.first.rating).to eq(2)
       end
-      it 'redirects to my_queue_path'
+      it 'redirects to my_queue_path' do
+        expect(response).to redirect_to my_queue_path
+      end
+
+      it 'submits a review for an video that doenst already have a review' do
+        binding.pry
+        expect(Review.count).to eq(2)
+      end
     end
   end
 

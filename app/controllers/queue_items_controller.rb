@@ -23,7 +23,6 @@ class QueueItemsController < ApplicationController
         queue_items = params[:queue_items]
         find_video_for(queue_items)
         update_attributes(queue_items)
-        binding.pry
         current_user.normalise_queue
         flash[:success] = "The order of the videos in your queue has been updasted."
       end
@@ -58,9 +57,17 @@ class QueueItemsController < ApplicationController
 
   def find_video_for(queue_items)
     queue_items.each do |queue_item|
-      final_queue_item = get_queue_item(queue_item)
-      review = Review.where(user: current_user, video: final_queue_item.video).first
-      review.update_review_attributes(queue_item)
+      if queue_item[:rating]
+        final_queue_item = get_queue_item(queue_item)
+        if Review.review_by_user_on_video(current_user, final_queue_item.video).blank?
+          Review.create_new_from_queue(final_queue_item, current_user, queue_item)
+          binding.pry
+        else
+          review = Review.review_by_user_on_video(current_user, final_queue_item.video)
+          review.update_review_attributes(queue_item)
+          binding.pry
+        end
+      end
     end
   end
 
