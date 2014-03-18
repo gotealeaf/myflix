@@ -13,41 +13,41 @@ describe Video do
       expect(search_rslt).to eq([])
     end
     
-    it "returns an array of a single matched object" do
+    it "returns an array of a single matched video" do
       monk = Video.create(title: "Monk", description: "A funny man.")
       search_rslt = Video.search_by_title("Monk")
 
       expect(search_rslt).to eq([monk])      
     end
 
-    it "returns an array of a single matched object in a different case" do
+    it "returns an array of a single matched video in a different case" do
       monk = Video.create(title: "Monk", description: "A funny man.")
       search_rslt = Video.search_by_title("mONK")
 
       expect(search_rslt).to eq([monk])
     end
 
-    it "returns an array of a partially matched object" do
+    it "returns an array of a single partially matched video" do
       familyguy = Video.create(title: "Family Guy", description: "A funny family.")
       search_rslt = Video.search_by_title("Family")
 
       expect(search_rslt).to eq([familyguy])
     end
 
-    it "returns an array of multiple matched obejcts" do
-      familymatters = Video.create(title: "Family Matters", description: "A Chicago family.")
-      familyguy = Video.create(title: "Family Guy", description: "A funny family.")
-      search_rslt = Video.search_by_title("Family")
-
-      expect(search_rslt).to eq([familymatters, familyguy])
-    end
-
-    it "returns an array of all mataches ordered by created_at" do
+    it "returns an array of multiple matached videos ordered by created_at" do
       familymatters = Video.create(title: "Family Matters", description: "A Chicago family.")
       familyguy = Video.create(title: "Family Guy", description: "A funny family.", created_at: "2013-03-18 04:53:45")
       search_rslt = Video.search_by_title("Family")
 
       expect(search_rslt).to eq([familyguy, familymatters])
+    end
+
+    it "returns an empty array if search term is blank" do
+      familymatters = Video.create(title: "Family Matters", description: "A Chicago family.")
+      familyguy = Video.create(title: "Family Guy", description: "A funny family.", created_at: "2013-03-18 04:53:45")
+      search_rslt = Video.search_by_title("")
+
+      expect(search_rslt).to eq([])
     end
   end
 end
