@@ -71,10 +71,10 @@ describe QueueItemsController do
       session[:user_id] = current_user.id
       south_park = Fabricate(:video)
       family_guy = Fabricate(:video)
-      que1 = Fabricate(:queue_item, video_id: south_park.id, user_id: current_user.id)
       que2 = Fabricate(:queue_item, video_id: family_guy.id, user_id: current_user.id)
+      que1 = Fabricate(:queue_item, video_id: south_park.id, user_id: current_user.id)
 
-      expect(QueueItem.all).to match_array([que1, que2])
+      expect(QueueItem.all).to match_array([que2, que1])
     end
 
     it "does not add the video to the que if the video is already in the que" do
