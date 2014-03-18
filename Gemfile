@@ -11,6 +11,8 @@ gem 'jquery-rails'
 gem 'therubyracer'
 gem 'bcrypt-ruby'
 gem 'bootstrap_form', :git => "git://github.com/bootstrap-ruby/rails-bootstrap-forms"
+gem 'fabrication'
+gem 'faker'
 
 group :development do
   gem 'sqlite3'
