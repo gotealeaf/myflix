@@ -13,7 +13,7 @@ class QueueItemsController < ApplicationController
   end
 
   def destroy
-    queue_item = QueueItem.find_by(params[:queue_item_id])
+    queue_item = QueueItem.find(params[:id])
     queue_item.destroy
     redirect_to queue_items_path
   end
