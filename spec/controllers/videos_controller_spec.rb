@@ -55,13 +55,37 @@ describe VideosController do
           
           expect(response).to render_template :show
         end
+
+        it "sets @reviews  variable for the video" do
+          review1 = Fabricate(:review, video: video)
+          review2 = Fabricate(:review, video: video)
+          get :show, id: video.id
+          expect(assigns(:reviews)).to match_array([review1, review2])
+        end
+
+        it "displays the latest review at the top of the list" do
+          review1 = Fabricate(:review, video: video)
+          review2 = Fabricate(:review, video: video)
+          
+
+          get :show, id: video.id
+          expect(assigns(:reviews)).to start_with review2
+                  
+          
+        end
+
+        it "sets @review for the review form" do
+          
+          get :show, id: video.id
+          expect(assigns(:review)).to be_an_instance_of(Review)
+        end
       end #end context
 
       
-        it 'redirects unauthenticated user to root_path' do
+        it 'redirects unauthenticated user to sign_in_path' do
           video = Fabricate(:video)
           get :show, id: video.id
-          expect(response).to redirect_to root_path
+          expect(response).to redirect_to sign_in_path
           
         end
         

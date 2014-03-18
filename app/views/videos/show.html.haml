@@ -1,9 +1,39 @@
 %article.video
   .container
     .row
-      .video_large_cover.col-md-6
+      .video_large_cover.col-sm-7.col-sm-offset-1
         = image_tag("#{@video.large_cover_url}", height: '375', width: '665')
-      .video_info.col-md-5.pull-right
+      .video_info.col-md-3
         %header
           %h3= @video.title
+          = @video.reviews.empty? ? "No Review" : "Rating: #{ratings_avg(@video)}/5"
         %p= @video.description
+
+%section.reviews.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = bootstrap_form_for [@video, @review] do |f|
+        %fieldset
+          .form-group
+            %label Review this video
+            .row
+              .col-sm-3
+                =f.select(:rating, [['1 star', 1],['2 stars', 2],['3 stars', 3],['4 stars', 4],['5 stars', 5] ])
+          .form-group
+            .row
+              .col-sm-8
+                = f.text_area :comment, label: "Comment", rows: 6, class: "span6"
+        %fieldset.form-group.actions.clearfix
+          = f.submit "Submit"
+          = link_to "Cancel", video_path(@video)
+      %header
+        %h3= "User Reviews (#{@video.reviews.count})"
+      %ul
+        - @video.reviews.each do |r|
+          %article.review
+            %li.row
+              .col-sm-2
+                %span= "Rating: #{r.rating}"
+                %p=  link_to " by #{r.user.full_name} "
+              .col-sm-8
+                %p= r.comment
