@@ -13,9 +13,8 @@ module ApplicationHelper
   end
 
   def video_review_rating_from_user(current_user, qi)
-    binding.pry
-    if current_user.reviews(video_id: "#{qi.video_id}").first != nil
-      current_user.reviews(video_id: "#{qi.video_id}").first.rating
+    if current_user.reviews.where(video_id: "#{qi.video_id}").first != nil
+      current_user.reviews.where(video_id: "#{qi.video_id}").first.rating
     end
   end
 
