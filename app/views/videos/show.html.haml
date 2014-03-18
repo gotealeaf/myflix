@@ -6,7 +6,7 @@
       .video_info.col-md-3
         %header
           %h3= @video.title
-          = @video.reviews.empty? ? "No Review" : "Rating: #{ratings_avg(@video)}/5"
+          = @video.reviews.empty? ? "No Review" : "Rating: #{ratings_avg(@video).round(1)}/5"
         %p= @video.description
 
 %section.reviews.container
