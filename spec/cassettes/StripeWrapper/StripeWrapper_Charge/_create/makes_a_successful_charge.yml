@@ -31,35 +31,35 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sat, 08 Mar 2014 14:04:47 GMT
+      - Tue, 18 Mar 2014 16:13:50 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
       - '570'
       Connection:
       - keep-alive
-      Access-Control-Allow-Credentials:
-      - 'true'
+      Cache-Control:
+      - no-cache, no-store
       Access-Control-Allow-Methods:
       - GET, POST, HEAD, OPTIONS, DELETE
       Access-Control-Max-Age:
       - '300'
-      Cache-Control:
-      - no-cache, no-store
+      Access-Control-Allow-Credentials:
+      - 'true'
       Strict-Transport-Security:
       - max-age=31556926; includeSubDomains
     body:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_103d16281FHqYYZYb2jpMXb4",
+          "id": "tok_103gnR281FHqYYZYCsJB6bN0",
           "livemode": false,
-          "created": 1394287487,
+          "created": 1395159230,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_103d16281FHqYYZYPSmWWAvq",
+            "id": "card_103gnR281FHqYYZYzqcY9GYm",
             "object": "card",
             "last4": "4242",
             "type": "Visa",
@@ -78,13 +78,13 @@ http_interactions:
           }
         }
     http_version: 
-  recorded_at: Sat, 08 Mar 2014 14:05:46 GMT
+  recorded_at: Tue, 18 Mar 2014 16:13:57 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/charges
     body:
       encoding: US-ASCII
-      string: amount=999&currency=usd&card=tok_103d16281FHqYYZYb2jpMXb4&description=a%20valid%20charge
+      string: amount=999&currency=usd&card=tok_103gnR281FHqYYZYCsJB6bN0&description=a%20valid%20charge
     headers:
       Accept:
       - '*/*; q=0.5, application/xml'
@@ -110,37 +110,37 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sat, 08 Mar 2014 14:04:49 GMT
+      - Tue, 18 Mar 2014 16:13:51 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
-      - '979'
+      - '1012'
       Connection:
       - keep-alive
-      Access-Control-Allow-Methods:
-      - GET, POST, HEAD, OPTIONS, DELETE
-      Cache-Control:
-      - no-cache, no-store
-      Access-Control-Allow-Credentials:
-      - 'true'
       Access-Control-Max-Age:
       - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
       Strict-Transport-Security:
       - max-age=31556926; includeSubDomains
     body:
       encoding: UTF-8
       string: |
         {
-          "id": "ch_103d16281FHqYYZY9OEkO4Ts",
+          "id": "ch_103gnR281FHqYYZY92CyWBYk",
           "object": "charge",
-          "created": 1394287488,
+          "created": 1395159231,
           "livemode": false,
           "paid": true,
           "amount": 999,
           "currency": "usd",
           "refunded": false,
           "card": {
-            "id": "card_103d16281FHqYYZYPSmWWAvq",
+            "id": "card_103gnR281FHqYYZYzqcY9GYm",
             "object": "card",
             "last4": "4242",
             "type": "Visa",
@@ -162,7 +162,7 @@ http_interactions:
           },
           "captured": true,
           "refunds": [],
-          "balance_transaction": "txn_103d16281FHqYYZYScSXh7Dc",
+          "balance_transaction": "txn_103gnR281FHqYYZY6YNq4Jwa",
           "failure_message": null,
           "failure_code": null,
           "amount_refunded": 0,
@@ -170,8 +170,9 @@ http_interactions:
           "invoice": null,
           "description": "a valid charge",
           "dispute": null,
-          "metadata": {}
+          "metadata": {},
+          "statement_description": null
         }
     http_version: 
-  recorded_at: Sat, 08 Mar 2014 14:05:48 GMT
+  recorded_at: Tue, 18 Mar 2014 16:13:59 GMT
 recorded_with: VCR 2.8.0

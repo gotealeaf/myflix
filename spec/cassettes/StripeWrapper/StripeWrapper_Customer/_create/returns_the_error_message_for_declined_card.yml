@@ -31,35 +31,35 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 18 Mar 2014 09:16:02 GMT
+      - Tue, 18 Mar 2014 16:14:05 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
       - '570'
       Connection:
       - keep-alive
-      Access-Control-Max-Age:
-      - '300'
       Access-Control-Allow-Methods:
       - GET, POST, HEAD, OPTIONS, DELETE
       Access-Control-Allow-Credentials:
       - 'true'
       Cache-Control:
       - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
       Strict-Transport-Security:
       - max-age=31556926; includeSubDomains
     body:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_103ggh281FHqYYZYcarAyyyf",
+          "id": "tok_103gnR281FHqYYZYpBCIDfVh",
           "livemode": false,
-          "created": 1395134161,
+          "created": 1395159245,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_103ggh281FHqYYZYwWvg2syG",
+            "id": "card_103gnR281FHqYYZYUOwCRz0A",
             "object": "card",
             "last4": "0002",
             "type": "Visa",
@@ -78,13 +78,13 @@ http_interactions:
           }
         }
     http_version: 
-  recorded_at: Tue, 18 Mar 2014 09:16:05 GMT
+  recorded_at: Tue, 18 Mar 2014 16:14:13 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/customers
     body:
       encoding: US-ASCII
-      string: card=tok_103ggh281FHqYYZYcarAyyyf&email=hosea%40turcotteswaniawski.name&plan=base
+      string: card=tok_103gnR281FHqYYZYpBCIDfVh&email=keaton%40hilpert.com&plan=base
     headers:
       Accept:
       - '*/*; q=0.5, application/xml'
@@ -101,7 +101,7 @@ http_interactions:
         MichaeltekiMac-mini.local 13.1.0 Darwin Kernel Version 13.1.0: Thu Jan 16
         19:40:37 PST 2014; root:xnu-2422.90.20~2/RELEASE_X86_64 x86_64"}'
       Content-Length:
-      - '81'
+      - '70'
   response:
     status:
       code: 402
@@ -110,21 +110,21 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 18 Mar 2014 09:16:04 GMT
+      - Tue, 18 Mar 2014 16:14:07 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
       - '117'
       Connection:
       - keep-alive
-      Access-Control-Allow-Methods:
-      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Max-Age:
+      - '300'
       Access-Control-Allow-Credentials:
       - 'true'
       Cache-Control:
       - no-cache, no-store
-      Access-Control-Max-Age:
-      - '300'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
     body:
       encoding: UTF-8
       string: |
@@ -136,5 +136,5 @@ http_interactions:
           }
         }
     http_version: 
-  recorded_at: Tue, 18 Mar 2014 09:16:07 GMT
+  recorded_at: Tue, 18 Mar 2014 16:14:14 GMT
 recorded_with: VCR 2.8.0

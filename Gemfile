@@ -18,6 +18,7 @@ gem 'fog'
 gem 'stripe'
 gem 'figaro'
 gem 'draper'
+gem 'stripe_event'
 
 group :development do
   gem 'sqlite3'
@@ -39,7 +40,6 @@ group :test, :development do
 	gem 'rspec-rails'
   gem 'launchy'
   gem 'capybara-email', '2.1.2'
-  gem 'webmock', '1.15.0'
   gem 'vcr'
   gem 'selenium-webdriver'
   gem 'database_cleaner'
@@ -48,4 +48,5 @@ end
 group :test do
 	gem 'shoulda-matchers'
 	gem 'capybara', '2.1.0'
+  gem 'webmock', '1.15.0'
 end
