@@ -61,11 +61,9 @@ class QueueItemsController < ApplicationController
         final_queue_item = get_queue_item(queue_item)
         if Review.review_by_user_on_video(current_user, final_queue_item.video).blank?
           Review.create_new_from_queue(final_queue_item, current_user, queue_item)
-          binding.pry
         else
           review = Review.review_by_user_on_video(current_user, final_queue_item.video)
           review.update_review_attributes(queue_item)
-          binding.pry
         end
       end
     end

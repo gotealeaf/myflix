@@ -24,7 +24,7 @@
                   %td
                     = button_to "Play", nil, class: "btn btn-default"
                   %td
-                    = select_tag "queue_items[][rating]", options_for_video_reviews(video_review_rating_from_user(current_user, qi))
+                    = select_tag "queue_items[][rating]", options_for_video_reviews(video_review_rating_from_user(current_user, qi)), :include_blank => true, class: 'form-control'
                   %td
                     = link_to("#{qi.video.category.title}", category_path(qi.video.category.id))
                   %td
