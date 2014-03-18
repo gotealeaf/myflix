@@ -5,9 +5,9 @@
     %li= link_to "Videos"
     %li= link_to "My Queue"
     %li= link_to "People"
-  =form_tag '/search', method: 'get', class: 'col-md-5.navbar-form' do
+  =form_tag search_videos_path, method: 'get', class: 'col-md-5.navbar-form' do
     %div.form-group
-      =text_field_tag :search, params[:search], placeholder: "Search for videos here", class: 'form-control'
+      =text_field_tag :search_term, params[:search_term], placeholder: "Search for videos here", class: 'form-control'
       =submit_tag "Search", name: nil, class: 'btn btn-default'
   #user_links.pull-right
     %ul
