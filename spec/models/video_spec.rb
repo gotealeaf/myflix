@@ -13,7 +13,7 @@ describe Video do
   it {should belong_to(:category)}  #using shoulda-matchers: Checking that Video belongs_to Category
   it {should validate_presence_of(:title)} #shoulda-matchers
   it {should validate_presence_of(:description)} #shoulda-matchers
-
+  it {should have_many(:reviews).order("created_at DESC")}
   describe "search_by_title" do
     it "returns empty array if no video titles contain the search string" do
       chak = Video.create(title: "chak_de", description: "chak de description")
