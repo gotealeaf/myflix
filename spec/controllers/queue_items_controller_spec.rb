@@ -86,7 +86,7 @@ describe QueueItemsController do
       let(:queue_item2) { Fabricate(:queue_item, user_id: adam.id, position: 2)}
       before do
         session[:user_id] = adam.id
-        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>"3"}, {"id"=>"#{queue_item2.id}", 'position'=>'1'}]
+        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>"7"}, {"id"=>"#{queue_item2.id}", 'position'=>'5'}]
       end
       it 'redirects the user to the my queue page' do
         expect(response).to redirect_to my_queue_path
@@ -123,9 +123,11 @@ describe QueueItemsController do
       let(:queue_item1) { Fabricate(:queue_item, user_id: adam.id, position: 1)}
       let(:queue_item2) { Fabricate(:queue_item, user_id: adam.id, position: 2)}
       let(:queue_item3) { Fabricate(:queue_item, position: 15) }
+      let(:queue_item4) { Fabricate(:queue_item, position: 14) }
+      let(:queue_item5) { Fabricate(:queue_item, position: 68) }
       before do
         session[:user_id] = adam.id
-        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>'34'}, {'id'=>"#{queue_item3.id}", "position"=>"14"}]
+        post :update_order, queue_items: [{'id'=>"#{queue_item5.id}", "position"=>"14"}, {'id'=>"#{queue_item1.id}", 'position'=>'34'}, {'id'=>"#{queue_item3.id}", "position"=>"14"}, {'id'=>"#{queue_item4.id}", "position"=>"14"}]
       end
       it 'fails to update queue' do
         expect(QueueItem.find(queue_item3.id).position).to eq(15)
@@ -135,6 +137,43 @@ describe QueueItemsController do
       end
       it 'shows error message' do
         expect(flash[:danger]).to be_present
+      end
+    end
+    context 'user submits rating info' do
+      let(:adam) { Fabricate :user }
+      let(:video1) { Fabricate :video }
+      let(:queue_item1) { Fabricate(:queue_item, user_id: adam.id, position: 1, video_id: video1.id)}
+      let(:queue_item2) { Fabricate(:queue_item, user_id: adam.id, position: 2)}
+      let(:queue_item3) { Fabricate(:queue_item, position: 15) }
+      let(:queue_item4) { Fabricate(:queue_item, position: 14) }
+      let(:queue_item5) { Fabricate(:queue_item, position: 68) }
+      before do
+        session[:user_id] = adam.id
+        Fabricate(:review, video_id: video1.id, rating: 1, content: "this is a really good review", user_id: adam.id)
+        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>'34', 'rating'=>'2  Stars'}, {'id'=>"#{queue_item2.id}", 'position'=>'66', 'rating'=>'3  Stars'}]
+      end
+      it 'updates the video ratings'  do
+        expect(Review.first.rating).to eq(2)
+      end
+      it 'redirects to my_queue_path' do
+        expect(response).to redirect_to my_queue_path
+      end
+    end
+    context 'user adds review to video that didnt have one before' do
+      let(:adam) { Fabricate :user }
+      let(:video1) { Fabricate :video }
+      let(:queue_item1) { Fabricate(:queue_item, user_id: adam.id, position: 1, video_id: video1.id)}
+      let(:queue_item2) { Fabricate(:queue_item, user_id: adam.id, position: 2)}
+      let(:queue_item3) { Fabricate(:queue_item, position: 15) }
+      let(:queue_item4) { Fabricate(:queue_item, position: 14) }
+      let(:queue_item5) { Fabricate(:queue_item, position: 68) }
+      before do
+        session[:user_id] = adam.id
+        Fabricate(:review, video_id: video1.id, rating: 1, content: "this is a really good review", user_id: adam.id)
+        post :update_order, queue_items: [{'id'=>"#{queue_item1.id}", 'position'=>'34', 'rating'=>'2  Stars'}, {'id'=>"#{queue_item2.id}", 'position'=>'66', 'rating'=>'3  Stars'}]
+      end
+      it 'submits a review for an video that doenst already have a review' do
+        expect(Review.count).to eq(2)
       end
     end
   end
