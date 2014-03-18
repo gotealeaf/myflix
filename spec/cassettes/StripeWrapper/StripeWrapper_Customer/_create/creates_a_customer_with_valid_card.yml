@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.stripe.com/v1/customers
+    uri: https://api.stripe.com/v1/tokens
     body:
       encoding: US-ASCII
-      string: card=tok_103ggv281FHqYYZYTiMT3BjL&email=kobe%40example.com&plan=base
+      string: card[number]=4242424242424242&card[exp_month]=3&card[exp_year]=2020&card[cvc]=314
     headers:
       Accept:
       - '*/*; q=0.5, application/xml'
@@ -22,7 +22,7 @@ http_interactions:
         MichaeltekiMac-mini.local 13.1.0 Darwin Kernel Version 13.1.0: Thu Jan 16
         19:40:37 PST 2014; root:xnu-2422.90.20~2/RELEASE_X86_64 x86_64"}'
       Content-Length:
-      - '68'
+      - '81'
   response:
     status:
       code: 200
@@ -31,11 +31,90 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 18 Mar 2014 09:30:17 GMT
+      - Tue, 18 Mar 2014 09:09:58 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
-      - '2100'
+      - '570'
+      Connection:
+      - keep-alive
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "tok_103ggb281FHqYYZYgZnlhi1t",
+          "livemode": false,
+          "created": 1395133798,
+          "used": false,
+          "object": "token",
+          "type": "card",
+          "card": {
+            "id": "card_103ggb281FHqYYZYJwKxuqFT",
+            "object": "card",
+            "last4": "4242",
+            "type": "Visa",
+            "exp_month": 3,
+            "exp_year": 2020,
+            "fingerprint": "4l2bzVeFtauUxEbn",
+            "customer": null,
+            "country": "US",
+            "name": null,
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 18 Mar 2014 09:10:02 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers
+    body:
+      encoding: US-ASCII
+      string: card=tok_103ggb281FHqYYZYgZnlhi1t&email=jason_runolfon%40raynor.com&plan=base
+    headers:
+      Accept:
+      - '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.10.1
+      Authorization:
+      - Bearer sk_test_RGvOemBHdAT2h5hLmH7mgiPI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.10.1","lang":"ruby","lang_version":"2.0.0 p353 (2013-11-22)","platform":"x86_64-darwin13.0.0","publisher":"stripe","uname":"Darwin
+        MichaeltekiMac-mini.local 13.1.0 Darwin Kernel Version 13.1.0: Thu Jan 16
+        19:40:37 PST 2014; root:xnu-2422.90.20~2/RELEASE_X86_64 x86_64"}'
+      Content-Length:
+      - '77'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 18 Mar 2014 09:10:00 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '2109'
       Connection:
       - keep-alive
       Access-Control-Max-Age:
@@ -53,20 +132,20 @@ http_interactions:
       string: |
         {
           "object": "customer",
-          "created": 1395135016,
-          "id": "cus_3ggvxTGRXqF2qi",
+          "created": 1395133800,
+          "id": "cus_3ggbX2KywWBVcs",
           "livemode": false,
           "description": null,
-          "email": "kobe@example.com",
+          "email": "jason_runolfon@raynor.com",
           "delinquent": false,
           "metadata": {},
           "subscriptions": {
             "object": "list",
             "count": 1,
-            "url": "/v1/customers/cus_3ggvxTGRXqF2qi/subscriptions",
+            "url": "/v1/customers/cus_3ggbX2KywWBVcs/subscriptions",
             "data": [
               {
-                "id": "sub_3ggvFrWJxOJbdb",
+                "id": "sub_3ggbNsuuMdHn2w",
                 "plan": {
                   "interval": "month",
                   "name": "the base plan",
@@ -82,12 +161,12 @@ http_interactions:
                   "statement_description": null
                 },
                 "object": "subscription",
-                "start": 1395135016,
+                "start": 1395133800,
                 "status": "active",
-                "customer": "cus_3ggvxTGRXqF2qi",
+                "customer": "cus_3ggbX2KywWBVcs",
                 "cancel_at_period_end": false,
-                "current_period_start": 1395135016,
-                "current_period_end": 1397813416,
+                "current_period_start": 1395133800,
+                "current_period_end": 1397812200,
                 "ended_at": null,
                 "trial_start": null,
                 "trial_end": null,
@@ -104,17 +183,17 @@ http_interactions:
           "cards": {
             "object": "list",
             "count": 1,
-            "url": "/v1/customers/cus_3ggvxTGRXqF2qi/cards",
+            "url": "/v1/customers/cus_3ggbX2KywWBVcs/cards",
             "data": [
               {
-                "id": "card_103ggv281FHqYYZYbfgBFxIa",
+                "id": "card_103ggb281FHqYYZYJwKxuqFT",
                 "object": "card",
                 "last4": "4242",
                 "type": "Visa",
-                "exp_month": 7,
-                "exp_year": 2015,
+                "exp_month": 3,
+                "exp_year": 2020,
                 "fingerprint": "4l2bzVeFtauUxEbn",
-                "customer": "cus_3ggvxTGRXqF2qi",
+                "customer": "cus_3ggbX2KywWBVcs",
                 "country": "US",
                 "name": null,
                 "address_line1": null,
@@ -129,8 +208,8 @@ http_interactions:
               }
             ]
           },
-          "default_card": "card_103ggv281FHqYYZYbfgBFxIa"
+          "default_card": "card_103ggb281FHqYYZYJwKxuqFT"
         }
     http_version: 
-  recorded_at: Tue, 18 Mar 2014 09:30:20 GMT
+  recorded_at: Tue, 18 Mar 2014 09:10:04 GMT
 recorded_with: VCR 2.8.0

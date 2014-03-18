@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.stripe.com/v1/charges
+    uri: https://api.stripe.com/v1/customers
     body:
       encoding: US-ASCII
-      string: amount=999&currency=usd&card=tok_103eAr281FHqYYZYVYHN9uJ8&description=Sign%20up%20charge%20for%20alice%40example.com
+      string: card=tok_103ggv281FHqYYZYyRJbl6Jp&email=alice%40example.com&plan=base
     headers:
       Accept:
       - '*/*; q=0.5, application/xml'
@@ -22,7 +22,7 @@ http_interactions:
         MichaeltekiMac-mini.local 13.1.0 Darwin Kernel Version 13.1.0: Thu Jan 16
         19:40:37 PST 2014; root:xnu-2422.90.20~2/RELEASE_X86_64 x86_64"}'
       Content-Length:
-      - '116'
+      - '69'
   response:
     status:
       code: 402
@@ -31,21 +31,21 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 11 Mar 2014 16:14:03 GMT
+      - Tue, 18 Mar 2014 09:29:55 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
-      - '162'
+      - '117'
       Connection:
       - keep-alive
-      Access-Control-Allow-Credentials:
-      - 'true'
       Access-Control-Allow-Methods:
       - GET, POST, HEAD, OPTIONS, DELETE
-      Access-Control-Max-Age:
-      - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
       Cache-Control:
       - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
     body:
       encoding: UTF-8
       string: |
@@ -53,10 +53,9 @@ http_interactions:
           "error": {
             "message": "Your card was declined.",
             "type": "card_error",
-            "code": "card_declined",
-            "charge": "ch_103eAr281FHqYYZYARwwHkOh"
+            "code": "card_declined"
           }
         }
     http_version: 
-  recorded_at: Tue, 11 Mar 2014 16:14:09 GMT
+  recorded_at: Tue, 18 Mar 2014 09:29:59 GMT
 recorded_with: VCR 2.8.0
