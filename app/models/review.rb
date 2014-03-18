@@ -15,4 +15,9 @@ class Review < ActiveRecord::Base
   def self.create_new_from_queue(final_queue_item, current_user, queue_item)
     create(video: final_queue_item.video, user: current_user, rating: queue_item[:rating])
   end
+
+  def self.find_user_rating_for_video(video, user)
+    review = where(video: video, user: user).first
+    review.rating
+  end
 end

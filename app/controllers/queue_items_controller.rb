@@ -18,10 +18,10 @@ class QueueItemsController < ApplicationController
   end
 
   def update_order
+    queue_items = params[:queue_items]
+    find_video_for(queue_items)
     begin
       ActiveRecord::Base.transaction do
-        queue_items = params[:queue_items]
-        find_video_for(queue_items)
         update_attributes(queue_items)
         current_user.normalise_queue
         flash[:success] = "The order of the videos in your queue has been updasted."

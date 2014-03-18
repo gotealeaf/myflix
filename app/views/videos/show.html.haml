@@ -20,7 +20,7 @@
             %label Rate this video
             .row
               .col-sm-3
-                = f.select :rating, options_for_video_reviews
+                = f.select :rating, options_for_video_reviews(Review.find_user_rating_for_video(@video, current_user))
           .form-group
             %label Write Review
             .row
