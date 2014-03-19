@@ -19,7 +19,7 @@ class Video < ActiveRecord::Base
       puts "unrated"
     else    
       collection = reviews.select(:rating).map {|r| r.rating}
-      collection.inject{ |sum, el| sum + el }.to_f / collection.size 
+      collection.sum / collection.count
     end
   end
 
