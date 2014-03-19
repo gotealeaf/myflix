@@ -27,8 +27,9 @@ describe UsersController do
       end
 
       it 'sets the session[user_id] if sucessfully saved' do
-        user = User.first
-        expect(session[:user_id]).to eq(user.id)
+        adam = User.first
+        add_to_session(adam)
+        expect(session[:user_id]).to eq(adam.id)
       end
 
       it 'redirects the user if the save was sucessful' do

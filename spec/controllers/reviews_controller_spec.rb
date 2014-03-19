@@ -53,21 +53,10 @@ describe ReviewsController do
     end
   end
   context 'no user signed in' do
-    before do
-      @video = Fabricate(:video)
-      request.env["HTTP_REFERER"] = video_path(@video.id)
-      session[:user_id] = nil
-      @review_valid = Fabricate.attributes_for(:review)
-      post :create, video_id: @video.id, review: @review_valid
-    end
-    it 'prevents the user from saving' do
-      expect(Review.count).to eq(0)
-    end
-    it 'redirects the user to the home page' do
-      expect(response).to redirect_to login_path
-    end
-    it 'flashes correct message to user' do
-      expect(flash[:danger]).to be_present
+    it_behaves_like "require_logged_in_user" do
+      video = Fabricate(:video)
+      review_valid = Fabricate.attributes_for(:review)
+      let(:action) { post :create, video_id: video.id, review: review_valid }
     end
   end
 end
