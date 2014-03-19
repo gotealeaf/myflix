@@ -2,12 +2,13 @@ class VideosController < ApplicationController
   before_action :require_user
 
   def index
-    #binding.pry
     @categories = Category.all
   end
 
   def show
     @video = Video.find(params[:id])
+    @review = Review.new
+    @reviews = @video.reviews
   end
 
   def search
