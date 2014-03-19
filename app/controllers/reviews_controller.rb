@@ -9,11 +9,7 @@ class ReviewsController < ApplicationController
       flash[:success] = "Thanks for the review, #{current_user.full_name}!"
       redirect_to video_path(@video)
     else
-      if @review.errors.messages[:user_id]
-        flash[:danger] = "Sorry, you can only review a video once."
-      else
-        flash[:danger] = "Sorry, your review needs revision to be accepted."
-      end
+      flash[:danger] = "Review could not be saved." #unless @review.errors[:user_id].present?
       @reviews = @video.reviews.reload
       render 'videos/show'
     end

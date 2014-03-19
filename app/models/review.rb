@@ -6,5 +6,5 @@ class Review < ActiveRecord::Base
   validates :review_text, presence: true, length: { minimum: 50 }
   validates :user_id, presence: true
   validates :video_id, presence: true
-  validates_uniqueness_of :user_id, scope: :video_id, message: "you can only review a video once."
+  validates_uniqueness_of :user_id, scope: :video_id, message: "can only review a video once"
 end

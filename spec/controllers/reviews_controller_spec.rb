@@ -87,11 +87,6 @@ describe ReviewsController do
           expect(Review.count).to eq(1)
         end
 
-        it "sets a special error message telling user they've already reviewed the video" do
-          expect(flash[:danger]).not_to be_blank
-          expect(flash[:danger]).to eq("Sorry, you can only review a video once.")
-        end
-
         it "renders the video show page" do
           expect(response).to render_template 'videos/show'
         end
