@@ -2,7 +2,6 @@ class QueueItemsController < ApplicationController
   before_action :current_user, :authorize
 
   def index
-    #@queue_items = QueueItem.all
     @queue_items = current_user.queue_items.all
   end
 
