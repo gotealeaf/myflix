@@ -9,15 +9,25 @@ describe Category do
       expect(comedy.recent_videos).to eq([])
     end
 
-    it "returns an array of all videos if there are fewer then 6" do
+    it "returns an array of all videos if fewer then 6" do
       comedy = Category.create(name: "Comedy")
       family_guy = Video.create(title: "Family Guy", description: "A loud drunk father.", category: comedy)
       futurama = Video.create(title: "Futurama", description: "An pizza delievery boy gets frozen.", category: comedy)
 
-      expect(comedy.recent_videos).to eq([family_guy, futurama])
+      expect(comedy.recent_videos).to match_array([family_guy, futurama])
     end
-    
-    it "returns an array the 6 most recently modified videos if there are more then 6"
-    it "retuns an array of videos in chronological order"
+
+    it "returns an array the 6 most recently modified videos ordered by updated_at" do
+      comedy = Category.create(name: "Comedy")
+      family_guy = Video.create(title: "Family Guy", description: "A loud drunk father.", category: comedy, updated_at: 7.day.ago)
+      futurama = Video.create(title: "Futurama", description: "An pizza delievery boy gets frozen.", category: comedy, updated_at: 6.day.ago)
+      back_to_the_future = Video.create(title: "Back to the Future", description: "Back in time!", category: comedy, updated_at: 3.day.ago)
+      the_simpsons = Video.create(title: "The Simpsons", description: "Yellow people.", category: comedy, updated_at: 4.day.ago)
+      south_park = Video.create(title: "South Park", description: "Some kids cause trouble.", category: comedy, updated_at: 5.day.ago)
+      king_of_the_hill = Video.create(title: "King of the Hill", description: "Some Texians.", category: comedy, updated_at: 2.day.ago)
+      modern_family = Video.create(title: "Modern Family", description: "A very funny modern famiyl.", category: comedy, updated_at: 1.day.ago)
+
+      expect(comedy.recent_videos).to eq([modern_family, king_of_the_hill, back_to_the_future, the_simpsons, south_park, futurama])
+    end
   end
 end
