@@ -14,14 +14,12 @@ describe SessionsController do
   end
 
   describe "POST create" do
-
+    let(:fake_user) { Fabricate(:user) }
     context 'with valid credentials' do
-      before do
-        fake_user = Fabricate(:user)
-        post :create, { email: fake_user.email, password: fake_user.password }
-      end
+      before { post :create, { email: fake_user.email, password: fake_user.password } }
+      
       it "puts user_id into session" do
-        expect(session[:user_id]).to eq(1)
+        expect(session[:user_id]).to eq(fake_user.id)
       end
 
       it "redirects to home" do
@@ -30,10 +28,8 @@ describe SessionsController do
     end
 
     context 'with invalid credentials' do
-      before do
-        fake_user = Fabricate(:user)
-        post :create, { email: fake_user.email, password: "wrongpassword" }
-      end
+      before { post :create, { email: fake_user.email, password: "wrongpassword" } }
+      
       it "does not put the user_id in the sesion" do
         expect(session[:user_id]).to be_nil
       end
