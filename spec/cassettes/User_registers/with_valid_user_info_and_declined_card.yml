@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.stripe.com/v1/customers
     body:
       encoding: US-ASCII
-      string: card=tok_103gnS281FHqYYZYpMAyi5Hu&email=alice%40example.com&plan=base
+      string: card=tok_103hEV281FHqYYZYN5LHL58V&email=alice%40example.com&plan=base
     headers:
       Accept:
       - '*/*; q=0.5, application/xml'
@@ -31,7 +31,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 18 Mar 2014 16:14:40 GMT
+      - Wed, 19 Mar 2014 20:12:21 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
@@ -40,10 +40,10 @@ http_interactions:
       - keep-alive
       Access-Control-Max-Age:
       - '300'
-      Access-Control-Allow-Methods:
-      - GET, POST, HEAD, OPTIONS, DELETE
       Access-Control-Allow-Credentials:
       - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
       Cache-Control:
       - no-cache, no-store
     body:
@@ -57,5 +57,5 @@ http_interactions:
           }
         }
     http_version: 
-  recorded_at: Tue, 18 Mar 2014 16:14:47 GMT
+  recorded_at: Wed, 19 Mar 2014 20:12:30 GMT
 recorded_with: VCR 2.8.0

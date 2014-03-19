@@ -31,35 +31,35 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 18 Mar 2014 17:35:45 GMT
+      - Wed, 19 Mar 2014 20:11:48 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
       - '570'
       Connection:
       - keep-alive
-      Cache-Control:
-      - no-cache, no-store
-      Access-Control-Allow-Methods:
-      - GET, POST, HEAD, OPTIONS, DELETE
       Access-Control-Max-Age:
       - '300'
       Access-Control-Allow-Credentials:
       - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
       Strict-Transport-Security:
       - max-age=31556926; includeSubDomains
     body:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_103gol281FHqYYZYVQYT1fJW",
+          "id": "tok_103hEV281FHqYYZYN4aRUa29",
           "livemode": false,
-          "created": 1395164145,
+          "created": 1395259907,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_103gol281FHqYYZYfUIYEUxe",
+            "id": "card_103hEV281FHqYYZYPxoPL2yM",
             "object": "card",
             "last4": "4242",
             "type": "Visa",
@@ -78,13 +78,13 @@ http_interactions:
           }
         }
     http_version: 
-  recorded_at: Tue, 18 Mar 2014 17:35:54 GMT
+  recorded_at: Wed, 19 Mar 2014 20:11:56 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/customers
     body:
       encoding: US-ASCII
-      string: card=tok_103gol281FHqYYZYVQYT1fJW&email=tony.lockman%40mosciskijacobs.net&plan=base
+      string: card=tok_103hEV281FHqYYZYN4aRUa29&email=kiarra_rath%40kshlerin.biz&plan=base
     headers:
       Accept:
       - '*/*; q=0.5, application/xml'
@@ -101,7 +101,7 @@ http_interactions:
         MichaeltekiMac-mini.local 13.1.0 Darwin Kernel Version 13.1.0: Thu Jan 16
         19:40:37 PST 2014; root:xnu-2422.90.20~2/RELEASE_X86_64 x86_64"}'
       Content-Length:
-      - '83'
+      - '76'
   response:
     status:
       code: 200
@@ -110,21 +110,21 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 18 Mar 2014 17:35:48 GMT
+      - Wed, 19 Mar 2014 20:11:50 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
-      - '2115'
+      - '2108'
       Connection:
       - keep-alive
       Access-Control-Max-Age:
       - '300'
       Access-Control-Allow-Credentials:
       - 'true'
-      Cache-Control:
-      - no-cache, no-store
       Access-Control-Allow-Methods:
       - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
       Strict-Transport-Security:
       - max-age=31556926; includeSubDomains
     body:
@@ -132,20 +132,20 @@ http_interactions:
       string: |
         {
           "object": "customer",
-          "created": 1395164147,
-          "id": "cus_3golvaensw7lLC",
+          "created": 1395259909,
+          "id": "cus_3hEVSTk1SWXr3i",
           "livemode": false,
           "description": null,
-          "email": "tony.lockman@mosciskijacobs.net",
+          "email": "kiarra_rath@kshlerin.biz",
           "delinquent": false,
           "metadata": {},
           "subscriptions": {
             "object": "list",
             "count": 1,
-            "url": "/v1/customers/cus_3golvaensw7lLC/subscriptions",
+            "url": "/v1/customers/cus_3hEVSTk1SWXr3i/subscriptions",
             "data": [
               {
-                "id": "sub_3golXm9Mwhzm0L",
+                "id": "sub_3hEV4DNInk1Wu7",
                 "plan": {
                   "interval": "month",
                   "name": "the base plan",
@@ -161,12 +161,12 @@ http_interactions:
                   "statement_description": null
                 },
                 "object": "subscription",
-                "start": 1395164147,
+                "start": 1395259909,
                 "status": "active",
-                "customer": "cus_3golvaensw7lLC",
+                "customer": "cus_3hEVSTk1SWXr3i",
                 "cancel_at_period_end": false,
-                "current_period_start": 1395164147,
-                "current_period_end": 1397842547,
+                "current_period_start": 1395259909,
+                "current_period_end": 1397938309,
                 "ended_at": null,
                 "trial_start": null,
                 "trial_end": null,
@@ -183,17 +183,17 @@ http_interactions:
           "cards": {
             "object": "list",
             "count": 1,
-            "url": "/v1/customers/cus_3golvaensw7lLC/cards",
+            "url": "/v1/customers/cus_3hEVSTk1SWXr3i/cards",
             "data": [
               {
-                "id": "card_103gol281FHqYYZYfUIYEUxe",
+                "id": "card_103hEV281FHqYYZYPxoPL2yM",
                 "object": "card",
                 "last4": "4242",
                 "type": "Visa",
                 "exp_month": 3,
                 "exp_year": 2020,
                 "fingerprint": "4l2bzVeFtauUxEbn",
-                "customer": "cus_3golvaensw7lLC",
+                "customer": "cus_3hEVSTk1SWXr3i",
                 "country": "US",
                 "name": null,
                 "address_line1": null,
@@ -208,8 +208,8 @@ http_interactions:
               }
             ]
           },
-          "default_card": "card_103gol281FHqYYZYfUIYEUxe"
+          "default_card": "card_103hEV281FHqYYZYPxoPL2yM"
         }
     http_version: 
-  recorded_at: Tue, 18 Mar 2014 17:35:56 GMT
+  recorded_at: Wed, 19 Mar 2014 20:11:59 GMT
 recorded_with: VCR 2.8.0

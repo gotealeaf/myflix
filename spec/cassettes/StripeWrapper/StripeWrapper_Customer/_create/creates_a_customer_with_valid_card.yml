@@ -31,17 +31,17 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 18 Mar 2014 16:13:59 GMT
+      - Wed, 19 Mar 2014 20:11:55 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
       - '570'
       Connection:
       - keep-alive
-      Access-Control-Allow-Methods:
-      - GET, POST, HEAD, OPTIONS, DELETE
       Access-Control-Allow-Credentials:
       - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
       Cache-Control:
       - no-cache, no-store
       Access-Control-Max-Age:
@@ -52,14 +52,14 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_103gnR281FHqYYZYGTnwtDmg",
+          "id": "tok_103hEV281FHqYYZYJ83uohKA",
           "livemode": false,
-          "created": 1395159239,
+          "created": 1395259915,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_103gnR281FHqYYZYEa8fK4J8",
+            "id": "card_103hEV281FHqYYZYVWVFaLBN",
             "object": "card",
             "last4": "4242",
             "type": "Visa",
@@ -78,13 +78,13 @@ http_interactions:
           }
         }
     http_version: 
-  recorded_at: Tue, 18 Mar 2014 16:14:06 GMT
+  recorded_at: Wed, 19 Mar 2014 20:12:03 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/customers
     body:
       encoding: US-ASCII
-      string: card=tok_103gnR281FHqYYZYGTnwtDmg&email=mertie%40moenraynor.net&plan=base
+      string: card=tok_103hEV281FHqYYZYJ83uohKA&email=daphnee.bergnaum%40lynch.net&plan=base
     headers:
       Accept:
       - '*/*; q=0.5, application/xml'
@@ -101,7 +101,7 @@ http_interactions:
         MichaeltekiMac-mini.local 13.1.0 Darwin Kernel Version 13.1.0: Thu Jan 16
         19:40:37 PST 2014; root:xnu-2422.90.20~2/RELEASE_X86_64 x86_64"}'
       Content-Length:
-      - '73'
+      - '78'
   response:
     status:
       code: 200
@@ -110,21 +110,21 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 18 Mar 2014 16:14:01 GMT
+      - Wed, 19 Mar 2014 20:11:57 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
-      - '2105'
+      - '2110'
       Connection:
       - keep-alive
-      Access-Control-Allow-Methods:
-      - GET, POST, HEAD, OPTIONS, DELETE
-      Access-Control-Allow-Credentials:
-      - 'true'
       Cache-Control:
       - no-cache, no-store
+      Access-Control-Allow-Credentials:
+      - 'true'
       Access-Control-Max-Age:
       - '300'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
       Strict-Transport-Security:
       - max-age=31556926; includeSubDomains
     body:
@@ -132,20 +132,20 @@ http_interactions:
       string: |
         {
           "object": "customer",
-          "created": 1395159240,
-          "id": "cus_3gnRZ7qnLpX1UV",
+          "created": 1395259916,
+          "id": "cus_3hEVKD4rh2ExH7",
           "livemode": false,
           "description": null,
-          "email": "mertie@moenraynor.net",
+          "email": "daphnee.bergnaum@lynch.net",
           "delinquent": false,
           "metadata": {},
           "subscriptions": {
             "object": "list",
             "count": 1,
-            "url": "/v1/customers/cus_3gnRZ7qnLpX1UV/subscriptions",
+            "url": "/v1/customers/cus_3hEVKD4rh2ExH7/subscriptions",
             "data": [
               {
-                "id": "sub_3gnRZAE6QuPWWt",
+                "id": "sub_3hEVDhopsGoOah",
                 "plan": {
                   "interval": "month",
                   "name": "the base plan",
@@ -161,12 +161,12 @@ http_interactions:
                   "statement_description": null
                 },
                 "object": "subscription",
-                "start": 1395159240,
+                "start": 1395259916,
                 "status": "active",
-                "customer": "cus_3gnRZ7qnLpX1UV",
+                "customer": "cus_3hEVKD4rh2ExH7",
                 "cancel_at_period_end": false,
-                "current_period_start": 1395159240,
-                "current_period_end": 1397837640,
+                "current_period_start": 1395259916,
+                "current_period_end": 1397938316,
                 "ended_at": null,
                 "trial_start": null,
                 "trial_end": null,
@@ -183,17 +183,17 @@ http_interactions:
           "cards": {
             "object": "list",
             "count": 1,
-            "url": "/v1/customers/cus_3gnRZ7qnLpX1UV/cards",
+            "url": "/v1/customers/cus_3hEVKD4rh2ExH7/cards",
             "data": [
               {
-                "id": "card_103gnR281FHqYYZYEa8fK4J8",
+                "id": "card_103hEV281FHqYYZYVWVFaLBN",
                 "object": "card",
                 "last4": "4242",
                 "type": "Visa",
                 "exp_month": 3,
                 "exp_year": 2020,
                 "fingerprint": "4l2bzVeFtauUxEbn",
-                "customer": "cus_3gnRZ7qnLpX1UV",
+                "customer": "cus_3hEVKD4rh2ExH7",
                 "country": "US",
                 "name": null,
                 "address_line1": null,
@@ -208,8 +208,8 @@ http_interactions:
               }
             ]
           },
-          "default_card": "card_103gnR281FHqYYZYEa8fK4J8"
+          "default_card": "card_103hEV281FHqYYZYVWVFaLBN"
         }
     http_version: 
-  recorded_at: Tue, 18 Mar 2014 16:14:08 GMT
+  recorded_at: Wed, 19 Mar 2014 20:12:05 GMT
 recorded_with: VCR 2.8.0
