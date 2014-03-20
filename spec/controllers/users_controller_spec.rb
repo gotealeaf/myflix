@@ -1,5 +1,10 @@
 require 'spec_helper'
 require 'pry'
+require 'database_cleaner'
+
+DatabaseCleaner.strategy = :truncation
+
+
 
 describe UsersController do
   describe 'GET #new' do
@@ -16,7 +21,7 @@ describe UsersController do
 
   describe "POST #create" do
     context 'with valid input' do
-      before(:each) do
+      before do
         @user_sample_params = Fabricate.attributes_for(:user)
         post :create, user: @user_sample_params
       end
@@ -47,6 +52,7 @@ describe UsersController do
       end
 
       it 'it fails to save if params incorrect' do
+        DatabaseCleaner.clean
         expect(User.count).to eq(0)
       end
 

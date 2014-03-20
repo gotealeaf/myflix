@@ -46,6 +46,7 @@ GEM
       execjs
     coffee-script-source (1.7.0)
     daemons (1.1.9)
+    database_cleaner (1.2.0)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
     erubis (2.7.0)
@@ -168,6 +169,7 @@ DEPENDENCIES
   bootstrap-sass
   bootstrap_form
   coffee-rails
+  database_cleaner
   fabrication
   faker
   haml-rails
