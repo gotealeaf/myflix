@@ -110,7 +110,7 @@ describe QueueItemsController do
     end
   end
 
-  describe "POST destroy" do
+  describe "DELETE destroy" do
     context "user authenticated" do
       before do
         alice = Fabricate(:user)
@@ -120,9 +120,16 @@ describe QueueItemsController do
         
       end
 
-      it "deletes the selected video from queue_items" do
+      it "deletes the selected item from queue_items if in user's queue" do
         delete :destroy, id: 1
         expect(User.first.queue_items.count).to eq(1)
+      end
+
+      it "does not delete the selected item if not in user's queue" do
+        bob = Fabricate(:user)
+        Fabricate(:queue_item, user: bob, video_id: 1, position: 1)
+        delete :destroy, id: 3
+        expect(bob.queue_items.count).to eq(1)
       end
 
       it "does not delete other videos" do
