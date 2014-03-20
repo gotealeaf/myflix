@@ -52,29 +52,44 @@ describe QueueItemsController do
 
   describe "POST create" do
     context "user authenticated" do
+      let(:video) { Fabricate(:video) }
+
       before do
-        alice = Fabricate(:user)
-        session[:user_id] = alice.id
+        session[:user_id] = Fabricate(:user).id
       end
 
-      it "adds the video to the queue" do
-        video = Fabricate(:video)
+      it "creates a queue item" do
         post :create, video_id: video.id
-        expect(User.first.queue_items.count).to eq(1)
+        expect(QueueItem.count).to eq(1)
       end
 
-      it "sets the position to the end of the queue" do
-        video = Fabricate(:video)
+      it "creates a queue item that is associated with the user" do
+        post :create, video_id: video.id 
+        expect(QueueItem.first.user).to eq(User.first)
+      end
+
+      it "creates a queue item that is associated with the video" do
+        post :create, video_id: video.id 
+        expect(QueueItem.first.video).to eq(Video.first)
+      end
+
+      it "sets the position of the queue item to the end of the queue" do
+        queue_item1 = Fabricate(:queue_item, position: 1, video: video, user: User.first)
         video2 = Fabricate(:video)
-        queue_item1 = Fabricate(:queue_item, video: Video.first, user: User.first)
         post :create, video_id: video2.id
-        expect(User.first.queue_items.last.video_id).to eq(video2.id)
+        second_video_queue_item = QueueItem.where(video_id: video2.id, user_id: User.first.id).first
+        expect(second_video_queue_item.position).to eq(2)
       end
 
       it "redirects to my_queue index page" do
-        video = Fabricate(:video)
         post :create, video_id: video.id
         expect(response).to redirect_to my_queue_path
+      end
+
+      it "does not add the video to the queue if the video is already in the user's queue" do
+        queue_item1 = Fabricate(:queue_item, position: 1, video: video, user: User.first)
+        post :create, video_id: video.id
+        expect(User.first.queue_items.count).to eq(1)
       end
     end
 

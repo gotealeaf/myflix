@@ -6,10 +6,10 @@ class QueueItemsController < ApplicationController
   end
 
   def create
-    queue_item = QueueItem.new(video_id: params[:video_id], user_id: current_user.id)
-    queue_item.position = current_user.queue_items.length + 1
+    queue_item = QueueItem.new(video: Video.find(params[:video_id]), user: current_user, 
+                               position: new_queue_item_position)
     unless queue_item.save
-      flash[:danger] = "That video is already in your queue"
+      flash[:danger] = queue_item.errors.full_messages
     end
     redirect_to my_queue_path
   end
@@ -19,9 +19,9 @@ class QueueItemsController < ApplicationController
   #   redirect_to my_queue_path
   # end
 
-  #private
+  private
 
-  # def queue_item_params
-  #   params.require(:queue_item).permit(:video_id)
-  # end
+  def new_queue_item_position
+    current_user.queue_items.length + 1
+  end
 end
