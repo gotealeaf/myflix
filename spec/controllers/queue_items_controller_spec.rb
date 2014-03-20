@@ -110,44 +110,60 @@ describe QueueItemsController do
     end
   end
 
-  # describe "POST destroy" do
-  #   context "user authenticated" do
-  #     before do
-  #       alice = Fabricate(:user)
-  #       session[:user_id] = alice.id
-  #       Fabricate(:user_video, user_id: alice.id, video_id: 1)
-  #       Fabricate(:user_video, user_id: alice.id, video_id: 2)
-  #       delete :destroy, id: 1
-  #     end
+  describe "POST destroy" do
+    context "user authenticated" do
+      before do
+        alice = Fabricate(:user)
+        session[:user_id] = alice.id
+        Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
+        Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
+        
+      end
 
-  #     it "deletes the selected video from user_videos" do
-  #       expect(User.first.user_videos.count).to eq(1)
-  #     end
+      it "deletes the selected video from queue_items" do
+        delete :destroy, id: 1
+        expect(User.first.queue_items.count).to eq(1)
+      end
 
-  #     it "does not delete other videos" do
-  #       expect(User.first.user_videos.first.id).to eq(2)
-  #     end
+      it "does not delete other videos" do
+        delete :destroy, id: 1
+        expect(User.first.queue_items.first.id).to eq(2)
+      end
 
-  #     it "redirects to the queue screen" do
-  #       expect(response).to redirect_to my_queue_path
-  #     end
-  #   end
+      it "updates the queue positions of lower ranked items" do
+        Fabricate(:queue_item, user_id: User.first.id, video_id: 3, position: 3)
+        delete :destroy, id: 1
+        expect(User.first.queue_items.first.position).to eq(1)
+        expect(User.first.queue_items.last.position).to eq(2)
+      end
 
-  #   context "user not authenticated" do
-  #     before do
-  #       alice = Fabricate(:user)
-  #       Fabricate(:user_video, user_id: alice.id, video_id: 1)
-  #       Fabricate(:user_video, user_id: alice.id, video_id: 2)
-  #       delete :destroy, id: 1
-  #     end
+      it "does not change the queue position of higher ranked items" do
+        delete :destroy, id: 2
+        expect(User.first.queue_items.count).to eq(1)
+        expect(User.first.queue_items.first.position).to eq(1)
+      end
 
-  #     it "does not delete the selected video from user_videos" do
-  #       expect(User.first.user_videos.count).to eq(2)
-  #     end
+      it "redirects to the queue screen" do
+        delete :destroy, id: 1
+        expect(response).to redirect_to my_queue_path
+      end
+    end
 
-  #     it "redirects to the login page" do
-  #       expect(response).to redirect_to login_path
-  #     end 
-  #   end
-  # end
+    context "user not authenticated" do
+      before do
+        alice = Fabricate(:user)
+        Fabricate(:queue_item, user_id: alice.id, video_id: 1)
+        Fabricate(:queue_item, user_id: alice.id, video_id: 2)
+        delete :destroy, id: 1
+      end
+
+      it "does not delete the selected video from user_videos" do
+        expect(User.first.queue_items.count).to eq(2)
+      end
+
+      it "redirects to the login page" do
+        expect(response).to redirect_to login_path
+      end 
+    end
+  end
 end

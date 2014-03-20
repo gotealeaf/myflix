@@ -14,14 +14,25 @@ class QueueItemsController < ApplicationController
     redirect_to my_queue_path
   end
 
-  # def destroy
-  #   queue_items(params[:id]).destroy
-  #   redirect_to my_queue_path
-  # end
+  def destroy
+    deleted_queue_item = QueueItem.find(params[:id])
+    deleted_queue_item.destroy
+    update_queue_item_positions(deleted_queue_item.position)
+    redirect_to my_queue_path
+  end
 
   private
 
   def new_queue_item_position
     current_user.queue_items.length + 1
   end
+
+  def update_queue_item_positions deleted_position
+    current_user.queue_items.each do |queue_item|
+      if queue_item.position > deleted_position.to_i
+        queue_item.update_column(:position, queue_item.position - 1) 
+      end
+    end
+  end
+
 end
