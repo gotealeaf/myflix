@@ -4,11 +4,16 @@
     = form_tag '/login', class:"sign_in" do
       %header
         %h1 Sign in
-      .form-group
-        = label_tag :email, "Email Address"
-        = text_field_tag :email, params[:email] || "", class: 'form-control'
-      .form-group
-        = label_tag :password
-        = password_field_tag :password, params[:email] || "", class: 'form-control'
-      .form-group
+      %fieldset
+        .form-group
+          = label_tag :email, "Email Address"
+          .row 
+            .col-sm-5
+              = text_field_tag :email, params[:email] || "", class: 'form-control'
+        .form-group
+          = label_tag :password
+          .row
+            .col-sm-5
+              = password_field_tag :password, params[:email] || "", class: 'form-control'
+      %fieldset.form-group.action
         = submit_tag 'Sign In', class: "btn btn-default"

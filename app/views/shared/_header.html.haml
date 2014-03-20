@@ -1,9 +1,6 @@
 %section#top-header.row
   %h1.col-md-2
-    - if logged_in?
-      = link_to "MyFLix", home_path
-    - else
-      = link_to "MyFlix", root_path
+    = link_to "MyFlix", root_path
   - if logged_in?
     %ul.col-md-4.clearfix
       %li= link_to "Videos", home_path
@@ -17,7 +14,7 @@
       %ul
         %li.dropdown
           %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
-            Welcome, Philip J. Fry
+            Welcome, #{current_user.name}
             %b.caret
           %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
             %li
