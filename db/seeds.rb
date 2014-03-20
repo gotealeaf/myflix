@@ -6,6 +6,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+User.create(name: "Jake Gavin", email: "jakegavin@gmail.com", password: "jakegavin")
+User.create(name: "Tristan Gavin", email: "tristan@gmail.com", password:"tristan")
+User.create(name: "Shunei Asao", email: "shunei@gmail.com", password: "shunei" )
 Video.create(title: "Archer", description: "Sophisticated spy Archer may have the coolest gadgets, but he still has issues when it comes to dealing with his boss -- who also is his mother.", small_cover_url: "/tmp/archer.jpg", large_cover_url: "/tmp/archer_large.jpg")
 Video.create(title: "Breaking Bad", description: "A high school chemistry teacher dying of cancer teams with a former student to manufacture and sell crystal meth to secure his family's future.", small_cover_url: "/tmp/breaking_bad.jpg", large_cover_url: "/tmp/breaking_bad_large.jpg")
 Video.create(title: "Family Guy", description: "In Seth MacFarlane's no-holds-barred animated show, buffoonish Peter Griffin and his dysfunctional family experience wacky misadventures.", small_cover_url: "/tmp/family_guy.jpg", large_cover_url: "/tmp/family_guy_large.jpg")
