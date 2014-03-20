@@ -1,0 +1,10 @@
+%section.register.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = bootstrap_form_for(@user, layout: :horizontal) do |f|
+        %header
+          %h1 Register
+        = f.text_field :name, label: "Full Name"
+        = f.email_field :email, label: "Email Address"
+        = f.password_field :password
+        = f.submit 'Sign Up'
