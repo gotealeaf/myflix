@@ -31,6 +31,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'database_cleaner'
   gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'launchy'
 end
 
 group :production do

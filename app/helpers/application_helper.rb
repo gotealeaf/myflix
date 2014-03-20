@@ -20,7 +20,10 @@ module ApplicationHelper
 
   def already_queue_item_for_video_and_user?(video, user)
     answer = QueueItem.get_queue_items_for_video_and_user(video, user)
-    binding.pry
-    answer.nil? #true is
+    if answer == []
+      false
+    else
+      true
+    end #true is
   end
 end
