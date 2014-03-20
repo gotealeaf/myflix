@@ -8,6 +8,7 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
+gem 'bootstrap_form'
 
 group :test, :development do
   gem 'rspec-rails'
