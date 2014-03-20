@@ -22,7 +22,7 @@ feature "login, add videos to queue and check queue works correctly" do
 
   scenario "select video and go to video show page" do
     video1 = Fabricate(:video, category: category)
-    vidit
+    visit home_path
     binding.pry
     find("video_#{video1.id}").click
     expect(page).to have_content "#{video1.title}"
