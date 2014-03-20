@@ -9,7 +9,8 @@
           %span Rating: NA
         %p= @video.description
         .actions
-          = link_to "+ My Queue", queue_items_path(qitem: {"video_id"=>@video.id, "user_id"=>session[:user_id]}), method: :post, class: "btn btn-default"
+          - if already_queue_item_for_video_and_user?(@video, current_user) == false
+            = link_to "+ My Queue", queue_items_path(qitem: {"video_id"=>@video.id, "user_id"=>session[:user_id]}), method: :post, class: "btn btn-default"
 
 %section.reviews.container
   .row
