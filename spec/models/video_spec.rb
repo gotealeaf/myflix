@@ -4,7 +4,6 @@ describe Video do
   it { should belong_to(:category) }
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:description) }
-  it { should have_many(:users).through(:user_videos) }
 
   describe "search_by_title" do
     it "returns an empty array if string does not match any titles" do
