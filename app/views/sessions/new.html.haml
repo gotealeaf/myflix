@@ -1,0 +1,18 @@
+%section.sign_in.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      =form_tag '/sign_in' do
+        %header
+          %h1 Sign in
+        .form-group
+          =label_tag :email
+          .row
+            .col-sm-4
+              =email_field_tag :email, nil, class: "form-control"
+        .form-group
+          =label_tag :password
+          .row
+            .col-sm-4
+              =password_field_tag :password, nil, class: "form-control"
+        .form-group.action
+          =submit_tag 'Sign in', class: "btn btn-default"

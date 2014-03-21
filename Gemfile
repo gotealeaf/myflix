@@ -9,6 +9,7 @@ gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'bootstrap_form'
+gem 'bcrypt-ruby'
 
 group :test, :development do
   gem 'rspec-rails'
