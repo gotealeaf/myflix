@@ -82,3 +82,17 @@ Video.create(
   large_cover_url: '/tmp/monk_large.jpg',
   category:        Category.find_by(name: 'TV Comedy')
 )
+
+User.create(
+  email:                  'bilbo@shire.com',
+  full_name:              'Bilbo Baggins',
+  password:               'smaug',
+  password_confirmation:  'smaug'
+)
+
+User.create(
+  email:                  'frodo@shire.com',
+  full_name:              'Frodo Baggins',
+  password:               'nazgul',
+  password_confirmation:  'nazgul'
+)
