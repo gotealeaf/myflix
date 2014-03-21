@@ -6,7 +6,8 @@ class QueueItemsController < ApplicationController
   end
 
   def create
-    queue_item = QueueItem.new(video: Video.find(params[:video_id]), user: current_user, 
+    queue_item = QueueItem.new(video: Video.find(params[:video_id]), 
+                               user: current_user, 
                                position: new_queue_item_position)
     unless queue_item.save
       flash[:danger] = queue_item.errors.full_messages
