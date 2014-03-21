@@ -13,9 +13,15 @@ module ApplicationHelper
   end
 
   def video_review_rating_from_user(current_user, qi)
-    if current_user.reviews.where(video_id: "#{qi.video_id}").first != nil
-      current_user.reviews.where(video_id: "#{qi.video_id}").first.rating
-    end
+    current_user.reviews.where(video_id: "#{qi.video_id}").first.try(:rating)
   end
 
+  def already_queue_item_for_video_and_user?(video, user)
+    answer = QueueItem.get_queue_items_for_video_and_user(video, user)
+    if answer == []
+      false
+    else
+      true
+    end #true is
+  end
 end

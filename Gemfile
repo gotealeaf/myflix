@@ -9,7 +9,6 @@ gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'bootstrap_form'
-# gem 'bootstrap_forms'
 gem 'bcrypt-ruby', '3.1.2'
 gem "htmlbeautifier", "~> 0.0.9"
 gem 'fabrication'
@@ -30,6 +29,10 @@ end
 
 group :test do
   gem 'shoulda-matchers'
+  gem 'database_cleaner'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'launchy'
 end
 
 group :production do

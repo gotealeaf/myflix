@@ -4,6 +4,6 @@
       %h3= category.title
       .videos.row
         - category.display_most_recent_videos.each do |video|
-          .video.col-sm-2
+          .video.col-sm-2{:id => "video_#{video.id}"}
             = link_to video_path(video.id), nil do
               %img(src="#{video.small_cover_url}")

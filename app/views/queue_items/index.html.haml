@@ -18,7 +18,7 @@
               - @queue_items.each do | qi |
                 %tr
                   = hidden_field_tag 'queue_items[][id]', qi.id
-                  %td= text_field_tag "queue_items[][position]", qi.position, class: 'form-control'
+                  %td= text_field_tag "queue_items[][position]", qi.position, class: 'form-control', id: "queue_item_#{qi.id}"
                   %td
                     = link_to("#{qi.video.title}", video_path(qi.video.id))
                   %td

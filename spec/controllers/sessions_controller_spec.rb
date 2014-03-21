@@ -10,7 +10,7 @@ describe SessionsController do
   end
   describe 'POST #create' do
     context 'needs standard params' do
-      before(:each) do
+      before do
         @adam_params = Fabricate.attributes_for(:user)
         @adam = User.create(@adam_params)
         post :create, user: @adam_params
@@ -37,7 +37,7 @@ describe SessionsController do
       end
     end
     context 'needs failing params' do
-      before(:each) do
+      before do
         @adam = Fabricate(:user)
         post :create, user: Fabricate.attributes_for(:user)
       end

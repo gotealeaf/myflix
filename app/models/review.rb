@@ -18,6 +18,8 @@ class Review < ActiveRecord::Base
 
   def self.find_user_rating_for_video(video, user)
     review = where(video: video, user: user).first
-    review.rating
+    if review != nil
+      review.rating
+    end
   end
 end

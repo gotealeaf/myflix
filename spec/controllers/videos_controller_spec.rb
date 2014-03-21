@@ -4,7 +4,7 @@ require 'pry'
 describe VideosController do
   describe 'GET #show' do
     context 'with valid user' do
-      before(:each) do
+      before do
         @simpsons = Video.create(title: 'The Simpsons!', description: 'A family that loves living together.')
         @futurama = Video.create(title: 'Futurama!', description: 'This is a crazy place where people live in the future.')
         @future = Video.create(title: "Future", description: "This is the future.")
@@ -43,7 +43,7 @@ describe VideosController do
 
   describe 'POST #search' do
     context 'authenticated user' do
-      before(:each) do
+      before do
         @simpsons = Fabricate(:video, title: "Simpsons")
         @futurama = Fabricate(:video, title: "Futurama")
         @future = Fabricate(:video, title: "Future")
