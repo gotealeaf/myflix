@@ -4,29 +4,31 @@
       %article
         %header
           %h2 My Queue
-        %table.table
-          %thead
-            %tr
-              %th(width="10%") List Order
-              %th(width="30%") Video Title
-              %th(width="10%") Play
-              %th(width="20%") Rating
-              %th(width="15%") Genre
-              %th(width="15%") Remove
-          - @queue_items.each do |item|  
-            %tbody
+        = form_tag sort_path do  
+          %table.table
+            %thead
               %tr
-                %td
-                  %input.form-control(type="text" value="1")
-                %td
-                  = link_to item.video_title, video_path(item.video)
-                %td
-                  = button_to "Play", nil, class: "btn btn-default"
-                %td
-                  = item.video_rating
-                %td
-                  = link_to item.category_name, category_path(item.video.category)
-                %td
-                  = link_to queue_item_path(item), method: :delete do
-                    %i.glyphicon.glyphicon-remove
-        = button_to "Update Instant Queue", nil, class: "btn btn-default"
+                %th(width="10%") List Order
+                %th(width="30%") Video Title
+                %th(width="10%") Play
+                %th(width="20%") Rating
+                %th(width="15%") Genre
+                %th(width="15%") Remove
+            - @queue_items.each do |item|  
+              %tbody
+                %tr
+                  = hidden_field_tag "queue_items[][id]", item.id
+                  %td
+                    = text_field_tag "queue_items[][position]", item.position
+                  %td
+                    = link_to item.video_title, video_path(item.video)
+                  %td
+                    = button_to "Play", nil, class: "btn btn-default"
+                  %td
+                    = item.video_rating
+                  %td
+                    = link_to item.category_name, category_path(item.video.category)
+                  %td
+                    = link_to queue_item_path(item), method: :delete do
+                      %i.glyphicon.glyphicon-remove
+          = submit_tag "Update Instant Queue", name: nil

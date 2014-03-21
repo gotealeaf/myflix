@@ -14,4 +14,5 @@ class QueueItem < ActiveRecord::Base
     review = video.reviews.where(user: user, video: video).first
     review.rating if review
   end
+
 end
