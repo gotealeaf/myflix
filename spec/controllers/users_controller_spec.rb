@@ -4,9 +4,22 @@ require 'database_cleaner'
 
 DatabaseCleaner.strategy = :truncation
 
-
-
 describe UsersController do
+  describe 'GET #show' do
+    let(:adam) { Fabricate(:user) }
+    before do
+      add_to_session(adam)
+      review1 = Fabricate(:review, user: adam)
+      review2 = Fabricate(:review, user: adam)
+      queue_item1 = Fabricate(:queue_item, user: adam)
+      queue_item2 = Fabricate(:queue_item, user: adam)
+    end
+    it 'sets up the user in the controller' do
+      get :show, id: adam.id
+      expect(assigns(:user)).to eq(adam)
+    end
+  end
+
   describe 'GET #new' do
     it 'sets up new user object' do
       get :new

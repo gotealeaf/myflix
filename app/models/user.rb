@@ -12,4 +12,9 @@ class User < ActiveRecord::Base
       queue_item.update_column(:position, queue_count)
     end
   end
+
+  def number_of_queue_items
+    total = queue_items.count
+    total
+  end
 end
