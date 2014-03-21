@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_many :queue_items, -> { order 'position ASC' }
   validates :email, uniqueness: true, presence: true
   validates :fullname, presence: true
-  has_many :reviews
+  has_many :reviews, -> { order 'created_at DESC' }
 
   def normalise_queue
     queue_count = 0
@@ -15,6 +15,11 @@ class User < ActiveRecord::Base
 
   def number_of_queue_items
     total = queue_items.count
+    total
+  end
+
+  def number_of_reviews
+    total = reviews.count
     total
   end
 end

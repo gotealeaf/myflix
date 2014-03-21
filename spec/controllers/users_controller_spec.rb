@@ -6,17 +6,27 @@ DatabaseCleaner.strategy = :truncation
 
 describe UsersController do
   describe 'GET #show' do
-    let(:adam) { Fabricate(:user) }
-    before do
-      add_to_session(adam)
-      review1 = Fabricate(:review, user: adam)
-      review2 = Fabricate(:review, user: adam)
-      queue_item1 = Fabricate(:queue_item, user: adam)
-      queue_item2 = Fabricate(:queue_item, user: adam)
+    context 'authenticated users' do
+      let(:adam) { Fabricate(:user) }
+      before do
+        add_to_session(adam)
+        Fabricate(:review, user: adam)
+        Fabricate(:review, user: adam)
+        Fabricate(:queue_item, user: adam)
+        Fabricate(:queue_item, user: adam)
+      end
+
+      it 'sets up the user in the controller' do
+        get :show, id: adam.id
+        expect(assigns(:user)).to eq(adam)
+      end
     end
-    it 'sets up the user in the controller' do
-      get :show, id: adam.id
-      expect(assigns(:user)).to eq(adam)
+    context "unauthenticated users" do
+      let(:adam) { Fabricate(:user) }
+      it_behaves_like "require_logged_in_user" do
+        user = Fabricate(:user)
+        let(:action) { get :show, id: user.id }
+      end
     end
   end
 

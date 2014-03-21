@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :require_user, :current_user, only: [:show]
   def new
     if session[:user_id]
       redirect_to home_path

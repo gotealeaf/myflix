@@ -15,8 +15,8 @@ describe QueueItemsController do
         expect(assigns(:queue_items)).to match_array([qitem, qitem2])
       end
       it 'renders the show template' do
-        qitem = Fabricate(:queue_item, user: adam)
-        qitem2 = Fabricate(:queue_item, user: adam)
+        Fabricate(:queue_item, user: adam)
+        Fabricate(:queue_item, user: adam)
         get :index
         expect(response).to render_template(:index)
       end

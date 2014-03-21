@@ -1,5 +1,6 @@
 class QueueItemsController < ApplicationController
   before_action :require_user, :current_user
+
   def index
     @queue_items = get_queue_items_for_user
     render

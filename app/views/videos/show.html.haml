@@ -38,6 +38,8 @@
             %li.row
               .col-sm-2
                 %span Rating: #{review.rating}
-                %p by #{review.user.fullname}
+                %p
+                  by
+                  =link_to "#{review.user.fullname}", user_path("#{review.user.id}")
               .col-sm-8
                 %p #{review.content}

@@ -15,7 +15,7 @@
             - @user.queue_items.each do |queue_item|
               %tr
                 %td
-                  = link_to "#{queue_item.video.title}"
+                  = link_to "#{queue_item.video.title}", video_path("#{queue_item.video.id}")
                 %td
                   = link_to "#{queue_item.video.category.title}"
 
@@ -23,4 +23,16 @@
   .row
     .col-sm-10.col-sm-offset-1
       %header
-        %h3 = "#{@user.fullname}"'s Reviews ("#{@user.number_of_reviews}")
+        %h3 #{@user.fullname}'s Reviews (#{@user.number_of_reviews})
+      %ul
+        - @user.reviews.each do |review|
+          %article.review
+            %li.row
+              .col-sm-2
+                %p
+                  = link_to "#{review.video.title}"
+                %col Rating: #{review.rating} / 5
+              .col-sm-8
+                %p #{review.content}
+
+
