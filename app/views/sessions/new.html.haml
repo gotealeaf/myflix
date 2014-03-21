@@ -1,7 +1,7 @@
 %section.sign_in.container
   .row
     .col-sm-10.col-sm-offset-1
-      =form_tag '/sign_in' do
+      =form_tag sessions_path, class: 'sign_in' do
         %header
           %h1 Sign in
         .form-group
