@@ -109,6 +109,7 @@ describe QueueItemsController do
       expect(response).to redirect_to(queue_items_path)
 
     end
+
     it "removes a queue item from the current user's que page" do
       current_user = Fabricate(:user)
       session[:user_id] = current_user.id
@@ -117,6 +118,18 @@ describe QueueItemsController do
       delete :destroy, id: q1.id
       expect(QueueItem.count).to eq(0)
     end
+
+    it "normalizes remaining queue items after deletion of an item" do
+      current_user = Fabricate(:user)
+      session[:user_id] = current_user.id
+      q1 = Fabricate(:queue_item, user: current_user, position: 1)
+      q2 = Fabricate(:queue_item, user: current_user, position: 2)
+      q3 = Fabricate(:queue_item, user: current_user, position: 3)
+
+      delete :destroy, id: q2.id
+      expect(current_user.queue_items.map(&:position)).to eq([1, 2])
+    end
+
     it "does not delete the queue item if the current user does not own the queue item" do
       bob = Fabricate(:user)
       jane = Fabricate(:user)
