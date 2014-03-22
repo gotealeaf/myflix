@@ -17,4 +17,11 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end
+
+  def require_no_user
+    if logged_in?
+      flash[:danger] = "You can't do that. You're already logged in."
+      redirect_to home_path
+    end
+  end
 end
