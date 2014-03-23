@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_many :reviews, -> { order("created_at DESC")}
+
   has_secure_password validations: false
 
   validates :email, presence: true, uniqueness: true

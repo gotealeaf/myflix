@@ -6,8 +6,39 @@
       .video_info.col-sm-3
         %header
           %h3= @video.title
-          %span Rating: 4.5/5.0
+          - if !@video.reviews.empty?
+            %span Rating: #{@video.average_rating}/5.0
         %p= @video.description
         .actions
           %a.btn.btn-primary(href="") Watch Now
           %a.btn.btn-default(href="") + My Queue
+%section.reviews.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = bootstrap_form_for ([@video, @review]) do |f|
+        %fieldset
+        .row
+          .col-sm-3
+            = f.select :rating, [1,2,3,4,5].map { |num| [pluralize(num, 'Star'), num] }.unshift(["Select rating", nil]), label: "Rate this video"
+        .row
+          .col-sm-8
+            = f.text_area :review, rows: 6, label: "Write Review"
+        .form-group.actions
+          = f.submit "Submit", class: "btn"
+          &nbsp;
+          = link_to "Cancel", video_path(@video)
+      - if @video.reviews.size == 0
+        .alert.alert-info.text-center
+          %h3 Sorry there are no reviews for this video.
+      - else
+        %header
+          %h3 User Reviews (#{@video.reviews.size})
+        %ul
+          - @video.reviews.each do |review|
+            %article.review
+              %li.row
+                .col-sm-2
+                  %span Rating: #{review.rating} / 5
+                  %p by <a href="">#{review.user.name}</a>
+                .col-sm-8
+                  %p= review.review
