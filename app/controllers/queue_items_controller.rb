@@ -23,12 +23,10 @@
       ActiveRecord::Base.transaction do
         update_queue_item_position
       end
-
     rescue ActiveRecord::RecordInvalid
       flash_error_message
       return
     end
-
     repositions_queue_items
     redirect_to(queue_items_path)
   end
