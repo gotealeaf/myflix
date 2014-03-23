@@ -3,6 +3,7 @@
 
   def index
     @queue_items = current_user.queue_items
+    @review = Review.new
   end
 
   def create
@@ -15,7 +16,7 @@
     queue_item = QueueItem.find(params[:id])
     queue_item.destroy if current_user.queue_items.include?(queue_item)
     redirect_to queue_items_path
-    repositions_queue_items
+    current_user.repositions_queue_items
   end
 
   def sort
@@ -27,7 +28,7 @@
       flash_error_message
       return
     end
-    repositions_queue_items
+    current_user.repositions_queue_items
     redirect_to(queue_items_path)
   end
 
@@ -44,10 +45,4 @@
     flash[:notice] = "Please only use whole numbers to update the queue" 
     redirect_to queue_items_path
   end
-
-  def repositions_queue_items
-    current_user.queue_items.each_with_index do |queue_item, index|
-      queue_item.update(position: index+1)
-    end
-  end 
 end

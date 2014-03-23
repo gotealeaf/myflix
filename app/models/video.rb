@@ -16,7 +16,7 @@ class Video < ActiveRecord::Base
 
   def average_rating
     if reviews.empty?
-      puts "unrated"
+      nil
     else    
       collection = reviews.select(:rating).map {|r| r.rating}
       collection.sum / collection.count

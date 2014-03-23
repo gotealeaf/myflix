@@ -14,7 +14,15 @@ describe QueueItemsController do
         expect(assigns(:queue_items)).to match_array([queue1, queue2])
       end
 
-      it "sets the @video variable"
+      it "sets the class object Review with a class method new" do
+        current_user = Fabricate(:user)
+        session[:user_id] = current_user.id
+        south_park = Fabricate(:video)
+        queue1 = Fabricate(:queue_item, user: current_user, video: south_park)
+
+        get :index
+        expect(assigns(:review)).to eq(Review.new)
+      end
     end
     context "when user is inauthenticated" do
       it "redirects the user to the sign page" do

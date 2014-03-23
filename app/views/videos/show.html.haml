@@ -18,7 +18,7 @@
 %section.reviews.container
   .row
     .col-sm-10.col-sm-offset-1
-      = form_for [@video, Review.new] do |f|
+      = form_for [@video, @review] do |f|
         = f.select :rating, options_for_select([5.0,4.0,3.0,2.0,1.0])
         %label Write Review
         .row
