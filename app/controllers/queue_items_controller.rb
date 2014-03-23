@@ -25,7 +25,7 @@
       end
 
     rescue ActiveRecord::RecordInvalid
-      roll_back_transaction_if_in_error
+      flash_error_message
       return
     end
 
@@ -42,7 +42,7 @@
     end
   end
 
-  def roll_back_transaction_if_in_error
+  def flash_error_message
     flash[:notice] = "Please only use whole numbers to update the queue" 
     redirect_to queue_items_path
   end
