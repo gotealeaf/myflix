@@ -56,3 +56,8 @@ VideoCategory.create(category_id: 4, video_id: 10)
 50.times do 
   Review.create(video_id: rand(Video.first.id..Video.last.id), user_id: rand(User.first.id..User.last.id), rating: rand(1..5), review: Faker::Lorem.paragraph)
 end
+User.all.each do |user|
+  5.times do |index|
+    QueueItem.create(user_id: user.id, video_id: rand(Video.first.id..Video.last.id), position: index+1)
+  end
+end

@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Video do
   it { should have_many(:categories) }
   it { should have_many(:reviews) }
+  it { should have_many(:queue_items) }
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:description) }
 
