@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-layout "application"
-
   def new
+    flash[:warning] = "You are already logged in."
+    redirect_to home_path and return if logged_in?
     @user = User.new
   end
 
