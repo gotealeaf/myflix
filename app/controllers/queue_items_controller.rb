@@ -21,15 +21,11 @@
   def sort
     begin
       ActiveRecord::Base.transaction do
-        params[:queue_items].each do |queue_item_data|
-          queue_item = QueueItem.find(queue_item_data["id"])
-          queue_item.update!(position: queue_item_data["position"]) if queue_item.user == current_user
-        end
+        update_queue_item_position
       end
 
     rescue ActiveRecord::RecordInvalid
-      flash[:notice] = "Please only use whole numbers to update the queue" 
-      redirect_to queue_items_path
+      roll_back_transaction_if_in_error
       return
     end
 
@@ -38,6 +34,18 @@
   end
 
   private
+
+  def update_queue_item_position
+    params[:queue_items].each do |queue_item_data|
+      queue_item = QueueItem.find(queue_item_data["id"])
+      queue_item.update!(position: queue_item_data["position"]) if queue_item.user == current_user
+    end
+  end
+
+  def roll_back_transaction_if_in_error
+    flash[:notice] = "Please only use whole numbers to update the queue" 
+    redirect_to queue_items_path
+  end
 
   def repositions_queue_items
     current_user.queue_items.each_with_index do |queue_item, index|
