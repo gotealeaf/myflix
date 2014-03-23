@@ -18,4 +18,8 @@ class ApplicationController < ActionController::Base
     end
   #  redirect_to sign_in_path unless logged_in?
   end
+
+  def require_sign_out
+    redirect_to home_path if current_user
+  end
 end
