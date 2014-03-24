@@ -11,16 +11,26 @@ describe User do
   describe "number_of_queue_items" do
     it 'returns the correct number of queue items' do
       adam = Fabricate(:user)
-      queue_item1 = Fabricate(:queue_item, user: adam)
-      queue_item2 = Fabricate(:queue_item, user: adam)
+      Fabricate(:queue_item, user: adam)
+      Fabricate(:queue_item, user: adam)
       expect(adam.number_of_queue_items).to eq(2)
     end
 
     it 'returns the number of the users reviews' do
       adam = Fabricate(:user)
-      review1 = Fabricate(:review, user: adam)
-      review2 = Fabricate(:review, user: adam)
+      Fabricate(:review, user: adam)
+      Fabricate(:review, user: adam)
       expect(adam.number_of_reviews).to eq(2)
+    end
+  end
+
+  describe 'user can have many followers' do
+    it 'allows user to have many friends' do
+      user = Fabricate(:user)
+      follower = Fabricate(:user)
+      relationship = Fabricate(:followship, user_id: user.id, follower_id: follower.id)
+      expect(Followship.first).to eq(relationship)
+      expect(User.first.followers).to eq([follower])
     end
   end
 end
