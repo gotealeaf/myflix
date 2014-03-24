@@ -13,16 +13,6 @@ describe QueueItemsController do
         get :index
         expect(assigns(:queue_items)).to match_array([queue1, queue2])
       end
-
-      it "sets the class object Review with a class method new" do
-        current_user = Fabricate(:user)
-        session[:user_id] = current_user.id
-        south_park = Fabricate(:video)
-        queue1 = Fabricate(:queue_item, user: current_user, video: south_park)
-
-        get :index
-        expect(assigns(:review)).to eq(Review.new)
-      end
     end
     context "when user is inauthenticated" do
       it "redirects the user to the sign page" do
@@ -185,6 +175,17 @@ describe QueueItemsController do
         
         post :sort, queue_items: [{id: q1.id, position: 2}, {id: q2.id, position: 4}, {id: q3.id, position: 1}]
         expect(current_user.queue_items.map(&:position)).to eq([1, 2, 3])
+      end
+
+      it "adds a new value for a video's rating to the database for the current user" do
+        current_user = Fabricate(:user)
+        session[:user_id] = current_user.id
+        south_park = Fabricate(:video)
+        review = Fabricate(:review)
+        q1 = Fabricate(:queue_item, user: current_user)
+
+        post :sort, video_rating: [{rating: 3}]
+        expect(current_user.queue_item.map(&:rating)).to eq([3])
       end
     end
     context "with invalid inputs" do

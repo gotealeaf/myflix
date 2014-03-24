@@ -20,6 +20,7 @@
   end
 
   def sort
+    #binding.pry
     begin
       ActiveRecord::Base.transaction do
         update_queue_item_position
@@ -38,6 +39,7 @@
     params[:queue_items].each do |queue_item_data|
       queue_item = QueueItem.find(queue_item_data["id"])
       queue_item.update!(position: queue_item_data["position"]) if queue_item.user == current_user
+      queue_item.video.update_columns(rating: queue_item_data["rating"]) if queue_item.user == current_user
     end
   end
 

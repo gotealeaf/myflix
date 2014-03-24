@@ -42,4 +42,24 @@ describe QueueItem do
       expect(queue_item.video_rating).to eq(nil)
     end
   end
+
+  describe "#rating=" do
+    it "lets the current user to re-assign the value of a video's rating on the queue item object" do
+      bob = Fabricate(:user)
+      south_park = Fabricate(:video)
+      queue_item = Fabricate(:queue_item, user: bob, video: south_park, rating: 2)
+      queue_item.rating = 4
+
+      expect(Review.rating.first).to eq(4)
+    end
+
+    it "gives queue item the ability to set a new value for a video's rating" do
+      bob = Fabricate(:user)
+      south_park = Fabricate(:video)
+      queue_item = Fabricate(:queue_item, user: bob, video: south_park)
+      queue_item.rating = nil
+
+      expect(Review.rating.first).to eq(nil)
+    end
+  end
 end
