@@ -44,22 +44,18 @@ describe QueueItem do
   end
 
   describe "#rating=" do
-    it "lets the current user to re-assign the value of a video's rating on the queue item object" do
+    it "changes the rating of the review if the review is present" do
       bob = Fabricate(:user)
       south_park = Fabricate(:video)
-      queue_item = Fabricate(:queue_item, user: bob, video: south_park, rating: 2)
+      review = Fabricate(:review, user: bob, video: south_park, rating: 2)
+      queue_item = Fabricate(:queue_item, user: bob, video: south_park)
       queue_item.rating = 4
 
       expect(Review.rating.first).to eq(4)
     end
 
-    it "gives queue item the ability to set a new value for a video's rating" do
-      bob = Fabricate(:user)
-      south_park = Fabricate(:video)
-      queue_item = Fabricate(:queue_item, user: bob, video: south_park)
-      queue_item.rating = nil
-
-      expect(Review.rating.first).to eq(nil)
-    end
+    it "clears the rating of the review if the review is present"
+    it "creates a review with the rating of the review is not present"
+    
   end
 end
