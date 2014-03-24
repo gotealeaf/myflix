@@ -1,4 +1,5 @@
 require "spec_helper"
+
 describe ReviewsController do
   describe "POST create" do
     let(:video) { Fabricate :video }
@@ -30,6 +31,8 @@ describe ReviewsController do
         end
 
         it "sets the notice" do
+          post :create, review: Fabricate.attributes_for(:review), video_id: video.id, user_id: current_user.id
+          expect(flash[:notice]).to eq("Your review has been added.")
         end
       end
 
@@ -52,18 +55,17 @@ describe ReviewsController do
           expect(assigns :reviews).to match_array([review])
         end
 
+        it "sets notice" do
+          expect(flash[:error]).not_to be_nil 
+        end
+
       end
     end
 
     context "unauthenticated users" do
       it "redirects to sign in path" do
-          video = Fabricate :video
-          post :create, review: Fabricate.attributes_for(:review), video_id: video.id
-          expect(response).to redirect_to sign_in_path
-      end
-
-      it "sets notice" do
-
+        post :create, review: Fabricate.attributes_for(:review), video_id: video.id
+        expect(response).to redirect_to sign_in_path
       end
     end
   end
