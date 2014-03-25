@@ -31,4 +31,7 @@ Myflix::Application.routes.draw do
   get 'forgot_password', to: 'forgot_passwords#new'
   get 'forgot_password_confirmation', to: 'forgot_passwords#confirm'
   get 'expired_token', to: 'pages#expired_token'
+
+  require 'sidekiq/web'
+  mount Sidekiq::Web, at: '/sidekiq'
 end
