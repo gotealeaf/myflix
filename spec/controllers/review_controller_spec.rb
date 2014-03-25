@@ -43,7 +43,7 @@ describe ReviewsController do
       end
 
       context "with invalid attributes" do
-        before { post :create, video_id: video.id, review: Fabricate.attributes_for(:review, video: video, review: nil, user: nil) }
+        before { post :create, video_id: video.id, review: Fabricate.attributes_for(:review, video: video, text: nil, user: nil) }
         it "does not save the review" do 
           expect(video.reviews.count).to eq(0)
         end
