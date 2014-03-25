@@ -1,0 +1,14 @@
+%article.search_results
+  %header
+    %h3= "#{pluralize(@videos.length, 'video')} matched your search criteria." unless @videos.empty?
+    %br/
+  .videos.row
+    - if @videos.empty?
+      .col-xs-6.col-xs-offset-3.text-center
+        .alert.alert-danger
+          %p Sorry, we couldn't find any videos that matched your search criteria.
+    -else
+      - @videos.each do |video|
+        .video.col-md-2
+          = link_to video_path(video), nil do 
+            = image_tag video.small_cover_url
