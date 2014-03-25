@@ -80,6 +80,14 @@ describe Video do
     it "should return the average if there are many ratings" do
       video = Fabricate(:video)
       rev1 = Fabricate(:review, video: video, rating: 4)
+      rev2 = Fabricate(:review, video: video, rating: 2)
+      expect(video.average_rating).to eq(3)
+    end
+
+
+    it "should return the rounded average" do
+      video = Fabricate(:video)
+      rev1 = Fabricate(:review, video: video, rating: 4)
       rev2 = Fabricate(:review, video: video, rating: 3)
       rev3 = Fabricate(:review, video: video, rating: 1)
       expect(video.average_rating).to eq(2.7)
