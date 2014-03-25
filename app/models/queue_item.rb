@@ -4,14 +4,20 @@ class QueueItem < ActiveRecord::Base
 
   validates :position, numericality: { only_integer: true }
 
-  def rating=(new_rating = nil)
-    review = Review.where(user: user, video: video, rating: new_rating).first
-    review.update(rating: new_rating)
-  end
-
-  def video_rating
+  def review_rating
     review = Review.where(user: user, video: video).first
     review.rating if review
+  end
+
+  def review_rating=(new_rating)
+    review = Review.where(user_id: user.id, video_id: video.id).first
+
+    if review
+      review.update_column(:rating, new_rating)
+    else
+      review = Review.new(user_id: user.id, video_id: video.id, rating: new_rating)
+      review.save(validate: false)
+    end
   end
 
   def video_title

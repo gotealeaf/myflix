@@ -25,37 +25,52 @@ describe QueueItem do
     end
   end
 
-  describe "#video_rating" do
+  describe "#review_rating" do
     it "returns the user's rating of a video in the que item's associated video's review" do
       user = Fabricate(:user)
       video = Fabricate(:video)
       review = Fabricate(:review, rating: 5.0, video: video, user: user)
       queue_item = Fabricate(:queue_item, user: user, video: video)
 
-      expect(queue_item.video_rating).to eq(5.0)
+      expect(queue_item.review_rating).to eq(5.0)
     end
     it "does not return returns the user's rating of a video in the que item's associated video's review if review is nil" do
       user = Fabricate(:user)
       video = Fabricate(:video)
       queue_item = Fabricate(:queue_item, user: user, video: video)
 
-      expect(queue_item.video_rating).to eq(nil)
+      expect(queue_item.review_rating).to eq(nil)
     end
   end
 
-  describe "#rating=" do
+  describe "#review_rating=" do
     it "changes the rating of the review if the review is present" do
       bob = Fabricate(:user)
       south_park = Fabricate(:video)
       review = Fabricate(:review, user: bob, video: south_park, rating: 2)
       queue_item = Fabricate(:queue_item, user: bob, video: south_park)
-      queue_item.rating = 4
+      queue_item.review_rating = 4
 
-      expect(Review.rating.first).to eq(4)
+      expect(Review.first.rating).to eq(4)
     end
 
-    it "clears the rating of the review if the review is present"
-    it "creates a review with the rating of the review is not present"
+    it "clears the rating of the review if the user sets the review an empty value and the review is present" do
+      bob = Fabricate(:user)
+      south_park = Fabricate(:video)
+      review = Fabricate(:review, user: bob, video: south_park, rating: 2)
+      queue_item = Fabricate(:queue_item, user: bob, video: south_park)
+      queue_item.review_rating = nil
+
+      expect(Review.first.rating).to be_nil
+    end
+    it "creates a review with the rating if the review is not present" do
+      bob = Fabricate(:user)
+      south_park = Fabricate(:video)
+      queue_item = Fabricate(:queue_item, user: bob, video: south_park)
+      queue_item.review_rating = 4
+
+      expect(Review.first.rating).to eq(4)
+    end
     
   end
 end
