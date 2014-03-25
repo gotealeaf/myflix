@@ -150,8 +150,9 @@ describe QueueItemsController do
       it "redirects to the queue items page" do
         current_user = Fabricate(:user)
         session[:user_id] = current_user.id
-        q1 = Fabricate(:queue_item, user: current_user, position: 1)
-        q2 = Fabricate(:queue_item, user: current_user, position: 2)
+        video = Fabricate(:video)
+        q1 = Fabricate(:queue_item, user: current_user, position: 1, video: video)
+        q2 = Fabricate(:queue_item, user: current_user, position: 2, video: video)
         
         post :sort, queue_items: [{id: q1.id, position: 1}, {id: q2.id, position: 2}]
         expect(response).to redirect_to(queue_items_path)
@@ -160,8 +161,9 @@ describe QueueItemsController do
       it "re orders each item by position number" do
         current_user = Fabricate(:user)
         session[:user_id] = current_user.id
-        q1 = Fabricate(:queue_item, user: current_user, position: 1)
-        q2 = Fabricate(:queue_item, user: current_user, position: 2)
+        video = Fabricate(:video)
+        q1 = Fabricate(:queue_item, user: current_user, position: 1, video: video)
+        q2 = Fabricate(:queue_item, user: current_user, position: 2, video: video)
         
         post :sort, queue_items: [{id: q1.id, position: 2}, {id: q2.id, position: 1}]
         expect(current_user.queue_items).to eq([q2, q1])
@@ -169,31 +171,21 @@ describe QueueItemsController do
       it "normalizes the position numbers" do
         current_user = Fabricate(:user)
         session[:user_id] = current_user.id
-        q1 = Fabricate(:queue_item, user: current_user, position: 1)
-        q2 = Fabricate(:queue_item, user: current_user, position: 2)
-        q3 = Fabricate(:queue_item, user: current_user, position: 3)
-        
+        video = Fabricate(:video)
+        q1 = Fabricate(:queue_item, user: current_user, position: 1, video: video)
+        q2 = Fabricate(:queue_item, user: current_user, position: 2, video: video)
+        q3 = Fabricate(:queue_item, user: current_user, position: 3, video: video)
         post :sort, queue_items: [{id: q1.id, position: 2}, {id: q2.id, position: 4}, {id: q3.id, position: 1}]
         expect(current_user.queue_items.map(&:position)).to eq([1, 2, 3])
-      end
-
-      it "adds a new value for a video's rating to the database for the current user" do
-        current_user = Fabricate(:user)
-        session[:user_id] = current_user.id
-        south_park = Fabricate(:video)
-        review = Fabricate(:review)
-        q1 = Fabricate(:queue_item, user: current_user)
-
-        post :sort, video_rating: [{rating: 3}]
-        expect(current_user.queue_item.map(&:rating)).to eq([3])
       end
     end
     context "with invalid inputs" do
       it "redirects to the queue items page" do
         current_user = Fabricate(:user)
         session[:user_id] = current_user.id
-        q1 = Fabricate(:queue_item, user: current_user, position: 1)
-        q2 = Fabricate(:queue_item, user: current_user, position: 2)
+        video = Fabricate(:video)
+        q1 = Fabricate(:queue_item, user: current_user, position: 1, video: video)
+        q2 = Fabricate(:queue_item, user: current_user, position: 2, video: video)
         
         post :sort, queue_items: [{id: q1.id, position: 2.5}, {id: q2.id, position: 1}]
         expect(response).to redirect_to(queue_items_path)
@@ -201,8 +193,9 @@ describe QueueItemsController do
       it "sets the flash error message" do
         current_user = Fabricate(:user)
         session[:user_id] = current_user.id
-        q1 = Fabricate(:queue_item, user: current_user, position: 1)
-        q2 = Fabricate(:queue_item, user: current_user, position: 2)
+        video = Fabricate(:video)
+        q1 = Fabricate(:queue_item, user: current_user, position: 1, video: video)
+        q2 = Fabricate(:queue_item, user: current_user, position: 2, video: video)
         
         post :sort, queue_items: [{id: q1.id, position: 2.5}, {id: q2.id, position: 1}]
         expect(flash[:notice]).to eq("Please only use whole numbers to update the queue")
@@ -210,8 +203,9 @@ describe QueueItemsController do
       it "does not reorder the queue items" do
         current_user = Fabricate(:user)
         session[:user_id] = current_user.id
-        q1 = Fabricate(:queue_item, user: current_user, position: 1)
-        q2 = Fabricate(:queue_item, user: current_user, position: 2)
+        video = Fabricate(:video)
+        q1 = Fabricate(:queue_item, user: current_user, position: 1, video: video)
+        q2 = Fabricate(:queue_item, user: current_user, position: 2, video: video)
         
         post :sort, queue_items: [{id: q1.id, position: 3}, {id: q2.id, position: 2.1}]
         expect(q1.reload.position).to eq(1)
