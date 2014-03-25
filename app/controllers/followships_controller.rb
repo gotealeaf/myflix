@@ -1,12 +1,12 @@
 class FollowshipsController < ApplicationController
   before_action :require_user, :current_user
+
   def create
-    follower = params[:follower_ids]
-    follower.each do |follow_id|
-      followee = User.find(follow_id[:id])
+    follower_id = params[:follower_ids]
+    followee = User.find(follower_id)
+    if followee != current_user
       if check_for_existing_followship?(followee)
-        followship = setup_followship(followee)
-        followship.save
+        finalise_followship(followee)
         flash[:success] = "You are now successfully following #{followee.fullname}."
       else
         flash[:danger] = "You already are following #{followee.fullname}, you cannot follow them again."
@@ -47,6 +47,11 @@ class FollowshipsController < ApplicationController
     else
       true
     end
+  end
+
+  def finalise_followship(followee)
+    followship = setup_followship(followee)
+    followship.save
   end
 
   def setup_followship(followee)

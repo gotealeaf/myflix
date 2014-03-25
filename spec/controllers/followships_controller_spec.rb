@@ -10,31 +10,30 @@ describe FollowshipsController do
         add_to_session(adam)
       end
       it 'creates a new followship' do
-        post :create, follower_ids: [{ id: follower.id }]
+        post :create, follower_ids: follower.id
         expect(Followship.count).to eq(1)
-      end
-      it 'add multiple followers' do
-        follower2 = Fabricate(:user)
-        post :create, follower_ids: [{ id: follower.id }, { id: follower2.id }]
-        expect(Followship.count).to eq(2)
       end
       it 'doesnt let it follow someone more than once' do
         Fabricate(:followship, user: adam, follower: follower)
-        post :create, follower_ids: [{ id: follower.id }]
+        post :create, follower_ids: follower.id
         expect(Followship.count).to eq(1)
       end
       it 'displays a confirmation message if the follow is successful' do
-        post :create, follower_ids: [{ id: follower.id }]
+        post :create, follower_ids: follower.id
         expect(flash[:success]).to be_present
       end
       it 'shows an error message if the save wasnt successful' do
         Fabricate(:followship, user: adam, follower: follower)
-        post :create, follower_ids: [{ id: follower.id }]
+        post :create, follower_ids: follower.id
         expect(flash[:danger]).to be_present
       end
       it 'redirects the user to the followships index page' do
-        post :create, follower_ids: [{ id: follower.id }]
+        post :create, follower_ids: follower.id
         expect(response).to redirect_to followships_path
+      end
+      it 'doesnt let a user follow themselves' do
+        post :create, follower_ids: adam.id
+        expect(Followship.count).to eq(0)
       end
     end
     it_behaves_like "require_logged_in_user" do
