@@ -17,11 +17,10 @@ class FollowshipsController < ApplicationController
 
   def index
     @users_followers = current_user.followers
-    render
   end
 
   def destroy
-    if Followship.exists?(params[:id])
+    if followship_exist?
       destroy_followship
       flash[:success] = "You are no longer following that user."
     else
@@ -41,11 +40,20 @@ class FollowshipsController < ApplicationController
     end
   end
 
+  def followship_exist?
+    followships = Followship.where(user: current_user, follower_id: params[:id].to_i)
+    if followships == []
+      false
+    else
+      true
+    end
+  end
+
   def setup_followship(followee)
     Followship.new(follower_id: followee.id, user_id: current_user.id)
   end
 
   def destroy_followship
-    current_user.followships.find_by_id(params[:id]).destroy
+    current_user.followships.where(follower_id: params[:id]).first.destroy
   end
 end

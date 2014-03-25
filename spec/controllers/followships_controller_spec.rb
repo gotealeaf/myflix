@@ -60,18 +60,20 @@ describe FollowshipsController do
       follower2 = Fabricate(:user)
       Fabricate(:followship, user: adam, follower: follower1)
       Fabricate(:followship, user: adam, follower: follower2)
+      get :index
       response.should render_template(:index)
     end
   end
 
   describe 'POST #destroy' do
     let(:adam) { Fabricate(:user) }
+    let(:follower) { Fabricate(:user) }
     before do
       add_to_session(adam)
     end
     it 'destroys existing followships' do
-      followship = Fabricate(:followship, user_id: adam.id)
-      post :destroy, id: followship.id
+      followship = Fabricate(:followship, user_id: adam.id, follower: follower)
+      post :destroy, id: follower.id
       expect(Followship.count).to eq(0)
     end
     it 'displays an error message if the there was no followship to delete' do
@@ -79,8 +81,8 @@ describe FollowshipsController do
       expect(flash[:danger]).to be_present
     end
     it 'displays a confirmation message if the delete is completed successfully' do
-      followship = Fabricate(:followship, user_id: adam.id)
-      post :destroy, id: followship.id
+      Fabricate(:followship, user_id: adam.id, follower: follower )
+      post :destroy, id: follower.id
       expect(flash[:success]).to be_present
     end
     it 'redirects the user to the index page for followships' do
