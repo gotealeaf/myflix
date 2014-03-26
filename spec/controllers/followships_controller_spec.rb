@@ -29,7 +29,7 @@ describe FollowshipsController do
       end
       it 'redirects the user to the followships index page' do
         post :create, follower_ids: follower.id
-        expect(response).to redirect_to followships_path
+        expect(response).to redirect_to people_path
       end
       it 'doesnt let a user follow themselves' do
         post :create, follower_ids: adam.id
@@ -87,7 +87,7 @@ describe FollowshipsController do
     it 'redirects the user to the index page for followships' do
       followship = Fabricate(:followship, user_id: adam.id)
       post :destroy, id: followship.id
-      expect(response).to redirect_to followships_path
+      expect(response).to redirect_to people_path
     end
     it_behaves_like "require_logged_in_user" do
       let(:action) { post :destroy, id: 1 }

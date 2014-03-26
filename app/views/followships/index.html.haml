@@ -18,5 +18,5 @@
           %td.extra-padding= follower.followers.count
           %td.extra-padding
             / = button_to "X", followship_path(id: follower.id), method: :delete, class: "glyphicon glyphicon-remove"
-            = link_to followship_path(id: follower.id), method: :delete do
+            = link_to followship_path(id: follower.id), method: :delete, id: "follower_#{follower.id}" do
               <span class="glyphicon glyphicon-remove"></span>

@@ -12,7 +12,7 @@ class FollowshipsController < ApplicationController
         flash[:danger] = "You already are following #{followee.fullname}, you cannot follow them again."
       end
     end
-    redirect_to followships_path
+    redirect_to people_path
   end
 
   def index
@@ -26,7 +26,7 @@ class FollowshipsController < ApplicationController
     else
       flash[:danger] = "There was an erorr when deleting the relationship."
     end
-    redirect_to followships_path
+    redirect_to people_path
   end
 
   private
