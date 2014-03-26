@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  has_many :followships
+  has_many :followers, :through => :followships
+
   has_secure_password validations: false
   has_many :queue_items, -> { order 'position ASC' }
   validates :email, uniqueness: true, presence: true
@@ -21,5 +24,13 @@ class User < ActiveRecord::Base
   def number_of_reviews
     total = reviews.count
     total
+  end
+
+  def following?(follower)
+    if followers.include?(follower)
+      false
+    else
+      true
+    end
   end
 end
