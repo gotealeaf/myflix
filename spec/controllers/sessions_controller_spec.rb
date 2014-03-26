@@ -51,7 +51,9 @@ describe SessionsController do
         expect(response).to render_template('sessions/new')
       end
 
-      it "sets the error message" 
+      it "sets the error message" do
+        expect(flash[:notice]).to eq("Email or password is invalid")
+      end
     end
   end
   describe "GET destroy" do

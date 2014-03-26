@@ -27,9 +27,6 @@ describe VideosController do
         expect(assigns(:review)).to be_instance_of(Review)
       end
     end
-
-    context "when the user has reviewed the video"
-      it "does not set a @review variable" 
   end
 
   describe "GET search" do

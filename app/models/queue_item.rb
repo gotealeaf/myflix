@@ -1,12 +1,14 @@
 class QueueItem < ActiveRecord::Base
   belongs_to :user
   belongs_to :video
+  delegate :category, to: :video
+  delegate :title, to: :video, prefix: :video
 
   validates :position, numericality: { only_integer: true }
 
   def review_rating
     review = Review.where(user: user, video: video).first
-    review.rating if review
+    review.rating.to_i if review
   end
 
   def review_rating=(new_rating)
@@ -20,11 +22,7 @@ class QueueItem < ActiveRecord::Base
     end
   end
 
-  def video_title
-    video.title
-  end
-
   def category_name
-    video.category.name
+    category.name
   end
 end

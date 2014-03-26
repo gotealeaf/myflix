@@ -20,6 +20,7 @@
   end
 
   def sort
+    
     begin
       ActiveRecord::Base.transaction do
         update_queue_item_position

@@ -7,19 +7,18 @@ describe QueueItemsController do
       it "sets the @queue_items variable" do
         current_user = Fabricate(:user)
         session[:user_id] = current_user.id
-        queue1 = Fabricate(:queue_item, user: current_user)
-        queue2 = Fabricate(:queue_item, user: current_user)
+        queue_item1 = Fabricate(:queue_item, user: current_user)
+        queue_item2 = Fabricate(:queue_item, user: current_user)
 
         get :index
-        expect(assigns(:queue_items)).to match_array([queue1, queue2])
+        expect(assigns(:queue_items)).to match_array([queue_item1, queue_item2])
       end
     end
     context "when user is inauthenticated" do
       it "redirects the user to the sign page" do
         curent_user = Fabricate(:user)
-    
-        queue1 = Fabricate(:queue_item)
-        queue2 = Fabricate(:queue_item)
+        queue_item = Fabricate(:queue_item)
+        queue_item = Fabricate(:queue_item)
 
         get :index
         expect(response).to redirect_to(sign_in_path)
@@ -147,70 +146,59 @@ describe QueueItemsController do
 
   describe "POST sort" do
     context "with valid inputs" do
-      it "redirects to the queue items page" do
-        current_user = Fabricate(:user)
+
+      let(:current_user) { Fabricate(:user)}
+      let(:video) { Fabricate(:video) }
+      let(:queue_item1) { Fabricate(:queue_item, user: current_user, position: 1, video: video) }
+      let(:queue_item2) { Fabricate(:queue_item, user: current_user, position: 2, video: video) }
+      let(:queue_item3) { Fabricate(:queue_item, user: current_user, position: 3, video: video) }
+
+      before do
         session[:user_id] = current_user.id
-        video = Fabricate(:video)
-        q1 = Fabricate(:queue_item, user: current_user, position: 1, video: video)
-        q2 = Fabricate(:queue_item, user: current_user, position: 2, video: video)
-        
-        post :sort, queue_items: [{id: q1.id, position: 1}, {id: q2.id, position: 2}]
+      end
+
+      it "redirects to the queue items page" do
+        post :sort, queue_items: [{id: queue_item1.id, position: 1}, {id: queue_item2.id, position: 2}]
         expect(response).to redirect_to(queue_items_path)
       end
 
-      it "re orders each item by position number" do
-        current_user = Fabricate(:user)
-        session[:user_id] = current_user.id
-        video = Fabricate(:video)
-        q1 = Fabricate(:queue_item, user: current_user, position: 1, video: video)
-        q2 = Fabricate(:queue_item, user: current_user, position: 2, video: video)
-        
-        post :sort, queue_items: [{id: q1.id, position: 2}, {id: q2.id, position: 1}]
-        expect(current_user.queue_items).to eq([q2, q1])
+      it "re orders each item by position number" do        
+        post :sort, queue_items: [{id: queue_item1.id, position: 2}, {id: queue_item2.id, position: 1}]
+        expect(current_user.queue_items).to eq([queue_item2, queue_item1])
       end
+
       it "normalizes the position numbers" do
-        current_user = Fabricate(:user)
-        session[:user_id] = current_user.id
-        video = Fabricate(:video)
-        q1 = Fabricate(:queue_item, user: current_user, position: 1, video: video)
-        q2 = Fabricate(:queue_item, user: current_user, position: 2, video: video)
-        q3 = Fabricate(:queue_item, user: current_user, position: 3, video: video)
-        post :sort, queue_items: [{id: q1.id, position: 2}, {id: q2.id, position: 4}, {id: q3.id, position: 1}]
+        post :sort, queue_items: [{id: queue_item1.id, position: 2}, {id: queue_item2.id, position: 4}, {id: queue_item3.id, position: 1}]
         expect(current_user.queue_items.map(&:position)).to eq([1, 2, 3])
       end
     end
     context "with invalid inputs" do
-      it "redirects to the queue items page" do
-        current_user = Fabricate(:user)
+      let(:current_user) { Fabricate(:user)}
+      let(:video) { Fabricate(:video) }
+      let(:queue_item1) { Fabricate(:queue_item, user: current_user, position: 1, video: video) }
+      let(:queue_item2) { Fabricate(:queue_item, user: current_user, position: 2, video: video) }
+      let(:queue_item3) { Fabricate(:queue_item, user: current_user, position: 3, video: video) }
+
+      before do
         session[:user_id] = current_user.id
-        video = Fabricate(:video)
-        q1 = Fabricate(:queue_item, user: current_user, position: 1, video: video)
-        q2 = Fabricate(:queue_item, user: current_user, position: 2, video: video)
-        
-        post :sort, queue_items: [{id: q1.id, position: 2.5}, {id: q2.id, position: 1}]
+      end
+
+      it "redirects to the queue items page" do
+        post :sort, queue_items: [{id: queue_item1.id, position: 2.5}, {id: queue_item2.id, position: 1}]
         expect(response).to redirect_to(queue_items_path)
       end
-      it "sets the flash error message" do
-        current_user = Fabricate(:user)
-        session[:user_id] = current_user.id
-        video = Fabricate(:video)
-        q1 = Fabricate(:queue_item, user: current_user, position: 1, video: video)
-        q2 = Fabricate(:queue_item, user: current_user, position: 2, video: video)
-        
-        post :sort, queue_items: [{id: q1.id, position: 2.5}, {id: q2.id, position: 1}]
+
+      it "sets the flash error message" do      
+        post :sort, queue_items: [{id: queue_item1.id, position: 2.5}, {id: queue_item2.id, position: 1}]
         expect(flash[:notice]).to eq("Please only use whole numbers to update the queue")
       end
+
       it "does not reorder the queue items" do
-        current_user = Fabricate(:user)
-        session[:user_id] = current_user.id
-        video = Fabricate(:video)
-        q1 = Fabricate(:queue_item, user: current_user, position: 1, video: video)
-        q2 = Fabricate(:queue_item, user: current_user, position: 2, video: video)
-        
-        post :sort, queue_items: [{id: q1.id, position: 3}, {id: q2.id, position: 2.1}]
-        expect(q1.reload.position).to eq(1)
+        post :sort, queue_items: [{id: queue_item1.id, position: 3}, {id: queue_item2.id, position: 2.1}]
+        expect(queue_item1.reload.position).to eq(1)
       end     
     end
+
     context "with unauthenticated user" do
       it "redirects user to sign in page" do
         jane = Fabricate(:user)
@@ -220,6 +208,7 @@ describe QueueItemsController do
         expect(response).to redirect_to sign_in_path
       end
     end
+
     context "with queue items that do not belong to the current user" do
       it "does not change the queue items" do
         jane = Fabricate(:user)
@@ -233,5 +222,4 @@ describe QueueItemsController do
       end
     end
   end
-  
 end
