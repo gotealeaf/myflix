@@ -37,12 +37,41 @@ describe VideosController do
         get :show, id: @back_to_the_future.id
       end
 
-      it "sets the @video variable to the designated id" do
-        expect(assigns(:video)).to be_instance_of(Video)
+      it "assigns the requested video to @video" do
+        expect(assigns(:video)).to eq(@back_to_the_future)
       end
 
       it "renders the show template" do
         expect(response).to render_template(:show)
+      end
+    end
+  end
+
+  describe "GET search" do
+    context "no user is signed in" do
+      it "redirects to the sign_in_path" do
+        get :search
+        expect(response).to redirect_to(sign_in_path)
+      end
+    end
+
+    context "a user is signed in" do
+      before :each do
+        session[:user_id] = smaug.id
+        @futurama = Video.create(title: "Futurama", description: "An pizza delievery boy gets frozen.")
+        @back_to_the_future = Video.create(title: "Back to the Future", description: "Back in time!")
+        @the_simpsons = Video.create(title: "The Simpsons", description: "Yellow people.")
+        @south_park = Video.create(title: "South Park", description: "Some kids cause trouble.")
+        @king_of_the_hill = Video.create(title: "King of the Hill", description: "Some Texians.")
+        @modern_family = Video.create(title: "Modern Family", description: "A very funny modern famiyl.")
+        get :search, search_term: "futur"
+      end
+
+      it "populates the @results array with videos matching the requested title" do
+        expect(assigns(:results)).to match_array([@futurama, @back_to_the_future])
+      end
+      it "renders the search template" do
+        expect(response).to render_template(:search)
       end
     end
   end
