@@ -16,6 +16,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       flash[:success] = "Your account has been created!"
+      UserMailer.welcome_email(@user).deliver
       session[:user_id] = @user.id
       redirect_to home_path
     else
