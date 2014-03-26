@@ -25,4 +25,12 @@ class User < ActiveRecord::Base
     total = reviews.count
     total
   end
+
+  def following?(follower)
+    if followers.include?(follower)
+      false
+    else
+      true
+    end
+  end
 end
