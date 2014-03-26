@@ -14,15 +14,9 @@ describe QueueItemsController do
         expect(assigns(:queue_items)).to match_array([queue_item1, queue_item2])
       end
     end
-    context "when user is inauthenticated" do
-      it "redirects the user to the sign page" do
-        curent_user = Fabricate(:user)
-        queue_item = Fabricate(:queue_item)
-        queue_item = Fabricate(:queue_item)
 
-        get :index
-        expect(response).to redirect_to(sign_in_path)
-      end
+    it_behaves_like "require_sign_in" do
+      let(:action) { post :index }
     end
   end
 
@@ -36,7 +30,7 @@ describe QueueItemsController do
       expect(response).to redirect_to(queue_items_path)
     end
 
-    it "creates a que item" do
+    it "creates a queue item" do
       current_user = Fabricate(:user)
       session[:user_id] = current_user.id
       video = Fabricate(:video)
@@ -136,7 +130,7 @@ describe QueueItemsController do
       delete :destroy, id: q1.id
       expect(QueueItem.count).to eq(1)
     end
-
+    
     it "redirects to the sign in page if the user is unauthenticated" do
       q1 = Fabricate(:queue_item)
       delete :destroy, id: q1.id

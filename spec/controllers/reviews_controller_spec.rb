@@ -2,21 +2,15 @@ require 'spec_helper'
 require 'pry'
 
 describe ReviewsController do
-
   describe "POST create" do
-    
-    let(:video) { Fabricate(:video)}
-    
+    let(:video) { Fabricate(:video)}    
     context "with authenticated users" do
 
-       let(:current_user) { Fabricate(:user)}
-
         before do
-          session[:user_id] = current_user.id
+          set_current_user
         end
 
       context "with valid input" do
-
         it "redirects to the video show page" do    
           post :create, review: {rating: 3.0}, video_id: video
           expect(response).to render_template('videos/show')
@@ -39,7 +33,6 @@ describe ReviewsController do
       end
 
       context "with invalid input" do
-
         it "does not create a review" do
           post :create, review: { user: current_user }, user_id: current_user, video_id: video.id
           expect(Review.count).to eq(0)
@@ -63,12 +56,8 @@ describe ReviewsController do
         end
       end
     end
-    context "with unauthenticated users"
-      it "redirects the visitor to sign in page" do
-        current_user = Fabricate(:user)
-
-        post :create, review: { rating: 3.0, content: "test" }, video_id: video
-        expect(response).to redirect_to(sign_in_path)
-      end
+    it_behaves_like "require_sign_in" do
+      let(:action) { post :create, review: { rating: 3.0, content: "test" }, video_id: video}
+    end
   end
 end
