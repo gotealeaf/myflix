@@ -3,13 +3,14 @@ ruby '2.0.0'
 
 gem 'bootstrap-sass'
 gem 'coffee-rails'
-gem 'rails'
+gem 'rails', '~> 4.0.4'
 gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
 gem "bcrypt-ruby"
 gem 'bootstrap_form'
+gem 'nokogiri', '1.3.3'
 
 group :development do
   gem 'sqlite3'
@@ -27,7 +28,7 @@ end
 group :development, :test do
   gem 'fabrication'
   gem "faker"
-	gem 'rspec-rails', '~> 3.0.0.beta'
+	gem 'rspec-rails'#, '~> 3.0.0.beta'
   gem 'pry'
 end
 
