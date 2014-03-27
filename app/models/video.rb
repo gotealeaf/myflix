@@ -1,6 +1,7 @@
 class Video < ActiveRecord::Base
-  has_many :video_categories
-  has_many :categories, -> { order(:name) }, through: :video_categories
+  # has_many :video_categories
+  # has_many :categories, -> { order(:name) }, through: :video_categories
+  belongs_to :category
   has_many :reviews, -> { order("created_at DESC") }
   
   validates :title, presence: :true, uniqueness: true

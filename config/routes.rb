@@ -6,15 +6,16 @@ Myflix::Application.routes.draw do
     collection do
       post 'search', to: 'videos#search'
     end
+
+    member do
+        post 'add_to_queue', to: 'queue_items#add_to_queue'
+    end
+
     resources :reviews, only: [:create]
   end
 
-  resources :users, only: [:create] # do
-  #   member do
-  #     resources :my_queues, only: [:index, :update]
-  #   end
-  # end 
-
+  resources :users, only: [:create]
+  
   resources :sessions, only: [:create]
 
   get 'my_queue', to: 'queue_items#index'

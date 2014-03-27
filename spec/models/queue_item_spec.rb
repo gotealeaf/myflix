@@ -35,7 +35,7 @@ describe QueueItem do
   describe "#category_name" do
     it "returns the video's category" do
       cat = Fabricate(:category, name: "Brasismo")
-      video = Fabricate(:video, categories: [cat])
+      video = Fabricate(:video, category: cat)
       queue_item = Fabricate(:queue_item, video: video)
 
       expect(queue_item.category_name).to eq("Brasismo")      
@@ -45,7 +45,7 @@ describe QueueItem do
   describe "#category" do 
     it "returns teh categpry of the video" do
       cat = Fabricate(:category, name: "Brasismo")
-      video = Fabricate(:video, categories: [cat])
+      video = Fabricate(:video, category: cat)
       queue_item = Fabricate(:queue_item, video: video)
 
       expect(queue_item.category).to eq(cat)    
