@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 
 describe VideosController do
   describe "GET index" do
