@@ -11,4 +11,9 @@ class User < ActiveRecord::Base
       queue_item.update(position: index+1)
     end
   end 
+
+  def queued_item?(video=nil)
+    collection = queue_items.map(&:video)
+    collection.include?(Video.find(video.id))
+  end
 end

@@ -5,7 +5,7 @@ gem 'bootstrap-sass'
 gem 'coffee-rails'
 gem 'rails', '~> 4.0.4'
 gem 'haml-rails'
-gem 'sass-rails'
+gem 'sass-rails', '~> 4.0.2'
 gem 'uglifier'
 gem 'jquery-rails'
 gem "bcrypt-ruby"
@@ -30,6 +30,7 @@ group :development, :test do
   gem "faker"
 	gem 'rspec-rails'#, '~> 3.0.0.beta'
   gem 'pry'
+  gem 'launchy', '~> 2.4.2'
 end
 
 group :test do

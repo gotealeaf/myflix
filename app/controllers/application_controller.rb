@@ -11,10 +11,4 @@ class ApplicationController < ActionController::Base
   def authorize
     redirect_to sign_in_path, alert: "Not authortized" unless current_user
   end
-
-  def reviewed?
-    
-    
-  end
-
 end
