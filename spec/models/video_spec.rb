@@ -44,39 +44,32 @@ describe Video do
   end
 
   #DESIGNED WITH TDD APPROACH
-  describe "searches by title" do
-    it "returns an empty array when it doesn't find a title that doesn't exist" do
-      @false_title = "falsevideo"
+  describe "searche_by_title" do
+    before { @family_guy_video.save }
 
+    it "returns an empty array when it doesn't find a title that matches" do
+      @false_title = "falsevideo"
       expect(Video.search_by_title(@false_title)).to eq([])
     end
 
     it "returns an array of the match when it finds a video with an exact match to the title provided" do
-      @family_guy_video.save
       @real_title = "Family Guy"
 
       expect(Video.search_by_title(@real_title)).to eq([@family_guy_video])
     end
 
+    # Note that it also orders them in rev-chronological, tho not a business req
     it "returns an array of the matches when it finds videos with a partial match to the title provided" do
-      @family_guy_video.save
       @family_guy_sequel = @family_guy_video.dup
       @family_guy_sequel.description = "Sequel to the other family guy video."
       @family_guy_sequel.save
 
       @partial_title = "Family"
-      expect(Video.search_by_title(@partial_title)).to eq([@family_guy_video, @family_guy_sequel])
+      expect(Video.search_by_title(@partial_title)).to eq([@family_guy_sequel, @family_guy_video])
+    end
+
+    it "returns nothing for an empty string" do
+      expect(Video.search_by_title("")).to eq([])
     end
   end
 end
-
-
-
-
-
-
-
-
-
-
-

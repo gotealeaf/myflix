@@ -45,30 +45,29 @@ describe Category do
                              description: "A forensics show.",
                              sm_cover_locn: "/tmp/monk.jpg",
                              lg_cover_locn: "/tmp/monk_large.jpg",
+                             created_at: 1.day.ago,
                              categories: [@drama_category])
-      @monk2 = @monk.dup
-      @monk2.title = "Monk2"
-      @monk2.categories = [@drama_category]
-      @monk2.save
+      @monk2 = Video.create(title: "Monk2",
+                             description: "A forensics show.",
+                             sm_cover_locn: "/tmp/monk.jpg",
+                             lg_cover_locn: "/tmp/monk_large.jpg",
+                             categories: [@drama_category])
     end
-
 
     it "returns empty array if there are no videos" do
       @empty_category = Category.create(name: "Empty")
       expect(Category.find_by(name: "Empty").recent_videos).to be_empty
     end
-    it "returns the most recent videos in a cateogry - up to 6 videos" do
+    it "returns the most recent videos in a cateogry" do
       expect(Category.find_by(name:"Drama").recent_videos).to include(@monk, @monk2)
     end
-    it "will return maximum 6 recent videos" do
-      i = 3
-      [@monk3, @monk4, @monk5, @monk6, @monk7].each do |vid|
-        vid = @monk.dup
-        vid.title = "Monk+#{i}"
-        i +=1
-        vid.categories = [@drama_category]
-        vid.save
-      end
+    it "will return only the 6 most-recent videos" do
+      4.times { Video.create(title: "Modern Family", description: "good show", categories: [@drama_category]) }
+      @castle = Video.create(title: "Castle", description: "Murder cases.", categories: [@drama_category], created_at: 1.week.ago )
+      expect(Category.find_by(name:"Drama").recent_videos).to_not include(@castle)
+    end
+    it "will return maximum 6 videos" do
+      7.times { Video.create(title: "Modern Family", description: "good show", categories: [@drama_category]) }
       expect(Category.find_by(name:"Drama").recent_videos.size).to eq(6)
     end
     it "returns videos in reverse chronological order (most recent first)" do
