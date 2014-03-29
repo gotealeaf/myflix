@@ -29,7 +29,7 @@ vid_categories = {family_guy: [3, 1],
                 monk: [2],
                 south_park: [3, 1]}
 
-100.times do
+10.times do
   sm_cover = small_covers.sample
   filename = File.basename(sm_cover, ".jpg")
   title = filename.gsub("_", " ")
