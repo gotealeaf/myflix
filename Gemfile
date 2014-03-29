@@ -12,6 +12,8 @@ gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'bootstrap_form', github: "bootstrap-ruby/rails-bootstrap-forms"
 gem 'fabrication'
 gem 'faker'
+gem 'sidekiq'
+gem 'figaro'
 
 
 group :development do
