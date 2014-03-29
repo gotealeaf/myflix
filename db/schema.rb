@@ -43,17 +43,6 @@ ActiveRecord::Schema.define(version: 20140327174221) do
     t.datetime "updated_at"
   end
 
-  create_table "video_categories", force: true do |t|
-    t.integer  "video_id"
-    t.integer  "category_id"
-    t.datetime "crated_at"
-  end
-
-  create_table "video_ratings", force: true do |t|
-    t.integer "user_id"
-    t.integer "review_id"
-  end
-
   create_table "videos", force: true do |t|
     t.string   "title"
     t.string   "small_cover"

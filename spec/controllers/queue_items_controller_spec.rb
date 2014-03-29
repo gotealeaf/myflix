@@ -6,7 +6,6 @@ describe QueueItemsController do
       it "sets @my_queue variable" do 
         user = Fabricate :user
         session[:user_id] = user.id
-
         queue_item1 = Fabricate(:queue_item, user: user)
         queue_item2 = Fabricate(:queue_item, user: user)
         queue_item3 = Fabricate(:queue_item, user: user)
@@ -18,27 +17,48 @@ describe QueueItemsController do
     end
 
     describe "POST add_to_queue" do
-      it "redirects to my_queue page" do
-        user = Fabricate :user
-        session[:user_id] = user.id
-        video = Fabricate :video
+      context "the video is not in the queue" do
+        before do
+          user = Fabricate :user
+          session[:user_id] = user.id
+          video = Fabricate :video
+          post :add_to_queue, id: video.id
+        end
 
-        post :add_to_queue, id: video.id
+        it "updates user queue_items adding the video" do
+          expect(QueueItem.count).to eq(1)
+        end
 
-        expect(response).to redirect_to "video/show"      
+        it "redirects to my_queue page" do
+          expect(response).to redirect_to video_path     
+        end
+
+        it "sets the notice" do 
+          expect(flash[:notice]).to eq("The video has been added to your queue.")          
+        end
       end
 
-      it "updates user queue_items adding the video" do
-        user = Fabricate :user
-        session[:user_id] = user.id
-        video = Fabricate :video
-        # queue_item = Fabricate(:queue_item, user: user, video: video, rating: nil)
+      context "the video is allready in the queue" do
+        let(:user){ Fabricate :user }        
+        before do
+          session[:user_id] = user.id
+          video = Fabricate :video
+          queue_item = Fabricate(:queue_item, user: user, video: video)
+          post :add_to_queue, id: video.id
+        end
 
-        post :add_to_queue, id: video.id
+        it "does not update the queue" do
+          expect(user.queue_items.count).to eq(1)
+        end
 
-        expect(QueueItem.last.user).to eq(user)
-        expect(QueueItem.last.video).to eq(video)
-      end
+        it "renders video when the video is allready in the queue" do
+          expect(response).to render_template 'videos/show'
+        end
+
+        it "sets the error" do 
+          expect(flash[:error]).to eq("The video is allready in your queue.")          
+        end
+      end      
     end
 
     describe "POST update" do
