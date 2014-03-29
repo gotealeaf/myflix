@@ -6,14 +6,15 @@
           %h1 Sign in
         %fieldset
           .form-group
-            = label_tag 'Email Address'
+            = label_tag :email, 'Email Address'
             .row
               .col-sm-4
                 = email_field_tag :email, params[:email] || '', class: 'form-control'
           .form-group
-            = label_tag 'Password'
+            = label_tag :password, 'Password'
             .row
               .col-sm-4
                 = password_field_tag :password, '', class: 'form-control'
         %fieldset.form-group.action
           = submit_tag 'Sign in', class: 'btn btn-default'
+          = link_to "Forgot Password?", forgot_password_path
