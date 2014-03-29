@@ -6,4 +6,8 @@ class Category < ActiveRecord::Base
   validates :name, presence: true#,
                    #length: { maximum: 30 }
 
+
+  def recent_videos
+    self.videos.limit(6).order(:created_at).reverse
+  end
 end
