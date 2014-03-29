@@ -18,25 +18,57 @@ describe QueueItemsController do
 
     describe "POST add_to_queue" do
       context "the video is not in the queue" do
+
+        let(:user){ Fabricate :user }    
+        let(:video){ Fabricate :video }     
+
         before do
-          user = Fabricate :user
           session[:user_id] = user.id
-          video = Fabricate :video
           post :add_to_queue, id: video.id
         end
 
         it "updates user queue_items adding the video" do
-          expect(QueueItem.count).to eq(1)
+          expect(user.queue_items.count).to eq(1)
         end
 
-        it "redirects to my_queue page" do
+        # it "sets queue_item the last one by order" do
+        #   video2 = Fabricate :video
+        #   queue_item = Fabricate(:queue_item, user: user, video: video2, order: 88)
+        #   order = user.queue_items.last.order
+
+        #   expect(user.queue_items[1].order).to eq(order)
+        # end
+
+        it "sets queue_item = 1 when is the first video added to the queue" do
+          expect(user.queue_items.last.order).to eq(1)
+        end
+
+        it "redirects to my_queue page when the video has been added to the queue" do
           expect(response).to redirect_to video_path     
         end
 
-        it "sets the notice" do 
+        it "sets the notice when the video has been added to the queue" do 
           expect(flash[:notice]).to eq("The video has been added to your queue.")          
         end
       end
+
+
+        it "sets queue_item the last one by order for a video that is not in the queue" do
+          user = Fabricate :user
+          video = Fabricate :video
+          session[:user_id] = user.id
+          video1 = Fabricate :video
+          video2 = Fabricate :video
+          video3 = Fabricate :video
+
+          queue_item = Fabricate(:queue_item, user: user, video: video1, order: 2)
+          queue_item = Fabricate(:queue_item, user: user, video: video2, order: 3)
+          queue_item = Fabricate(:queue_item, user: user, video: video3, order: 4)
+          order = user.queue_items.last.order
+
+          post :add_to_queue, id: video.id
+          expect(user.queue_items.last.order).to eq(order + 1)
+        end
 
       context "the video is allready in the queue" do
         let(:user){ Fabricate :user }        
@@ -51,7 +83,7 @@ describe QueueItemsController do
           expect(user.queue_items.count).to eq(1)
         end
 
-        it "renders video when the video is allready in the queue" do
+        it "renders videos/show template when the video is allready in the queue" do
           expect(response).to render_template 'videos/show'
         end
 

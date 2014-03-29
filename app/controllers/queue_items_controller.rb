@@ -7,7 +7,9 @@ class QueueItemsController < ApplicationController
 
   def add_to_queue
     if QueueItem.find_by(user: current_user, video: Video.find(params[:id])).nil?
-      QueueItem.create(user: current_user, video: Video.find(params[:id]))
+      order = current_user.queue_items.last.nil? ? 1 : (current_user.queue_items.last.order + 1)
+      QueueItem.create(user: current_user, video: Video.find(params[:id]), order: order)
+      
       flash[:notice] = "The video has been added to your queue."
       redirect_to video_path  
     else
