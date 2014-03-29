@@ -1,19 +1,9 @@
 require 'spec_helper'
 
-describe Catetory do
+describe Category do
 
-  describe 'with missing attributes' do
-    before { @empty_category = Category.new }
-
-    it "is not valid if name is missing" do
-      expect(@empty_category).to_not be_valid
-    end
-  end
-
-
-  describe 'with wrong-format attributes' do
-    it 'is not valid if name is too long'
-  end
+  it { should validate_presence_of(:name) }
+  it "should validate that length of name is not too long"
 
 
   describe 'with proper-format attributes' do
@@ -40,9 +30,9 @@ describe Catetory do
       expect(@drama_category.videos).to eq([@lie_to_me, @monk])
     end
 
-    it "saves properly" do
+    it "saves into the database exactly" do
       @drama_category.save
-      expect(Category.first).to eq(@drama_category)
+      expect(Category.last).to eq(@drama_category)
     end
   end
 end

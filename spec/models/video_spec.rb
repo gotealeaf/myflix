@@ -1,30 +1,10 @@
 require 'spec_helper'
 
 describe Video do
-
-
-  describe 'created normally but' do
-    before { @normal_video = Video.new(title: "Stock Title",
-                                       description: "Generic Descriptio ",
-                                       sm_cover_locn: "/tmp/stock_title.jpg",
-                                       lg_cover_locn: "/tmp/stock_title_large.jpg")}
-
-    describe "with missing title" do
-      before { @normal_video.title = "" }
-      it "is not valid" do
-        expect(@normal_video).to_not be_valid
-      end
-    end
-
-    describe "with missing description" do
-      before { @normal_video.description = "" }
-      it "is not valid" do
-        expect(@normal_video).to_not be_valid
-      end
-    end
-    it "is not valid if sm_cover_locn is missing"
-    it "is not valid if lg_cover_locn is missing"
-  end
+  it { should have_many(:categories) }  #WANT BOTH IN TESTING???
+  it { should have_many(:categories).through(:video_categories) }
+  it { should validate_presence_of(:title) }
+  it { should validate_presence_of(:description)}
 
 
   describe "with wrong-format attributes" do
@@ -49,12 +29,9 @@ describe Video do
       expect(@family_guy_video).to respond_to(:lg_cover_locn)
       expect(@family_guy_video).to respond_to(:categories)
     end
-    it "is valid" do
-      expect(@family_guy_video).to be_valid
-    end
-    it "saves into the database properly" do
+    it "saves into the database exactly" do
       @family_guy_video.save
-      expect(Video.first).to eq(@family_guy_video)
+      expect(Video.last).to eq(@family_guy_video)
     end
     it "orders categories properly" do
       @comedy_category = Category.create(name: "Comedy", videos: [@family_guy_video])
