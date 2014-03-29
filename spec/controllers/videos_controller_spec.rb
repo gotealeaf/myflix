@@ -24,21 +24,26 @@ describe VideosController do
       expect(response).to redirect_to(sign_in_path)
     end
 
-    context "with authenticated users"
+    context "with authenticated users" do
       before :each do
-        @review_1 = Fabricate(:review, video: @fake_video)
-        @review_2 = Fabricate(:review, video: @fake_video)
+        @review_1 = Fabricate(:review, video: @fake_video, rating: 3)
+        @review_2 = Fabricate(:review, video: @fake_video, rating: 3)
         session[:user_id] = Fabricate(:user).id
         get :show, id: @fake_video.id
       end
 
       it "sets @reviews" do
-        execpt(assigns(:reviews)).to match_array([@review_1, @review_2])
+        expect(assigns(:reviews)).to match_array([@review_1, @review_2])
       end
 
       it "sets @video" do
         expect(assigns(:video)).to eq(@fake_video)
       end
+
+      it "sets @avg_rating" do
+        expect(assigns(:avg_rating)).to eq(3)
+      end
+    end
   end
 
   describe "GET search" do

@@ -4,6 +4,14 @@ describe Video do
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:description) }
   it { should belong_to(:category) }
+  it { should have_many(:reviews) }
+
+  it "returns an array of reviews in reverse chronological order" do
+    video = Fabricate(:video)
+    review_1 = Fabricate(:review, video: video, created_at: 2.day.ago)
+    review_2 = Fabricate(:review, video: video)
+    expect(video.reviews).to eq([review_2, review_1])
+  end
 
   describe "#search_by_title" do
     it "returns an empty array if there is no match" do

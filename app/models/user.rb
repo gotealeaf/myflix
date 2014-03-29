@@ -4,5 +4,7 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true, on: :create
   validates :full_name, presence: true
 
+  has_many :reviews,  -> { order(created_at: :desc) }
+
   has_secure_password
 end

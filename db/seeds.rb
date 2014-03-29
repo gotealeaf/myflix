@@ -9,7 +9,7 @@
 Category.create(name: 'TV Comedy')
 Category.create(name: 'TV Drama')
 
-Video.create(
+monk = Video.create(
   title:           'Monk',
   description:     'A San Francisco detective with some peculier ' + 
                      'habbits solves some interesting crimes.',
@@ -83,16 +83,30 @@ Video.create(
   category:        Category.find_by(name: 'TV Comedy')
 )
 
-User.create(
+bilbo = User.create(
   email:                  'bilbo@shire.com',
   full_name:              'Bilbo Baggins',
   password:               'smaug',
   password_confirmation:  'smaug'
 )
 
-User.create(
+frodo = User.create(
   email:                  'frodo@shire.com',
   full_name:              'Frodo Baggins',
   password:               'nazgul',
   password_confirmation:  'nazgul'
+)
+
+Review.create(
+  user:         bilbo,
+  video:        monk,
+  rating:       4,
+  content:      Faker::Lorem.paragraph(2)
+)
+
+Review.create(
+  user:         frodo,
+  video:        monk,
+  rating:       3,
+  content:      Faker::Lorem.paragraph(3)
 )
