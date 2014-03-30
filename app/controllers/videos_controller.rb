@@ -13,5 +13,4 @@ class VideosController < ApplicationController
     def search_params
       params.permit(:search)
     end
-
 end
