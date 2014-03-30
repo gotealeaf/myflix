@@ -21,7 +21,7 @@ describe QueueItemsController do
   end
 
   describe "POST create" do
-      let(:current_user) { Fabricate(:user)}
+      #let(:current_user) { Fabricate(:user)}
       let(:south_park) { Fabricate(:video) }
       let(:family_guy) { Fabricate(:video) }
 
@@ -45,7 +45,7 @@ describe QueueItemsController do
     end
 
     it "creates the queue item that is associated with the signed in user" do
-      post :create, queue_item: { video_id: south_park.id, user_id: current_user }, video_id: south_park.id, user_id: current_user
+      post :create, queue_item: { video_id: south_park.id, user_id: current_user.id }, video_id: south_park.id
       expect(QueueItem.first.user).to eq(current_user)
     end
 
