@@ -43,6 +43,14 @@ describe VideosController do
       it "sets @avg_rating" do
         expect(assigns(:avg_rating)).to eq(3)
       end
+
+      it "sets @review" do
+        expect(assigns(:review)).to be_a_new(Review)
+      end
+
+      it "sets @review.video" do
+        expect(assigns(:review).video).to eq(@fake_video)
+      end
     end
   end
 
@@ -63,3 +71,11 @@ describe VideosController do
     end
   end
 end
+
+
+
+
+
+
+
+

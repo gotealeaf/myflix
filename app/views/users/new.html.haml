@@ -5,9 +5,9 @@
         = bootstrap_form_for(@user, style: :horizontal, left: "col-sm-2", right: "col-sm-6") do |f|
           %header
             %h1 Register
-          =f.email_field :email, label: "Email Address"
-          =f.password_field :password, label: "Password"
-          =f.password_field :password_confirmation, label: "Confirm Password"
-          =f.text_field :full_name, label: "Full Name"
-          =f.form_group do
-            =f.submit "Sign Up", left: "col-sm-offset-2"
+          = f.email_field :email, label: "Email Address"
+          = f.password_field :password, label: "Password"
+          = f.password_field :password_confirmation, label: "Confirm Password"
+          = f.text_field :full_name, label: "Full Name"
+          = f.form_group do
+            = f.submit "Sign Up", left: "col-sm-offset-2"
