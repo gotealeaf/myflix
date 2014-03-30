@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       flash[:notice] = "Welcome to myFlix!"
-      signin_user
+      signin_user(@user)
     else
       render 'new'
     end
