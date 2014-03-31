@@ -5,9 +5,11 @@
         %img(src="http://dummyimage.com/665x375/000000/00a2ff")
       .video_info.col-sm-3
         %header
-          %h3 Futurama
-          %span Rating: #{@avg_rating}
-        %p Pizza boy Philip J. Fry awakens in the 31st century after 1,000 years of cryogenic preservation in this animated series. After he gets a job at an interplanetary delivery service, Fry embarks on ridiculous escapades to make sense of his predicament.
+          %h3 
+            = @video.title
+          %span Rating: #{@average_rating}
+        %p
+          = @video.description
         .actions
           %a.btn.btn-primary(href="") Watch Now
           %a.btn.btn-default(href="") + My Queue

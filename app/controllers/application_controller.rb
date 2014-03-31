@@ -17,4 +17,12 @@ class ApplicationController < ActionController::Base
       redirect_to sign_in_path
     end
   end
+
+  def average_rating(reviews)
+    if reviews.count > 0
+      reviews.average(:rating).round(1)
+    else
+      "Not yet reviewed."
+    end
+  end
 end

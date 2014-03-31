@@ -19,13 +19,13 @@ describe ReviewsController do
         expect(assigns(:video)).to eq(@fake_video)
       end
 
-      it "sets @avg_rating to 3 if no reviews with invalid data" do
+      it "sets @average_rating if no reviews with invalid data" do
         session[:user_id] = Fabricate(:user)
         @user = User.find(session[:user_id])
         @video = Fabricate(:video)
         @fake_review = Fabricate.attributes_for(:review, content: nil, video: @video, user: @user)
         post :create, review: @fake_review
-        expect(assigns(:avg_rating)).to eq(3)
+        expect(assigns(:average_rating)).to eq("Not yet reviewed.")
       end
 
       context "with invalid data" do
@@ -56,8 +56,8 @@ describe ReviewsController do
           expect(assigns(:user)).to eq(@user)
         end
 
-        it "sets @avg_rating rounded 1 place" do
-          expect(assigns(:avg_rating)).to_not be_blank
+        it "sets @average_rating rounded 1 place" do
+          expect(assigns(:average_rating)).to eq(3.3)
         end
 
         it "renders to videos/show" do

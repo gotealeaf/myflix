@@ -12,11 +12,7 @@ class ReviewsController < ApplicationController
       else
         @user = User.find(session[:user_id])
         @reviews = @video.reviews
-        if @reviews.count > 0
-          @avg_rating = @reviews.average(:rating).round(1)
-        else
-          @avg_rating = 3
-        end
+        @average_rating = average_rating(@reviews)
         render 'videos/show', assigns: { video: @video }
       end
     end
