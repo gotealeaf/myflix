@@ -13,7 +13,6 @@ gem 'bootstrap_form', github: "bootstrap-ruby/rails-bootstrap-forms"
 gem 'fabrication'
 gem 'faker'
 gem 'sidekiq'
-gem 'figaro'
 gem 'unicorn'
 
 
