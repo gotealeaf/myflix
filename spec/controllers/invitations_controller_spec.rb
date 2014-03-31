@@ -74,7 +74,9 @@ describe InvitationsController do
     end
 
     context "with unauthenticated users" do
-
+      it_behaves_like "requires sign in" do
+        let(:action) { post :create, invitation: { recipient_email: "linda@123.com", recipient_name: "linda" } }
+      end
     end
   end
 end
