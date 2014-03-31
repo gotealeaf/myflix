@@ -68,6 +68,7 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.0)
     execjs (2.0.2)
+    fabrication (1.2.0)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.2.1)
@@ -227,6 +228,7 @@ DEPENDENCIES
   capybara (~> 2.1.0)
   coffee-rails
   database_cleaner (~> 1.0.1)
+  fabrication (= 1.2.0)
   factory_girl_rails (~> 4.2.1)
   faker (~> 1.1.2)
   guard-rspec (= 2.5.0)
