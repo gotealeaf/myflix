@@ -24,32 +24,41 @@ describe VideosController do
       expect(response).to redirect_to(sign_in_path)
     end
 
+    it "sets @avg_rating to 3 if no reviews with authenticated users" do
+      @user = Fabricate(:user)
+      session[:user_id] = @user.id
+      get :show, id: @fake_video.id
+      expect(assigns(:avg_rating)).to eq(3)
+    end
+
     context "with authenticated users" do
       before :each do
-        @review_1 = Fabricate(:review, video: @fake_video, rating: 3)
-        @review_2 = Fabricate(:review, video: @fake_video, rating: 3)
-        session[:user_id] = Fabricate(:user).id
+        @user = Fabricate(:user)
+        session[:user_id] = @user.id
+        @review_1 = Fabricate(:review, user: @user, video: @fake_video, rating: 3)
+        @review_2 = Fabricate(:review, user: @user, video: @fake_video, rating: 3)
+        @review_3 = Fabricate(:review, user: @user, video: @fake_video, rating: 4)
         get :show, id: @fake_video.id
       end
 
       it "sets @reviews" do
-        expect(assigns(:reviews)).to match_array([@review_1, @review_2])
+        expect(assigns(:reviews)).to match_array([@review_1, @review_2, @review_3])
       end
 
       it "sets @video" do
         expect(assigns(:video)).to eq(@fake_video)
       end
 
-      it "sets @avg_rating" do
-        expect(assigns(:avg_rating)).to eq(3)
+      it "sets @user" do
+        expect(assigns(:user).id).to eq(session[:user_id])
       end
 
-      it "sets @review" do
+      it "sets @avg_rating rounded 1 place" do
+        expect(assigns(:avg_rating)).to eq(3.3)
+      end
+
+      it "sets @review to be a new Review object" do
         expect(assigns(:review)).to be_a_new(Review)
-      end
-
-      it "sets @review.video" do
-        expect(assigns(:review).video).to eq(@fake_video)
       end
     end
   end

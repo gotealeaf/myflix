@@ -23,6 +23,8 @@
           .form-group.row
             .col-sm-8
               = f.text_area :content, label: "Write Review", rows: "6"
+          = f.hidden_field :user_id, value: @user.id
+          = f.hidden_field :video_id, value: @video.id
           %fieldset.form-group.actions.clearfix
             =f.form_group do
               = f.submit "Submit", class: "btn"
