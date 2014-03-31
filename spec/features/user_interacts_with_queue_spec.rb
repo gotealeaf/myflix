@@ -53,6 +53,7 @@ feature 'User interacts with the queue ' do
     find_and_expect_value(futurama, 3)
   end
 end
+
 #requires data: {video_id: item.video.id} in the dom
 =begin
     find("input[data-video-id='#{futurama.id}']").set(3)
