@@ -5,16 +5,23 @@ class QueueItemsController < ApplicationController
     @queue_items = current_user.queue_items
   end
 
-  def add_to_queue
-    if QueueItem.find_by(user: current_user, video: Video.find(params[:id])).nil?
-      order = current_user.queue_items.last.nil? ? 1 : (current_user.queue_items.last.order + 1)
-      QueueItem.create(user: current_user, video: Video.find(params[:id]), order: order)
-      
-      flash[:notice] = "The video has been added to your queue."
-      redirect_to video_path  
-    else
-      flash[:error] = "The video is allready in your queue."  
-      render 'videos/show'
-    end      
+  def create
+    video = Video.find(params[:video_id])
+    queue_video(video) 
+    redirect_to my_queue_path
+  end
+
+  private 
+
+  def queue_video(video)
+    QueueItem.create(video: video, user: current_user, order: new_queue_item_order) unless current_user_has_video?(video)   
+  end
+
+  def new_queue_item_order
+    current_user.queue_items.count + 1
+  end
+
+  def current_user_has_video?(video)
+    current_user.queue_items.map(&:video).include?(video)    
   end
 end
