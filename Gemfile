@@ -14,6 +14,8 @@ gem 'fabrication'
 gem 'faker'
 gem 'sidekiq'
 gem 'unicorn'
+gem 'carrierwave'
+gem 'mini_magick'
 
 
 group :development do
