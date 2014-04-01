@@ -1,5 +1,6 @@
 class Video < ActiveRecord::Base
 
+  #has_many :queue_items
   has_many :video_categories
   has_many :categories, through: :video_categories, order: :name
   has_many :reviews, order: "created_at DESC"

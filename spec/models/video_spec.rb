@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Video do
+  #it { should have_many(:queue_items)}
   it { should have_many(:categories) }  #WANT BOTH IN TESTING???
   it { should have_many(:categories).through(:video_categories) }
   it { should have_many(:reviews).order("created_at DESC")}
