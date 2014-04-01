@@ -13,7 +13,8 @@ Myflix::Application.routes.draw do
   post '/update_form', to: 'queue_items#update_order'
   get '/people', to: 'followships#index'
   post '/password_reset', to: 'password_resets#create'
-  get 'reset_request_confirmation', to: 'password_resets#confirmation'
+  get '/reset_request_confirmation', to: 'password_resets#confirmation'
+  get '/reset_password', to: 'password_resets#new'
 
   resources :videos, only: [:show, :index] do
     collection do

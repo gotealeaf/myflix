@@ -11,6 +11,8 @@ class PasswordResetsController < ApplicationController
   end
 
   def update
+    binding.pry
+    user = User.find_by_reset_token!(params[:id])
 
   end
 

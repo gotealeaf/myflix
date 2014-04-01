@@ -1,7 +1,7 @@
 %section.reset_password.container
   .row
     .col-sm-10.col-sm-offset-1
-      = bootstrap_form_for(@user, url: edit_password_reset_path) do |f|
+      = bootstrap_form_for(@user, url: password_reset_path(params[:id])) do |f|
         %header
           %h1 Enter your new password
         %fieldset.form-group
