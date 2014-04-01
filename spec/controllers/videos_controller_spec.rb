@@ -1,8 +1,11 @@
 require 'spec_helper'
+####ONE FAILURE - "USER CAN'T BE BLANK"
+
 
 describe VideosController do
   let(:video) { Fabricate(:video) }
   let(:user)  { Fabricate(:user)  }
+  let(:review){ Fabricate(:review)}
 
 
   describe "GET #show" do
@@ -10,7 +13,7 @@ describe VideosController do
     it "redirects to root if user is not signed in" do
       session[:user_id] = nil
       get :show, id: user.id
-      expect(response).to redirect_to :root
+      expect(response).to redirect_to signin_path
     end
 
     context "WITH signed-in user" do
@@ -18,7 +21,19 @@ describe VideosController do
 
       it "loads the @video variable" do
         get :show, id: video.id
-        assigns(:video).should eq(video)
+        expect(assigns(:video)).to eq(video)
+      end
+      it "loads the @review variable" do
+        get :show, id: video.id
+        expect(assigns(:review)).to be_a_new Review
+      end
+      #IS THIS AN ISSUE WITH THE SETUP OF MY FABRICATION?
+      it "accesses reviews in reverse chronological order" do
+        video = Fabricate(:video)
+        review1 = Fabricate(:review, video_id: video.id)
+        review2 = Fabricate(:review, video_id: video.id)
+        get :show, id: video.id
+        expect(assigns(:video).reviews).to match_array([review1, review2])
       end
       it "renders the videos#show template" do
         get :show, id: video.id
@@ -33,7 +48,7 @@ describe VideosController do
     it "redirects to root if user is not signed in" do
       session[:user_id] = nil
       get :search, search: "thing"
-      expect(response).to redirect_to :root
+      expect(response).to redirect_to signin_path
     end
 
     context "WITH signed-in user" do
@@ -41,11 +56,11 @@ describe VideosController do
 
       it "loads @results with the return array of the title search" do
         get :search, search: video.title
-        assigns(:results).should eq([video])
+        expect(assigns(:results)).to eq([video])
       end
       it "loads @searchtext with the user's search string" do
         get :search, search: "avideo"
-        assigns(:searchtext).should eq("avideo")
+        expect(assigns(:searchtext)).to eq("avideo")
       end
       it "renders the videos#search template" do
         get :search, search: video.title

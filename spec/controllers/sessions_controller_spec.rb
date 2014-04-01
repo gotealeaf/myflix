@@ -17,7 +17,7 @@ describe SessionsController do
 
 
   describe "POST create" do
-    joe = Fabricate(:user)
+    let(:joe) { Fabricate(:user) }
 
     it "signs user in with correct information" do
       post :create, {email: joe.email, password: joe.password}
@@ -73,7 +73,7 @@ describe SessionsController do
       it "redirects guests who are already signed out" do
         session[:user_id] = nil
         get :destroy
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to signin_path
       end
     end
   end

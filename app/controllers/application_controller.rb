@@ -29,7 +29,8 @@ class ApplicationController < ActionController::Base
 
   def require_signed_in
       unless signed_in?
-        access_denied("Please sign-in to do that.")
+        flash[:error] = "Please sign-in to do that."
+        redirect_to signin_path
       end
   end
 
