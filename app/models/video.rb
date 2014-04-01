@@ -2,7 +2,7 @@ class Video < ActiveRecord::Base
 
   has_many :video_categories
   has_many :categories, through: :video_categories, order: :name
-  has_many :reviews, order: "created_at ASC"
+  has_many :reviews, order: "created_at DESC"
 
   #Validations
   validates :title,       presence: true#,

@@ -1,6 +1,4 @@
 require 'spec_helper'
-####TWO FAILURES - "USER CAN'T BE BLANK, VIDEO CAN'T BE BLANK"
-
 
 describe Video do
   it { should have_many(:categories) }  #WANT BOTH IN TESTING???
