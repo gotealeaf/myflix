@@ -12,7 +12,7 @@ gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'bootstrap_form', github: "bootstrap-ruby/rails-bootstrap-forms"
 gem 'fabrication'
 gem 'faker'
-gem 'sidekiq'
+gem 'sidekiq', '2.17.7'
 gem 'unicorn'
 gem 'carrierwave'
 gem 'mini_magick'
