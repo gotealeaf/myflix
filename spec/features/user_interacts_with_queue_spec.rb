@@ -1,25 +1,5 @@
 require 'spec_helper'
 
-def fill_in_position_value(video, position_value)
-  within(:xpath, "//tr[contains(.,'#{video.title}')]") do
-    fill_in "queue_items[][position]", with: position_value
-  end
-end
-
-def find_and_expect_value(video, position_value)
-  expect(find(:xpath, "//tr[contains(.,'#{video.title}')]//input[@type='text']").value).to eq(position_value.to_s)
-end
-
-def add_video_to_queue(video)
-  visit videos_path
-  find("a[href='/videos/#{video.id}']").click
-  click_link("+ My Queue")
-end
-
-def does_not_have_link(link)
-  page.should_not have_content(link)
-end
-
 feature 'User interacts with the queue ' do
   scenario "user adds and reorders videos in the queue" do
     comedies = Fabricate(:category, name: 'Comedies')
@@ -51,6 +31,26 @@ feature 'User interacts with the queue ' do
     find_and_expect_value(family_guy, 1)
     find_and_expect_value(south_park, 2)
     find_and_expect_value(futurama, 3)
+  end
+
+  def fill_in_position_value(video, position_value)
+    within(:xpath, "//tr[contains(.,'#{video.title}')]") do
+      fill_in "queue_items[][position]", with: position_value
+    end
+  end
+
+  def find_and_expect_value(video, position_value)
+    expect(find(:xpath, "//tr[contains(.,'#{video.title}')]//input[@type='text']").value).to eq(position_value.to_s)
+  end
+
+  def does_not_have_link(link)
+    page.should_not have_content(link)
+  end
+
+  def add_video_to_queue(video)
+    visit videos_path
+    find("a[href='/videos/#{video.id}']").click
+    click_link("+ My Queue")
   end
 end
 

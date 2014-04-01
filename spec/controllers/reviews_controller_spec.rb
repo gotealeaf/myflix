@@ -3,11 +3,12 @@ require 'pry'
 
 describe ReviewsController do
   describe "POST create" do
-    let(:video) { Fabricate(:video)}    
+    let(:bob) { Fabricate(:user) }
+    let(:video) { Fabricate(:video) }    
     context "with authenticated users" do
 
         before do
-          set_current_user
+          set_current_user(bob)
         end
 
       context "with valid input" do
@@ -27,19 +28,19 @@ describe ReviewsController do
         end
 
         it "creates a review associated with the signed in user" do                
-          post :create, review: {user: current_user, rating: 3.0, content: "test"}, user_id: current_user, video_id: video.id
-          expect(Review.first.user).to eq(current_user)
+          post :create, review: {user: bob, rating: 3.0, content: "test"}, user_id: bob.id, video_id: video.id
+          expect(Review.first.user).to eq(bob)
         end
       end
 
       context "with invalid input" do
         it "does not create a review" do
-          post :create, review: { user: current_user }, user_id: current_user, video_id: video.id
+          post :create, review: { user: bob }, user_id: bob.id, video_id: video.id
           expect(Review.count).to eq(0)
         end
 
         it "renders the videos/show template" do
-          post :create, review: { user: current_user }, user_id: current_user, video_id: video.id
+          post :create, review: { user: bob }, user_id: bob.id, video_id: video.id
           expect(response).to render_template 'videos/show'
         end
 
@@ -49,7 +50,7 @@ describe ReviewsController do
         end
 
         it "sets @reviews" do
-          review = Fabricate(:review, rating: 3.0, content: "yay", video: video, user_id: current_user.id)
+          review = Fabricate(:review, rating: 3.0, content: "yay", video: video, user_id: bob.id)
 
           post :create, review: { rating: 3.0 }, video_id: video.id
           expect(assigns(:reviews)).to match_array([review])

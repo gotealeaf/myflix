@@ -21,12 +21,12 @@ describe QueueItemsController do
   end
 
   describe "POST create" do
-      #let(:current_user) { Fabricate(:user)}
+      let(:bob) { Fabricate(:user) }
       let(:south_park) { Fabricate(:video) }
       let(:family_guy) { Fabricate(:video) }
 
       before do
-        set_current_user
+        set_current_user(bob)
       end
 
     it "redirects to the my que page" do
@@ -45,22 +45,22 @@ describe QueueItemsController do
     end
 
     it "creates the queue item that is associated with the signed in user" do
-      post :create, queue_item: { video_id: south_park.id, user_id: current_user.id }, video_id: south_park.id
-      expect(QueueItem.first.user).to eq(current_user)
+      post :create, queue_item: { video_id: south_park.id, user_id: bob.id }, video_id: south_park.id
+      expect(QueueItem.first.user).to eq(bob)
     end
 
     it "puts the video as the last one in the que" do
-      queue_item2 = Fabricate(:queue_item, video_id: family_guy.id, user_id: current_user.id)
-      queue_item1 = Fabricate(:queue_item, video_id: south_park.id, user_id: current_user.id)
+      queue_item2 = Fabricate(:queue_item, video_id: family_guy.id, user_id: bob.id)
+      queue_item1 = Fabricate(:queue_item, video_id: south_park.id, user_id: bob.id)
 
-      expect(current_user.queue_items.to_a).to match_array([queue_item2, queue_item1])
+      expect(bob.queue_items.to_a).to match_array([queue_item2, queue_item1])
     end
 
     it "does not add the video to the queue if the video is already in the que" do
-      queue_item1 = Fabricate(:queue_item, video: south_park, user: current_user)
-      queue_item2 = Fabricate(:queue_item, video: family_guy, user: current_user)
-      post :create, queue_item: { video: south_park, user: current_user }, video_id: south_park.id, user_id: current_user.id
-      expect(current_user.queue_items.count).to eq(2)
+      queue_item1 = Fabricate(:queue_item, video: south_park, user: bob)
+      queue_item2 = Fabricate(:queue_item, video: family_guy, user: bob)
+      post :create, queue_item: { video: south_park, user: bob }, video_id: south_park.id, user_id: bob.id
+      expect(bob.queue_items.count).to eq(2)
     end
 
 
