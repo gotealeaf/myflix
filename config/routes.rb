@@ -17,6 +17,6 @@ Myflix::Application.routes.draw do
   post 'sort', to: 'queue_items#sort'
 
   resources :categories, only: [:show] 
-  resources :users, only: [:create]
+  resources :users, only: [:create, :show]
   get 'ui(/:action)', controller: 'ui'
 end
