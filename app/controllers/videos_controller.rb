@@ -7,10 +7,8 @@ class VideosController < ApplicationController
 
   def show
     @video = Video.find(params[:id])
-    @user = User.find(session[:user_id])
     @reviews = @video.reviews
     @average_rating = average_rating(@reviews)
-    @review = Review.new
   end
 
   def search

@@ -18,19 +18,17 @@
   .row
     .col-sm-10.col-sm-offset-1
       %fieldset
-        = bootstrap_form_for(@review) do |f|
+        = bootstrap_form_for([@video, Review.new]) do |f|
           .row
             .col-sm-3
-              = f.select :rating, options_for_select([[ "5 Stars", 5 ], [ "4 Stars", 4 ], ["3 Stars", 3 ], [ "2 Stars", 2 ], [ "1 Star", 1 ]])
+              = f.select :rating, options_for_select([5,4,3,2,1].map { |number| [pluralize(number, " Star")] })
           .form-group.row
             .col-sm-8
               = f.text_area :content, label: "Write Review", rows: "6"
-          = f.hidden_field :user_id, value: @user.id
-          = f.hidden_field :video_id, value: @video.id
           %fieldset.form-group.actions.clearfix
             =f.form_group do
               = f.submit "Submit", class: "btn"
-              %a(href="") Cancel
+            = link_to "Cancel", @video
       %header
         %h3 User Reviews (#{@reviews.count})
       %ul
