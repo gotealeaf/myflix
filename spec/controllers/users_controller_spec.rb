@@ -54,6 +54,22 @@ describe UsersController do
         expect(user.authenticate(@user_sample_params[:password])).to be_instance_of(User)
       end
 
+      context 'sends confirmation email correctly' do
+        it 'checks there was an email sent' do
+          message = ActionMailer::Base.deliveries.last
+          expect(message).to_not be_blank
+        end
+        it 'checks the email is being sent to the correct person' do
+          message = ActionMailer::Base.deliveries.last
+          expect(message.to).to eq([User.first.email])
+        end
+        it 'checks the email body is correct' do
+          message = ActionMailer::Base.deliveries.last
+          expect(message.subject).to include("Thank you for signing up for MyFlix")
+        end
+
+      end
+
       it 'sets the session[user_id] if sucessfully saved' do
         adam = User.first
         add_to_session(adam)

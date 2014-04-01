@@ -12,6 +12,8 @@ Myflix::Application.routes.draw do
   get '/my_queue', to: 'queue_items#index'
   post '/update_form', to: 'queue_items#update_order'
   get '/people', to: 'followships#index'
+  post '/password_reset', to: 'password_resets#create'
+  get 'reset_request_confirmation', to: 'password_resets#confirmation'
 
   resources :videos, only: [:show, :index] do
     collection do
@@ -19,6 +21,8 @@ Myflix::Application.routes.draw do
     end
     resources :reviews, only: [:create]
   end
+
+  resources :password_resets
 
   resources :followships, only: [:create, :destroy]
 
