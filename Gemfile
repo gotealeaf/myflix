@@ -19,6 +19,8 @@ gem 'mini_magick'
 gem 'paratrooper'
 gem "sentry-raven"
 gem "fog"
+gem 'figaro'
+gem 'stripe'
 
 
 group :development do

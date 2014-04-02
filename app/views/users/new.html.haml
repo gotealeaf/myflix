@@ -1,7 +1,12 @@
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+Stripe.setPublishableKey("#{ENV['STRIPE_PUBLIC_KEY']}");
+</script>
+= javascript_include_tag 'payment'
 %section.register.container
   .row
     .col-sm-10.col-sm-offset-1
-      = bootstrap_form_for(@user, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-6") do |f|
+      = bootstrap_form_for(@user, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-6", html: {id: 'payment-form'}) do |f|
         %header
           %h1 Register
           = f.alert_message 'Please check your input below.'
@@ -10,10 +15,24 @@
           = f.password_field :password
           = f.text_field :fullname, label: "Full Name"
           = hidden_field_tag :invitation_token, @invitation_token
+        %fieldset.credit_card
+          .form-group
+            %label.control-label.col-sm-2 Credit Card Number
+            .col-sm-6
+              %input.form-control(type="text" data-stripe='number')
+          .form-group
+            %label.control-label.col-sm-2 Security Code
+            .col-sm-6
+              %input.form-control(type="text" data-stripe='cvc')
+          .form-group
+            %label.control-label.col-sm-2 Expiration
+            .col-sm-3
+              = select_month(Date.today, {add_month_numbers: true},  class: 'form-control', data: { stripe: 'exp-month' })
+            .col-sm-2
+              = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'form-control', data: { stripe: 'exp-year' })
         %fieldset.actions.control-group.col-sm-offset-2
           .controls
-            = f.submit "Sign Up", class: "btn btn-default"
-
+            %input(type="submit" value="Sign Up" class="btn btn-default" id='submit')
 
 
 
