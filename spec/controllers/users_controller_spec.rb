@@ -2,9 +2,7 @@ require 'spec_helper'
 
 describe UsersController do
 
-
   describe 'Registration' do
-
 
     describe "GET new" do
       it "should make a new instance" do
@@ -12,7 +10,6 @@ describe UsersController do
         expect(assigns(:user)).to be_a_new User
       end
     end
-
 
     describe "POST create" do
       context "with valid info" do

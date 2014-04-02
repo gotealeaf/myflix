@@ -1,11 +1,9 @@
 require 'spec_helper'
-####ONE FAILURE - "USER CAN'T BE BLANK"
-
 
 describe VideosController do
   let(:video) { Fabricate(:video) }
-  let(:user)  { Fabricate(:user)  }
-
+  let(:user ) { Fabricate(:user ) }
+  let(:user1) { Fabricate(:user ) }
 
   describe "GET #show" do
 
@@ -22,15 +20,10 @@ describe VideosController do
         get :show, id: video.id
         expect(assigns(:video)).to eq(video)
       end
-      #-----REMOVED FOR NOW-----
-      # it "loads the @review variable" do
-      #   get :show, id: video.id
-      #   expect(assigns(:review)).to be_a_new Review
-      # end
       #IS THIS AN ISSUE WITH THE SETUP OF MY FABRICATION?
       it "indexes reviews in reverse chronological order" do
-        review1 = Fabricate(:review, video: video)
-        review2 = Fabricate(:review, video: video)
+        review1 = Fabricate(:review, video: video, user: user  )
+        review2 = Fabricate(:review, video: video, user: user1 )
         get :show, id: video.id
         expect(assigns(:video).reviews).to match_array([review1, review2])
       end
@@ -40,7 +33,6 @@ describe VideosController do
       end
     end
   end
-
 
   describe "GET #search" do
 

@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe SessionsController do
 
-
   describe "GET new" do
     it "redirects users who are already signed in" do
       session[:user_id] = 1
@@ -14,7 +13,6 @@ describe SessionsController do
       expect(response).to render_template :new
     end
   end
-
 
   describe "POST create" do
     let(:joe) { Fabricate(:user) }
@@ -49,7 +47,6 @@ describe SessionsController do
       expect(response).to redirect_to root_path
     end
   end
-
 
   describe "GET destroy" do
     context "for signed in users" do

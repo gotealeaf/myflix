@@ -21,7 +21,6 @@ describe QueueItemsController do
       end
     end
 
-
     context "for UNauthenticated users (guests)" do
       it "redirects to the signin page" do
         get :index
