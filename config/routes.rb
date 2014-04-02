@@ -8,9 +8,10 @@ Myflix::Application.routes.draw do
   get     '/signout',  to: 'sessions#destroy'
   get     '/my_queue', to: 'queue_items#index'
 
+  resources :categories,  only: [:show]
+  resources :queue_items, only: [:create]
   resources :sessions,    only: [:create]
   resources :users,       only: [:create, :show]
-  resources :categories,  only: [:show]
   resources :videos,      only: [:show] do
     collection do
       get  :search  #videos/search

@@ -59,8 +59,8 @@ describe ReviewsController do
         it "sets @video" do
           expect(assigns(:video)).to eq(video)
         end
-        it "renders the video#show page again" do
-          expect(response).to render_template 'videos/show'
+        it "redirects back to video#show page again" do
+          expect(response).to redirect_to video
         end
         it "shows the users form errors"
       end

@@ -6,6 +6,8 @@ describe QueueItem do
   it { should validate_presence_of(:position  ) }
   it { should validate_presence_of(:user_id   ) }
   it { should validate_presence_of(:video_id  ) }
+  it { should validate_uniqueness_of(:user_id ).scoped_to(:video_id) }
+  it { should validate_uniqueness_of(:position).scoped_to(:user_id ) }
 
   let(:category) { Fabricate(:category) }
   let(:user)     { Fabricate(:user) }
@@ -53,5 +55,11 @@ describe QueueItem do
       queue_item = Fabricate(:queue_item, video: video, user: user)
       expect(queue_item.user_rating).to be_nil
     end
+  end
+
+  describe "arrange_queue_position! method" do
+    it "re-orders queue item position in ascending relative order of relative positions given"
+      #expect(QueueItem.all.each.map(&:position)).to eq([1,2])
+    it "returns true if successful"
   end
 end
