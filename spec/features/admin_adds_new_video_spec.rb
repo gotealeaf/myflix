@@ -19,7 +19,7 @@ feature 'Admin adds new video' do
     sign_in
 
     visit video_path(Video.first)
-    expect(page).to have_selector("img[src='/uploads/monk_large.jpg']")
+    expect(page).to have_selector("img[src='/uploads/video/large_cover/1/monk_large.jpg']")
     expect(page).to have_selector("a[href='http://diikjwpmj92eg.cloudfront.net/office_hours/webdev_from_the_ground_up_part1.m4v']")
   end
 end
