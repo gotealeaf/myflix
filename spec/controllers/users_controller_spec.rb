@@ -52,15 +52,16 @@ describe UsersController do
         expect(assigns(:user)).to be_instance_of(User)
       end
     end
+  end
 
-    describe "GET queue" do
-      it "redirects to sign_in_path with unauthenticated users"
 
-      context "with authenticated users" do
-        it "sets @videos"
-        it "sets @user"
-        it "renders the queue template"
-      end
+  describe "GET queue" do
+    it "redirects to sign_in_path with unauthenticated users"
+
+    context "with authenticated users" do
+      it "sets @videos"
+      it "sets @user"
+      it "renders the queue template"
     end
   end
 end
