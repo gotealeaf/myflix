@@ -89,4 +89,58 @@ describe QueueItemsController do
       it "redirects to the signin page"
     end
   end
+
+  describe 'DELETE destroy' do
+    context "for authenticated (signed in) users" do
+      let(:current_user) { Fabricate(:user ) }
+      before { session[:user_id] = current_user.id }
+
+      it "redirects if the current user is not the owner of the queue item" do
+        other_user = Fabricate(:user)
+        video      = Fabricate(:video)
+        queue_item = Fabricate(:queue_item, video: video, user: other_user)
+        delete :destroy, id: queue_item.id
+        expect(response).to redirect_to root_path
+      end
+      it "deletes the clicked queue" do
+        video      = Fabricate(:video)
+        queue_item = Fabricate(:queue_item, video: video, user: current_user)
+        delete :destroy, id: queue_item.id
+        expect(QueueItem.count).to eq(0)
+      end
+      it "reorders the queue item positions" do
+
+      end
+      it "redirects back to the queue page" do
+        video      = Fabricate(:video)
+        queue_item = Fabricate(:queue_item, video: video, user: current_user)
+        delete :destroy, id: queue_item.id
+        expect(response).to redirect_to my_queue_path
+      end
+    end
+
+    context "for authenticated (signed in) users" do
+      let(:user ) { Fabricate(:user  ) }
+      let(:video) { Fabricate(:video ) }
+
+      it "redirects to the signin page" do
+        queue_item = Fabricate(:queue_item, video: video, user: user)
+        delete :destroy, id: queue_item.id
+        expect(response).to redirect_to signin_path
+      end
+    end
+  end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+

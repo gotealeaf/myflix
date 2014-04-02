@@ -1,5 +1,6 @@
 class QueueItemsController < ApplicationController
-  before_action :require_signed_in, only: [:index]
+  before_action :require_signed_in, only: [:index, :destroy]
+  before_action :require_owner,     only: [:destroy]
 
   def index
     @queue_items = current_user.queue_items
@@ -19,8 +20,21 @@ class QueueItemsController < ApplicationController
     end
   end
 
+  def destroy
+    QueueItem.find(params[:id]).destroy
+    redirect_to my_queue_path
+  end
+
   private
     def next_position
       (current_user.queue_items.count)+1
+    end
+
+    def require_owner
+      redirect_to root_path unless (queue_owner == current_user)
+    end
+
+    def queue_owner
+      QueueItem.find(params[:id]).user
     end
 end

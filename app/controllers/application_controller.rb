@@ -39,8 +39,4 @@ class ApplicationController < ActionController::Base
         access_denied("You're already signed in.")
       end
   end
-
-  def require_owner
-    User.find(params[:id]) == current_user if signed_in?
-  end
 end

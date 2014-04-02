@@ -37,4 +37,8 @@ class UsersController < ApplicationController
     def set_user
       @user = User.find(params[:id])
     end
+
+    def require_owner
+      User.find(params[:id]) == current_user if signed_in?
+    end
 end
