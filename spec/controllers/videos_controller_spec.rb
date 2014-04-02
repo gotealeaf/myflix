@@ -20,7 +20,6 @@ describe VideosController do
         get :show, id: video.id
         expect(assigns(:video)).to eq(video)
       end
-      #IS THIS AN ISSUE WITH THE SETUP OF MY FABRICATION?
       it "indexes reviews in reverse chronological order" do
         review1 = Fabricate(:review, video: video, user: user  )
         review2 = Fabricate(:review, video: video, user: user1 )
