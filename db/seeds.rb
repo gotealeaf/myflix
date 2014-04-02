@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-
+####################################VIDEOS SEED#################################
 # Setup Videos From JPG's
 file_urls = Dir.glob("public/tmp/*.jpg").each{|e| e.gsub!("public", "")}
 small_covers = []
@@ -46,5 +46,24 @@ vid_categories = {family_guy: [3, 1],
                sm_cover_locn: sm_cover,
                lg_cover_locn: lg_cover,
                category_ids: vid_catids )
+end
+
+
+#################################USERS SEED###################################
+20.times do
+  user_name = Faker::Name.name
+  user_email = Faker::Internet.safe_email
+  User.create(name: user_name, email: user_email, password: "password")
+end
+
+
+#################################REVIEWS SEED###################################
+#Each user makes a review on a video
+User.all.limit(5).each do |u|
+  Video.all.each do |vid|
+    vid_rating = [1,2,3,4,5].sample.to_f
+    vid_content = Faker::Lorem.paragraph
+    vid.reviews.create(rating: vid_rating, content: vid_content, user_id: u.id)
+  end
 end
 

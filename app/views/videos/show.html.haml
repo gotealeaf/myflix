@@ -6,43 +6,43 @@
       .video_info.col-sm-3
         %header
           %h3= @video.title
-          %span Rating: 4.5/5.0
+          - if @video.average_rating.nil?
+            Rating: (not yet rated)
+          - else
+            %span= "Rating: #{@video.average_rating}/5.0"
         %p= @video.description
         .actions
-          %a.btn.btn-primary(href="") Watch Now
-          %a.btn.btn-default(href="") + My Queue
+          /%a.btn.btn-primary(href="") Watch Now
+          %a
+            =link_to "+ My Queue", queue_items_path(video_id: @video.id), method: 'post', class: 'btn btn-default'
 
 %section.reviews.container
   .row
     .col-sm-10.col-sm-offset-1
-      %form
+      = bootstrap_form_for [@video, Review.new] do |f|
         %fieldset
           .form-group
-            %label Rate this video
+            =f.label :rating, "Rate this video"
             .row
               .col-sm-3
-                %select.form-control(name="")
-                  %option(value="5") 5 Stars
-                  %option(value="4") 4 Stars
-                  %option(value="3") 3 Stars
-                  %option(value="2") 2 Stars
-                  %option(value="1") 1 Star
+                = f.select :rating, options_for_select([5,4,3,2,1].map{|n| [pluralize(n, " Star"), n]}), class: 'form-control'
           .form-group
-            %label Write Review
+            =f.label :content, "Write Review"
             .row
               .col-sm-8
-                %textarea.form-control(name="" rows="6")
+                = f.text_area :content, hide_label: true, rows: 6, class: 'form-control'
         %fieldset.form-group.actions.clearfix
-          %input(type="submit" value="Submit" class="btn")
-          %a(href="") Cancel
+          = f.submit "Submit", class: 'btn'
+          /%input(type="submit" value="Submit" class="btn")
+          = link_to "Cancel", @video
       %header
-        %h3 User Reviews (253)
+        %h3= "User Reviews (#{@video.reviews.size})"
       %ul
-        - 8.times do
+        -@video.reviews.each do |review|
           %article.review
             %li.row
               .col-sm-2
-                %span Rating: 5 / 5
-                %p by <a href="">John A. Zoidberg</a>
+                %span= "Rating: #{review.rating}/5.0"
+                %p= link_to "by #{review.user.name}", user_path(review.user)
               .col-sm-8
-                %p In my opinion, this is one of the best shows ever made. It's not only funny, but despite being so frequently silly, it's very smart as well. Math, science, history, all get referenced. The best parts of the show are the subtle things, those little things in the background or just on screen for a couple of seconds that just make you laugh out loud if you were paying attention. The writers even appear to have been thinking ahead, because if you play close attention to the first episode, you can see a literal shadow of an event revealed seasons later.
+                %p="#{review.content}"

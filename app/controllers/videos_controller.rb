@@ -1,4 +1,5 @@
 class VideosController < ApplicationController
+  before_filter :require_signed_in
 
   def show
     @video = Video.find(params[:id])

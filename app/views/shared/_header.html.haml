@@ -4,7 +4,7 @@
   -if signed_in?
     %ul.col-md-4.clearfix
       %li= link_to "Videos"
-      %li= link_to "My Queue"
+      %li= link_to "My Queue", my_queue_path
       %li= link_to "People"
     %form.col-md-5.navbar-form{action: search_videos_path, method: 'get'}
       .form-group
