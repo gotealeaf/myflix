@@ -16,6 +16,7 @@ gem 'sidekiq', '3.0.0'
 gem 'unicorn'
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'paratrooper'
 
 
 group :development do
