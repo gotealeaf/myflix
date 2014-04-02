@@ -5,6 +5,8 @@ describe Video do
   it { should validate_presence_of(:description) }
   it { should belong_to(:category) }
   it { should have_many(:reviews).order(created_at: :desc) }
+  it { should have_many(:queue_items) }
+  it { should have_many(:users).through(:queue_items) }
 
   it "returns an array of reviews in reverse chronological order" do
     video = Fabricate(:video)
