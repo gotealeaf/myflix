@@ -18,6 +18,7 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'paratrooper'
 gem "sentry-raven"
+gem "fog"
 
 
 group :development do
