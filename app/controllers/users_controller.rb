@@ -1,16 +1,19 @@
 class UsersController < ApplicationController
 
+  def show
+    @user = User.find(params[:id])
+  end
+
+  def index
+    @user = User.find_by(params[:user_id])
+  end
+
   def new
     if current_user
       redirect_to videos_path 
     else
       @user = User.new
     end
-  end
-
-  def show
-    #binding.pry
-    @user = User.find(params[:id])
   end
 
   def create
