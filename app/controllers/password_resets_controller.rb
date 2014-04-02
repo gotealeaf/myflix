@@ -11,9 +11,8 @@ class PasswordResetsController < ApplicationController
   end
 
   def update
-    binding.pry
-    user = User.find_by_reset_token!(params[:id])
-
+    @user = User.find_by_reset_token!(params[:id])
+    redirect_to login_path
   end
 
   def new
@@ -22,5 +21,6 @@ class PasswordResetsController < ApplicationController
 
   def edit
     @user = User.find_by_reset_token!(params[:id])
+    @user.update_attributes(params[:user])
   end
 end

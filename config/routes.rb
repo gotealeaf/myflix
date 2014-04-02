@@ -16,6 +16,7 @@ Myflix::Application.routes.draw do
   get '/reset_request_confirmation', to: 'password_resets#confirmation'
   get '/reset_password', to: 'password_resets#new'
 
+
   resources :videos, only: [:show, :index] do
     collection do
       get :search, to: 'videos#search'

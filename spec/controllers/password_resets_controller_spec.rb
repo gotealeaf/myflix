@@ -45,4 +45,15 @@ describe PasswordResetsController do
       expect(assigns(:user)).to eq(adam)
     end
   end
+
+  describe 'PATCH #update' do
+    let(:adam) { Fabricate(:user, reset_token: SecureRandom.urlsafe_base64) }
+    it 'set the user object to the correct user' do
+      patch :update, { id: adam.reset_token, user: { password: "test" } }
+      expect(assigns(:user)).to eq(adam)
+    end
+    it 'updates the password to the new password for the user'
+    it 'shows a flash message to the user'
+    it 'redirects the user the the login page'
+  end
 end
