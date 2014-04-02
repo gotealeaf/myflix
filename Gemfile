@@ -17,6 +17,7 @@ gem 'unicorn'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'paratrooper'
+gem "sentry-raven"
 
 
 group :development do
