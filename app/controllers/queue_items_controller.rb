@@ -1,9 +1,8 @@
 class QueueItemsController < ApplicationController
-  def index
-    require_user and return
+  before_action :require_user
 
-    @user = User.find(session[:user_id])
-    @queue_items = @user.queue_items
+  def index
+    @queue_items = current_user.queue_items
     render 'users/my_queue'
   end
 end

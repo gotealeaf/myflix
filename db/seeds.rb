@@ -117,7 +117,7 @@ QueueItem.create(
   position: 1
 )
 
-QueueItem.create(
+QueueI tem.create(
   user: bilbo,
   video: futurama,
   position: 2

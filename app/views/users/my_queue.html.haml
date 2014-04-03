@@ -19,13 +19,13 @@
                 %td
                   = queue_item.position
                 %td
-                  = link_to queue_item.video.title
+                  = link_to queue_item.video_title, queue_item.video
                 %td
                   = button_to "Play", nil, class: "btn btn-default"
                 %td
-                  = queue_item.video.reviews.find_by(user: @user).rating if !!queue_item.video.reviews.find_by(user: @user)
+                  = queue_item.rating
                 %td
-                  = link_to queue_item.video.category.name
+                  = link_to queue_item.category_name, queue_item.category
                 %td
                   = link_to "", method: :post do
                     %i.glyphicon.glyphicon-remove
