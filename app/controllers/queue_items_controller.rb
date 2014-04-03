@@ -8,11 +8,11 @@ class QueueItemsController < ApplicationController
   end
 
   def create
-    renumber_positions
+    current_user.renumber_positions
     @video      = Video.find(params[:video_id])
     @queue_item = QueueItem.create(video_id: params[:video_id],
                                    user: current_user,
-                                   position: next_position)
+                                   position: current_user.next_position)
     if @queue_item.valid?
       flash[:notice] = "Video added to your queue."
       redirect_to my_queue_path
@@ -23,9 +23,10 @@ class QueueItemsController < ApplicationController
   end
 
   def update_queue
+    #binding.pry
     begin
       attempt_to_update_database
-      renumber_positions
+      current_user.renumber_positions
       flash[:notice] = "Queue order updated."
     rescue ActiveRecord::RecordInvalid
       flash[:error] = "Invalid queue numbering. Only integer numbers(1,2,3...99,100...), and no duplicate numbers allowed."
@@ -36,7 +37,7 @@ class QueueItemsController < ApplicationController
   def destroy
     QueueItem.find(params[:id]).destroy
     redirect_to my_queue_path
-    renumber_positions
+    current_user.renumber_positions
   end
 
   private
@@ -47,23 +48,6 @@ class QueueItemsController < ApplicationController
           QueueItem.find(queue_item["id"]).update_attributes!(position: queue_item["position"])
         end
       end
-    end
-
-    def renumber_positions
-      current_user.queue_items.each_with_index do |item, index|
-        QueueItem.find(item.id).update_attributes(position: (index+1) )
-      end
-    end
-
-    # def arrange_by_relative_position
-    #   order_array = current_user.queue_items.map{|e| [e.id, e.position]}
-    #   order_array.sort_by!{|e| e[1]}
-    # end
-
-    def next_position
-      (current_user.queue_items.count + 1)
-      # last_position = arrange_by_relative_position.last[1]
-      # last_position += 1
     end
 
     def require_owner
