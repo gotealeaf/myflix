@@ -19,10 +19,6 @@ describe VideosController do
   describe "GET show" do
     let(:video) { Fabricate(:video) }
 
-    before :each do
-      @fake_video = Fabricate(:video)
-    end
-
     it "redirects to the sign_in_path for unauthenticated users" do
       get :show, id: video.id
       expect(response).to redirect_to(sign_in_path)

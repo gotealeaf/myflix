@@ -18,7 +18,7 @@ monk = Video.create(
   category:         Category.find_by(name: 'TV Drama')
 )
 
-Video.create(
+futurama = Video.create(
   title:           'Futurama',
   description:     'A New York slacker wakes up in the future.',
   small_cover_url: '/tmp/futurama.jpg',
@@ -109,4 +109,16 @@ Review.create(
   video:        monk,
   rating:       3,
   content:      Faker::Lorem.paragraph(3)
+)
+
+QueueItem.create(
+  user: bilbo,
+  video: monk,
+  position: 1
+)
+
+QueueItem.create(
+  user: bilbo,
+  video: futurama,
+  position: 2
 )

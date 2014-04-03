@@ -53,15 +53,4 @@ describe UsersController do
       end
     end
   end
-
-
-  describe "GET queue" do
-    it "redirects to sign_in_path with unauthenticated users"
-
-    context "with authenticated users" do
-      it "sets @videos"
-      it "sets @user"
-      it "renders the queue template"
-    end
-  end
 end

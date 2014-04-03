@@ -1,6 +1,4 @@
 class ReviewsController < ApplicationController
-
-
   def create
     require_user and return
 

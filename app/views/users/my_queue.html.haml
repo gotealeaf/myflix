@@ -14,18 +14,18 @@
               %th(width="15%") Genre
               %th(width="15%") Remove
           %tbody
-            = @videos.each do |video|
+            - @queue_items.each do |queue_item|
               %tr
                 %td
-                  %input.form-control(type="text" value="1")
+                  = queue_item.position
                 %td
-                  = link_to video.title
+                  = link_to queue_item.video.title
                 %td
                   = button_to "Play", nil, class: "btn btn-default"
                 %td
-                  = video.rating.find_by(user: @user)
+                  = queue_item.video.reviews.find_by(user: @user).rating if !!queue_item.video.reviews.find_by(user: @user)
                 %td
-                  = link_to video.category
+                  = link_to queue_item.video.category.name
                 %td
                   = link_to "", method: :post do
                     %i.glyphicon.glyphicon-remove

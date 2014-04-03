@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   validates :full_name, presence: true
 
   has_many :reviews,  -> { order(created_at: :desc) }
-  has_many :queue_items
+  has_many :queue_items, -> { order(position: :asc) }
   has_many :videos, through: :queue_items
 
   has_secure_password
