@@ -19,5 +19,5 @@
           %td.extra-padding 
             = "#{followed_user.followers.count}"
           %td.extra-padding
-            = link_to "", method: :post do
+            = link_to relationship_path(followed_user), method: :delete do
               %i.glyphicon.glyphicon-remove

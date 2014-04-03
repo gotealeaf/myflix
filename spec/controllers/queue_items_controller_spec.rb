@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 
 describe QueueItemsController do
   describe "GET index" do
@@ -29,7 +28,7 @@ describe QueueItemsController do
         set_current_user(bob)
       end
 
-    it "redirects to the my que page" do
+    it "redirects to the my queue page" do
       post :create
       expect(response).to redirect_to(queue_items_path)
     end
@@ -49,14 +48,14 @@ describe QueueItemsController do
       expect(QueueItem.first.user).to eq(bob)
     end
 
-    it "puts the video as the last one in the que" do
+    it "puts the video as the last one in the queue" do
       queue_item2 = Fabricate(:queue_item, video_id: family_guy.id, user_id: bob.id)
       queue_item1 = Fabricate(:queue_item, video_id: south_park.id, user_id: bob.id)
 
       expect(bob.queue_items.to_a).to match_array([queue_item2, queue_item1])
     end
 
-    it "does not add the video to the queue if the video is already in the que" do
+    it "does not add the video to the queue if the video is already in the queue" do
       queue_item1 = Fabricate(:queue_item, video: south_park, user: bob)
       queue_item2 = Fabricate(:queue_item, video: family_guy, user: bob)
       post :create, queue_item: { video: south_park, user: bob }, video_id: south_park.id, user_id: bob.id
