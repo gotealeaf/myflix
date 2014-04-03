@@ -26,7 +26,7 @@
                     %td
                       = button_to "Play", nil, class: "btn btn-default"
                     %td
-                      = select_tag "queue_items[][rating]", options_for_select(rating_selector_options, rating_default_value(queue_item.user_rating)), class: "form-control"
+                      = select_tag "queue_items[][rating]", options_for_select(rating_selector_options, rating_default_value(queue_item.rating)), include_blank: true, class: "form-control"
                     %td
                       - queue_item.video_categories.each do |category|
                         =link_to "#{category.name}",category_path(category)

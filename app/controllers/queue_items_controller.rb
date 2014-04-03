@@ -13,24 +13,11 @@ class QueueItemsController < ApplicationController
     @queue_item = QueueItem.create(video_id: params[:video_id],
                                    user: current_user,
                                    position: current_user.next_position)
-    if @queue_item.valid?
-      flash[:notice] = "Video added to your queue."
-      redirect_to my_queue_path
-    else
-      flash[:error] = "Video is already in your queue."
-      redirect_to video_path(@video)
-    end
+    after_create_check_flash_and_redirect
   end
 
   def update_queue
-    #binding.pry
-    begin
-      attempt_to_update_database
-      current_user.renumber_positions
-      flash[:notice] = "Queue order updated."
-    rescue ActiveRecord::RecordInvalid
-      flash[:error] = "Invalid queue numbering. Only integer numbers(1,2,3...99,100...), and no duplicate numbers allowed."
-    end
+    update_queue_items
     redirect_to my_queue_path
   end
 
@@ -40,12 +27,35 @@ class QueueItemsController < ApplicationController
     current_user.renumber_positions
   end
 
+  ############################## PRIVATE METHODS ###############################
   private
 
-    def attempt_to_update_database
+    def after_create_check_flash_and_redirect
+      if @queue_item.valid?
+        flash[:notice] = "Video added to your queue."
+        redirect_to my_queue_path
+      else
+        flash[:error] = "Video is already in your queue."
+        redirect_to video_path(@video)
+      end
+    end
+
+    def update_queue_items
+      begin
+        transaction_to_update_database
+        current_user.renumber_positions
+        flash[:notice] = "Queue order updated."
+      rescue ActiveRecord::RecordInvalid
+        flash[:error] = "Invalid queue numbering. Only integer numbers(1,2,3...99,100...). No duplicate numbers."
+      end
+    end
+
+    def transaction_to_update_database
       ActiveRecord::Base.transaction do
-        params[:queue_items].each do |queue_item|
-          QueueItem.find(queue_item["id"]).update_attributes!(position: queue_item["position"])
+        params[:queue_items].each do |queue_item_data|
+          queue_item = QueueItem.find(queue_item_data["id"])
+          queue_item.update_attributes!(position: queue_item_data["position"],
+                                        rating: queue_item_data["rating"]) if queue_item.user == current_user
         end
       end
     end

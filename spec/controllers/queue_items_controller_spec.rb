@@ -184,6 +184,33 @@ describe QueueItemsController do
         post :update_queue, queue_items: [{id: queue_item1.id, position: 3}, {id: queue_item2.id, position: 1}]
         expect(flash[:notice]).to_not be_nil
       end
+
+      context "for the video rating selector" do
+        it "creates a review-rating if the user selects a rating for an unrated video" do
+          queue_item1 = Fabricate(:queue_item, user: joe, video: video1, position: 1)
+          queue_item2 = Fabricate(:queue_item, user: joe, video: video2, position: 2)
+          post :update_queue, queue_items: [{id: queue_item1.id, position: 1, rating: 3},
+                                            {id: queue_item2.id, position: 2, rating: nil}]
+          expect(joe.queue_items.first.rating).to eq(3)
+        end
+        it "updates a review-rating if the user selects a different rating from current" do
+          review1     = Fabricate(:review, user: joe, video: video1, rating: 3)
+          queue_item1 = Fabricate(:queue_item, user: joe, video: video1, position: 1)
+          queue_item2 = Fabricate(:queue_item, user: joe, video: video2, position: 2)
+          post :update_queue, queue_items: [{id: queue_item1.id, position: 1, rating: 1},
+                                            {id: queue_item2.id, position: 2, rating: nil}]
+          expect(joe.queue_items.first.rating).to eq(1)
+        end
+        it "does not create a new rating if 'blank' is selected" do
+          queue_item1 = Fabricate(:queue_item, user: joe, video: video1, position: 1)
+          queue_item2 = Fabricate(:queue_item, user: joe, video: video2, position: 2)
+          post :update_queue, queue_items: [{id: queue_item1.id, position: 1, rating: 0},
+                                            {id: queue_item2.id, position: 2, rating: nil}]
+          expect(joe.queue_items.first.rating).to be_nil
+        end
+        it "flashes notice that the rating updates were successful"
+          # Array of flash notices not yet implemented
+      end
     end
 
     context "with invalid user inputs" do

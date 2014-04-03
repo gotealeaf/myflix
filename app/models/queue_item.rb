@@ -10,12 +10,25 @@ class QueueItem < ActiveRecord::Base
   validates :user_id,  presence: true
   validates :video_id, presence: true
   validates :position, presence: true,
-                       numericality: { only_integer: true },
+                       numericality: { only_integer: true,
+                                       greater_than_or_equal_to: 1 },
                        uniqueness: true
 
-  def user_rating
-    review = Review.where(user_id: user.id, video_id: video.id).first
+  #Need to update this to be a Virtual Attribute - refactor
+  def rating
     review.rating if review
+  end
+
+  def rating=(new_rating)
+    if review
+      review.update_attribute(:rating, new_rating)
+    else
+       Review.create(user_id: user.id, video_id: video.id, rating: new_rating, content: nil)
+    end
+  end
+
+  def review
+    @review ||= Review.where(user_id: user.id, video_id: video.id).first
   end
 
   def video_category_names

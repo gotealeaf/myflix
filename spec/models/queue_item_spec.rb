@@ -46,21 +46,33 @@ describe QueueItem do
     it "returns the category names in alphabetical order"
   end
 
-  describe "user_rating method" do
+  describe "rating method" do
     it "returns the rating for associated user's review (when present)" do
       review     = Fabricate(:review, rating: 4, video: video, user: user)
       queue_item = Fabricate(:queue_item, video: video, user: user)
-      expect(queue_item.user_rating).to eq(review.rating)
+      expect(queue_item.rating).to eq(review.rating)
     end
     it "returns nil if there is no review by the user" do
       queue_item = Fabricate(:queue_item, video: video, user: user)
-      expect(queue_item.user_rating).to be_nil
+      expect(queue_item.rating).to be_nil
     end
   end
 
-  describe "arrange_queue_position! method" do
-    it "re-orders queue item position in ascending relative order of relative positions given"
-      #expect(QueueItem.all.each.map(&:position)).to eq([1,2])
-    it "returns true if successful"
+  describe "rating= virtual attribute method" do
+    let!(:review)    { Fabricate(:review, rating: 4, video: video, user: user) }
+    let(:queue_item) { Fabricate(:queue_item, video: video, user: user) }
+
+    it "sets the rating for associated user's review if the review is present" do
+      queue_item.rating = 2
+      expect(Review.first.rating).to eq(2)
+    end
+    it "clears the rating of the review is the review is present" do
+      queue_item.rating = nil
+      expect(Review.first.rating).to eq(nil)
+    end
+    it "creates a review with the rating if the review is not present" do
+      queue_item.rating = 4
+      expect(Review.first.rating).to eq(4)
+    end
   end
 end
