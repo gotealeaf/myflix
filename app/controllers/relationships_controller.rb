@@ -7,7 +7,6 @@ class RelationshipsController < ApplicationController
     else
       current_user.follow!(@user)
     end
-    #current_user.follow!(@user) unless current_user.following?(@user)
     redirect_to users_path
   end
 

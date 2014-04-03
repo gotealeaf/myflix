@@ -5,7 +5,6 @@ class UsersController < ApplicationController
   end
 
   def index
-    @user = User.find_by(params[:user_id])
   end
 
   def new
