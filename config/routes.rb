@@ -4,7 +4,7 @@ Myflix::Application.routes.draw do
   get 'ui(/:action)', controller: 'ui'
   get '/home', to: 'videos#index'
   get '/login', to: 'sessions#new'
-  post '/login', to: 'sessions#create'
+  post '/login_now', to: 'sessions#create'
   get '/', to: 'pages#root'
   get '/register', to: 'users#new'
   post '/register', to: 'users#create'
@@ -24,7 +24,7 @@ Myflix::Application.routes.draw do
     resources :reviews, only: [:create]
   end
 
-  resources :password_resets
+  resources :password_resets, only: [:create, :edit, :new, :update]
 
   resources :followships, only: [:create, :destroy]
 
