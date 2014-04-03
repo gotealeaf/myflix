@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
+  before_action :require_user, only: [:new]
+
   def new
-    @user = User.new
   end
 
   def create
@@ -10,7 +11,7 @@ class SessionsController < ApplicationController
       flash[:notice] = "Login success"
       redirect_to videos_path
     else
-      session[:error] = "Login fail"
+      flash[:error] = "Login fail"
       redirect_to login_path
     end
   end

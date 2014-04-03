@@ -1,4 +1,5 @@
 class VideosController < ApplicationController
+  before_action :require_user, only: [:show, :search]
   def index
     @categories = Category.all
     redirect_to root_path if !logged_in?

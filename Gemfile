@@ -22,10 +22,13 @@ end
 
 group :test, :development do
   gem 'rspec-rails'
+  gem 'fabrication'
+  gem 'faker'
 end
 
-group :test do
+group :test, :development do
   gem 'shoulda-matchers'
+  gem 'rspec-console'
 end
 
 group :production do
