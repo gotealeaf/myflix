@@ -4,34 +4,35 @@
       %article
         %header
           %h2 My Queue
-        %table.table
-          %thead
-            %tr
-              %th(width="10%") List Order
-              %th(width="30%") Video Title
-              %th(width="10%") Play
-              %th(width="20%") Rating
-              %th(width="15%") Genre(s)
-              %th(width="15%") Remove
-          %tbody
-            - @queue_items.each do |queue_item|
-              %tr
-                %td
-                  =queue_item.position
-                  /%input.form-control(type="text" value="1")
-                %td
-                  = link_to "#{queue_item.video_title}", video_path(queue_item.video)
-                %td
-                  = button_to "Play", nil, class: "btn btn-default"
-                %td
-                  = queue_item.user_rating
-                %td
-                  - queue_item.video_categories.each do |category|
-                    =link_to "#{category.name}",category_path(category)
-                    %br
-                %td
-                  = link_to queue_item_path(queue_item), method: 'delete' do
-                    %i.glyphicon.glyphicon-remove
+          =form_tag "/update_queue" do
+            %table.table
+              %thead
+                %tr
+                  %th(width="10%") List Order
+                  %th(width="30%") Video Title
+                  %th(width="10%") Play
+                  %th(width="20%") Rating
+                  %th(width="15%") Genre(s)
+                  %th(width="15%") Remove
+              %tbody
+                - @queue_items.each do |queue_item|
+                  %tr
+                    %td
+                      = hidden_field_tag "queue_items[][id]", queue_item.id
+                      = text_field_tag "queue_items[][position]", queue_item.position
+                      /%input.form-control(type="text" value="1")
+                    %td
+                      = link_to "#{queue_item.video_title}", video_path(queue_item.video)
+                    %td
+                      = button_to "Play", nil, class: "btn btn-default"
+                    %td
+                      = queue_item.user_rating
+                    %td
+                      - queue_item.video_categories.each do |category|
+                        =link_to "#{category.name}",category_path(category)
+                        %br
+                    %td
+                      = link_to queue_item_path(queue_item), method: 'delete' do
+                        %i.glyphicon.glyphicon-remove
 
-
-        = button_to "Update Instant Queue", nil, class: "btn btn-default"
+            = submit_tag "Update Instant Queue", class: "btn btn-default"

@@ -7,9 +7,11 @@ class QueueItem < ActiveRecord::Base
 
   validates_uniqueness_of :position, scope: [ :user_id ]
   validates_uniqueness_of :user_id,  scope: [ :video_id ]
-  validates :position, presence: true
   validates :user_id,  presence: true
   validates :video_id, presence: true
+  validates :position, presence: true,
+                       numericality: { only_integer: true },
+                       uniqueness: true
 
   def user_rating
     review = Review.where(user_id: user.id, video_id: video.id).first

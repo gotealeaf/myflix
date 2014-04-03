@@ -69,7 +69,7 @@ describe QueueItemsController do
         post :create, video_id: video.id
         expect(QueueItem.last.position).to eq(2)
       end
-      it "does not allow duplicate videos in the view" do
+      it "does not allow duplicate videos in the queue" do
         queue_item = Fabricate(:queue_item, user: current_user, video: video)
         post :create, video_id: video.id
         expect(assigns(:queue_item)).to_not be_valid
@@ -79,14 +79,28 @@ describe QueueItemsController do
         post :create, video_id: video.id
         expect(flash[:error]).to_not be_nil
       end
-      it "redirects back to the videos#show page after duplicate queue attempts" do
+      it "redirects back to the video#show page after duplicate queue attempts" do
         queue_item = Fabricate(:queue_item, user: current_user, video: video)
         post :create, video_id: video.id
-        expect(response).to redirect_to video
+        expect(response).to redirect_to video_path(video)
+      end
+      it "reorders the positions prior to creation of the new position" do
+        video1      = Fabricate(:video)
+        video2      = Fabricate(:video)
+        queue_item1 = Fabricate(:queue_item, user: current_user, video: video1, position: 3)
+        queue_item2 = Fabricate(:queue_item, user: current_user, video: video2, position: 12)
+        post :create, video_id: video.id
+        expect(current_user.queue_items.map(&:position)).to eq([1,2,3])
       end
     end
+
     context "for UNauthenticated users (guests)" do
-      it "redirects to the signin page"
+      it "redirects to the signin page" do
+        session[:user_id] = nil
+        video = Fabricate(:video)
+        post :create, video_id: video.id
+        expect(response).to redirect_to signin_path
+      end
     end
   end
 
@@ -109,7 +123,14 @@ describe QueueItemsController do
         expect(QueueItem.count).to eq(0)
       end
       it "reorders the queue item positions" do
-
+        video1      = Fabricate(:video)
+        video2      = Fabricate(:video)
+        video3      = Fabricate(:video)
+        queue_item1 = Fabricate(:queue_item, user: current_user, video: video1, position: 1)
+        queue_item2 = Fabricate(:queue_item, user: current_user, video: video2, position: 2)
+        queue_item3 = Fabricate(:queue_item, user: current_user, video: video3, position: 3)
+        delete :destroy, id: queue_item2.id
+        expect(current_user.queue_items.map(&:position)).to eq([1,2])
       end
       it "redirects back to the queue page" do
         video      = Fabricate(:video)
@@ -126,6 +147,78 @@ describe QueueItemsController do
       it "redirects to the signin page" do
         queue_item = Fabricate(:queue_item, video: video, user: user)
         delete :destroy, id: queue_item.id
+        expect(response).to redirect_to signin_path
+      end
+    end
+  end
+
+  describe "POST update_queue" do
+    let(:video1) { Fabricate(:video) }
+    let(:video2) { Fabricate(:video) }
+    let(:joe   ) { Fabricate(:user ) }
+
+    before { session[:user_id] = joe.id  }
+
+    context "with valid user inputs" do
+      it "redirects back to the MyQueue page" do
+        queue_item1 = Fabricate(:queue_item, user: joe, video: video1, position: 1)
+        queue_item2 = Fabricate(:queue_item, user: joe, video: video2, position: 2)
+        post :update_queue, queue_items: [{id: queue_item1.id, position: 4}, {id: queue_item2.id, position: 1}]
+        expect(response).to redirect_to my_queue_path
+      end
+      it "reorders the positions ascending" do
+        queue_item1 = Fabricate(:queue_item, user: joe, video: video1, position: 1)
+        queue_item2 = Fabricate(:queue_item, user: joe, video: video2, position: 2)
+        post :update_queue, queue_items: [{id: queue_item1.id, position: 4}, {id: queue_item2.id, position: 1}]
+        expect(joe.queue_items.map(&:position)).to eq(joe.queue_items.map(&:position).sort)
+      end
+      it "renumbers the positions from 1" do
+        queue_item1 = Fabricate(:queue_item, user: joe, video: video1, position: 3)
+        queue_item2 = Fabricate(:queue_item, user: joe, video: video2, position: 16)
+        post :update_queue, queue_items: [{id: queue_item1.id, position: 4}, {id: queue_item2.id, position: 1}]
+        expect(joe.queue_items.reload.map(&:position)).to eq([1,2])
+      end
+      it "flashes a notice message of success" do
+        queue_item1 = Fabricate(:queue_item, user: joe, video: video1, position: 1)
+        queue_item2 = Fabricate(:queue_item, user: joe, video: video2, position: 2)
+        post :update_queue, queue_items: [{id: queue_item1.id, position: 3}, {id: queue_item2.id, position: 1}]
+        expect(flash[:notice]).to_not be_nil
+      end
+    end
+
+    context "with invalid user inputs" do
+      it "should redirect back to the MyQueue page" do
+        queue_item1 = Fabricate(:queue_item, user: joe, video: video1, position: 2)
+        queue_item2 = Fabricate(:queue_item, user: joe, video: video2, position: 1)
+        post :update_queue, queue_items: [{id: queue_item1.id, position: 4.3}, {id: queue_item2.id, position: 1}]
+        expect(response).to redirect_to my_queue_path
+      end
+      it "does not reorder any of the positions for non-integers" do
+        queue_item1 = Fabricate(:queue_item, user: joe, video: video1, position: 2)
+        queue_item2 = Fabricate(:queue_item, user: joe, video: video2, position: 7)
+        post :update_queue, queue_items: [{id: queue_item1.id, position: 3}, {id: queue_item2.id, position: 1.2}]
+        expect(joe.queue_items.reload.map(&:position)).to eq([2,7])
+      end
+      it "abort & rollback for duplicate positions" do
+        queue_item1 = Fabricate(:queue_item, user: joe, video: video1, position: 2)
+        queue_item2 = Fabricate(:queue_item, user: joe, video: video2, position: 7)
+        post :update_queue, queue_items: [{id: queue_item1.id, position: 3}, {id: queue_item2.id, position: 3}]
+        expect(joe.queue_items.reload.map(&:position)).to eq([2,7])
+      end
+      it "flashes an error message regarding valid input requirments" do
+        queue_item1 = Fabricate(:queue_item, user: joe, video: video1, position: 2)
+        queue_item2 = Fabricate(:queue_item, user: joe, video: video2, position: 7)
+        post :update_queue, queue_items: [{id: queue_item1.id, position: 3}, {id: queue_item2.id, position: 4.3}]
+        expect(flash[:error]).to_not be_nil
+      end
+    end
+
+    context "for UNauthenticated (guest) users" do
+      it "should redirect to the signin page" do
+        session[:user_id] = nil
+        queue_item1 = Fabricate(:queue_item, user: joe, video: video1, position: 2)
+        queue_item2 = Fabricate(:queue_item, user: joe, video: video2, position: 7)
+        post :update_queue, queue_items: [{id: queue_item1.id, position: 3}, {id: queue_item2.id, position: 4}]
         expect(response).to redirect_to signin_path
       end
     end
