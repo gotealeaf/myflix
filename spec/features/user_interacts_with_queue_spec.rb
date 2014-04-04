@@ -7,7 +7,6 @@ feature 'User interacts with the queue ' do
     family_guy = Fabricate(:video, title: 'Family Guy', category: comedies)
     south_park = Fabricate(:video, title: 'South Park', category: comedies)
 
-    visit sign_in_path
     user_signs_in
     find("a[href='/videos/#{futurama.id}']").click
     expect(page).to have_content(futurama.title)

@@ -19,8 +19,9 @@ class User < ActiveRecord::Base
   end 
 
   def queued_item?(video=nil)
-    collection = queue_items.map(&:video)
-    collection.include?(Video.find(video.id))
+    #collection = queue_items.map(&:video)
+    #collection.include?(Video.find(video.id))
+    queue_items.map(&:video).include?(video)
   end
 
   def following?(other_user)
