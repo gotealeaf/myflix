@@ -21,7 +21,7 @@ describe QueueItemsController do
         expect(assigns(:queue_items)).to match_array([@queue_item_1, @queue_item_2])
       end
 
-      it "renders the queue template" do
+      it "renders queue template" do
         expect(response).to render_template 'users/my_queue'
       end
     end
@@ -36,13 +36,13 @@ describe QueueItemsController do
     context "with authenticated users" do
       let(:video) { Fabricate(:video) }
 
-      context "when the video is not already in user queue" do
+      context "video is not in user queue" do
         before :each do
           session[:user_id] = user
           post :create, video_id: video.id
         end
 
-        it "creates the queue_item associated with the video and the user" do
+        it "creates queue_item associated with video and user" do
           expect(QueueItem.first.video).to eq video
           expect(QueueItem.first.user).to eq user
         end
@@ -52,7 +52,7 @@ describe QueueItemsController do
         end
       end
 
-      context "when the video is already in user queue" do
+      context "video is in user queue" do
         before :each do
           session[:user_id] = user
           Fabricate(:queue_item, video: video, user: user)
@@ -63,11 +63,11 @@ describe QueueItemsController do
           expect(QueueItem.count).to eq 1
         end
 
-        it "sets the warning message" do
+        it "sets warning message" do
           expect(flash[:warning]).to_not be_blank
         end
 
-        it "redirects to the video page" do
+        it "redirects to video page" do
           expect(response).to redirect_to video
         end
       end
