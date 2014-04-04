@@ -24,6 +24,7 @@ end
 group :production do
   gem 'pg'
   gem 'rails_12factor'
+  gem 'mailgunner', '~> 1.3.0'
 end
 
 group :development, :test do
