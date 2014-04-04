@@ -7,7 +7,8 @@ class QueueItem < ActiveRecord::Base
 
   validates :video_id, presence: true
   validates_uniqueness_of :video_id, scope: :user_id, message: "is already in queue"
-  validates_uniqueness_of :position, scope: :user_id
+  #validates_numericality_of :position, only_integer: true
+  #validates_uniqueness_of :position, scope: :user_id
 
   def rating
     review = Review.where(user_id: user.id, video_id: video.id).first

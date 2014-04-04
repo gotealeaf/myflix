@@ -173,4 +173,177 @@ describe QueueItemsController do
       end 
     end
   end
+  
+  describe "POST update_queue" do
+    context "with valid inputs" do
+      it "redirects to the my queue page" do
+        alice = Fabricate(:user)
+        session[:user_id] = alice.id
+        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
+        post :update_queue, queue_items: [{id: "1", position: "1"}]
+        expect(response).to redirect_to my_queue_path
+      end
+
+      it "updates queue positions" do
+        alice = Fabricate(:user)
+        session[:user_id] = alice.id
+        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
+        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
+        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+        post :update_queue, queue_items: [{id: "1", position: "3"}, 
+                                          {id: "2", position: "2"}, 
+                                          {id: "3", position: "1"}]
+        expect(alice.queue_items).to eq([queue_item3, queue_item2, queue_item1])
+        # reload is necessary or the database update in the controller won't impact the variables
+        # welp, there's two hours of my life gone
+        expect(queue_item1.reload.position).to eq(3)
+        expect(queue_item2.reload.position).to eq(2)
+        expect(queue_item3.reload.position).to eq(1) 
+      end
+
+      it "normalizes the position numbers to start with 1" do
+        alice = Fabricate(:user)
+        session[:user_id] = alice.id
+        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
+        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
+        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+        post :update_queue, queue_items: [{id: "1", position: "4"}, 
+                                          {id: "2", position: "3"}, 
+                                          {id: "3", position: "2"}]
+        expect(alice.queue_items.map(&:position)).to eq([1, 2, 3])
+      end
+
+      it "moves an item to the end of the queue if one position input off end of queue" do
+        alice = Fabricate(:user)
+        session[:user_id] = alice.id
+        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
+        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
+        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+        post :update_queue, queue_items: [{id: "1", position: "4"}, 
+                                          {id: "2", position: "2"}, 
+                                          {id: "3", position: "1"}]
+        expect(queue_item1.reload.position).to eq(3)
+        expect(queue_item2.reload.position).to eq(2)
+        expect(queue_item3.reload.position).to eq(1)                                         
+      end
+    end
+
+    context "with invalid inputs" do
+      context "with non-integer input" do
+        it "redirects to the my queue page" do
+          alice = Fabricate(:user)
+          session[:user_id] = alice.id
+          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
+          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
+          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+          post :update_queue,  queue_items: [{id: "1", position: "3"}, 
+                                            {id: "2", position: "2"}, 
+                                            {id: "3", position: "1.5"}]
+          expect(response).to redirect_to my_queue_path
+        end
+
+        it "sets a flash error message" do
+          alice = Fabricate(:user)
+          session[:user_id] = alice.id
+          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
+          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
+          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+          post :update_queue,  queue_items: [{id: "1", position: "3"}, 
+                                            {id: "2", position: "2"}, 
+                                            {id: "3", position: "1.5"}]
+          expect(flash[:danger]).to eq("Non-integer order numbers entered") 
+        end
+
+        it "does not change any queue positions" do
+          alice = Fabricate(:user)
+          session[:user_id] = alice.id
+          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
+          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
+          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+          post :update_queue,  queue_items: [{id: "1", position: "3"}, 
+                                            {id: "2", position: "2"}, 
+                                            {id: "3", position: "1.5"}]
+          expect(alice.queue_items).to eq([queue_item1, queue_item2, queue_item3])
+        end
+      end
+
+      context "with duplicate positions input" do
+        it "redirects to the my queue page" do
+          alice = Fabricate(:user)
+          session[:user_id] = alice.id
+          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
+          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
+          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+          post :update_queue,  queue_items: [{id: "1", position: "3"}, 
+                                            {id: "2", position: "2"}, 
+                                            {id: "3", position: "2"}]
+          expect(response).to redirect_to my_queue_path
+        end
+
+        it "sets a flash error message" do
+          alice = Fabricate(:user)
+          session[:user_id] = alice.id
+          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
+          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
+          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+          post :update_queue,  queue_items: [{id: "1", position: "3"}, 
+                                            {id: "2", position: "2"}, 
+                                            {id: "3", position: "2"}]
+          expect(flash[:danger]).to eq("Non-unique order numbers entered") 
+        end
+
+        it "does not change any queue positions if non-unique positions submitted" do
+          alice = Fabricate(:user)
+          session[:user_id] = alice.id
+          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
+          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
+          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+          post :update_queue, :queue_items => [{":id" => "1", ":position" => "3"}, 
+                                               {":id" => "2", ":position" => "2"}, 
+                                               {":id" => "3", ":position" => "2"}]
+          expect(alice.queue_items).to eq([queue_item1, queue_item2, queue_item3])             
+        end
+      end
+    end
+
+    context "with unauthenticated users"
+      it "redirects to login page" do
+        alice = Fabricate(:user)
+        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
+        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
+        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+        post :update_queue, :queue_items => [{":id" => "1", ":position" => "3"}, 
+                                             {":id" => "2", ":position" => "2"}, 
+                                             {":id" => "3", ":position" => "1"}]
+        expect(response).to redirect_to login_path
+      end
+
+      it "does not change any queue positions" do
+        alice = Fabricate(:user)
+        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
+        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
+        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+        post :update_queue, :queue_items => [{":id" => "1", ":position" => "3"}, 
+                                             {":id" => "2", ":position" => "2"}, 
+                                             {":id" => "3", ":position" => "1"}]
+        expect(alice.queue_items).to eq([queue_item1, queue_item2, queue_item3])
+      end
+
+    context "with queue items that do not belong to user" do
+      it "redirects to the my queue page" 
+
+      it "does not change any queue positions" do
+        alice = Fabricate(:user)
+        bob = Fabricate(:user)
+        session[:user_id] = bob.id
+        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
+        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
+        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+        post :update_queue, queue_items: [{id: "1", position: "3"}, 
+                                          {id: "2", position: "2"}, 
+                                          {id: "3", position: "1"}]
+        expect(alice.queue_items).to eq([queue_item1, queue_item2, queue_item3])
+      end
+    end
+  end
 end

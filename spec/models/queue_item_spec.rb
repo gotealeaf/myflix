@@ -4,7 +4,8 @@ describe QueueItem do
   it { should belong_to(:user) }
   it { should belong_to(:video) }
   it { should validate_presence_of(:video_id) }
-  it { should validate_uniqueness_of(:position) }
+  #it { should validate_uniqueness_of(:position) }
+  #it { should validate_numericality_of(:position).only_integer }
   it { should validate_uniqueness_of(:video_id).scoped_to(:user_id).with_message("is already in queue") }
 
   describe "#video_title" do
