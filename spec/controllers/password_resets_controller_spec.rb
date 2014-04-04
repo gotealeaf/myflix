@@ -56,25 +56,25 @@ describe PasswordResetsController do
   describe 'PATCH #update' do
     let(:adam) { Fabricate(:user, reset_token: SecureRandom.urlsafe_base64) }
     it 'set the user object to the correct user' do
-      patch :update, { id: adam.reset_token, user: { password: "test" } }
+      patch :update, { token: adam.reset_token, user: { password: "test" } }
       expect(assigns(:user).fullname).to eq(adam.fullname)
     end
     context "blank password is submitted" do
       it 'doesnt save a users password' do
         new_password = ""
-        patch :update, { id: adam.reset_token, user: { password: new_password } }
+        patch :update, { token: adam.reset_token, user: { password: new_password } }
         assigns
         expect(User.first.authenticate(new_password)).to eq(false)
       end
       it 'has flash message' do
         new_password = ""
-        patch :update, { id: adam.reset_token, user: { password: new_password } }
+        patch :update, { token: adam.reset_token, user: { password: new_password } }
         assigns
         expect(flash[:danger]).to be_present
       end
       it 'renders update template' do
         new_password = ""
-        patch :update, { id: adam.reset_token, user: { password: new_password } }
+        patch :update, { token: adam.reset_token, user: { password: new_password } }
         assigns
         expect(response).to render_template "edit"
       end
@@ -82,25 +82,25 @@ describe PasswordResetsController do
     context 'with valid password' do
       it 'updates the password to the new password for the user' do
         new_password = "test"
-        patch :update, { id: adam.reset_token, user: { password: new_password } }
+        patch :update, { token: adam.reset_token, user: { password: new_password } }
         assigns
         expect(User.first.authenticate(new_password)).to eq(adam)
       end
       it 'shows a flash message to the user' do
         new_password = "test"
-        patch :update, { id: adam.reset_token, user: { password: new_password } }
+        patch :update, { token: adam.reset_token, user: { password: new_password } }
         assigns
         expect(flash[:success]).to be_present
       end
       it 'redirects the user the the login page' do
         new_password = "test"
-        patch :update, { id: adam.reset_token, user: { password: new_password } }
+        patch :update, { token: adam.reset_token, user: { password: new_password } }
         assigns
         expect(response).to redirect_to login_path
       end
       it 'sets the user token to nil' do
         new_password = "test"
-        patch :update, { id: adam.reset_token, user: { password: new_password } }
+        patch :update, { token: adam.reset_token, user: { password: new_password } }
         assigns
         expect(User.first.reset_token).to eq(nil)
       end

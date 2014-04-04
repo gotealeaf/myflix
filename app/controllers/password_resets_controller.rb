@@ -20,10 +20,10 @@ class PasswordResetsController < ApplicationController
       flash[:danger] = "Your password cannot be blank."
       render :edit
     else
-      @user = find_user_by_token
+      @user = User.find_by_reset_token!(params[:token])
       @user.update_attributes(password: params[:user][:password], reset_token: nil)
       @user.save
-      flash[:success] = "You password has been updated."
+      flash[:success] = "Your password has been updated."
       redirect_to login_path
     end
   end
@@ -33,12 +33,12 @@ class PasswordResetsController < ApplicationController
   end
 
   def edit
-    @user = find_user_by_token
+    @user = User.find_by_reset_token!(params[:id])
   end
 
   private
 
   def find_user_by_token
-    User.find_by_reset_token!(params[:id])
+    User.find_by_reset_token!(params[:reset_token])
   end
 end
