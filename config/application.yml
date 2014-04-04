@@ -1,0 +1,10 @@
+# Add application configuration variables here, as shown below.
+#
+S3_KEY: AKIAIXY5EA4IWA2ENKTQ
+S3_SECRET: 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
+# S3_BUCKET_NAME: 'myflixrc'
+# PUSHER_APP_ID: "2954"
+# PUSHER_KEY: 7381a978f7dd7f9a1117
+# PUSHER_SECRET: abdc3b896a0ffb85d373
+# STRIPE_API_KEY: EdAvEPVEC3LuaTg5Q3z6WbDVqZlcBQ8Z
+# STRIPE_PUBLIC_KEY: pk_BRgD57O8fHja9HxduJUszhef6jCyS
