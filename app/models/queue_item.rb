@@ -5,14 +5,15 @@ class QueueItem < ActiveRecord::Base
   delegate :title,      to: :video, prefix: :video
   delegate :categories, to: :video, prefix: :video
 
-  validates_uniqueness_of :position, scope: [ :user_id ]
+  validates_uniqueness_of :position, scope: [ :user_id ],
+                          allow_nil: true
   validates_uniqueness_of :user_id,  scope: [ :video_id ]
   validates :user_id,  presence: true
   validates :video_id, presence: true
   validates :position, presence: true,
                        numericality: { only_integer: true,
                                        greater_than_or_equal_to: 1 },
-                       uniqueness: true
+                       allow_nil: true
 
   #Need to update this to be a Virtual Attribute - refactor
   def rating

@@ -24,4 +24,9 @@ class User < ActiveRecord::Base
   def next_position
     (queue_items.count + 1)
   end
+
+
+  def has_this_video_in_queue?(video)
+    queue_items.map(&:video_id).include?(video.id)
+  end
 end

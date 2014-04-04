@@ -4,12 +4,10 @@ describe ReviewsController do
 
   describe 'POST create' do
     let(:video) { Fabricate(:video) } #makes one whenever it's called
-    context "with guest (not signed in)" do
-      before { session[:user_id] = nil }
 
-      it "redirects guest" do
-        post :create, review: Fabricate.attributes_for(:review), video_id: video.id
-        expect(response).to redirect_to signin_path
+    context "with guest (not signed in)" do
+      it_behaves_like "require_signed_in" do
+        let(:verb_action) {post :create, review: Fabricate.attributes_for(:review), video_id: 1}
       end
     end
 
@@ -65,7 +63,7 @@ describe ReviewsController do
         it "shows the users form errors"
       end
 
-      context "second review on video by user" do
+      context "user attempts second review on video" do
         it "does not save the review"
         it "re-renders the page"
         it "flashes notice that user has already reviewed the video"

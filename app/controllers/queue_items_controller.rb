@@ -52,11 +52,24 @@ class QueueItemsController < ApplicationController
 
     def transaction_to_update_database
       ActiveRecord::Base.transaction do
-        params[:queue_items].each do |queue_item_data|
-          queue_item = QueueItem.find(queue_item_data["id"])
-          queue_item.update_attributes!(position: queue_item_data["position"],
-                                        rating: queue_item_data["rating"]) if queue_item.user == current_user
-        end
+        set_positions_initially_to_nil
+        attempt_to_update_positions_per_user_entries
+      end
+    end
+
+    def set_positions_initially_to_nil
+      params[:queue_items].each do |queue_item_data|
+        queue_item = QueueItem.find(queue_item_data["id"])
+        queue_item.update_attributes!(position: nil)
+      end
+    end
+
+    def attempt_to_update_positions_per_user_entries
+      params[:queue_items].each do |queue_item_data|
+        queue_item = QueueItem.find(queue_item_data["id"])
+        queue_item_data["position"] = "blank" if queue_item_data["position"].blank?
+        queue_item.update_attributes!(position: queue_item_data["position"],
+                                      rating: queue_item_data["rating"]) if queue_item.user == current_user
       end
     end
 

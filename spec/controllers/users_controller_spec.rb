@@ -13,7 +13,7 @@ describe UsersController do
 
     describe "POST create" do
       context "with valid info" do
-        params = {user: { name: "Joe", email: "email@email.com", password: "password" }}
+        let(:params) { {user: { name: "Joe", email: "email@email.com", password: "password" }} }
 
         it "makes a new user" do
           expect do
@@ -27,7 +27,7 @@ describe UsersController do
       end
 
       context "with INVALID information" do
-        params = {user: { name: "", email: "", password: "" }}
+        let(:params) { {user: { name: "", email: "", password: "" }} }
 
         it "does not create a new user" do
           expect {post :create, params
