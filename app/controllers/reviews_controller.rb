@@ -12,9 +12,9 @@ class ReviewsController < ApplicationController
     end
   end
 
- private
+  private
 
- def review_params
-   params.require(:review).permit(:rating, :content)
- end
+  def review_params
+    params.require(:review).permit(:rating, :content)
+  end
 end
