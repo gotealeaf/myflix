@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
-  def create
-    require_user and return
+  before_action :require_user
 
+  def create
     @video = Video.find(params[:video_id])
     @review = review_params.merge(user: current_user)
     @review = @video.reviews.build(@review)

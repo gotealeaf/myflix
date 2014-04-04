@@ -8,11 +8,15 @@ describe QueueItem do
   it { should belong_to(:video) }
   it { should validate_presence_of(:user) }
   it { should validate_presence_of(:video) }
-  #it { should validate_presence_of(:position) }
 
-  it "validates uniqueness of position" do
+  it "validates uniqueness of position for user" do
     queue_item = Fabricate(:queue_item)
     expect(queue_item).to validate_uniqueness_of(:position).scoped_to(:user_id)
+  end
+
+  it "validates uniqueness of video for user" do
+    queue_item = Fabricate(:queue_item)
+    expect(queue_item).to validate_uniqueness_of(:video).scoped_to(:user_id)
   end
 
   describe "#assign_position" do

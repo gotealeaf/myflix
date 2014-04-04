@@ -10,9 +10,9 @@
           %span Rating: #{@average_rating}
         %p
           = @video.description
-        .actions
+        .actions.clearfix
           %a.btn.btn-primary(href="") Watch Now
-          %a.btn.btn-default(href="") + My Queue
+          = link_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: "btn btn-default"
 
 %section.reviews.container
   .row
