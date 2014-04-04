@@ -16,6 +16,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def generate_token(column)
+    column = SecureRandom.urlsafe_base64
+  end
+
   def number_of_queue_items
     total = queue_items.count
     total

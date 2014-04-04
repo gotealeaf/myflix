@@ -5,7 +5,7 @@ class Review < ActiveRecord::Base
   validates_presence_of :rating, :user_id, :video_id
 
   def update_review_attributes(queue_item)
-    update_attributes!(rating: "#{queue_item[:rating]}")
+    update_columns(rating: "#{queue_item[:rating]}")
   end
 
   def self.review_by_user_on_video(user, video)
