@@ -22,7 +22,7 @@ Myflix::Application.configure do
   config.action_mailer.smtp_settings = {
   address:              'smtp.gmail.com',
   port:                 587,
-  domain:               'example.com',
+  domain:               'http://myflix-rjewell2200.herokuapp.com/',
   user_name:            '<username>',
   password:             '<password>',
   authentication:       'plain',
