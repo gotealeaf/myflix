@@ -12,6 +12,7 @@ gem 'bootstrap_form'
 gem 'bcrypt-ruby'
 gem 'fabrication'
 gem 'faker'
+gem 'pry'
 
 group :test, :development do
   gem 'rspec-rails'
