@@ -39,4 +39,8 @@ describe User do
       expect(joe.has_this_video_in_queue?(video)).to be_false
     end
   end
+
+  describe "renumber_positions" do
+    it "should renumber the queue_item positions from 1"
+  end
 end

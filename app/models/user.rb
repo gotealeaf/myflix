@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
   def renumber_positions
     queue_items.each_with_index do |item, index|
-      QueueItem.find(item.id).update_attributes(position: (index+1) )
+      item.update_attributes(position: (index+1) )
     end
   end
 
