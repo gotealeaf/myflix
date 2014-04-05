@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
+ruby '2.1.1'
 
 gem 'bootstrap-sass'
 gem 'coffee-rails'
@@ -8,6 +8,20 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
+gem 'bootstrap_form'
+gem 'bcrypt-ruby'
+gem 'fabrication'
+gem 'faker'
+gem 'pry'
+
+group :test, :development do
+  gem 'rspec-rails'
+end
+
+group :test do
+  gem 'shoulda-matchers'
+end
+
 
 group :development do
   gem 'sqlite3'
@@ -23,3 +37,4 @@ group :production do
   gem 'rails_12factor'
 end
 
+gem 'therubyracer'

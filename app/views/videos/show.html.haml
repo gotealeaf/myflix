@@ -1,0 +1,43 @@
+%article.video
+  .container
+    .row
+      .video_large_cover.col-sm-7.col-sm-offset-1
+        %img(src="#{@video.large_cover}")
+      .video_info.col-sm-3
+        %header
+          %h3= @video.title
+          %span Rating: 4.5/5.0
+        %p= @video.description
+        .actions
+          = button_to "+ My Queue", queue_items_path(video_id: @video.id), class: "btn"
+
+%section.reviews.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = form_for [@video, Review.new] do |f|
+        %fieldset
+          .form-group
+            %label Rate this video
+            .row
+              .col-sm-3
+                = f.select :rating, options_for_select([5,4,3,2,1].map {|number| [pluralize(number, "Star")]}), class: "form-control"
+          .form-group
+            %label Write Review
+            .row
+              .col-sm-8
+                = f.text_area :content, rows: 6, class: "span6"
+        %fieldset.form-group.actions.clearfix
+          %input(type="submit" value="Submit" class="btn")
+          = link_to "Cancel", @video
+          
+      %header
+        %h3 User Reviews (#{ @reviews.count })
+      %ul
+        - @reviews.each do |review|
+          %article.review
+            %li.row
+              .span2
+                %span Rating: #{review.rating} / 5
+                %p by <a href=""> #{review.creator.full_name} </a>
+              .span8
+                %p #{review.content}
