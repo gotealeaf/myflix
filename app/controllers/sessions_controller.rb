@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :require_user, only: [:new]
+  before_action :require_user, only: [:destroy]
 
   def new
   end

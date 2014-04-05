@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe SessionsController do
   describe "sessions#new" do
-    it "redirects to videos_path if not logging in" do
-      get :new
-      expect(response).to redirect_to root_path 
-    end
     it "renders :new if logging in" do
       session[:user_id] = Fabricate(:user)
       get :new

@@ -32,5 +32,41 @@ describe Video do
     end
   end
 
+  describe "number of reviews" do
+    it "returns number of reviews when more than one review" do
+      @video = Fabricate(:video) do
+        reviews(count: 5) {
+          Fabricate.build(:review, user: nil)
+        }
+      end
+      expect(@video.number_of_reviews).to eq 5
+    end
+    it "returns zero when no reviews" do
+      @video = Fabricate(:video)
+      expect(@video.number_of_reviews).to eq 0
+    end
+  end
+
+  describe "averge rating" do
+    it "return averge rating when more than one reviews" do
+      # @video =  Fabricate(:video) { 
+      #   reviews(count: 2){ 
+      #     Fabricate(:review)  
+      #   }
+      # }
+      
+#       averge = @video.reviews.map(&:rating).sum / @video.reviews.count
+
+    @video = Fabricate(:video)
+
+    #why this faile ???? QQ
+#     @test = Fabricate(:review_no_video, rating: 34, video: @video)
+    Fabricate(:review, video: @video, rating: 2)
+#     @video.reviews << Fabricate(:review, video: nil, rating: 2)
+    Fabricate(:review, video: @video, rating: 3)
+
+    expect(@video.averge_rating).to eq(2.5) 
+    end
+  end
 end
 
