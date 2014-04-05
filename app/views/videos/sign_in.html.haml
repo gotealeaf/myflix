@@ -1,0 +1,19 @@
+%section.sign_in.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %form.sign_in
+        %header
+          %h1 Sign in
+        %fieldset
+          .form-group
+            %label Email Address
+            .row
+              .col-sm-4
+                %input.form-control(type="email")
+          .form-group
+            %label Password
+            .row
+              .col-sm-4
+                %input.form-control(type="password")
+        %fieldset.form-group.action
+          %input(type="submit" value="Sign in" class="btn btn-default")
