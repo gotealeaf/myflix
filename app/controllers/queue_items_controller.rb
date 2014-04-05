@@ -17,4 +17,10 @@ class QueueItemsController < ApplicationController
       redirect_to video
     end
   end
+
+  def destroy
+    queue_item = QueueItem.find(params[:id])
+    queue_item.destroy if current_user == queue_item.user
+    redirect_to my_queue_path
+  end
 end
