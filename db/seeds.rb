@@ -35,6 +35,10 @@ sport = Fabricate(:category, name: "sport")
 news = Fabricate(:category, name: "news")
 grammer = Fabricate(:category, name: "grammer")
 
+User.create(name: "crokobit", email: "crokobit@gmail.com", password: "pw")
+
 10.times do
-  Fabricate(:video, category: [sport, news, grammer].sample)
+  Fabricate(:video, category: [sport, news, grammer].sample) do
+    reviews(count: (3..10).to_a.sample, video: nil)
+  end
 end
