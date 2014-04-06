@@ -10,7 +10,13 @@ def current_user
   @current_user ||= Fabricate(:user)
 end
 
-def feature_sign_in_user(user=nil)
+############################## FEATURE SPEC METHODS ############################
+
+def click_video_image_link(video)
+  find(:xpath, "//a[@href='/videos/#{video.id}']").click
+end
+
+def signin_user(user=nil)
   joe = user || Fabricate(:user)
   visit '/signin'
   fill_in "Email Address", with: joe.email
@@ -18,19 +24,9 @@ def feature_sign_in_user(user=nil)
   click_button "Sign in"
 end
 
-def feature_user_adds_video_to_queue
-  visit root_path
-  find(:xpath, "//a[@href='/videos/1']").click
-  click_link "+ My Queue"
+def verify_number_of_items_in_queue(number)
+  body.should have_field("queue_items[][position]", count: "#{number}")
 end
 
-#Note: Depends on videos already having been created
-def feature_add_videos_to_queue(number)
-  (1..number).each do |n|
-    visit root_path
-    find(:xpath, "//a[@href='/videos/#{n}']").click
-    click_link "+ My Queue"
-  end
-end
 
 

@@ -7,10 +7,10 @@ describe VideosController do
 
   describe "GET #show" do
 
-    it "redirects to root if user is not signed in" do
-      session[:user_id] = nil
-      get :show, id: user.id
-      expect(response).to redirect_to signin_path
+    context "redirects to signin page if user is not signed in" do
+      it_behaves_like "require_signed_in" do
+        let(:verb_action) { get :show, id: user.id }
+      end
     end
 
     context "WITH signed-in user" do

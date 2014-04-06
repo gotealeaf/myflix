@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe User do
-  it { should have_many(              :queue_items ).order("position")}
+  it { should have_many(              :queue_items ).order("position"       )}
+  it { should have_many(              :reviews     ).order("created_at DESC")}
   it { should validate_uniqueness_of( :email       )}
   it { should validate_presence_of(   :email       )}
   it { should validate_presence_of(   :name        )}
@@ -40,7 +41,36 @@ describe User do
     end
   end
 
+  describe "next_position" do
+    it "chooses the next number in the position" do
+      joe         = Fabricate(:user)
+      queue_item1 = Fabricate(:queue_item, user: joe, video: Fabricate(:video))
+      expect(joe.next_position).to eq(2)
+    end
+  end
+
   describe "renumber_positions" do
-    it "should renumber the queue_item positions from 1"
+    it "should renumber the queue_item positions from 1" do
+      joe    = Fabricate(:user)
+      monk   = Fabricate(:video)
+      castle = Fabricate(:video)
+      queue_item1 = Fabricate(:queue_item, user: joe, video: monk, position: 99)
+      queue_item2 = Fabricate(:queue_item, user: joe, video: castle, position: 11)
+      joe.renumber_positions
+      expect(joe.queue_items.map(&:position)).to eq([1,2])
+    end
+  end
+
+  describe "can_follow?" do
+    it "verifies current user is not the passed user" do
+      joe = Fabricate(:user)
+      expect(joe.can_follow?(joe)).to be_false
+    end
+    it "verifies passed user is not in current_user's leaders list (followed users)" do
+      joe = Fabricate(:user)
+      jen = Fabricate(:user)
+      joe.following_relationships.create(leader: jen)
+      expect(joe.can_follow?(jen)).to be_false
+    end
   end
 end

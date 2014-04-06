@@ -10,7 +10,7 @@ feature "User Video Queue Pages Spec" do
 
   scenario "user signs in, adds videos to My Queue, checks video page, reorders queue positions" do
     # User signs in
-    feature_sign_in_user
+    signin_user(joe)
     page.should have_content "Drama"
 
     # Clicks video from root path
@@ -57,10 +57,6 @@ def add_video_to_queue(video)
   click_link "+ My Queue"
 end
 
-def click_video_image_link(video)
-  find(:xpath, "//a[@href='/videos/#{video.id}']").click
-end
-
 def expect_queue_position(video, position)
   expect(find("#position_for_video_id_#{video.id}").value).to eq("#{position}")
 end
@@ -71,8 +67,4 @@ end
 
 def fill_in_queue_position_input_box(video, number)
   fill_in "position_for_video_id_#{video.id}", with: "#{number}"
-end
-
-def verify_number_of_items_in_queue(number)
-  body.should have_field("queue_items[][position]", count: "#{number}")
 end
