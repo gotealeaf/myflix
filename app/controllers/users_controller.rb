@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
-  before_action :set_user,            only: [:show, :edit, :update]
-  before_action :require_signed_out,  only: [:new, :create]
-  before_action :require_owner,       only: [:edit, :update]
+  before_action :require_signed_out,  only: []
+  before_action :require_owner,       only: []
+  before_action :require_signed_in,   only: [:show]
+  before_action :set_user,            only: [:show]
 
   def new
     @user = User.new

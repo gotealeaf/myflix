@@ -3,10 +3,8 @@ require 'spec_helper'
 describe SessionsController do
 
   describe "GET new" do
-    it "redirects users who are already signed in" do
-      session[:user_id] = 1
-      get :new
-      expect(response).to redirect_to root_path
+    it_behaves_like "require_signed_out" do
+      let(:verb_action) { get :new }
     end
     it "renders the template for guests not signed in" do
       get :new

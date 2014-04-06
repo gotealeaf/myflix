@@ -13,7 +13,7 @@ describe UsersController do
 
     describe "POST create" do
       context "with valid info" do
-        params = {user: { name: "Joe", email: "email@email.com", password: "password" }}
+        let(:params) { {user: { name: "Joe", email: "email@email.com", password: "password" }} }
 
         it "makes a new user" do
           expect do
@@ -27,7 +27,7 @@ describe UsersController do
       end
 
       context "with INVALID information" do
-        params = {user: { name: "", email: "", password: "" }}
+        let(:params) { {user: { name: "", email: "", password: "" }} }
 
         it "does not create a new user" do
           expect {post :create, params
@@ -46,6 +46,32 @@ describe UsersController do
           expect(response).to render_template :new
         end
       end
+    end
+  end
+
+  describe "GET show" do
+    let!(:joe) { Fabricate(:user) }
+
+    it "should set the @user with user for profile page" do
+      sign_in_user
+      get :show, id: joe.id
+      expect(assigns(:user)).to eq(joe)
+    end
+
+    context "should should redirect unauthenticated/guest (not signed-in) users" do
+      it_behaves_like "require_signed_in" do
+        let(:verb_action) { get :show, id: joe.id }
+      end
+    end
+  end
+
+
+  describe "set_user" do
+    let!(:joe) { Fabricate(:user) }
+
+    it "should det the @user with user for profile page" do
+      get :show, id: joe.id
+      expect(@controller.instance_eval{set_user}).to eq(joe)
     end
   end
 end

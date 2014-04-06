@@ -8,10 +8,7 @@ describe Video do
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:description)}
 
-  let(:video) { Video.new(title: "Family Guy",
-                          description: "A video in db.",
-                          sm_cover_locn: "/tmp/family_guy.jpg",
-                          lg_cover_locn: "/tmp/family_guy_large.jpg") }
+  let(:video) { Fabricate(:video, title: "Family Guy") }
 
 
   describe 'with valid attributes'do
