@@ -12,8 +12,8 @@ describe QueueItemsController do
     context "with authenticated users" do
       before :each do
         session[:user_id] = user
-        @queue_item_1 = Fabricate(:queue_item, user: user)
-        @queue_item_2 = Fabricate(:queue_item, user: user)
+        @queue_item_1 = Fabricate(:queue_item, user: user, position: 1)
+        @queue_item_2 = Fabricate(:queue_item, user: user, position: 2)
         get :index
       end
 
@@ -38,17 +38,29 @@ describe QueueItemsController do
 
 
     context "video is not in user queue with authenticated users" do
-      before :each do
+      it "creates queue_item associated with video and user" do
         session[:user_id] = user
         post :create, video_id: video.id
-      end
-
-      it "creates queue_item associated with video and user" do
         expect(QueueItem.first.video).to eq video
         expect(QueueItem.first.user).to eq user
       end
 
+      it "assigns next available position to the queue_item" do
+        session[:user_id] = user
+        Fabricate(:queue_item, user: user)
+        post :create, video_id: video.id
+        expect(QueueItem.find_by(video: video).position).to eq 2
+      end
+
+      it "assigns the first position if there are no other queue_items for the user" do
+        session[:user_id] = user
+        post :create, video_id: video.id
+        expect(QueueItem.first.position).to eq 1
+      end
+
       it "redirects to my_queue path" do
+        session[:user_id] = user
+        post :create, video_id: video.id
         expect(response).to redirect_to my_queue_path
       end
     end

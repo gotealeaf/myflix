@@ -9,12 +9,6 @@ class QueueItem < ActiveRecord::Base
   delegate :category, to: :video
   delegate :title, to: :video, prefix: :video
 
-  after_initialize :assign_position
-
-  def assign_position
-    self.position ||= user.queue_items.count + 1 if !!user
-  end
-
   def category_name
     category.name
   end

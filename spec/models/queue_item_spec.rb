@@ -19,17 +19,6 @@ describe QueueItem do
     expect(queue_item).to validate_uniqueness_of(:video).scoped_to(:user_id)
   end
 
-  describe "#assign_position" do
-    it "assigns a position" do
-      expect(Fabricate(:queue_item).position).to eq 1
-    end
-
-    it "assigns the next position if the user has several queue_items" do
-      Fabricate(:queue_item, user: user)
-      expect(Fabricate(:queue_item, user: user).position).to eq 2
-    end
-  end
-
   describe "#video_title" do
     it "returns the titile of the video" do
       queue_item = Fabricate(:queue_item, video: video)
