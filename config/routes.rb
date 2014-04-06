@@ -3,6 +3,11 @@ Myflix::Application.routes.draw do
   post 'log_in', to: 'sessions#create'
   get 'register', to: 'users#new'
   get 'log_out', to: 'sessions#destroy'
+  get 'forgot_password', to: 'sessions#forgot_password'
+  post 'send_token', to: 'sessions#send_token'
+  get 'confirm_password', to: 'sessions#confirm_password'
+  get 'reset_password', to: 'sessions#reset_password'
+  patch 'update_password', to: 'sessions#update_password'
   get 'queue_items', to: 'queue_items#index'
   root to: 'pages#index' 
 

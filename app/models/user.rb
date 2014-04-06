@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   validates_presence_of :email, :password, :full_name
   validates_uniqueness_of :email
 
+  before_update :generate_token, :if => :password_changed?
+
   has_secure_password validations: false
 
   def repositions_queue_items
@@ -19,8 +21,6 @@ class User < ActiveRecord::Base
   end 
 
   def queued_item?(video=nil)
-    #collection = queue_items.map(&:video)
-    #collection.include?(Video.find(video.id))
     queue_items.map(&:video).include?(video)
   end
 
@@ -34,5 +34,9 @@ class User < ActiveRecord::Base
 
   def unfollow!(other_user)
     self.relationships.find_by(followed_id: other_user.id).destroy
+  end
+
+  def generate_token
+    self.token = SecureRandom.urlsafe_base64
   end
 end

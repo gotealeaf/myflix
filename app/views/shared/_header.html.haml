@@ -20,5 +20,5 @@
             %li
               %a(href="#") Account
               %a(href="#") Plan and Billing
-              = link_to "Profile", user_path(current_user)
+              = link_to "Profile", user_path(current_user.id)
               = link_to "Log Out", log_out_path
