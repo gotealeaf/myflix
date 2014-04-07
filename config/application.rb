@@ -15,5 +15,8 @@ module Myflix
       g.orm :active_record
       g.template_engine :haml
     end
+    console do
+        ActiveRecord::Base.connection
+    end
   end
 end

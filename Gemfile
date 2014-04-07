@@ -21,5 +21,10 @@ end
 group :production do
   gem 'pg'
   gem 'rails_12factor'
+
+group :development , :production do
+  gem 'rspec-rails'
+end
+
 end
 
