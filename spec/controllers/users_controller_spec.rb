@@ -9,70 +9,31 @@ describe UsersController do
     end
   end
   describe "POST create" do
-    after { ActionMailer::Base.deliveries.clear }
     it "sets @user" do
       post :create, user: { fullname: 'desmond', password: 'password'}
       expect(assigns(:user)).to be_instance_of(User)
     end
-    context "with valid input" do
-      before do
-        post :create, user: Fabricate.attributes_for(:user)
-      end
-      it "creates the user" do
-        expect(User.count).to eq(1)
-      end
+    context "successful user signup" do
       it "redirects to login path if success" do
+        result = double(:sign_up_result, successful?: true)
+        UserSignup.any_instance.should_receive(:sign_up).and_return(result)
+        post :create, user: Fabricate.attributes_for(:user)
         expect(response).to redirect_to login_path
       end
     end
 
-    context "register through invitation" do
-      it "should make the user follow the inviter" do
-        desmond = Fabricate(:user)
-        invitation = Fabricate(:invitation, inviter: desmond, recipient_email: "linda@123.com")
-        post :create, user: { fullname: "linda", email: "linda@123.com", password: "password" }, invitation_token: invitation.token
-        linda = User.find_by(email: "linda@123.com")
-        expect(linda.follows?(desmond)).to be_true
-      end
-      it "should make the inviter follow the user" do
-        desmond = Fabricate(:user)
-        invitation = Fabricate(:invitation, inviter: desmond, recipient_email: "linda@123.com")
-        post :create, user: { fullname: "linda", email: "linda@123.com", password: "password" }, invitation_token: invitation.token
-        linda = User.find_by(email: "linda@123.com")
-        expect(desmond.follows?(linda)).to be_true
-      end
-      it "should expire the invitation upon acceptance" do
-        desmond = Fabricate(:user)
-        invitation = Fabricate(:invitation, inviter: desmond, recipient_email: "linda@123.com")
-        post :create, user: { fullname: "linda", email: "linda@123.com", password: "password" }, invitation_token: invitation.token
-        expect(Invitation.first.token).to be_nil
-      end
-    end
-
-    context "sending emails" do
-      it "should send out email to user with valid input" do
-        post :create, user: { email: "desmond@gmail.com", fullname: "desmond", password: "1234" }
-        expect(ActionMailer::Base.deliveries.last.to).to eq(["desmond@gmail.com"])
-      end
-      it "should send out eamil with user's fullname with valid input" do
-        post :create, user: { email: "desmond@gmail.com", fullname: "desmond", password: "1234" }
-        expect(ActionMailer::Base.deliveries.last.body).to include("desmond")
-      end
-      it "should not send out email with invalid input" do
-        post :create, user: { email: "desmond@gmail.com" }
-        expect(ActionMailer::Base.deliveries).to be_empty
-      end
-    end
-
-    context "with invalid input" do
-      before do
-        post :create, user: { fullname: 'desmond', password: 'password'}
-      end
-      it "does not create the user" do
-        expect(User.count).to eq(0)
-      end
+    context "failed user signup" do
       it "renders new template if fail" do
+        result = double(:sign_up_result, successful?: false, error_message: 'This is an error message')
+        UserSignup.any_instance.should_receive(:sign_up).and_return(result)
+        post :create, user: { fullname: 'desmond', password: 'password'}
         expect(response).to render_template :new
+      end
+      it "should set danger message" do
+        result = double(:sign_up_result, successful?: false, error_message: 'This is an error message')
+        UserSignup.any_instance.should_receive(:sign_up).and_return(result)
+        post :create, user: { fullname: 'desmond', password: 'password'}
+        expect(flash[:danger]).to eq('This is an error message')
       end
     end
   end

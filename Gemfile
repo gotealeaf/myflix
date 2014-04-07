@@ -21,7 +21,7 @@ gem "sentry-raven"
 gem "fog"
 gem 'figaro'
 gem 'stripe'
-
+gem 'draper'
 
 group :development do
   gem 'sqlite3'
@@ -50,5 +50,9 @@ group :test do
   gem 'capybara'
   gem 'launchy'
   gem 'capybara-email'
+  gem 'vcr'
+  gem 'webmock'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 

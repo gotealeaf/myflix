@@ -1,13 +1,8 @@
 jQuery(function($) {
   $('#payment-form').submit(function(event) {
     var $form = $(this);
-
-    // Disable the submit button to prevent repeated clicks
-    $form.find('#submit').prop('disabled', true);
-
-    Stripe.card.createToken($form, stripeResponseHandler);
-
-    // Prevent the form from submitting with the default action
+    $form.find('button').prop('disabled', true);
+    Stripe.createToken($form, stripeResponseHandler);
     return false;
   });
 });
@@ -17,8 +12,8 @@ var stripeResponseHandler = function(status, response) {
 
   if (response.error) {
     // Show the errors on the form
-    $('.credit_card').prepend("<div class='alert alert-danger'>" + response.error.message + "</div>");
-    $form.find('#submit').prop('disabled', false);
+    $form.find('.credit_card').prepend("<div class='alert alert alert-danger'>" + response.error.message + "</div>");
+    $form.find('button').prop('disabled', false);
   } else {
     // token contains id, last4, and card type
     var token = response.id;
