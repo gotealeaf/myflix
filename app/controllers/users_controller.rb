@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      MyflixMailer.welcome_email(@user).deliver
       flash[:notice] = "Welcome to myFlix!"
       signin_user(@user)
     else

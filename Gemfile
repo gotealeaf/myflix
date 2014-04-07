@@ -34,6 +34,10 @@ group :test do
   gem 'fabrication', '1.2.0'
 end
 
+group :development do
+  gem 'letter_opener'
+end
+
 group :production do
   gem 'pg'
   gem 'rails_12factor'
