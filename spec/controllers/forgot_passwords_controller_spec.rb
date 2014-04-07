@@ -25,11 +25,5 @@ describe ForgotPasswordsController do
       message = ActionMailer::Base.deliveries
       expect(message.last.to).to eq([User.last.email])
     end
-
-    it "sends an email to the user with a link to reset its password" do
-      post :create, email: bob.email
-      message = ActionMailer::Base.deliveries.last
-      expect(message.body).to include(reset_password_url(bob.token, host: 'localhost:3000'))
-    end
   end
 end
