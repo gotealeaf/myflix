@@ -27,11 +27,7 @@ v14 = Video.create(title: "Family Guy", description: "A cartoon that exhibits mu
 User.destroy_all
 alice = User.create(full_name: "alice", password: "password", email: "alice@example.com")
 bob = User.create(full_name: "bob", password: "password", email: "bob@example.com")
-cat = User.create(full_name: "cat", password: "password", email: "cat@example.com")
-dan = User.create(full_name: "dan", password: "password", email: "dan@example.com")
-elena = User.create(full_name: "elena", password: "password", email: "elena@example.com")
-frank = User.create(full_name: "frank", password: "password", email: "frank@example.com")
-suzie = User.create(full_name: "suzie", password: "password", email: "suzie@example.com")
+
 
 
 Review.destroy_all

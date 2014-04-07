@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :reviews
+  has_many :reviews, -> {order('created_at DESC')}
   has_many :queue_items, -> { order('position') } 
   has_many :relationships, foreign_key: 'follower_id', dependent: :destroy
   has_many :followed_users, through: :relationships, source: :followed
@@ -10,9 +10,9 @@ class User < ActiveRecord::Base
   validates_presence_of :email, :password, :full_name
   validates_uniqueness_of :email
 
-  before_update :generate_token, :if => :password_changed?
-
   has_secure_password validations: false
+
+  before_create :generate_token
 
   def repositions_queue_items
     queue_items.each_with_index do |queue_item, index|

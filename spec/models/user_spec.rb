@@ -6,6 +6,12 @@ describe User do
   it { should validate_presence_of(:full_name) }
   it { should validate_uniqueness_of(:email) }
   #it { should have_many(:queue_items).order(:position) } 
+  it { should have_many(:reviews).order("created_at DESC")}
+
+  it "generates a random token when the user is created" do
+    alice = Fabricate(:user)
+    expect(alice.token).to be_present
+  end
 
   describe "#follow!(other_user)" do
     it "should add the other_user to the user's array of followed users" do
