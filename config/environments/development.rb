@@ -9,7 +9,7 @@ Myflix::Application.configure do
   config.action_mailer.raise_delivery_errors = false
 
   # Specify host for mailer links
-  config.action_mailer.default_url_options = [ host: "arcane-stream-2628.herokuapp.com/" ]
+  config.action_mailer.default_url_options = [ host: "localhost:3000/" ]
 
   config.action_mailer.delivery_method = :letter_opener
 

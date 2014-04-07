@@ -15,5 +15,4 @@ class ForgotPasswordsController < ApplicationController
       redirect_to forgot_password_path
     end
   end
-
 end
