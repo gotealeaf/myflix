@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "User invites friend" do
+feature "User invites friend", { js: true, vcr: true } do
   scenario "User successfully invites a freiend and invitation is accepted" do
     desmond = Fabricate(:user)
     sign_in(desmond)
@@ -29,6 +29,10 @@ feature "User invites friend" do
     current_email.click_link "Accept this invitation"
     fill_in "Password", with: "password"
     fill_in "Full Name", with: "Linda"
+    fill_in "Credit Card Number", with: "4242424242424242"
+    fill_in "Security Code", with: "123"
+    select "4 - April", from: 'date_month'
+    select "2016", from: 'date_year'
     click_button "Sign Up"
   end
 
