@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
                        length: { minimum: 6 }
 
 
+
   def renumber_positions
     queue_items.each_with_index do |item, index|
       item.update_attributes(position: (index+1) )
@@ -36,5 +37,9 @@ class User < ActiveRecord::Base
 
   def can_follow?(user)
     true unless (user == self) || (leaders.include?(user))
+  end
+
+  def self.generate_token
+    SecureRandom.urlsafe_base64
   end
 end

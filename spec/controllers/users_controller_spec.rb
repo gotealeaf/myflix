@@ -13,7 +13,8 @@ describe UsersController do
 
     describe "POST create" do
       context "with valid info" do
-        let(:params) { {user: { name: "Joe", email: "email@email.com", password: "password" }} }
+        let(:joe) { Fabricate.build(:user) }
+        let(:params) { {user: { name: joe.name, email: joe.email, password: joe.password }} }
 
         it "makes a new user" do
           expect do
@@ -22,12 +23,34 @@ describe UsersController do
         end
         it "signs in user" do
           post :create, params
-          expect(session[:user_id]).to eq(User.find_by(email: "email@email.com").id)
+          expect(session[:user_id]).to eq(User.find_by(email: joe.email).id)
+        end
+
+        context "email sending" do
+          before { post :create, params }
+          after  { ActionMailer::Base.deliveries.clear }
+
+          it "sends an email upon successful creation" do
+            ActionMailer::Base.deliveries.should_not be_empty
+          end
+          it "sends email to the registering user's email address" do
+            email = ActionMailer::Base.deliveries.last
+            email.to.should eq([joe.email])
+          end
+          it "has a welcome message in the subject" do
+            email = ActionMailer::Base.deliveries.last
+            email.subject.should include("Welcome to MyFLiX")
+          end
+          it "has a welcome message in the body" do
+            email = ActionMailer::Base.deliveries.last
+            expect(email.parts.first.body.raw_source).to include(joe.name)
+          end
         end
       end
 
       context "with INVALID information" do
         let(:params) { {user: { name: "", email: "", password: "" }} }
+        after  { ActionMailer::Base.deliveries.clear }
 
         it "does not create a new user" do
           expect {post :create, params
@@ -44,6 +67,10 @@ describe UsersController do
         it "renders the new view template" do
           post :create, params
           expect(response).to render_template :new
+        end
+        it "does not send an email" do
+          post :create, params
+          ActionMailer::Base.deliveries.should be_empty
         end
       end
     end

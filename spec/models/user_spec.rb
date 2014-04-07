@@ -73,4 +73,14 @@ describe User do
       expect(joe.can_follow?(jen)).to be_false
     end
   end
+
+  describe "generate_token" do
+    it "generates a random token and loads it into the specified column on user" do
+      joe = Fabricate(:user)
+      token = User.generate_token
+      joe.update_column(:password_reset_token, token)
+      expect(User.first.password_reset_token).to eq(token)
+    end
+  end
+
 end
