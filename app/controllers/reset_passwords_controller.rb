@@ -9,12 +9,21 @@ class ResetPasswordsController < ApplicationController
   end
 
   def create
-    binding.pry
     @user = User.where(token: params[:token]).first
-    @user.password = password_reset_params
-    @user.save
-    redirect_to sign_in_path
+    if @user
+      @user.password = password_reset_params[:password]
+      @user.update_columns(token: SecureRandom.urlsafe_base64)
+      @user.save
+      flash[:notice] = "Please go to the log in page and sign in with your new password."
+      render 'show'
+    else
+      redirect_to expired_token_path
+    end
   end
+
+  def expired_token
+  end
+
 private
 
   def password_reset_params

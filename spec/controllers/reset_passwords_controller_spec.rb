@@ -24,22 +24,37 @@ describe ResetPasswordsController do
   end
 
   describe "POST create" do
-    context "with valid input"
-    it "redirects user to the sign in path" do
-      bob = Fabricate(:user, password: "password")
-      
-      post :create, token: bob.token, password: "abcdefg"
-      expect(response).to redirect_to(sign_in_path)
-    end
+    context "with valid input" do
 
-    it "changes the password of the user" do
-      bob = Fabricate(:user, password: "password")
-      post :create, token: bob.token, password: "new_password"
-      
-      expect(bob.reload.authenticate('new_password')).to be_true
+      it "changes the password of the user" do
+        bob = Fabricate(:user, password: "password")
+        post :create, token: bob.token, password: "new_password"
+        
+        expect(bob.reload.authenticate('new_password')).to eq(bob)
+      end
+
+      it "resets user's token" do
+        bob = Fabricate(:user, password: "password")
+        token = bob.token
+        post :create, token: token, password: "new_password"
+        expect(bob.reload.token).not_to eq(token)
+      end
+
+      it "sets a notice, requesting the user to sign in with the new password" do
+        bob = Fabricate(:user, password: "password")
+        post :create, token: bob.token, password: "new_password"
+        
+        expect(flash[:notice]).to eq("Please go to the log in page and sign in with your new password.")
+      end
     end
-    it "resets user's token"
-    context "with invalid input"
+    context "with invalid input" do
+      it "redirects to exipred token page" do
+        bob = Fabricate(:user, password: "password")
+        post :create, token: "12345", password: "new_password"
+
+        expect(response).to redirect_to(expired_token_path)
+      end
+    end
   end
 
 end
