@@ -1,89 +1,6 @@
 <<<<<<< HEAD
-Welcome to MyFLix!
 
-This is a proof-of-concept app based on the Netflix site, built using TDD and BDD, and featuring full payment processing, account management, and administration capabilities. Some of my learnings include:
-
-PROCESS
-
-Ideation, wireframes, mockups, design and development
-Building from the application core to the peripherals
-Adding features incrementally and deploying continuously
-
-FRONT-END FRAMEWORKS
-
-Haml
-SASS
-Twitter Bootstrap
-jQuery
-
-TEAM COLLABORATION
-
-Feature development with Git branching
-GitHub flow
-Code reviews
-
-TESTING
-
-Unit, functional, and integration tests
-Development and test databases
-Shoulda matchers
-TDD and red/green/refactor
-Testing with RSpec
-Controller tests
-Generating fake data
-Macros
-Shared examples
-Feature specs
-Capybara
-Test doubles and method stubs
-Feature tests with Javascript
-Testing email sending
-Fully integrated and isolated API tests
-Stubs and mocks
-
-BUILDING APPLICATIONS
-
-Seeding data
-Search capability
-Sending emails
-Using random tokens
-Custom form builders
-Complex forms
-Organizing cross-cutting functionality with Concerns
-Using Sidekiq to process background jobs
-Using Amazon S3 for cloud storage
-Skinny controller, fat model
-Wrapping APIs
-Responding to webhooks
-Collecting credit card payments
-Payment forms
-Handling recurring billing
-Handling callback events
-
-
-PRODUCTION APPLICATION CONSIDERATIONS
-
-Secure sensitive data
-Deploy with Procfile and Foreman
-Deploy with background jobs
-Unicorn as alternative server
-Production service integration
-
-
-
-WORKFLOWS
-
-Building workflows involving multiple sub-systems
-Complex registration workflow
-Invitation workflow
-Social networking
-Taking and charging credit cards
-Recurring billing
-Privileges and access control
-Account and billing management
-Plan cancellation and lock out
-=======
-== Welcome to MyFlix!
+==Welcome to MyFlix!
 
 This is a proof-of-concept app based on the Netflix site, built using TDD and BDD, and featuring full payment processing, account management, and administration capabilities. Learnings from building this applicatiion include:
 
@@ -157,4 +74,5 @@ This is a proof-of-concept app based on the Netflix site, built using TDD and BD
 * Privileges and access control
 * Account and billing management
 * Plan cancellation and lock out
+
 >>>>>>> master
