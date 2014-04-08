@@ -1,5 +1,5 @@
 class VideosController < ApplicationController
-  before_action :require_user, only: [:show, :search]
+  before_action :require_user, only: [:show, :search, :review]
 
   def index
     @categories = Category.all
@@ -15,5 +15,17 @@ class VideosController < ApplicationController
   end
 
   def review
+    @video = Video.find(params[:id])
+    @review = Review.new(
+      rating: params[:rating],
+      review_description: params[:review_description],
+      video: @video,
+      user: current_user
+    )
+    if @review.save
+      render :show
+    else
+      redirect_to root_path
+    end
   end
 end
