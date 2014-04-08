@@ -37,16 +37,13 @@ grammer = Fabricate(:category, name: "grammer")
 
 User.create(name: "crokobit", email: "crokobit@gmail.com", password: "pw")
 
-crokobit = Fabricate(:user, name: "crokobit")
+@crokobit = Fabricate(:user, name: "crokobit")
 ivan = Fabricate(:user, name: "ivan")
 eva = Fabricate(:user, name: "eva")
 
+#why can not decidde reviews user relationship here?
 10.times do
   Fabricate(:video, category: [sport, news, grammer].sample) do
-     reviews(count: (3..10).to_a.sample) {
-      Fabricate(:review) {
-        user [crokobit, ivan, eva].sample
-        }
-     }
+    reviews(count: (3..10).to_a.sample)  
   end
 end
