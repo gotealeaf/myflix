@@ -12,7 +12,6 @@ class ResetPasswordsController < ApplicationController
     #binding.pry
     @user = User.where(token: params[:token]).first
     @user.password_digest = params[:password]
-    #@user.update_columns(password_digest: params[:password])
     @user.save
     redirect_to sign_in_path
   end

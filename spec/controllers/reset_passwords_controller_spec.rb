@@ -34,8 +34,8 @@ describe ResetPasswordsController do
 
     it "changes the password of the user" do
       bob = Fabricate(:user, password: "password")
-      post :create, token: bob.token, password: "abcdefg"
-      expect(bob.reload.authenticate('abcdefg')).to be_true
+      post :create, token: bob.token, password: "new_password"
+      expect(bob.reload.authenticate('new_password')).to be_true
     end
     it "resets user's token"
     context "with invalid input"
