@@ -35,7 +35,7 @@ describe VideosController do
   end
 
 
-  describe "videos#review" do
+  describe "videos#create_review" do
     context "logged in" do
       before(:each) do
         @user = Fabricate(:user)
@@ -46,7 +46,7 @@ describe VideosController do
         before(:each) do
           @video = Fabricate(:video)
           @review = Fabricate.build(:review)
-          post :review, id: @video.id, rating: @review.rating, review_description: @review.review_description
+          post :create_review, id: @video.id, rating: @review.rating, review_description: @review.review_description
         end
         it "assigns rating to @review" do
           expect(assigns(:review).rating).to eq @review.rating
@@ -71,7 +71,7 @@ describe VideosController do
       context "data not pass validate" do
         before(:each) do
           @video = Fabricate(:video)
-          post :review, id: @video.id, rating: nil, review_description: ""
+          post :create_review, id: @video.id, rating: nil, review_description: ""
         end
         it "does not save review to db" do
           expect(Review.count).to eq 0
