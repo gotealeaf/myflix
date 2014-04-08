@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Category do
-  it {should have_many(:videos).through(:video_categories)}
+  it {should have_many(:videos)}
   describe "recent_videos" do
     before (:each) do
       @category1 = Category.create(name: "category1")
@@ -20,8 +20,8 @@ describe Category do
 
       end
       it "return six videos in reverse chronological order when having more than six videos" do
-        @video6 = Video.create(title: "video6",description: "X",created_at: 2.day.ago , categories: [@category1])
-        @video7 = Video.create(title: "video7",description: "X",created_at: 7.day.ago , categories: [@category1])
+        @video6 = Video.create(title: "video6",description: "X",created_at: 2.day.ago , category: @category1)
+        @video7 = Video.create(title: "video7",description: "X",created_at: 7.day.ago , category: @category1)
         expect(@category1.recent_videos).to eq [ @video1, @video6, @video3, @video5, @video2, @video4 ]
       end
       it "return some videos when having videos less than six videos" do

@@ -2,7 +2,7 @@ require 'pry'
 require 'spec_helper'
 
 describe Video do
-  it { should have_many(:categories).through(:video_categories) }
+  it { should belong_to(:category) }
   it { should validate_presence_of :title}
   it { should validate_presence_of :description}
 
@@ -36,7 +36,7 @@ describe Video do
     it "returns number of reviews when more than one review" do
       @video = Fabricate(:video) do
         reviews(count: 5) {
-          Fabricate.build(:review, user: nil)
+          Fabricate(:review, user: Fabricate(:user) )
         }
       end
       expect(@video.number_of_reviews).to eq 5
