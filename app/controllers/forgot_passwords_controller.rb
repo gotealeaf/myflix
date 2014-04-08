@@ -1,13 +1,18 @@
 class ForgotPasswordsController < ApplicationController
   before_action :require_signed_out
 
+  def confirm_password_reset_email
+    # Static confirmation page
+  end
+
   def new
   end
 
   def create
     @user = User.find_by(email: params[:email])
     if !@user.blank?
-      @user.update_column(:password_reset_token, User.generate_token)
+      @user.update_columns(password_reset_token: User.generate_token,
+                           prt_created_at: Time.zone.now)
       MyflixMailer.password_reset_email(@user).deliver
       redirect_to confirm_password_reset_email_path
     else

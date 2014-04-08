@@ -10,7 +10,6 @@ class MyflixMailer < ActionMailer::Base
     @user = user
     mail(to: user.email,
          from: "info@myflix.com",
-         host: "http://arcane-stream-2628.herokuapp.com/",
          subject: "Link To Reset Your MyFLiX Password")
   end
 end

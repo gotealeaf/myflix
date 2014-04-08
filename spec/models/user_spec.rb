@@ -83,4 +83,14 @@ describe User do
     end
   end
 
+  describe "token_expired" do
+    it "returns false if the token is outside the allowed timeframe" do
+      joe = Fabricate(:user, prt_created_at: 2.days.ago)
+      expect(joe.token_expired?(2)).to be_true
+    end
+    it "returns true if the token is within the allowed timeframe" do
+      joe = Fabricate(:user, prt_created_at: 2.minutes.ago)
+      expect(joe.token_expired?(2)).to be_false
+    end
+  end
 end

@@ -46,6 +46,9 @@ describe ForgotPasswordsController do
           it "creates a new password_reset_token for the user" do
             expect(User.find_by(email: joe.email).password_reset_token).to_not be_blank
           end
+          it "sets the current time in the user's prt_created_at (for expirations)" do
+            expect(User.find_by(email: joe.email).prt_created_at).to be >= 2.minutes.ago
+          end
           it "redirects to the 'email sent' " do
            expect(response).to redirect_to confirm_password_reset_email_path
           end

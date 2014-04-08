@@ -42,4 +42,8 @@ class User < ActiveRecord::Base
   def self.generate_token
     SecureRandom.urlsafe_base64
   end
+
+  def token_expired?(timeframe)
+    prt_created_at.nil? ? true : prt_created_at < timeframe.hours.ago
+  end
 end
