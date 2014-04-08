@@ -22,6 +22,7 @@ gem "fog"
 gem 'figaro'
 gem 'stripe'
 gem 'draper'
+gem 'stripe_event'
 
 group :development do
   gem 'sqlite3'

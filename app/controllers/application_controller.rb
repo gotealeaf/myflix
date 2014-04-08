@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin
-    if !current_user.admin?
+    if logged_in? && !current_user.admin?
       flash[:danger] = "You don't have authority to do that!"
       redirect_to home_path
     end

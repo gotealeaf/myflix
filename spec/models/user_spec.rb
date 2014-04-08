@@ -55,4 +55,12 @@ describe User do
       expect(desmond.follows?(desmond)).to be_false
     end
   end
+
+  describe "#deactivate!" do
+    it "should deactivate a active user" do
+      desmond = Fabricate(:user, active: true)
+      desmond.deactivate!
+      expect(desmond).not_to be_active
+    end
+  end
 end

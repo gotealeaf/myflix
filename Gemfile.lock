@@ -244,6 +244,9 @@ GEM
       json (~> 1.8.1)
       mime-types (~> 1.25)
       rest-client (~> 1.4)
+    stripe_event (1.1.0)
+      activesupport (>= 3.1)
+      stripe (~> 1.6)
     subexec (0.2.3)
     thin (1.5.0)
       daemons (>= 1.0.9)
@@ -312,6 +315,7 @@ DEPENDENCIES
   sidekiq (= 3.0.0)
   sqlite3
   stripe
+  stripe_event
   thin
   uglifier
   unicorn

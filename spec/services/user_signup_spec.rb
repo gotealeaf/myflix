@@ -3,13 +3,17 @@ require 'spec_helper'
 describe UserSignup do
     after { ActionMailer::Base.deliveries.clear }
     context "with valid person input and valid credit card input" do
-      let(:charge) { double(:charge, successful?: true) }
+      let(:customer) { double(:customer, successful?: true, customer_token: 'abcdef') }
       before do
-        StripeWrapper::Charge.should_receive(:create).and_return(charge)
+        StripeWrapper::Customer.should_receive(:create).and_return(customer)
       end
       it "creates the user" do
         UserSignup.new(Fabricate.build(:user)).sign_up("some_stripe_token", nil)
         expect(User.count).to eq(1)
+      end
+      it "should store customer token from stripe" do
+        UserSignup.new(Fabricate.build(:user)).sign_up("some_stripe_token", nil)
+        expect(User.first.customer_token).to eq('abcdef')
       end
       context "register through invitation" do
         it "should make the user follow the inviter" do
@@ -43,7 +47,7 @@ describe UserSignup do
         expect(User.count).to eq(0)
       end
       it "should not charge the card" do
-        StripeWrapper::Charge.should_not_receive(:create)
+        StripeWrapper::Customer.should_not_receive(:create)
       end
       it "should not send out email with invalid input" do
         expect(ActionMailer::Base.deliveries).to be_empty
@@ -51,9 +55,9 @@ describe UserSignup do
     end
 
     context "with valid person input and invalid credit card input" do
-      let(:charge) { double(:charge, successful?: false, error_message: 'Your card is declined.') }
+      let(:customer) { double(:customer, successful?: false, error_message: 'Your card is declined.') }
       before do
-        StripeWrapper::Charge.should_receive(:create).and_return(charge)
+        StripeWrapper::Customer.should_receive(:create).and_return(customer)
       end
       it "should not create a new user" do
         UserSignup.new(Fabricate.build(:user)).sign_up("1234", nil)
@@ -62,9 +66,9 @@ describe UserSignup do
     end
 
     context "sending emails" do
-      let(:charge) { double(:charge, successful?: true) }
+      let(:customer) { double(:customer, successful?: true, customer_token: 'abcdef') }
       before do
-        StripeWrapper::Charge.should_receive(:create).and_return(charge)
+        StripeWrapper::Customer.should_receive(:create).and_return(customer)
       end
       it "should send out email to user with valid input" do
         UserSignup.new(Fabricate.build(:user, email: "desmond@gmail.com", fullname: "desmond", password: "1234")).sign_up("some_stripe_token", nil)

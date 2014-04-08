@@ -16,6 +16,7 @@ Myflix::Application.routes.draw do
 
   namespace :admin do
     resources :videos, only: [:new, :create]
+    resources :payments, only: [:index]
   end
 
   resources :relationships, only: [:destroy, :create]
@@ -37,6 +38,7 @@ Myflix::Application.routes.draw do
 
   resources :password_resets, only: [:show, :create]
 
-
   resources :invitations, only: [:new, :create]
+
+  mount StripeEvent::Engine => '/stripe_event'
 end
