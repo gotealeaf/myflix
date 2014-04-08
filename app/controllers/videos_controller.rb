@@ -1,5 +1,5 @@
 class VideosController < ApplicationController
-  before_action :require_user, only: [:show, :search, :review]
+  before_action :require_user, only: [:show, :search, :create_review]
 
   def index
     @categories = Category.all
@@ -14,7 +14,7 @@ class VideosController < ApplicationController
     @videos = Video.search_by_title(params[:search_item])
   end
 
-  def review
+  def create_review
     @video = Video.find(params[:id])
     @review = Review.new(
       rating: params[:rating],
@@ -25,7 +25,8 @@ class VideosController < ApplicationController
     if @review.save
       render :show
     else
-      redirect_to root_path
+      flash[:error] = "Can not rating twice !!"
+      render :show
     end
   end
 end

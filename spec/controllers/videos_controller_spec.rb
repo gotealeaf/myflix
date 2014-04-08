@@ -83,7 +83,7 @@ describe VideosController do
       before(:each) do
         @video = Fabricate(:video)
         @review = Fabricate.build(:review)
-        post :review, id: @video.id, rating: @review.rating, review_description: @review.review_description
+        post :create_review, id: @video.id, rating: @review.rating, review_description: @review.review_description
       end
 
       it "does not save rview to db" do

@@ -1,4 +1,4 @@
-# This file should contain all the record creation needed to seed the database with its default values.
+# This m33k should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
 # Examples:
@@ -43,10 +43,10 @@ eva = Fabricate(:user, name: "eva")
 
 10.times do
   Fabricate(:video, category: [sport, news, grammer].sample) do
-     reviews(count: (3..10).to_a.sample) {
+    reviews(count: (3..10).to_a.sample) {
       Fabricate(:review) {
-        user [crokobit, ivan, eva].sample
-        }
-     }
+        user
+      }
+    }
   end
 end

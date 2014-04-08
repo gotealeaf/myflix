@@ -5,4 +5,5 @@ class Review < ActiveRecord::Base
   validates :rating, presence: true
   validates :review_description, presence: true
   
+  validates_uniqueness_of :user, scope: :video
 end

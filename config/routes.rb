@@ -3,7 +3,7 @@ Myflix::Application.routes.draw do
   get '/home', to: 'videos#index'
   resources :videos do
     member do
-      post 'review'
+      post 'create_review'
     end
   end
   get '/search', to: 'videos#search'
