@@ -14,6 +14,5 @@ class ForgotPasswordsController < ApplicationController
   end
 
   def confirm_password_reset
-    
   end
 end

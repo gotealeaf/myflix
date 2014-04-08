@@ -27,6 +27,7 @@ Myflix::Application.routes.draw do
   get 'email_page', to: 'forgot_passwords#email_page'
   get 'confirm_password_reset', to: 'forgot_passwords#confirm_password_reset'
 
-  resources :reset_passwords, only: [:show]
+  resources :reset_passwords, only: [:show, :create]
+  #patch 'update_password', to: 'reset_passwords#update'
   get 'expired_token', to: 'reset_passwords#expired_token'
 end
