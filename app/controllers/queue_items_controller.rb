@@ -24,6 +24,15 @@ class QueueItemsController < ApplicationController
     redirect_to my_queue_path
   end
 
+  def update_queue
+    current_user.queue_items.each do |queue_item|
+      queue_item.position = params[queue_item.id.to_s]
+      queue_item.save
+    end
+
+    redirect_to my_queue_path
+  end
+
   private
 
   def user_next_queue_position

@@ -97,7 +97,7 @@ describe QueueItemsController do
       expect(response).to redirect_to my_queue_path
     end
 
-    it "removes the queue_item from the db" do
+    it "removes the queue item from the db" do
       session[:user_id] = user
       delete :destroy, id: queue_item.id
       expect(QueueItem.count).to eq 0
@@ -112,6 +112,31 @@ describe QueueItemsController do
     it "redirects to sign_in_path with unauthenticated users" do
       delete :destroy, id: queue_item.id
       expect(response).to redirect_to sign_in_path
+    end
+  end
+
+  describe "PATCH update_queue" do
+    it "redirects to the sign in path for unauthenticated users" do
+      patch :update_queue
+      expect(response).to redirect_to sign_in_path
+    end
+
+    context "with authenticated users" do
+      it "it redirects to my queue" do
+        session[:user_id] = Fabricate(:user)
+        patch :update_queue
+        expect(response).to redirect_to my_queue_path
+      end
+
+      it "takes the passed parameters and updates the associated queue items" do
+        user = Fabricate(:user)
+        session[:user_id] = user
+        queue_item_1 = Fabricate(:queue_item, user: user, position: 1)
+        queue_item_2 = Fabricate(:queue_item, user: user, position: 2)
+        patch :update_queue, queue_item_1.id.to_s => 2, queue_item_2.id.to_s => 1
+        expect(queue_item_1.reload.position).to eq 2
+        expect(queue_item_2.reload.position).to eq 1
+      end
     end
   end
 end

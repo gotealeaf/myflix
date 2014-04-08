@@ -11,11 +11,6 @@ describe QueueItem do
   it { should validate_numericality_of(:position).only_integer }
   it { should allow_value("", nil).for(:position) }
 
-  it "validates uniqueness of position for user" do
-    queue_item = Fabricate(:queue_item, position: 1)
-    expect(queue_item).to validate_uniqueness_of(:position).scoped_to(:user_id)
-  end
-
   it "validates uniqueness of video for user" do
     queue_item = Fabricate(:queue_item)
     expect(queue_item).to validate_uniqueness_of(:video).scoped_to(:user_id)

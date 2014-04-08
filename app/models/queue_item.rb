@@ -4,7 +4,7 @@ class QueueItem < ActiveRecord::Base
 
   validates :user, presence: true
   validates :video, presence: true, uniqueness: { scope: :user_id }
-  validates :position, uniqueness: { scope: :user_id }, allow_blank: true, numericality: { only_integer: true }
+  validates :position, allow_blank: true, numericality: { only_integer: true }
 
   delegate :category, to: :video
   delegate :title, to: :video, prefix: :video
