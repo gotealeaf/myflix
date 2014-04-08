@@ -33,11 +33,6 @@ bob = User.create(full_name: "bob", password: "password", email: "bob@example.co
 Review.destroy_all
 Review.create(user_id: bob.id, video_id: south_park.id, rating: 5.0, content: "boy o boy what film!")
 Review.create(user_id: alice.id, video_id: south_park.id, rating: 2.0, content: "not so good!")
-Review.create(user_id: cat.id, video_id: south_park.id, rating: 4.0, content: "very funny!")
-Review.create(user_id: dan.id, video_id: south_park.id, rating: 5.0, content: "a fantastic show")
-Review.create(user_id: elena.id, video_id: south_park.id, rating: 1.0, content: "crazy kids")
-Review.create(user_id: frank.id, video_id: south_park.id, rating: 3.0, content: "enjoyable")
-Review.create(user_id: suzie.id, video_id: south_park.id, rating: 5.0, content: "o wow")
 
 
 =begin
