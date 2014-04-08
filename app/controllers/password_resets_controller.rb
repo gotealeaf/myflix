@@ -7,7 +7,8 @@ class PasswordResetsController < ApplicationController
   def show
     @user  = User.where(password_reset_token: params[:id]).first
     if user_valid_but_token_invalid?(2)
-      clear_reset_token_and_redirect
+      set_token_data_invalid
+      redirect_to expired_token_path
     elsif user_and_token_valid?(2)
       @token = params[:id]
     else
@@ -18,7 +19,8 @@ class PasswordResetsController < ApplicationController
   def create
     @user = User.where(password_reset_token: params[:token]).first
     if user_valid_but_token_invalid?(3)
-      clear_reset_token_and_redirect
+      set_token_data_invalid
+      redirect_to expired_token_path
     elsif user_and_token_valid?(3)
       update_valid_password_or_retry
     else
@@ -37,14 +39,10 @@ class PasswordResetsController < ApplicationController
     @user && !@user.token_expired?(timeframe)
   end
 
-  def clear_reset_token_and_redirect
-    @user.update_columns(password_reset_token: nil)
-    redirect_to expired_token_path
-  end
-
   def update_valid_password_or_retry
     if @user.update(password: params[:password])
       flash[:notice] = "Password successfully changed. Please login with new password."
+      clear_reset_token_and_redirect
       redirect_to signin_path
     else
       flash[:notice] = "Password invalid. Please must be a minimum of 6 characters."

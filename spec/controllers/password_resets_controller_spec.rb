@@ -60,6 +60,8 @@ describe PasswordResetsController do
         it "redirects the user to the signin page" do
           expect(response).to redirect_to signin_path
         end
+        it "clears the user's password_reset_token"
+        it ""
       end
 
       context "with invalid password" do

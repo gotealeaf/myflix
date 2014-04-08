@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
 
   has_secure_password validations: false
 
+  before_create :set_initial_reset_tokens
+
 
   validates :name,     presence: true,
                        length: { minimum: 1, maximum: 30 }
@@ -43,7 +45,17 @@ class User < ActiveRecord::Base
     SecureRandom.urlsafe_base64
   end
 
+  def set_initial_reset_tokens
+    self.password_reset_token = User.generate_token
+    self.prt_created_at = 1.day.ago
+  end
+
   def token_expired?(timeframe)
     prt_created_at.nil? ? true : prt_created_at < timeframe.hours.ago
+  end
+
+  def set_token_data_invalid
+    update_columns(password_reset_token: User.generate_token,
+                   prt_created_at: 1.day.ago)
   end
 end

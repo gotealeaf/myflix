@@ -93,4 +93,21 @@ describe User do
       expect(joe.token_expired?(2)).to be_false
     end
   end
+
+  describe "set_token_data_invalid" do
+    it "generates a new password_reset_token for the suer" do
+      old_token = User.generate_token
+      joe = Fabricate(:user, password_reset_token: old_token,
+                             prt_created_at: 2.minutes.ago)
+      joe.set_token_data_invalid
+      expect(joe.reload.password_reset_token).to_not eq(old_token)
+    end
+    it "it sets the time to an invalid time one day ago" do
+      old_token = User.generate_token
+      joe = Fabricate(:user, password_reset_token: old_token,
+                             prt_created_at: 2.minutes.ago)
+      joe.set_token_data_invalid
+      expect(joe.reload.prt_created_at).to be < 1.day.ago
+    end
+  end
 end
