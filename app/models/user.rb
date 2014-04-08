@@ -6,4 +6,10 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
 
   has_secure_password 
+
+  def normalize_queue_positions 
+    queue_items.each_with_index do |queue_item, index|
+      queue_item.update_attributes(order: index + 1)
+    end    
+  end
 end

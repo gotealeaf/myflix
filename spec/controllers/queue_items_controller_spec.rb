@@ -128,7 +128,7 @@ describe QueueItemsController do
           expect(user.queue_items).to eq([qi2, qi1, qi4, qi3])
         end
 
-        it "it normalize position numbers" do
+        it "normalizes position numbers" do
           qi1 = Fabricate :queue_item, user: user, order: 1
           qi2 = Fabricate :queue_item, user: user, order: 2
           qi3 = Fabricate :queue_item, user: user, order: 3
@@ -139,6 +139,36 @@ describe QueueItemsController do
 
           expect(user.queue_items.map(&:order)).to eq([1, 2, 3, 4])
         end
+      end
+
+      context "videos without a review created by the logged user" do
+        it "creates a review that belongs to the current user" do
+          qi1 = Fabricate :queue_item, user: user, video: video, order: 1
+          queue_items = [{ id: qi1.id, order: 1,rating: 3 }]   
+
+          post :update_queue, queue_items: queue_items
+
+          expect(Review.count).to eq(1)  
+        end
+
+        it "creates the review setting rating with the input"
+      end
+
+      context "videos with reviews already done by the logged user" do
+        it "updates queue items rating" do
+          # video1 = Fabricate :video
+          # review1 = Fabricate :review, video: video, creator: user, rating: 2
+          # review2 = Fabricate :review, video: video1, creator: user, rating: 3
+          # qi1 = Fabricate :queue_item, user: user, video: video, order: 1
+          # qi2 = Fabricate :queue_item, user: user, video: video1, order: 2       
+          # queue_items = [{ id: qi1.id, order: 1,rating: 3 }, { id: qi2.id, order: 2, rating: 4 }]   
+
+          # post :update_queue, queue_items: queue_items
+
+          # expect([QueueItem.find(qi1.id).rating, QueueItem.find(qi2.id).rating]).to eq([3, 4])  
+        end
+
+        it "does not create a review of video if current user already has one done"        
       end
 
       context "with invalid inputs" do
@@ -173,7 +203,7 @@ describe QueueItemsController do
       end
 
       context "with queue items that do not belong to the current user" do
-        it "does not change the queue items" do
+        it "does not change the queue items position" do
           user2 = Fabricate :user
           qi1 = Fabricate :queue_item, user: user2, order: 1
           qi2 = Fabricate :queue_item, user: user2, order: 2
@@ -184,6 +214,8 @@ describe QueueItemsController do
 
           expect(qi1.reload.order).to eq(1)
         end
+
+        it "does not change the queue items rating"
       end
     end
   end
