@@ -9,10 +9,15 @@ class ResetPasswordsController < ApplicationController
   end
 
   def create
-    #binding.pry
+    binding.pry
     @user = User.where(token: params[:token]).first
-    @user.password_digest = params[:password]
+    @user.password = password_reset_params
     @user.save
     redirect_to sign_in_path
+  end
+private
+
+  def password_reset_params
+    params.permit(:password)
   end
 end
