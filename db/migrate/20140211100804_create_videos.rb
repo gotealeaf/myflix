@@ -5,6 +5,7 @@ class CreateVideos < ActiveRecord::Migration
       t.text :description
       t.string :big_cover_url
       t.string :small_cover_url
+      t.integer :category_id
 
       t.timestamps
     end
