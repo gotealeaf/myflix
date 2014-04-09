@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:edit]
+  before_action :set_user, only: [:edit, :update]
 
   def new
     #binding.pry
@@ -19,9 +19,10 @@ class UsersController < ApplicationController
   def edit; end
   
   def update
-    if @user.update(user.param)
+    if @user.update(user_param)
       redirect_to root_path
     else
+      flash[:error] = "invalid update"
       render :edit
     end
   end

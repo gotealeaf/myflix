@@ -28,4 +28,52 @@ describe UsersController do
       end
     end
   end
+
+  describe "users#update" do
+
+    it "locates requested user to @user" do
+      @user = Fabricate(:user)
+      patch :update, id: @user ,user: { 
+        name: @user.name,
+        password: "pw",
+        email: @user.email,
+      }
+      expect(assigns(:user)).to eq @user
+    end
+
+    context "valid update" do
+      before(:each) do
+        @user = Fabricate(:user)
+        patch :update, id: @user ,user: { 
+          name: "crokobit",
+          password: "pw",
+          email: "crokobit@gmail.com"
+        }
+        @user.reload
+      end
+      it "updates @user to db" do
+        expect(@user.name).to eq "crokobit"
+        expect(@user.authenticate("pw")).to eq @user
+        expect(@user.email).to eq "crokobit@gmail.com"
+      end
+      it "redirects to root_path" do
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    context "invalid update" do
+      before(:each) do
+        @user = Fabricate(:user)
+        patch :update, id: @user ,user: { 
+          name: "",
+          password: "pw",
+          email: "crokobit@gmail.com"
+        }
+      end
+      it "render :edit" do
+        expect(response).to render_template :edit
+      end
+    end
+  end
+
 end
