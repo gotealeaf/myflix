@@ -13,3 +13,9 @@ shared_examples "require_signed_out" do
     expect(response).to redirect_to root_path
   end
 end
+
+shared_examples "Tokenable" do
+  it "generates a new token and sets it in the token column before creation" do
+    expect(object.token).to_not be_nil
+  end
+end

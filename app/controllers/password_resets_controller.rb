@@ -5,7 +5,7 @@ class PasswordResetsController < ApplicationController
   end
 
   def show
-    @user  = User.where(password_reset_token: params[:id]).first
+    @user  = User.where(token: params[:id]).first
     if user_valid_but_token_invalid?
       @user.set_token_data_invalid
       redirect_to expired_token_path
@@ -17,7 +17,7 @@ class PasswordResetsController < ApplicationController
   end
 
   def create
-    @user = User.where(password_reset_token: params[:token]).first
+    @user = User.where(token: params[:token]).first
     if user_valid_but_token_invalid?(3)
       @user.set_token_data_invalid
       redirect_to expired_token_path

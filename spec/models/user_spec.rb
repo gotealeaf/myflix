@@ -74,12 +74,12 @@ describe User do
     end
   end
 
-  describe "generate_token" do
-    it "generates a random token and loads it into the specified column on user" do
+  describe "secure_token" do
+    it "generates a random token" do
       joe = Fabricate(:user)
-      token = User.generate_token
-      joe.update_column(:password_reset_token, token)
-      expect(User.first.password_reset_token).to eq(token)
+      token = User.secure_token
+      joe.update_column(:token, token)
+      expect(User.first.token).to eq(token)
     end
   end
 
@@ -97,16 +97,16 @@ describe User do
   end
 
   describe "set_token_data_invalid" do
-    it "generates a new password_reset_token for the suer" do
-      old_token = User.generate_token
-      joe = Fabricate(:user, password_reset_token: old_token,
+    it "generates a new token for the suer" do
+      old_token = User.secure_token
+      joe = Fabricate(:user, token: old_token,
                              prt_created_at: 2.minutes.ago)
       joe.set_token_data_invalid
-      expect(joe.reload.password_reset_token).to_not eq(old_token)
+      expect(joe.reload.token).to_not eq(old_token)
     end
     it "it sets the time to an invalid time one day ago" do
-      old_token = User.generate_token
-      joe = Fabricate(:user, password_reset_token: old_token,
+      old_token = User.secure_token
+      joe = Fabricate(:user, token: old_token,
                              prt_created_at: 2.minutes.ago)
       joe.set_token_data_invalid
       expect(joe.reload.prt_created_at).to be < 1.day.ago
@@ -121,5 +121,9 @@ describe User do
       joe.follow(jen)
       expect(joe.leaders.first).to eq(jen)
     end
+  end
+
+  it_behaves_like "Tokenable" do
+    let(:object) { Fabricate(:user) }
   end
 end

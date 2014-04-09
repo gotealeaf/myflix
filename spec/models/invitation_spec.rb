@@ -13,13 +13,9 @@ describe Invitation do
       invite.save
       expect(Invitation.first.token).to_not be_nil
     end
-  end
 
-  describe "set_invitation_token" do
-    it "sets the invitation's token to a random string" do
-      invite = Fabricate.build(:invitation, inviter_id: 1, token: nil)
-      invite.set_invitation_token
-      expect(invite.token).to_not be_nil
+    it_behaves_like "Tokenable" do
+      let(:object) { Fabricate(:invitation, inviter_id: 1) }
     end
   end
 
