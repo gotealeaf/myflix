@@ -14,6 +14,7 @@ Myflix::Application.configure do
 
   config.assets.digest = true
 
+  config.action_mailer.default_url_options = { host: "arcane-stream-2628.herokuapp.com" }
   config.action_mailer.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
   :port           => ENV['MAILGUN_SMTP_PORT'],
