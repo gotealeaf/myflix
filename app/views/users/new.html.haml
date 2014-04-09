@@ -8,6 +8,7 @@
           =f.email_field    :email,     label: "Email Address"
           =f.password_field :password
           =f.text_field     :name,      label: "Full Name"
+          = hidden_field_tag :token, @token
         %fieldset.actions.control-group.col-sm-offset-2
           .controls
             =f.submit "Sign Up", class: "btn btn-default"

@@ -16,6 +16,8 @@ def click_video_image_link(video)
   find(:xpath, "//a[@href='/videos/#{video.id}']").click
 end
 
+
+
 def signin_user(user=nil)
   joe = user || Fabricate(:user)
   visit '/signin'

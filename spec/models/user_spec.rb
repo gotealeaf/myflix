@@ -73,4 +73,53 @@ describe User do
       expect(joe.can_follow?(jen)).to be_false
     end
   end
+
+  describe "generate_token" do
+    it "generates a random token and loads it into the specified column on user" do
+      joe = Fabricate(:user)
+      token = User.generate_token
+      joe.update_column(:password_reset_token, token)
+      expect(User.first.password_reset_token).to eq(token)
+    end
+  end
+
+  describe "token_expired" do
+    it "returns false if the token is outside the allowed timeframe" do
+      joe = Fabricate(:user)
+      joe.update_columns(prt_created_at: 2.days.ago)
+      expect(joe.token_expired?(2)).to be_true
+    end
+    it "returns true if the token is within the allowed timeframe" do
+      joe = Fabricate(:user)
+      joe.update_columns(prt_created_at: 2.minutes.ago)
+      expect(joe.token_expired?(2)).to be_false
+    end
+  end
+
+  describe "set_token_data_invalid" do
+    it "generates a new password_reset_token for the suer" do
+      old_token = User.generate_token
+      joe = Fabricate(:user, password_reset_token: old_token,
+                             prt_created_at: 2.minutes.ago)
+      joe.set_token_data_invalid
+      expect(joe.reload.password_reset_token).to_not eq(old_token)
+    end
+    it "it sets the time to an invalid time one day ago" do
+      old_token = User.generate_token
+      joe = Fabricate(:user, password_reset_token: old_token,
+                             prt_created_at: 2.minutes.ago)
+      joe.set_token_data_invalid
+      expect(joe.reload.prt_created_at).to be < 1.day.ago
+    end
+  end
+
+  describe "follow" do
+    let(:joe)    { Fabricate(:user) }
+    let(:jen)    { Fabricate(:user) }
+
+    it "sets a user to follow the provided other user (leader)" do
+      joe.follow(jen)
+      expect(joe.leaders.first).to eq(jen)
+    end
+  end
 end

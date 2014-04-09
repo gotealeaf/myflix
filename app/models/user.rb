@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
 
   has_secure_password validations: false
 
+  before_create :set_initial_reset_tokens
+
 
   validates :name,     presence: true,
                        length: { minimum: 1, maximum: 30 }
@@ -18,6 +20,7 @@ class User < ActiveRecord::Base
 
   validates :password, presence: true,
                        length: { minimum: 6 }
+
 
 
   def renumber_positions
@@ -36,5 +39,27 @@ class User < ActiveRecord::Base
 
   def can_follow?(user)
     true unless (user == self) || (leaders.include?(user))
+  end
+
+  def follow(user)
+    following_relationships.create(leader: user)
+  end
+
+  def self.generate_token
+    SecureRandom.urlsafe_base64
+  end
+
+  def set_initial_reset_tokens
+    self.password_reset_token = User.generate_token
+    self.prt_created_at = 1.day.ago
+  end
+
+  def token_expired?(timeframe)
+    prt_created_at.nil? ? true : prt_created_at < timeframe.hours.ago
+  end
+
+  def set_token_data_invalid
+    update_columns(password_reset_token: User.generate_token,
+                   prt_created_at: 1.day.ago)
   end
 end
