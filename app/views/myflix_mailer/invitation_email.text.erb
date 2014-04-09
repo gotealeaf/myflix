@@ -1,0 +1,14 @@
+<%= "#{@user.name}" %> Has Specifically Invited You To Join MyFLiX
+--------------------------------------------------------------------------------
+<%= "#{@invitation.message}" %>
+
+
+Just click the following link and you will be directed to a signup page:
+<%= link_to "Join MyFLiX", register_with_token_url(@invitation.token) %>
+
+
+
+
+
+Sincerely,
+<%= "#{@user.name}" %> & The MyFLiX Team

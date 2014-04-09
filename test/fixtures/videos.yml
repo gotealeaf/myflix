@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  sm_cover_locn: MyText
+  lg_cover_locn: MyText
+
+two:
+  title: MyString
+  description: MyText
+  sm_cover_locn: MyText
+  lg_cover_locn: MyText

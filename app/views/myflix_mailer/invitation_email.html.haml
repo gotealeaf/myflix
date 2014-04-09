@@ -1,0 +1,18 @@
+!!! 5
+%html(lang="en-US")
+  %body
+    %h3="#{@user.name} Has Specifically Invited You To Join MyFLiX"
+    %hr
+    %br
+    %p= "#{@invitation.message}"
+
+    %p Just click the following link and you will be directed to a signup page:
+    %p= link_to "Join MyFLiX", register_with_token_url(@invitation.token)
+    %br
+
+    %br
+    %br
+    %br
+
+    %p Sincerely,
+    %p= "#{@user.name} & The MyFLiX Team"

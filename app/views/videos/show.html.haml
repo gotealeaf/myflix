@@ -1,0 +1,49 @@
+%article.video
+  .container
+    .row
+      .video_large_cover.col-sm-7.col-sm-offset-1
+        %img{src: "#{@video.lg_cover_locn}", height: 375, width: 665}
+      .video_info.col-sm-3
+        %header
+          %h3= @video.title
+          - if @video.average_rating.nil?
+            Rating: (not yet rated)
+          - else
+            %span= "Rating: #{@video.average_rating}/5.0"
+        %p= @video.description
+        .actions
+          /%a.btn.btn-primary(href="") Watch Now
+          - unless current_user.has_this_video_in_queue?(@video)
+            %a
+              =link_to "+ My Queue", queue_items_path(video_id: @video.id), method: 'post', class: 'btn btn-default'
+
+%section.reviews.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = bootstrap_form_for [@video, Review.new] do |f|
+        %fieldset
+          .form-group
+            =f.label :rating, "Rate this video"
+            .row
+              .col-sm-3
+                = f.select :rating, options_for_select(rating_selector_options), class: 'form-control'
+          .form-group
+            =f.label :content, "Write Review"
+            .row
+              .col-sm-8
+                = f.text_area :content, hide_label: true, rows: 6, class: 'form-control'
+        %fieldset.form-group.actions.clearfix
+          = f.submit "Submit", class: 'btn'
+          /%input(type="submit" value="Submit" class="btn")
+          = link_to "Cancel", @video
+      %header
+        %h3= "User Reviews (#{@video.reviews.size})"
+      %ul
+        -@video.reviews.each do |review|
+          %article.review
+            %li.row
+              .col-sm-2
+                %span= "Rating: #{review.rating}/5.0"
+                %p= link_to "by #{review.user.name}", user_path(review.user)
+              .col-sm-8
+                %p="#{review.content}"
