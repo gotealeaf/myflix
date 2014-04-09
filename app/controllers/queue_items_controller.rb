@@ -27,6 +27,15 @@ class QueueItemsController < ApplicationController
   def update_queue
     current_user.queue_items.each do |queue_item|
       queue_item.position = params[queue_item.id.to_s]
+
+      if queue_item.position > current_user.queue_items.count
+        QueueItem.where(user: current_user).each do |queue_item|
+          queue_item.position = queue_item.position - 1
+          queue_item.save
+        end
+
+        queue_item.position = current_user.queue_items.count
+      end
       queue_item.save
     end
 

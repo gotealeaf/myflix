@@ -128,15 +128,68 @@ describe QueueItemsController do
         expect(response).to redirect_to my_queue_path
       end
 
-      it "takes the passed parameters and updates the associated queue items" do
-        user = Fabricate(:user)
-        session[:user_id] = user
-        queue_item_1 = Fabricate(:queue_item, user: user, position: 1)
-        queue_item_2 = Fabricate(:queue_item, user: user, position: 2)
-        patch :update_queue, queue_item_1.id.to_s => 2, queue_item_2.id.to_s => 1
-        expect(queue_item_1.reload.position).to eq 2
-        expect(queue_item_2.reload.position).to eq 1
+      context "With multiple passed parameters" do
+
+        it "updates the user's queue item postions with the passed parameters" do
+          user = Fabricate(:user)
+          session[:user_id] = user
+          queue_item_1 = Fabricate(:queue_item, user: user, position: 1)
+          queue_item_2 = Fabricate(:queue_item, user: user, position: 2)
+          patch :update_queue, queue_item_1.id.to_s => 3, queue_item_2.id.to_s => 2
+          expect(queue_item_1.reload.position).to eq 2
+          expect(queue_item_2.reload.position).to eq 1
+        end
+
+        it "does not update other user's queue items" do
+          user_1 = Fabricate(:user)
+          user_2 = Fabricate(:user)
+          session[:user_id] = user_1
+          queue_item_1 = Fabricate(:queue_item, user: user_1, position: 1)
+          queue_item_2 = Fabricate(:queue_item, user: user_1, position: 2)
+          queue_item_3 = Fabricate(:queue_item, user: user_2, position: 1)
+          queue_item_4 = Fabricate(:queue_item, user: user_2, position: 2)
+          patch :update_queue, queue_item_1.id.to_s => 3, queue_item_2.id.to_s => 2
+          expect(queue_item_1.reload.position).to eq 2
+          expect(queue_item_2.reload.position).to eq 1
+          expect(queue_item_3.reload.position).to eq 1
+          expect(queue_item_4.reload.position).to eq 2  
+        end
+      end
+
+      context "with a single passed parameter for last position" do
+        it "updates the user's queue item positions so the specified queue item is last" do
+          user = Fabricate(:user)
+          session[:user_id] = user
+          queue_item_1 = Fabricate(:queue_item, user: user, position: 1)
+          queue_item_2 = Fabricate(:queue_item, user: user, position: 2)
+          patch :update_queue, queue_item_1.id.to_s => 3, queue_item_2.id.to_s => 2
+          expect(queue_item_1.reload.position).to eq 2
+          expect(queue_item_2.reload.position).to eq 1        
+        end
+
+        it "does not update other user's queue items" do
+          user_1 = Fabricate(:user)
+          user_2 = Fabricate(:user)
+          session[:user_id] = user_1
+          queue_item_1 = Fabricate(:queue_item, user: user_1, position: 1)
+          queue_item_2 = Fabricate(:queue_item, user: user_1, position: 2)
+          queue_item_3 = Fabricate(:queue_item, user: user_2, position: 1)
+          queue_item_4 = Fabricate(:queue_item, user: user_2, position: 2)
+          patch :update_queue, queue_item_1.id.to_s => 3, queue_item_2.id.to_s => 2
+          expect(queue_item_1.reload.position).to eq 2
+          expect(queue_item_2.reload.position).to eq 1 
+          expect(queue_item_3.reload.position).to eq 1
+          expect(queue_item_4.reload.position).to eq 2 
+        end
       end
     end
   end
 end
+
+
+
+
+
+
+
+
