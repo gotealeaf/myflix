@@ -8,6 +8,8 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
+gem 'bootstrap_form', github: "bootstrap-ruby/rails-bootstrap-forms"
+gem 'bcrypt-ruby', '~> 3.1.2'
 
 group :development do
   gem 'sqlite3'
@@ -16,6 +18,17 @@ group :development do
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
+end
+
+group :test, :development do
+  gem 'rspec-rails'
+  gem 'fabrication'
+  gem 'faker'
+end
+
+group :test, :development do
+  gem 'shoulda-matchers'
+  gem 'rspec-console'
 end
 
 group :production do

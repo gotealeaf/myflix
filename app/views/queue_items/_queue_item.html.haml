@@ -1,0 +1,20 @@
+%tr
+  %td
+    %input.form-control(type="text" value="#{queue_item.position}")
+  %td
+    = link_to queue_item.video_title
+  %td
+    = button_to "Play", nil, class: "btn btn-default"
+  %td
+    %select.form-group(name="")
+      %option(value="5") 5 Stars
+      %option(value="4") 4 Stars
+      %option(value="3") 3 Stars
+      %option(value="2") 2 Stars
+      %option(value="1") 1 Star
+  %td
+    = link_to queue_item.category_name
+  %td
+    = link_to queue_path(queue_item), method: :delete do
+      %i.glyphicon.glyphicon-remove
+

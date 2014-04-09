@@ -6,6 +6,7 @@ Bundler.require(:default, Rails.env)
 
 module Myflix
   class Application < Rails::Application
+    config.autoload_paths += %W(#{config.root}/lib)
     config.encoding = "utf-8"
     config.filter_parameters += [:password]
     config.active_support.escape_html_entities_in_json = true
