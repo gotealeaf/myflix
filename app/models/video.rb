@@ -17,8 +17,8 @@ class Video < ActiveRecord::Base
   end
 
   def averge_rating
-    rating_data = self.reviews.map{ |i| i.rating }
-    rating_data.sum.to_f / rating_data.count
+    reviews.average(:rating).round(1)
+
   end
 
 end
