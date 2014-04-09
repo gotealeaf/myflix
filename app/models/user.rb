@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  #require_relative "../../lib/tokenable"
+  include Tokenable
+
   has_many :reviews,     -> { order("created_at DESC") }, class_name: "Review"
   has_many :queue_items, -> { order("position"       ) }, class_name: "QueueItem"
   has_many :following_relationships, class_name: "Relationship", foreign_key: :follower_id  #fk = reference to person who is doing the looking for things
@@ -8,7 +11,7 @@ class User < ActiveRecord::Base
 
   has_secure_password validations: false
 
-  before_create :set_initial_reset_tokens
+  before_create :set_initial_prt_time
 
 
   validates :name,     presence: true,
@@ -45,12 +48,11 @@ class User < ActiveRecord::Base
     following_relationships.create(leader: user)
   end
 
-  def self.generate_token
+  def self.secure_token
     SecureRandom.urlsafe_base64
   end
 
-  def set_initial_reset_tokens
-    self.password_reset_token = User.generate_token
+  def set_initial_prt_time
     self.prt_created_at = 1.day.ago
   end
 
@@ -59,7 +61,7 @@ class User < ActiveRecord::Base
   end
 
   def set_token_data_invalid
-    update_columns(password_reset_token: User.generate_token,
+    update_columns(token: User.secure_token,
                    prt_created_at: 1.day.ago)
   end
 end

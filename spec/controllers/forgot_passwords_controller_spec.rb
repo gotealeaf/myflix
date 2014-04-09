@@ -43,8 +43,8 @@ describe ForgotPasswordsController do
           it "loads the @user instance variable found from the email provided" do
             expect(assigns(:user)).to eq(joe)
           end
-          it "creates a new password_reset_token for the user" do
-            expect(User.find_by(email: joe.email).password_reset_token).to_not be_blank
+          it "creates a new token for the user" do
+            expect(User.find_by(email: joe.email).token).to_not be_blank
           end
           it "sets the current time in the user's prt_created_at (for expirations)" do
             expect(User.find_by(email: joe.email).prt_created_at).to be >= 2.minutes.ago
