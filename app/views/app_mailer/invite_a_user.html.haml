@@ -2,7 +2,8 @@
 %html(lang="en-US")
   %body
     %p 
-      = "#{@a_hash[:full_name]}"
+      = "#{@a_hash['full_name']}"
     %p 
-      = "#{@a_user} has invited you to join MyFLiX. Please register here: register"
+      = "#{@a_user.full_name} has invited you to join MyFLiX. Please register here:"
+      = link_to "register", register_url
       &copy 2013 MyFLiX

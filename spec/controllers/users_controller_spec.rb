@@ -45,33 +45,50 @@ describe UsersController do
 
   describe "POST create" do
     context "with valid input" do
-      
-      before do
-        post :create, user: Fabricate.attributes_for(:user)
-      end
-
       it "creates the user" do
+        post :create, user: Fabricate.attributes_for(:user)
         expect(User.count).to eq(1)
       end
 
       it "redirects to the videos path" do
+        post :create, user: Fabricate.attributes_for(:user)
         expect(response).to redirect_to videos_path
+      end
+
+      it "the guest follows the invitor" do
+        bob = Fabricate(:user, full_name: 'bob smith')
+        invite = Invitation.create(inviter_email: bob.email, guest_email: "cat@example.com")
+        post :create, user: {email: "cat@example.com", password: "password", full_name: "cat"}
+        #binding.pry
+        cat = User.where(email: "cat@example.com").first
+        expect(cat.following?(bob)).to be_true
+      end
+      
+      it "the invitor follows the guest" do
+        bob = Fabricate(:user, full_name: 'bob smith')
+        invite = Invitation.create(inviter_email: bob.email, guest_email: "cat@example.com")
+        post :create, user: {email: "cat@example.com", password: "password", full_name: "cat"}
+        #binding.pry
+        cat = User.where(email: "cat@example.com").first
+        expect(bob.following?(cat)).to be_true
       end
 
       context "email sending" do
         it "sends out the email" do
+          post :create, user: Fabricate.attributes_for(:user)
           expect(ActionMailer::Base.deliveries).to_not be_empty
         end
         it "sends to the right recipient" do
+          post :create, user: Fabricate.attributes_for(:user)
           message = ActionMailer::Base.deliveries
           expect(message.last.to).to eq([User.last.email])
         end
         it "has the right content" do
+          post :create, user: Fabricate.attributes_for(:user)
           message = ActionMailer::Base.deliveries.last
           expect(message.body).to include("You created an account on MyFLiX with")
         end
       end
-
     end
     context "with invalid input" do
 

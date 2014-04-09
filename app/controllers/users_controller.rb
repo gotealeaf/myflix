@@ -17,7 +17,16 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save
+    #binding.pry
+    if invitation = Invitation.where(guest_email: @user.email).first
+      other_user = User.where(email: invitation.inviter_email).first
+      @user.save
+      @user.follow!(other_user)
+      other_user.follow!(@user)
+      AppMailer.notify_on_registration(@user).deliver
+      session[:user_id] = @user.id
+      redirect_to videos_path, notice: "Thank you for signing up"
+    elsif @user.save
       AppMailer.notify_on_registration(@user).deliver
       session[:user_id] = @user.id
       redirect_to videos_path, notice: "Thank you for signing up"
