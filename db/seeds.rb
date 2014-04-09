@@ -35,17 +35,15 @@ sport = Fabricate(:category, name: "sport")
 news = Fabricate(:category, name: "news")
 grammer = Fabricate(:category, name: "grammer")
 
-User.create(name: "crokobit", email: "crokobit@gmail.com", password: "pw")
-
-crokobit = Fabricate(:user, name: "crokobit")
+crokobit = Fabricate(:user, name: "crokobit", password: "pw")
 ivan = Fabricate(:user, name: "ivan")
 eva = Fabricate(:user, name: "eva")
 
 10.times do
   Fabricate(:video, category: [sport, news, grammer].sample) do
-    reviews(count: (3..10).to_a.sample) {
+    reviews(count: 1) {
       Fabricate(:review) {
-        user
+        user [crokobit, ivan, eva].sample
       }
     }
   end
