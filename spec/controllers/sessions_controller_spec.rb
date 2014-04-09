@@ -55,7 +55,7 @@ describe SessionsController do
 
   describe "GET destroy" do
     before do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       get :destroy
     end
 
