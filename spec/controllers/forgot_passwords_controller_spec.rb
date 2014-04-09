@@ -59,10 +59,10 @@ describe ForgotPasswordsController do
             it "sends an email to the user owner of the email entered" do
               expect(ActionMailer::Base.deliveries.last.to).to eq([joe.email])
             end
-            it "contains an address with the token in the url" do
+            it "contains a subject about resetting the password" do
               expect(ActionMailer::Base.deliveries.last.subject).to include("Reset Your MyFLiX Password")
             end
-            it "contains an address with the token in the url" do
+            it "contains content with instructions for resetting" do
               expect(ActionMailer::Base.deliveries.last.parts.first.body.raw_source).to include("Reset Your Password")
             end
           end

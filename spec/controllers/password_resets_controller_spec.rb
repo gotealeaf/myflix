@@ -4,9 +4,11 @@ describe PasswordResetsController do
 
   describe "GET show" do
     context "with a valid token" do
-      let(:joe) { Fabricate(:user, password_reset_token: SecureRandom.urlsafe_base64,
-                                   prt_created_at: 2.minutes.ago) }
-      before { get :show, id: joe.password_reset_token }
+      let(:joe) { Fabricate(:user) }
+      before do
+        joe.update_columns(prt_created_at: 2.minutes.ago)
+        get :show, id: joe.password_reset_token
+      end
 
       it "renders the reset password page" do
         expect(response).to render_template "show"
@@ -20,8 +22,7 @@ describe PasswordResetsController do
     end
 
     context "with an invalid expired token" do
-      let(:joe) { Fabricate(:user, password_reset_token: SecureRandom.urlsafe_base64,
-                                   prt_created_at: 2.days.ago) }
+      let(:joe) { Fabricate(:user) }
       before { get :show, id: joe.password_reset_token }
 
       it "redirects to the expired token page" do
@@ -41,12 +42,14 @@ describe PasswordResetsController do
   end
 
   describe "POST create" do
-    let(:joe) { Fabricate(:user, password_reset_token: SecureRandom.urlsafe_base64,
-                                 prt_created_at: 2.hours.ago) }
+    let(:joe) { Fabricate(:user) }
 
     context "with valid token" do
       context "with valid password" do
-        before { post :create, { token: joe.password_reset_token, password: "new_password" } }
+        before do
+          joe.update_columns(prt_created_at: 2.minutes.ago)
+          post :create, { token: joe.password_reset_token, password: "new_password" }
+        end
 
         it "loads the @user instance variable" do
           expect(assigns(:user)).to eq(joe)
@@ -61,11 +64,13 @@ describe PasswordResetsController do
           expect(response).to redirect_to signin_path
         end
         it "clears the user's password_reset_token"
-        it ""
       end
 
       context "with invalid password" do
-        before { post :create, { token: joe.password_reset_token, password: "" } }
+        before do
+          joe.update_columns(prt_created_at: 2.minutes.ago)
+          post :create, { token: joe.password_reset_token, password: "" }
+        end
         it "rejects invalid passwords" do
           expect(response).to redirect_to password_reset_path(joe.password_reset_token)
         end
@@ -82,12 +87,12 @@ describe PasswordResetsController do
       end
 
       context "due to token too old" do
-        let(:joe) { Fabricate(:user, password_reset_token: SecureRandom.urlsafe_base64,
-                                     prt_created_at: 2.days.ago) }
+        let(:joe) { Fabricate(:user) }
         before { post :create, { token: joe.password_reset_token, password: "new_password" } }
 
         it "resets the token to nil" do
-          expect(joe.reload.password_reset_token).to be_nil
+          old_token = joe.password_reset_token
+          expect(joe.reload.password_reset_token).to_not eq(old_token)
         end
         it "redirects the user to the expired tokens page" do
           expect(response).to redirect_to expired_token_path

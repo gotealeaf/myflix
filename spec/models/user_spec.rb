@@ -85,11 +85,13 @@ describe User do
 
   describe "token_expired" do
     it "returns false if the token is outside the allowed timeframe" do
-      joe = Fabricate(:user, prt_created_at: 2.days.ago)
+      joe = Fabricate(:user)
+      joe.update_columns(prt_created_at: 2.days.ago)
       expect(joe.token_expired?(2)).to be_true
     end
     it "returns true if the token is within the allowed timeframe" do
-      joe = Fabricate(:user, prt_created_at: 2.minutes.ago)
+      joe = Fabricate(:user)
+      joe.update_columns(prt_created_at: 2.minutes.ago)
       expect(joe.token_expired?(2)).to be_false
     end
   end
@@ -108,6 +110,16 @@ describe User do
                              prt_created_at: 2.minutes.ago)
       joe.set_token_data_invalid
       expect(joe.reload.prt_created_at).to be < 1.day.ago
+    end
+  end
+
+  describe "follow" do
+    let(:joe)    { Fabricate(:user) }
+    let(:jen)    { Fabricate(:user) }
+
+    it "sets a user to follow the provided other user (leader)" do
+      joe.follow(jen)
+      expect(joe.leaders.first).to eq(jen)
     end
   end
 end
