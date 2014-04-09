@@ -40,6 +40,13 @@ describe ResetPasswordsController do
         expect(bob.reload.token).not_to eq(token)
       end
 
+      it "redirects to the sign in path" do
+        bob = Fabricate(:user, password: "password")
+        post :create, token: bob.token, password: "new_password" 
+
+        expect(response).to redirect_to(sign_in_path)
+      end
+
       it "sets a notice, requesting the user to sign in with the new password" do
         bob = Fabricate(:user, password: "password")
         post :create, token: bob.token, password: "new_password"

@@ -15,7 +15,7 @@ class ResetPasswordsController < ApplicationController
       @user.update_columns(token: SecureRandom.urlsafe_base64)
       @user.save
       flash[:notice] = "Please go to the log in page and sign in with your new password."
-      render 'show'
+      redirect_to sign_in_path
     else
       redirect_to expired_token_path
     end

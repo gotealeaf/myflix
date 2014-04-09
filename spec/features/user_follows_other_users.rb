@@ -10,7 +10,7 @@ feature 'User follows other users' do
     visit sign_in_path
     user_signs_in(alice)
 
-    find("a[href='/videos/#{futurama.id}']").click
+    find("a[href='/videos/#{futurama.id}']").click_link
     expect(page).to have_content(futurama.title)
     expect(page).to have_content(bob.full_name)
     

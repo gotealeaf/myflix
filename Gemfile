@@ -11,6 +11,7 @@ gem 'jquery-rails'
 gem "bcrypt-ruby"
 gem 'bootstrap_form'
 gem 'nokogiri', '1.3.3'
+gem 'capybara-email'
 
 group :development do
   gem 'sqlite3'
