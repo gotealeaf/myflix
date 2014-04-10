@@ -17,7 +17,6 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    #binding.pry
     if invitation = Invitation.where(guest_email: @user.email).first
       other_user = User.where(email: invitation.inviter_email).first
       @user.save
