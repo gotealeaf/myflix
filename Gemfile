@@ -43,7 +43,7 @@ group :development do
   gem 'letter_opener'
 end
 
-group :production do
+group :production, :staging do
   gem 'pg'
   gem 'rails_12factor'
 end
