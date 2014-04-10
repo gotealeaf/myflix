@@ -1,6 +1,18 @@
 require 'spec_helper'
 
 describe UsersController do
+  Sidekiq::Testing.fake! do
+    describe "Sidekiq" do
+      before { post :create, params }
+      after  do
+        Sidekiq::Worker.clear_all
+      end
+
+      it "successfully sends to Sidekiq's queue" do
+        expect(Sidekiq::Extensions::DelayedMailer.jobs.size).to eq(1)
+      end
+    end
+  end
 
   describe 'Registration' do
 
@@ -58,14 +70,14 @@ describe UsersController do
 
         context "email sending" do
           before { post :create, params }
-          after  { ActionMailer::Base.deliveries.clear }
+          after  do
+            ActionMailer::Base.deliveries.clear
+            Sidekiq::Worker.clear_all
+          end
 
           it "sends an email upon successful creation" do
             ActionMailer::Base.deliveries.should_not be_empty
           end
-          it "successfully sends to Sidekiq's queue"
-          #   expect(Sidekiq::Extensions::DelayedMailer.jobs.size).to eq(1)
-          # end
           it "sends email to the registering user's email address" do
             email = ActionMailer::Base.deliveries.last
             email.to.should eq([joe.email])
@@ -77,6 +89,9 @@ describe UsersController do
           it "has a welcome message in the body" do
             email = ActionMailer::Base.deliveries.last
             expect(email.parts.first.body.raw_source).to include(joe.name)
+          end
+          it "successfully sends to Sidekiq's queue" do
+            expect(Sidekiq::Extensions::DelayedMailer.jobs.size).to eq(1)
           end
         end
       end
@@ -173,3 +188,5 @@ describe UsersController do
     end
   end
 end
+
+
