@@ -26,6 +26,6 @@ class MyflixMailer < ActionMailer::Base
 
   # SET BUT DON"T SAVE THIS ONE
   def user_developer_email_if_in_staging
-     @user.email = ENV[“STAGING_EMAIL”] if ENV["RAILS_ENV"] == "staging"
+     @user.email = ENV['STAGING_EMAIL'] if ENV['RAILS_ENV'] == "staging"
   end
 end
