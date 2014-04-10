@@ -13,6 +13,7 @@ gem 'sidekiq'
 gem 'sinatra', require: nil
 gem 'uglifier'
 gem 'unicorn'
+gem 'paratrooper'
 
 
 group :development, :test do
