@@ -22,8 +22,8 @@
         = f.select :rating, options_for_select([5,4,3,2,1].map {|number| [pluralize(number, "Star")]})
         %label Write Review
         .row
-          .col-sm-10.col-sm-offset-1
-            = f.text_area :content, rows: 10, class: "span10"
+          .col-sm-8.col-sm-offset-1
+            = f.text_area :content, cols: 10, rows: 6, class: "form-control"
             = f.submit
             = link_to "Cancel", @video
   %header

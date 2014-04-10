@@ -5,7 +5,6 @@ class InvitationsController < ApplicationController
   def create
     @mail_content = {}
     @mail_content = {"email" => params[:email], "full_name" => params[:full_name], "description" => params[:description]}
-    #binding.pry
     if @mail_content.has_value?(nil)
       flash[:notice] = "Please fill out the form entirely."
       render "new"
