@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       users_by_invitation_are_cofollowers
-      MyflixMailer.welcome_email(@user).deliver
+      MyflixMailer.delay.welcome_email(@user.id)
       flash[:notice] = "Welcome to myFlix!"
       signin_user(@user)
     else

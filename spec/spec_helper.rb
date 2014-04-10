@@ -55,6 +55,7 @@ require 'rspec/autorun'
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'capybara/email/rspec'
+require 'sidekiq/testing/inline'
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
@@ -80,6 +81,9 @@ RSpec.configure do |config|
   # instead of true.
   # DOES NOT WORK WITH SELENIUM. SET TO FALSE IF SELENIUM. RAILSCAST #257.
   config.use_transactional_fixtures = true
+
+  # Sidekiq Testing
+  # Sidekiq::Testing.inline!
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of

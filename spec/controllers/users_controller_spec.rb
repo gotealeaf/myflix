@@ -63,6 +63,9 @@ describe UsersController do
           it "sends an email upon successful creation" do
             ActionMailer::Base.deliveries.should_not be_empty
           end
+          it "successfully sends to Sidekiq's queue"
+          #   expect(Sidekiq::Extensions::DelayedMailer.jobs.size).to eq(1)
+          # end
           it "sends email to the registering user's email address" do
             email = ActionMailer::Base.deliveries.last
             email.to.should eq([joe.email])

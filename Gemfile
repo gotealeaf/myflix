@@ -9,7 +9,11 @@ gem 'haml-rails'
 gem 'jquery-rails'
 gem 'rails'
 gem 'sass-rails'
+gem 'sidekiq'
+gem 'sinatra', require: nil
 gem 'uglifier'
+gem 'unicorn'
+
 
 group :development, :test do
   gem 'sqlite3'

@@ -1,8 +1,8 @@
 class MyflixMailer < ActionMailer::Base
   default from: "info@myflix.com"
 
-  def welcome_email(user)
-    @user = user
+  def welcome_email(user_id)
+    @user = User.find(user_id)
     mail(to: @user.email, from: "info@myflix.com", subject: "Welcome to MyFLiX!")
   end
 

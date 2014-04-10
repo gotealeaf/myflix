@@ -1,4 +1,6 @@
 Myflix::Application.routes.draw do
+  require 'sidekiq/web'
+
   get 'ui(/:action)',         controller: 'ui'
 
   root                        to: 'pages#front'
@@ -30,4 +32,6 @@ Myflix::Application.routes.draw do
     end
     resources :reviews,       only: [:create]
   end
+
+  mount Sidekiq::Web, at: '/sidekiq'
 end
