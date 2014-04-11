@@ -16,32 +16,16 @@ class QueueItemsController < ApplicationController
   end
 
   def update_queue
-    new_queue_positions = params[:queue_items]
-    if (all_queue_positions_integers?(new_queue_positions) && 
-        all_queue_positions_unique?(new_queue_positions) && 
-        all_queue_items_belong_to_user?(new_queue_positions))
-      new_queue_positions.each do |queue_item_data|
-        queue_item = QueueItem.find(queue_item_data[:id].to_i)
-        queue_item.update_attributes(position: queue_item_data[:position].to_i)
-      end
-
-      # normalize data
-      current_user.queue_items.each_with_index do |queue_item, index|
-        queue_item.update_attributes(position: index + 1)
-      end
-    elsif !all_queue_positions_integers?(new_queue_positions)
-      flash[:danger] = "Non-integer order numbers entered"
-    elsif !all_queue_positions_unique?(new_queue_positions)
-      flash[:danger] = "Non-unique order numbers entered"
-    end
-
+    update_queue_items(params[:queue_items])
     redirect_to my_queue_path
   end
 
   def destroy
     queue_item = QueueItem.find(params[:id])
-    queue_item.destroy if queue_item.user_id == current_user.id
-    update_queue_item_positions(queue_item.position)
+    if queue_item.user_id == current_user.id
+      queue_item.destroy 
+      normalize_queue_items
+    end
     redirect_to my_queue_path
   end
 
@@ -56,6 +40,30 @@ class QueueItemsController < ApplicationController
       if queue_item.position > deleted_position.to_i
         queue_item.update_column(:position, queue_item.position - 1) 
       end
+    end
+  end
+
+  def update_queue_items(new_queue_positions)
+    if (all_queue_positions_integers?(new_queue_positions) && 
+        all_queue_positions_unique?(new_queue_positions) && 
+        all_queue_items_belong_to_user?(new_queue_positions))
+      new_queue_positions.each do |queue_item_data|
+        queue_item = QueueItem.find(queue_item_data[:id].to_i)
+        queue_item.update_attributes(position: queue_item_data[:position].to_i)
+      end
+
+      normalize_queue_items
+
+    elsif !all_queue_positions_integers?(new_queue_positions)
+      flash[:danger] = "Non-integer order numbers entered"
+    elsif !all_queue_positions_unique?(new_queue_positions)
+      flash[:danger] = "Non-unique order numbers entered"
+    end
+  end
+
+  def normalize_queue_items
+    current_user.queue_items.each_with_index do |queue_item, index|
+      queue_item.update_attributes(position: index + 1)
     end
   end
 
