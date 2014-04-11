@@ -192,21 +192,62 @@ describe QueueItemsController do
       end
 
       context "with invalid input" do
-        it "sets warning message" do
-          queue_item = Fabricate(:queue_item, user: @user, position: 1)
-          patch :update_queue, "queue_items" => [{ "id" => queue_item.id, "position" => "t" }]
-          expect(flash[:warning]).to_not be_blank
+        context "with invalid character" do
+          it "sets warning message" do
+            queue_item = Fabricate(:queue_item, user: @user, position: 1)
+            patch :update_queue, "queue_items" => [{ "id" => queue_item.id, "position" => "t" }]
+            expect(flash[:warning]).to_not be_blank
+          end
+
+          it "does not change queue item positions" do
+            queue_item_1 = Fabricate(:queue_item, user: @user, position: 1)
+            queue_item_2 = Fabricate(:queue_item, user: @user, position: 2)
+            patch :update_queue, "queue_items" =>
+                                    [{ "id" => queue_item_1.id, "position" => "2" },
+                                     { "id" => queue_item_2.id, "position" => "t" }]
+            expect(queue_item_1.reload.position).to eq 1
+            expect(queue_item_2.reload.position).to eq 2 
+          end
         end
 
-        it "does not change queue_item positions" do
-          queue_item_1 = Fabricate(:queue_item, user: @user, position: 1)
-          queue_item_2 = Fabricate(:queue_item, user: @user, position: 2)
-          patch :update_queue, "queue_items" =>
-                                  [{ "id" => queue_item_1.id, "position" => "2" },
-                                   { "id" => queue_item_2.id, "position" => "2" }]
-          expect(queue_item_1.reload.position).to eq 1
-          expect(queue_item_2.reload.position).to eq 2 
+        context "with number in invalid range" do
+          it "sets warning message" do
+            queue_item = Fabricate(:queue_item, user: @user, position: 1)
+            patch :update_queue, "queue_items" => [{ "id" => queue_item.id, "position" => "5" }]
+            expect(flash[:warning]).to_not be_blank
+          end
+
+          it "does not change queue item positions" do
+            queue_item_1 = Fabricate(:queue_item, user: @user, position: 1)
+            queue_item_2 = Fabricate(:queue_item, user: @user, position: 2)
+            patch :update_queue, "queue_items" =>
+                                    [{ "id" => queue_item_1.id, "position" => "2" },
+                                     { "id" => queue_item_2.id, "position" => "5" }]
+            expect(queue_item_1.reload.position).to eq 1
+            expect(queue_item_2.reload.position).to eq 2 
+          end
         end
+
+        context "with duplicate entries" do
+          it "sets warning message" do
+            queue_item_1 = Fabricate(:queue_item, user: @user, position: 1)
+            queue_item_2 = Fabricate(:queue_item, user: @user, position: 2)
+            patch :update_queue, "queue_items" =>
+                                    [{ "id" => queue_item_1.id, "position" => "2" },
+                                     { "id" => queue_item_2.id, "position" => "2" }]
+            expect(flash[:warning]).to_not be_blank
+          end
+
+          it "does not change queue item positions" do
+            queue_item_1 = Fabricate(:queue_item, user: @user, position: 1)
+            queue_item_2 = Fabricate(:queue_item, user: @user, position: 2)
+            patch :update_queue, "queue_items" =>
+                                    [{ "id" => queue_item_1.id, "position" => "2" },
+                                     { "id" => queue_item_2.id, "position" => "2" }]
+            expect(queue_item_1.reload.position).to eq 1
+            expect(queue_item_2.reload.position).to eq 2 
+          end
+        end        
       end
     end
   end

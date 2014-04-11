@@ -27,17 +27,11 @@ class QueueItemsController < ApplicationController
   def update_queue
     params_array = params[:queue_items]
 
-    original_postions = current_user.queue_items.map { |qi| { id: qi.id, position: qi.id } } 
-
     if moved_item_id = find_greater_then_total_id(params_array)
       params_array = rearange(moved_item_id, params_array)
     end
 
-    # current_user.queue_items.each do |queue_item|
-    #   queue_item.position = nil
-    # end
-
-    if params_array.map{ |i| i[:position] }.sort == [*1..user_queue_total].sort
+    if param_positions_valid?(params_array)
       set_positions(params_array)
     else
       flash[:warning] = "Please number each queue item 1 to #{user_queue_total}."
@@ -71,16 +65,15 @@ class QueueItemsController < ApplicationController
     end
   end
 
+  def param_positions_valid?(params_array)
+    params_array.map{ |i| i[:position].to_i }.sort == [*1..user_queue_total].sort
+  end
+
   def set_positions(params_array)
     params_array.each do |params_hash|
       queue_item = QueueItem.find(params_hash[:id].to_i)
       queue_item.position = params_hash[:position]
       queue_item.save
     end
-  end
-
-  def set_warning(video_title, error_messages)
-    flash[:warning] ||= "The following errors occured: "
-    flash[:warning] += error_messages.join(" ") + " for " + video_title + ". "
   end
 end
