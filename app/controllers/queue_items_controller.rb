@@ -25,18 +25,22 @@ class QueueItemsController < ApplicationController
   end
 
   def update_queue
-    current_user.queue_items.each do |queue_item|
-      queue_item.position = params[queue_item.id.to_s]
+    params_array = params[:queue_items]
 
-      if queue_item.position > current_user.queue_items.count
-        QueueItem.where(user: current_user).each do |queue_item|
-          queue_item.position = queue_item.position - 1
-          queue_item.save
-        end
+    original_postions = current_user.queue_items.map { |qi| { id: qi.id, position: qi.id } } 
 
-        queue_item.position = current_user.queue_items.count
-      end
-      queue_item.save
+    if moved_item_id = find_greater_then_total_id(params_array)
+      params_array = rearange(moved_item_id, params_array)
+    end
+
+    # current_user.queue_items.each do |queue_item|
+    #   queue_item.position = nil
+    # end
+
+    if params_array.map{ |i| i[:position] }.sort == [*1..user_queue_total].sort
+      set_positions(params_array)
+    else
+      flash[:warning] = "Please number each queue item 1 to #{user_queue_total}."
     end
 
     redirect_to my_queue_path
@@ -44,7 +48,39 @@ class QueueItemsController < ApplicationController
 
   private
 
+  def user_queue_total
+    current_user.queue_items.count
+  end
+
   def user_next_queue_position
-    current_user.queue_items.count + 1
+    user_queue_total + 1
+  end
+
+  def find_greater_then_total_id(params_array)
+    params_array.each do |params_hash|
+      return params_hash[:id].to_i if params_hash[:position].to_i > user_queue_total
+    end
+    return false
+  end
+
+  def rearange(moved_item_id, params_array)
+    moved_postion = QueueItem.find(moved_item_id).position
+    params_array.map! do |params_hash|
+      params_hash[:position] = params_hash[:position].to_i - 1 if params_hash[:position].to_i > moved_postion
+      params_hash
+    end
+  end
+
+  def set_positions(params_array)
+    params_array.each do |params_hash|
+      queue_item = QueueItem.find(params_hash[:id].to_i)
+      queue_item.position = params_hash[:position]
+      queue_item.save
+    end
+  end
+
+  def set_warning(video_title, error_messages)
+    flash[:warning] ||= "The following errors occured: "
+    flash[:warning] += error_messages.join(" ") + " for " + video_title + ". "
   end
 end
