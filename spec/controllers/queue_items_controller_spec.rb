@@ -5,6 +5,8 @@ describe QueueItemsController do
 
     let(:user){ Fabricate :user }    
     let(:video){ Fabricate :video }     
+    let(:video1){ Fabricate :video }
+    let(:video2){ Fabricate :video }
 
     before do
       session[:user_id] = user.id
@@ -46,7 +48,6 @@ describe QueueItemsController do
 
       it "sets the video the last one in the user's queue" do
         Fabricate(:queue_item, user: user, video: video, order: 2)
-        video1 = Fabricate :video
         post :create, video_id: video1.id  
         video1_queue_item = QueueItem.where(user: user, video: video1).first                  
         expect(video1_queue_item.order).to eq(2)          
@@ -96,7 +97,7 @@ describe QueueItemsController do
     describe "POST update_queue" do
       context "with valid inputs" do
         it "redirects to my_queue page" do
-          qi1 = Fabricate :queue_item, user: user, order: 1
+          qi1 = Fabricate :queue_item, user: user, video: video, order: 1
           queue_items = [{ id: qi1.id, order: 2 }]
 
           post :update_queue, queue_items: queue_items
@@ -105,75 +106,77 @@ describe QueueItemsController do
         end
 
         it "updates the order of many queue elements" do
-          qi1 = Fabricate :queue_item, user: user, order: 1
-          qi2 = Fabricate :queue_item, user: user, order: 2
-          qi3 = Fabricate :queue_item, user: user, order: 3
-          qi4 = Fabricate :queue_item, user: user, order: 4
-          queue_items = [{ id: qi1.id, order: 2 }, { id: qi2.id, order: 1 }, { id: qi3.id, order: 4 }, { id: qi4.id, order: 3 }]
+          qi1 = Fabricate :queue_item, user: user, video: video, order: 1
+          qi2 = Fabricate :queue_item, user: user, video: video1, order: 2
+          qi3 = Fabricate :queue_item, user: user, video: video2, order: 3
+          queue_items = [{ id: qi1.id, order: 2, rating:1 }, { id: qi2.id, order: 1, rating:1 }, { id: qi3.id, order: 4, rating: 1 }]
 
           post :update_queue, queue_items: queue_items
 
-          expect([1 ,2, 3, 4]).to eq([QueueItem.find(qi2.id).order, QueueItem.find(qi1.id).order, QueueItem.find(qi4.id).order, QueueItem.find(qi3.id).order])
+          expect([1 ,2, 3]).to eq([QueueItem.find(qi2.id).order, QueueItem.find(qi1.id).order, QueueItem.find(qi3.id).order])
         end
 
         it "reorders the queue following the new order" do
-          qi1 = Fabricate :queue_item, user: user, order: 1
-          qi2 = Fabricate :queue_item, user: user, order: 2
-          qi3 = Fabricate :queue_item, user: user, order: 3
-          qi4 = Fabricate :queue_item, user: user, order: 4
-          queue_items = [{ id: qi1.id, order: 2 }, { id: qi2.id, order: 1 }, { id: qi3.id, order: 4 }, { id: qi4.id, order: 3 }]
+          qi1 = Fabricate :queue_item, user: user, video: video, order: 1
+          qi2 = Fabricate :queue_item, user: user, video: video1, order: 2
+          qi3 = Fabricate :queue_item, user: user, video: video2, order: 3
+          queue_items = [{ id: qi1.id, order: 2 }, { id: qi2.id, order: 1 }, { id: qi3.id, order: 4 }]
 
           post :update_queue, queue_items: queue_items
 
-          expect(user.queue_items).to eq([qi2, qi1, qi4, qi3])
+          expect(user.queue_items).to eq([qi2, qi1, qi3])
         end
 
         it "normalizes position numbers" do
-          qi1 = Fabricate :queue_item, user: user, order: 1
-          qi2 = Fabricate :queue_item, user: user, order: 2
-          qi3 = Fabricate :queue_item, user: user, order: 3
-          qi4 = Fabricate :queue_item, user: user, order: 4
-          queue_items = [{ id: qi1.id, order: 5 }, { id: qi2.id, order: 2 }, { id: qi3.id, order: 3 }, { id: qi4.id, order: 4 }]
-
-          post :update_queue, queue_items: queue_items
-
-          expect(user.queue_items.map(&:order)).to eq([1, 2, 3, 4])
-        end
-      end
-
-      context "videos without a review created by the logged user" do
-        it "creates a review that belongs to the current user" do
           qi1 = Fabricate :queue_item, user: user, video: video, order: 1
-          queue_items = [{ id: qi1.id, order: 1,rating: 3 }]   
+          qi2 = Fabricate :queue_item, user: user, video: video1, order: 2
+          qi3 = Fabricate :queue_item, user: user, video: video2, order: 3
+          queue_items = [{ id: qi1.id, order: 5 }, { id: qi2.id, order: 2 }, { id: qi3.id, order: 3 }]
 
           post :update_queue, queue_items: queue_items
 
-          expect(Review.count).to eq(1)  
+          expect(user.queue_items.map(&:order)).to eq([1, 2, 3])
         end
 
-        it "creates the review setting rating with the input"
-      end
+        context "the video has not a review created by the logged user" do
+          it "creates a review that belongs to the current user setting the input rating" do
+            qi1 = Fabricate :queue_item, user: user, video: video, order: 1
+            queue_items = [{ id: qi1.id, order: 1, rating: 3 }]   
 
-      context "videos with reviews already done by the logged user" do
-        it "updates queue items rating" do
-          # video1 = Fabricate :video
-          # review1 = Fabricate :review, video: video, creator: user, rating: 2
-          # review2 = Fabricate :review, video: video1, creator: user, rating: 3
-          # qi1 = Fabricate :queue_item, user: user, video: video, order: 1
-          # qi2 = Fabricate :queue_item, user: user, video: video1, order: 2       
-          # queue_items = [{ id: qi1.id, order: 1,rating: 3 }, { id: qi2.id, order: 2, rating: 4 }]   
+            post :update_queue, queue_items: queue_items
 
-          # post :update_queue, queue_items: queue_items
-
-          # expect([QueueItem.find(qi1.id).rating, QueueItem.find(qi2.id).rating]).to eq([3, 4])  
+            expect(Review.count).to eq(1)  
+          end
         end
 
-        it "does not create a review of video if current user already has one done"        
+        context "the video has already a review created by the logged user" do
+          it "does not create a review if current user already has one done" do
+            qi1 = Fabricate :queue_item, user: user, video: video, order: 1
+            review1 = Fabricate :review, video: video, creator: user, rating: 2
+            queue_items = [{ id: qi1.id, order: 1, rating: 3 }]   
+
+            post :update_queue, queue_items: queue_items
+
+            expect(Review.count).to eq(1) 
+          end
+
+          it "updates queue items rating" do
+            review1 = Fabricate :review, video: video, creator: user, rating: 2
+            review2 = Fabricate :review, video: video1, creator: user, rating: 3
+            qi1 = Fabricate :queue_item, user: user, video: video, order: 1
+            qi2 = Fabricate :queue_item, user: user, video: video1, order: 2       
+            queue_items = [{ id: qi1.id, order: 1,rating: 3 }, { id: qi2.id, order: 2, rating: 4 }]   
+
+            post :update_queue, queue_items: queue_items
+            
+            expect([QueueItem.find(qi1.id).rating, QueueItem.find(qi2.id).rating]).to eq([3, 4])  
+          end             
+        end
       end
 
       context "with invalid inputs" do
         it "redirects to my_queue page" do
-          queue_item1 = Fabricate :queue_item, user: user, order: 1
+          queue_item1 = Fabricate :queue_item, user: user, video: video, order: 1
           queue_items = [{ id: queue_item1.id, order: 3.4 }]
 
           post :update_queue, queue_items: queue_items
@@ -182,7 +185,7 @@ describe QueueItemsController do
         end
 
         it "sets the flash error message" do
-          queue_item1 = Fabricate :queue_item, user: user, order: 1
+          queue_item1 = Fabricate :queue_item, user: user, video: video, order: 1
           queue_items = [{ id: queue_item1.id, order: 2.2 }]
 
           post :update_queue, queue_items: queue_items
@@ -191,8 +194,8 @@ describe QueueItemsController do
         end
 
         it "does not update queue elements if the input are not integers" do
-          qi1 = Fabricate :queue_item, user: user, order: 1
-          qi2 = Fabricate :queue_item, user: user, order: 2
+          qi1 = Fabricate :queue_item, user: user, video: video, order: 1
+          qi2 = Fabricate :queue_item, user: user, video: video1, order: 2
 
           queue_items = [{ id: qi1.id, order: 3 }, { id: qi2.id, order: 2.2 }]
 
@@ -205,13 +208,13 @@ describe QueueItemsController do
       context "with queue items that do not belong to the current user" do
         it "does not change the queue items position" do
           user2 = Fabricate :user
-          qi1 = Fabricate :queue_item, user: user2, order: 1
-          qi2 = Fabricate :queue_item, user: user2, order: 2
+          qi1 = Fabricate :queue_item, user: user2, video: video, order: 1
+          qi2 = Fabricate :queue_item, user: user2, video: video1, order: 2
 
           queue_items = [{ id: qi1.id, order: 3 }, { id: qi2.id, order: 2 }]
-
+          #binding.pry
           post :update_queue, queue_items: queue_items
-
+          
           expect(qi1.reload.order).to eq(1)
         end
 

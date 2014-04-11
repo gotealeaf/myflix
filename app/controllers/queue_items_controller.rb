@@ -49,24 +49,31 @@ class QueueItemsController < ApplicationController
   def update_queue_items 
     ActiveRecord::Base.transaction do
       params[:queue_items].each do |input|
+        create_review(input) unless current_user_has_review?(input[:id])
         update_queue_items_order input
-        create_review input
-        # update_queue_items_rating input 
+        update_queue_items_rating input
       end
     end
   end
 
-  def update_queue_items_order input
-    queue_item = QueueItem.find_by(id: input[:id])
-    queue_item.update_attributes!(order: input[:order]) if queue_item.user == current_user
+  def current_user_has_review? queue_item_id
+    current_user.reviews.map(&:video).include?(QueueItem.find(queue_item_id).video)
   end
 
   def create_review input
-    Review.create(creator: current_user, video: QueueItem.find_by(id: input[:id]).video, rating: input[:rating])
+    review = Review.new(creator: current_user, video: QueueItem.find_by(id: input[:id]).video, rating: input[:rating])
+    review.save(:validate => false)
+  end
+
+  def update_queue_items_order input
+    queue_item = QueueItem.find(input[:id])
+    queue_item.update_attributes!(order: input[:order]) if queue_item.user == current_user
   end
 
   def update_queue_items_rating input
-    review = Review.find_by(creator: current_user, video: QueueItem.find_by(id: input[:id]).video)
-    review.update_attributes!(rating: input[:rating])
+    video = QueueItem.find(input[:id]).video
+    review = current_user.reviews.find_by(video_id: video.id)
+    review.update_attributes(rating: input[:rating])
+    review.save(:validate => false)
   end
 end
