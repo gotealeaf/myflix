@@ -4,4 +4,5 @@ class User < ActiveRecord::Base
   validates :name, presence: true
   
   has_many :reviews
+  has_many :queue_items
 end

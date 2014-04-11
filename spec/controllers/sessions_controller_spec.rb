@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe SessionsController do
+
+  let(:user) { Fabricate(:user) }
+
   describe "sessions#new" do
     it "renders :new if logging in" do
       session[:user_id] = Fabricate(:user)
@@ -12,11 +15,10 @@ describe SessionsController do
   describe "sessions#create" do
     context "authenticating successfully" do
       before(:each) do
-        @user = Fabricate(:user)
-        post :create, name: @user.name, password: @user.password
+        post :create, name: user.name, password: user.password
       end
       it "assigns user_id to session[:user_id]" do
-        expect(session[:user_id]).to eq @user.id
+        expect(session[:user_id]).to eq user.id
       end
       it "redirects to videos_path" do
         expect(response).to redirect_to videos_path
@@ -25,8 +27,7 @@ describe SessionsController do
 
     context "failing authentication" do
       before(:each) do
-        @user = Fabricate(:user)
-        post :create, name: @user.name, password: "wrong pw"
+        post :create, name: user.name, password: "wrong pw"
       end
       it "redirects to login_path" do
         expect(response).to redirect_to login_path  
@@ -38,8 +39,7 @@ describe SessionsController do
 
     describe "sessions#destroy" do
       before(:each) do
-        @user = Fabricate(:user)
-        session[:user_id] = @user.id
+        session[:user_id] = user.id
         delete :destroy
       end
       it "logs out" do
