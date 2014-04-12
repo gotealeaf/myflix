@@ -21,20 +21,18 @@ class QueueItemsController < ApplicationController
   def destroy
     queue_item = QueueItem.find(params[:id])
     queue_item.destroy if current_user == queue_item.user
+    normalize_queue_items_positions
     redirect_to my_queue_path
   end
 
   def update_queue
     params_array = params[:queue_items]
 
-    if moved_item_id = find_greater_then_total_id(params_array)
-      params_array = rearange(moved_item_id, params_array)
-    end
-
-    if param_positions_valid?(params_array)
-      set_positions(params_array)
-    else
-      flash[:warning] = "Please number each queue item 1 to #{user_queue_total}."
+    begin
+      update_queue_items
+      normalize_queue_items_positions
+    rescue ActiveRecord::RecordInvalid
+      flash[:warning] = "Invalid position entry."
     end
 
     redirect_to my_queue_path
@@ -42,38 +40,22 @@ class QueueItemsController < ApplicationController
 
   private
 
-  def user_queue_total
-    current_user.queue_items.count
-  end
-
   def user_next_queue_position
-    user_queue_total + 1
+    current_user.queue_items.count + 1
   end
 
-  def find_greater_then_total_id(params_array)
-    params_array.each do |params_hash|
-      return params_hash[:id].to_i if params_hash[:position].to_i > user_queue_total
-    end
-    return false
-  end
-
-  def rearange(moved_item_id, params_array)
-    moved_postion = QueueItem.find(moved_item_id).position
-    params_array.map! do |params_hash|
-      params_hash[:position] = params_hash[:position].to_i - 1 if params_hash[:position].to_i > moved_postion
-      params_hash
+  def update_queue_items
+    ActiveRecord::Base.transaction do
+      params[:queue_items].each do |queue_items_data|
+        queue_item = QueueItem.find(queue_items_data[:id].to_i)
+        queue_item.update!(position: queue_items_data[:position]) if queue_item.user == current_user
+      end
     end
   end
 
-  def param_positions_valid?(params_array)
-    params_array.map{ |i| i[:position].to_i }.sort == [*1..user_queue_total].sort
-  end
-
-  def set_positions(params_array)
-    params_array.each do |params_hash|
-      queue_item = QueueItem.find(params_hash[:id].to_i)
-      queue_item.position = params_hash[:position]
-      queue_item.save
+  def normalize_queue_items_positions
+    current_user.queue_items.each_with_index do |queue_item, index|
+      queue_item.update(position: index + 1)
     end
   end
 end
