@@ -6,6 +6,14 @@ shared_examples "require_signed_in" do
   end
 end
 
+shared_examples "require_admin" do
+  it "redirects to the root path if user is not an admin" do
+    sign_in_user
+    verb_action
+    expect(response).to redirect_to root_path
+  end
+end
+
 shared_examples "require_signed_out" do
   it "redirects to the root page if user is still signed in (ie: not signed out)" do
     sign_in_user(current_user)

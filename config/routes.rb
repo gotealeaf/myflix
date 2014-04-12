@@ -33,5 +33,11 @@ Myflix::Application.routes.draw do
     resources :reviews,       only: [:create]
   end
 
+
+  namespace :admin do
+    resources :videos,        only: [:new]
+  end
+
+
   mount Sidekiq::Web, at: '/sidekiq'
 end
