@@ -50,8 +50,10 @@ class QueueItemsController < ApplicationController
     ActiveRecord::Base.transaction do
       params[:queue_items].each do |input|
         create_review(input) unless current_user_has_review?(input[:id])
-        update_queue_items_order input
-        update_queue_items_rating input
+        if QueueItem.find(input[:id]).user == current_user 
+          update_queue_items_order input
+          update_queue_items_rating input
+        end
       end
     end
   end
@@ -67,7 +69,7 @@ class QueueItemsController < ApplicationController
 
   def update_queue_items_order input
     queue_item = QueueItem.find(input[:id])
-    queue_item.update_attributes!(order: input[:order]) if queue_item.user == current_user
+    queue_item.update_attributes!(order: input[:order])
   end
 
   def update_queue_items_rating input

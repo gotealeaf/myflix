@@ -203,6 +203,16 @@ describe QueueItemsController do
 
           expect(qi1.reload.order).to eq(1)
         end
+
+        it "does not change the queue items rating" do
+          review1 = Fabricate :review, video: video, creator: user, rating: 2
+          qi1 = Fabricate :queue_item, user: user, video: video, order: 1
+          queue_items = [{ id: qi1.id, order: 1.1,rating: 3 }]   
+
+          post :update_queue, queue_items: queue_items
+          
+          expect(QueueItem.find(qi1.id).rating).to eq(2)            
+        end
       end
 
       context "with queue items that do not belong to the current user" do
@@ -210,15 +220,23 @@ describe QueueItemsController do
           user2 = Fabricate :user
           qi1 = Fabricate :queue_item, user: user2, video: video, order: 1
           qi2 = Fabricate :queue_item, user: user2, video: video1, order: 2
-
           queue_items = [{ id: qi1.id, order: 3 }, { id: qi2.id, order: 2 }]
-          #binding.pry
+
           post :update_queue, queue_items: queue_items
           
           expect(qi1.reload.order).to eq(1)
         end
 
-        it "does not change the queue items rating"
+        it "does not change the queue items rating" do
+          user1 = Fabricate :user
+          review1 = Fabricate :review, video: video, creator: user1, rating: 2
+          qi1 = Fabricate :queue_item, user: user1, video: video, order: 1
+          queue_items = [{ id: qi1.id, order: 1,rating: 3 }]   
+
+          post :update_queue, queue_items: queue_items
+          
+          expect(QueueItem.find(qi1.id).rating).to eq(2)            
+        end
       end
     end
   end
