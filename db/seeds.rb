@@ -43,8 +43,8 @@ vid_categories = {family_guy: [3, 1],
 
   Video.create(title: title,
                description: description,
-               sm_cover_locn: sm_cover,
-               lg_cover_locn: lg_cover,
+               small_cover: sm_cover,
+               large_cover: lg_cover,
                category_ids: vid_catids )
 end
 

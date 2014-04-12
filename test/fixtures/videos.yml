@@ -3,11 +3,11 @@
 one:
   title: MyString
   description: MyText
-  sm_cover_locn: MyText
-  lg_cover_locn: MyText
+  small_cover: MyText
+  large_cover: MyText
 
 two:
   title: MyString
   description: MyText
-  sm_cover_locn: MyText
-  lg_cover_locn: MyText
+  small_cover: MyText
+  large_cover: MyText

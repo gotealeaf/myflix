@@ -57,7 +57,7 @@ require 'capybara/rspec'
 require 'capybara/email/rspec'
 require 'sidekiq/testing'
 require 'sidekiq/testing/inline'
-Sidekiq::Testing.fake!
+#Sidekiq::Testing.fake!
 
 
 # Requires supporting ruby files with custom matchers and macros, etc,

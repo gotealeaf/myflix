@@ -2,10 +2,14 @@ class Video < ActiveRecord::Base
 
   #has_many :queue_items
   has_many :video_categories
-  has_many :categories, through: :video_categories, order: :name
+  has_many :categories, -> { order("name") }, through: :video_categories
   has_many :reviews, -> { order("created_at DESC") }
 
-  #Validations
+  # Mount uploaders to control file upload
+  mount_uploader :large_cover, LargeCoverUploader
+  mount_uploader :small_cover, SmallCoverUploader
+
+  # Validations
   validates :title,       presence: true#,
                           #length: { maximum: 30 }
   validates :description, presence: true

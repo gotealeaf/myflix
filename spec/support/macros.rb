@@ -6,8 +6,16 @@ def sign_in_user(user = current_user)
   session[:user_id] = user.id
 end
 
+def sign_in_admin(admin_user = current_admin)
+  session[:user_id] = admin_user.id
+end
+
 def current_user
   @current_user ||= Fabricate(:user)
+end
+
+def current_admin
+  @current_admin ||= Fabricate(:admin)
 end
 
 ############################## FEATURE SPEC METHODS ############################

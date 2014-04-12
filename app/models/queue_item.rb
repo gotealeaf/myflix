@@ -10,8 +10,7 @@ class QueueItem < ActiveRecord::Base
   validates_uniqueness_of :user_id,  scope: [ :video_id ]
   validates :user_id,  presence: true
   validates :video_id, presence: true
-  validates :position, presence: true,
-                       numericality: { only_integer: true,
+  validates :position, numericality: { only_integer: true,
                                        greater_than_or_equal_to: 1 },
                        allow_nil: true
 

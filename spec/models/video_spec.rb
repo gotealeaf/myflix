@@ -16,8 +16,8 @@ describe Video do
     it "responds to all attributes" do
       expect(video).to respond_to(:title)
       expect(video).to respond_to(:description)
-      expect(video).to respond_to(:sm_cover_locn)
-      expect(video).to respond_to(:lg_cover_locn)
+      expect(video).to respond_to(:small_cover)
+      expect(video).to respond_to(:large_cover)
       expect(video).to respond_to(:categories)
       expect(video).to respond_to(:reviews)
     end
