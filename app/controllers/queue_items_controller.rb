@@ -16,7 +16,10 @@ class QueueItemsController < ApplicationController
   end
 
   def update_queue
-    update_queue_items(params[:queue_items])
+    #binding.pry
+    update_queue_item_positions(params[:queue_items])
+    current_user.normalize_queue_item_positions
+    #update_queue_item_ratings(params[:queue_items])
     redirect_to my_queue_path
   end
 
@@ -24,7 +27,7 @@ class QueueItemsController < ApplicationController
     queue_item = QueueItem.find(params[:id])
     if queue_item.user_id == current_user.id
       queue_item.destroy 
-      normalize_queue_items
+      current_user.normalize_queue_item_positions
     end
     redirect_to my_queue_path
   end
@@ -35,61 +38,36 @@ class QueueItemsController < ApplicationController
     current_user.queue_items.length + 1
   end
 
-  def update_queue_item_positions deleted_position
-    current_user.queue_items.each do |queue_item|
-      if queue_item.position > deleted_position.to_i
-        queue_item.update_column(:position, queue_item.position - 1) 
-      end
-    end
-  end
-
-  def update_queue_items(new_queue_positions)
-    if (all_queue_positions_integers?(new_queue_positions) && 
-        all_queue_positions_unique?(new_queue_positions) && 
-        all_queue_items_belong_to_user?(new_queue_positions))
-      new_queue_positions.each do |queue_item_data|
+  def update_queue_item_positions(new_queue_values)
+    if (all_queue_positions_valid?(new_queue_values))
+      new_queue_values.each do |queue_item_data|
         queue_item = QueueItem.find(queue_item_data[:id].to_i)
-        queue_item.update_attributes(position: queue_item_data[:position].to_i)
+        queue_item.update_attributes(position: queue_item_data[:position].to_i, rating: queue_item_data[:rating].to_i) if queue_item.user == current_user
       end
-
-      normalize_queue_items
-
-    elsif !all_queue_positions_integers?(new_queue_positions)
+    elsif !all_queue_positions_integers?(new_queue_values)
       flash[:danger] = "Non-integer order numbers entered"
-    elsif !all_queue_positions_unique?(new_queue_positions)
+    elsif !all_queue_positions_unique?(new_queue_values)
       flash[:danger] = "Non-unique order numbers entered"
     end
   end
 
-  def normalize_queue_items
-    current_user.queue_items.each_with_index do |queue_item, index|
-      queue_item.update_attributes(position: index + 1)
-    end
+  def all_queue_positions_valid?(new_queue_values)
+    (all_queue_positions_integers?(new_queue_values) && 
+    all_queue_positions_unique?(new_queue_values))
   end
 
-  def all_queue_positions_integers?(new_queue_positions)
-    new_queue_positions.each do |queue_item|
-      unless queue_item[:position] == queue_item[:position].to_i.to_s
-        return false
-      end
+  def all_queue_positions_integers?(new_queue_values)
+    new_queue_values.each do |queue_item|
+      return false unless queue_item[:position] == queue_item[:position].to_i.to_s
     end
     true
   end
 
-  def all_queue_positions_unique?(new_queue_positions)
+  def all_queue_positions_unique?(new_queue_values)
     positions = []
-    new_queue_positions.each do |queue_item|
+    new_queue_values.each do |queue_item|
       positions << queue_item[:position]
     end
     positions.uniq.length == positions.length
-  end
-
-  def all_queue_items_belong_to_user?(new_queue_positions)
-    new_queue_positions.each do |queue_item|
-      unless QueueItem.find(queue_item[:id]).user == current_user
-        return false
-      end
-    end
-    true
   end
 end

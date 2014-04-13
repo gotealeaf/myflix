@@ -177,18 +177,22 @@ describe QueueItemsController do
     context "with valid inputs" do
       it "redirects to the my queue page" do
         alice = Fabricate(:user)
+        video = Fabricate(:video)
         session[:user_id] = alice.id
-        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
+        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: video.id, position: 1)
         post :update_queue, queue_items: [{id: "1", position: "1"}]
         expect(response).to redirect_to my_queue_path
       end
 
       it "updates queue positions" do
         alice = Fabricate(:user)
+        video1 = Fabricate(:video)
+        video2 = Fabricate(:video)
+        video3 = Fabricate(:video)
         session[:user_id] = alice.id
-        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
-        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
-        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: video1.id, position: 1)
+        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: video2.id, position: 2)
+        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: video3.id, position: 3)
         post :update_queue, queue_items: [{id: "1", position: "3"}, 
                                           {id: "2", position: "2"}, 
                                           {id: "3", position: "1"}]
@@ -203,9 +207,12 @@ describe QueueItemsController do
       it "normalizes the position numbers to start with 1" do
         alice = Fabricate(:user)
         session[:user_id] = alice.id
-        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
-        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
-        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+        video1 = Fabricate(:video)
+        video2 = Fabricate(:video)
+        video3 = Fabricate(:video)
+        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: video1.id, position: 1)
+        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: video2.id, position: 2)
+        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: video3.id, position: 3)
         post :update_queue, queue_items: [{id: "1", position: "4"}, 
                                           {id: "2", position: "3"}, 
                                           {id: "3", position: "2"}]
@@ -215,9 +222,12 @@ describe QueueItemsController do
       it "moves an item to the end of the queue if one position input off end of queue" do
         alice = Fabricate(:user)
         session[:user_id] = alice.id
-        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
-        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
-        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+        video1 = Fabricate(:video)
+        video2 = Fabricate(:video)
+        video3 = Fabricate(:video)
+        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: video1.id, position: 1)
+        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: video2.id, position: 2)
+        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: video3.id, position: 3)
         post :update_queue, queue_items: [{id: "1", position: "4"}, 
                                           {id: "2", position: "2"}, 
                                           {id: "3", position: "1"}]
@@ -232,9 +242,12 @@ describe QueueItemsController do
         it "redirects to the my queue page" do
           alice = Fabricate(:user)
           session[:user_id] = alice.id
-          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
-          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
-          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+          video1 = Fabricate(:video)
+          video2 = Fabricate(:video)
+          video3 = Fabricate(:video)
+          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: video1.id, position: 1)
+          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: video2.id, position: 2)
+          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: video3.id, position: 3)
           post :update_queue,  queue_items: [{id: "1", position: "3"}, 
                                             {id: "2", position: "2"}, 
                                             {id: "3", position: "1.5"}]
@@ -244,9 +257,12 @@ describe QueueItemsController do
         it "sets a flash error message" do
           alice = Fabricate(:user)
           session[:user_id] = alice.id
-          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
-          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
-          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+          video1 = Fabricate(:video)
+          video2 = Fabricate(:video)
+          video3 = Fabricate(:video)
+          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: video1.id, position: 1)
+          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: video2.id, position: 2)
+          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: video3.id, position: 3)
           post :update_queue,  queue_items: [{id: "1", position: "3"}, 
                                             {id: "2", position: "2"}, 
                                             {id: "3", position: "1.5"}]
@@ -256,9 +272,12 @@ describe QueueItemsController do
         it "does not change any queue item positions" do
           alice = Fabricate(:user)
           session[:user_id] = alice.id
-          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
-          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
-          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+          video1 = Fabricate(:video)
+          video2 = Fabricate(:video)
+          video3 = Fabricate(:video)
+          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: video1.id, position: 1)
+          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: video2.id, position: 2)
+          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: video3.id, position: 3)
           post :update_queue,  queue_items: [{id: "1", position: "3"}, 
                                             {id: "2", position: "2"}, 
                                             {id: "3", position: "1.5"}]
@@ -270,9 +289,12 @@ describe QueueItemsController do
         it "redirects to the my queue page" do
           alice = Fabricate(:user)
           session[:user_id] = alice.id
-          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
-          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
-          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+          video1 = Fabricate(:video)
+          video2 = Fabricate(:video)
+          video3 = Fabricate(:video)
+          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: video1.id, position: 1)
+          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: video2.id, position: 2)
+          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: video3.id, position: 3) 
           post :update_queue,  queue_items: [{id: "1", position: "3"}, 
                                             {id: "2", position: "2"}, 
                                             {id: "3", position: "2"}]
@@ -282,9 +304,12 @@ describe QueueItemsController do
         it "sets a flash error message" do
           alice = Fabricate(:user)
           session[:user_id] = alice.id
-          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
-          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
-          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+          video1 = Fabricate(:video)
+          video2 = Fabricate(:video)
+          video3 = Fabricate(:video)
+          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: video1.id, position: 1)
+          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: video2.id, position: 2)
+          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: video3.id, position: 3)
           post :update_queue,  queue_items: [{id: "1", position: "3"}, 
                                             {id: "2", position: "2"}, 
                                             {id: "3", position: "2"}]
@@ -294,9 +319,12 @@ describe QueueItemsController do
         it "does not change any queue positions if non-unique positions submitted" do
           alice = Fabricate(:user)
           session[:user_id] = alice.id
-          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
-          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
-          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+          video1 = Fabricate(:video)
+          video2 = Fabricate(:video)
+          video3 = Fabricate(:video)
+          queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: video1.id, position: 1)
+          queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: video2.id, position: 2)
+          queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: video3.id, position: 3)
           post :update_queue, :queue_items => [{":id" => "1", ":position" => "3"}, 
                                                {":id" => "2", ":position" => "2"}, 
                                                {":id" => "3", ":position" => "2"}]
@@ -308,9 +336,12 @@ describe QueueItemsController do
     context "with unauthenticated users"
       it "redirects to login page" do
         alice = Fabricate(:user)
-        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
-        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
-        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+        video1 = Fabricate(:video)
+        video2 = Fabricate(:video)
+        video3 = Fabricate(:video)
+        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: video1.id, position: 1)
+        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: video2.id, position: 2)
+        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: video3.id, position: 3)
         post :update_queue, queue_items: [{id: "1", position: "3"}, 
                                           {id: "2", position: "2"}, 
                                           {id: "3", position: "1"}]
@@ -319,9 +350,12 @@ describe QueueItemsController do
 
       it "does not change any queue positions" do
         alice = Fabricate(:user)
-        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
-        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
-        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
+        video1 = Fabricate(:video)
+        video2 = Fabricate(:video)
+        video3 = Fabricate(:video)
+        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: video1.id, position: 1)
+        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: video2.id, position: 2)
+        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: video3.id, position: 3)
         post :update_queue, queue_items: [{id: "1", position: "3"}, 
                                           {id: "2", position: "2"}, 
                                           {id: "3", position: "1"}]
@@ -329,14 +363,15 @@ describe QueueItemsController do
       end
 
     context "with queue items that do not belong to user" do
+      let(:alice) { Fabricate(:user) }
+      let(:video1) { Fabricate(:video) }
+      let(:video2) { Fabricate(:video) }
+      let(:video3) { Fabricate(:video) }
+      let(:queue_item1) { Fabricate(:queue_item, user_id: alice.id, video_id: video1.id, position: 1) }
+      let(:queue_item2) { Fabricate(:queue_item, user_id: alice.id, video_id: video2.id, position: 2) }
+      let(:queue_item3) { Fabricate(:queue_item, user_id: alice.id, video_id: video3.id, position: 3) }
+
       it "redirects to the my queue page" do 
-        alice = Fabricate(:user)
-        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
-        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
-        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
-        post :update_queue, queue_items: [{id: "1", position: "3"}, 
-                                          {id: "2", position: "2"}, 
-                                          {id: "3", position: "1"}]
         bob = Fabricate(:user)
         session[:user_id] = bob.id
         post :update_queue, queue_items: [{id: "1", position: "3"}, 
@@ -346,10 +381,6 @@ describe QueueItemsController do
       end
 
       it "does not change any queue positions" do
-        alice = Fabricate(:user)
-        queue_item1 = Fabricate(:queue_item, user_id: alice.id, video_id: 1, position: 1)
-        queue_item2 = Fabricate(:queue_item, user_id: alice.id, video_id: 2, position: 2)
-        queue_item3 = Fabricate(:queue_item, user_id: alice.id, video_id: 3, position: 3)
         bob = Fabricate(:user)
         session[:user_id] = bob.id
         post :update_queue, queue_items: [{id: "1", position: "3"}, 
