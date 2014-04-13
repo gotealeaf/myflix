@@ -12,10 +12,9 @@
             %span= "Rating: #{@video.average_rating}/5.0"
         %p= @video.description
         .actions
-          /%a.btn.btn-primary(href="") Watch Now
+          %a.btn.btn-primary(href="#{@video.video_url}") Watch Now
           - unless current_user.has_this_video_in_queue?(@video)
-            %a
-              =link_to "+ My Queue", queue_items_path(video_id: @video.id), method: 'post', class: 'btn btn-default'
+            =link_to "+ My Queue", queue_items_path(video_id: @video.id), method: 'post', class: 'btn btn-default'
 
 %section.reviews.container
   .row

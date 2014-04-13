@@ -27,7 +27,8 @@ describe Admin::VideosController do
                                description: "a video",
                                categories: ["","#{drama.id}"],
                                small_cover: "/public/tmp/monk.jpg",
-                               large_cover: "/public/tmp/monk_large.jpg" }}
+                               large_cover: "/public/tmp/monk_large.jpg",
+                               video_url: "http://example.com/video.mp4" }}
       end
       it "loads info into the @video instance variable" do
         expect(assigns(:video)).to be_valid
@@ -50,7 +51,8 @@ describe Admin::VideosController do
                                  description: "a video",
                                  categories: ["","#{drama.id}"],
                                  small_cover: "/public/tmp/monk.jpg",
-                                 large_cover: "/public/tmp/monk_large.jpg" }}
+                                 large_cover: "/public/tmp/monk_large.jpg",
+                                 video_url: "http://example.com/video.mp4" }}
       end
       it "renders the video form" do
         expect(response).to render_template 'new'
