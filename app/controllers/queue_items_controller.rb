@@ -26,10 +26,8 @@ class QueueItemsController < ApplicationController
   end
 
   def update_queue
-    queue_items_data = params[:queue_items]
-
     begin
-      current_user.update_queue_items(queue_items_data)
+      update_queue_items
       current_user.normalize_queue_items_positions
     rescue ActiveRecord::RecordInvalid
       flash[:warning] = "Invalid position entry."
@@ -42,5 +40,14 @@ class QueueItemsController < ApplicationController
 
   def user_next_queue_position
     current_user.queue_items.count + 1
+  end
+
+  def update_queue_items
+    ActiveRecord::Base.transaction do
+      params[:queue_items].each do |queue_item_data|
+        queue_item = QueueItem.find(queue_item_data[:id].to_i)
+        queue_item.update!(position: queue_item_data[:position]) if queue_item.user == current_user
+      end
+    end
   end
 end
