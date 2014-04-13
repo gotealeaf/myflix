@@ -28,6 +28,7 @@ class QueueItemsController < ApplicationController
   def update_queue
     begin
       update_queue_items
+      update_video_rating
       current_user.normalize_queue_items_positions
     rescue ActiveRecord::RecordInvalid
       flash[:warning] = "Invalid position entry."
@@ -42,10 +43,23 @@ class QueueItemsController < ApplicationController
     current_user.queue_items.count + 1
   end
 
+  def update_video_rating
+    params[:queue_items].each do |queue_item_data|
+      video = QueueItem.find(queue_item_data[:id]).video
+      if review = Review.find_by(user: current_user, video: video)
+        review.rating = queue_item_data[:rating]
+        review.save(validate: false)
+      else
+        review = Review.new(video: video, user: current_user, rating: queue_item_data[:rating])
+        review.save(validate: false)
+      end
+    end
+  end
+
   def update_queue_items
     ActiveRecord::Base.transaction do
       params[:queue_items].each do |queue_item_data|
-        queue_item = QueueItem.find(queue_item_data[:id].to_i)
+        queue_item = QueueItem.find(queue_item_data[:id])
         queue_item.update!(position: queue_item_data[:position]) if queue_item.user == current_user
       end
     end

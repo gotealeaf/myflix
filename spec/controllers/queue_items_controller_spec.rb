@@ -205,6 +205,48 @@ describe QueueItemsController do
           expect(queue_item_4.reload.position).to eq 2 
         end
       end
+
+      context "rated video gets new rating" do
+        it "redirects to my queue" do
+          user = Fabricate(:user)
+          video = Fabricate(:video)
+          session[:user_id] = user
+          queue_item = Fabricate(:queue_item, user: user, video: video, position: 1)
+          Fabricate(:review, user: user, video: video, rating: 5)
+          patch :update_queue, queue_items: [{ id: queue_item.id, position: 1, rating: 3 }]
+          expect(response).to redirect_to my_queue_path 
+        end
+
+        it "updates the rating" do
+          user = Fabricate(:user)
+          video = Fabricate(:video)
+          session[:user_id] = user
+          queue_item = Fabricate(:queue_item, user: user, video: video, position: 1)
+          Fabricate(:review, user: user, video: video, rating: 5)
+          patch :update_queue, queue_items: [{ id: queue_item.id, position: 1, rating: 3 }]
+          expect(user.queue_items.first.rating).to eq 3 
+        end
+      end
+
+      context "previously unrated video gets rated" do
+        it "redirects to my queue" do
+          user = Fabricate(:user)
+          video = Fabricate(:video)
+          session[:user_id] = user
+          queue_item = Fabricate(:queue_item, user: user, video: video, position: 1)
+          patch :update_queue, queue_items: [{ id: queue_item.id, position: 1, rating: 3 }]
+          expect(response).to redirect_to my_queue_path 
+        end
+
+        it "creates the review with a rating" do
+          user = Fabricate(:user)
+          video = Fabricate(:video)
+          session[:user_id] = user
+          queue_item = Fabricate(:queue_item, user: user, video: video, position: 1)
+          patch :update_queue, queue_items: [{ id: queue_item.id, position: 1, rating: 3 }]
+          expect(user.queue_items.first.rating).to eq 3 
+        end
+      end
     end
 
     context "with invalid input" do
