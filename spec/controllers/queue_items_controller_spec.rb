@@ -175,10 +175,10 @@ describe QueueItemsController do
   
   describe "POST update_queue" do
     context "with valid inputs" do
-      let!(:alice) { Fabricate(:user) }
-      let!(:video1) { Fabricate(:video) }
-      let!(:video2) { Fabricate(:video) }
-      let!(:video3) { Fabricate(:video) }
+      let(:alice) { Fabricate(:user) }
+      let(:video1) { Fabricate(:video) }
+      let(:video2) { Fabricate(:video) }
+      let(:video3) { Fabricate(:video) }
       let!(:queue_item1) { Fabricate(:queue_item, user_id: alice.id, video_id: video1.id, position: 1) }
       let!(:queue_item2) { Fabricate(:queue_item, user_id: alice.id, video_id: video2.id, position: 2) }
       let!(:queue_item3) { Fabricate(:queue_item, user_id: alice.id, video_id: video3.id, position: 3) }
@@ -222,10 +222,10 @@ describe QueueItemsController do
     end
 
     context "with invalid inputs" do
-        let!(:alice) { Fabricate(:user) }
-        let!(:video1) { Fabricate(:video) }
-        let!(:video2) { Fabricate(:video) }
-        let!(:video3) { Fabricate(:video) }
+        let(:alice) { Fabricate(:user) }
+        let(:video1) { Fabricate(:video) }
+        let(:video2) { Fabricate(:video) }
+        let(:video3) { Fabricate(:video) }
         let!(:queue_item1) { Fabricate(:queue_item, user_id: alice.id, video_id: video1.id, position: 1) }
         let!(:queue_item2) { Fabricate(:queue_item, user_id: alice.id, video_id: video2.id, position: 2) }
         let!(:queue_item3) { Fabricate(:queue_item, user_id: alice.id, video_id: video3.id, position: 3) }
@@ -282,10 +282,10 @@ describe QueueItemsController do
     end
 
     context "with unauthenticated users"
-      let!(:alice) { Fabricate(:user) }
-      let!(:video1) { Fabricate(:video) }
-      let!(:video2) { Fabricate(:video) }
-      let!(:video3) { Fabricate(:video) }
+      let(:alice) { Fabricate(:user) }
+      let(:video1) { Fabricate(:video) }
+      let(:video2) { Fabricate(:video) }
+      let(:video3) { Fabricate(:video) }
       let!(:queue_item1) { Fabricate(:queue_item, user_id: alice.id, video_id: video1.id, position: 1) }
       let!(:queue_item2) { Fabricate(:queue_item, user_id: alice.id, video_id: video2.id, position: 2) }
       let!(:queue_item3) { Fabricate(:queue_item, user_id: alice.id, video_id: video3.id, position: 3) }
@@ -305,10 +305,10 @@ describe QueueItemsController do
       end
 
     context "with queue items that do not belong to user" do
-      let!(:alice) { Fabricate(:user) }
-      let!(:video1) { Fabricate(:video) }
-      let!(:video2) { Fabricate(:video) }
-      let!(:video3) { Fabricate(:video) }
+      let(:alice) { Fabricate(:user) }
+      let(:video1) { Fabricate(:video) }
+      let(:video2) { Fabricate(:video) }
+      let(:video3) { Fabricate(:video) }
       let!(:queue_item1) { Fabricate(:queue_item, user_id: alice.id, video_id: video1.id, position: 1) }
       let!(:queue_item2) { Fabricate(:queue_item, user_id: alice.id, video_id: video2.id, position: 2) }
       let!(:queue_item3) { Fabricate(:queue_item, user_id: alice.id, video_id: video3.id, position: 3) }
