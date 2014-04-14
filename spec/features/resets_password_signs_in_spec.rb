@@ -4,7 +4,7 @@ feature 'User signs in with new password' do
   scenario 'User forgets password and tries to re-assign his/her password' do
     comedies = Fabricate(:category, name: 'Comedies')
     futurama = Fabricate(:video, title: 'Futurama', category: comedies, description: "funny show")
-    bob = Fabricate(:user, email: 'bob@example.com')
+    bob = Fabricate(:user, email: 'bob@example.com', password: 'old_password')
     clear_emails
     visit email_page_path
     fill_in "email", with: "bob@example.com"

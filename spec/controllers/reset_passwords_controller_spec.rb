@@ -4,14 +4,12 @@ describe ResetPasswordsController do
   describe "GET show" do
     it "renders page for submitting a new password" do
       bob = Fabricate(:user)
-      #bob.update_columns(token: bob.generate_token)
       get :show, id: bob.token
       expect(response).to render_template('reset_passwords/show')
     end
 
     it "sets @token" do
       bob = Fabricate(:user)
-      #bob.update_columns(token: bob.generate_token)
       get :show, id: bob.token
       expect(assigns(:token)).to eq(bob.token)
     end

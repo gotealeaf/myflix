@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140409210411) do
+ActiveRecord::Schema.define(version: 20140414183153) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -20,10 +20,13 @@ ActiveRecord::Schema.define(version: 20140409210411) do
   end
 
   create_table "invitations", force: true do |t|
-    t.string   "inviter_email"
+    t.integer  "inviter_id",  limit: 255
     t.string   "guest_email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "guest_name"
+    t.text     "message"
+    t.string   "token"
   end
 
   create_table "queue_items", force: true do |t|

@@ -3,6 +3,8 @@ Myflix::Application.routes.draw do
   post 'log_in', to: 'sessions#create'
   get 'register', to: 'users#new'
   get 'log_out', to: 'sessions#destroy'
+  get 'register_user_with_token/:token', to: 'users#register_with_token', as: 'register_user_with_token'
+  get 'expired_token', to: 'reset_passwords#expired_token'
   root to: 'pages#index' 
 
   resources :videos, only: [:index, :show] do

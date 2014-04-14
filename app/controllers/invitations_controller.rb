@@ -1,18 +1,24 @@
 class InvitationsController < ApplicationController
   def new
+    @invitation = Invitation.new
   end
 
   def create
-    @mail_content = {}
-    @mail_content = {"email" => params[:email], "full_name" => params[:full_name], "description" => params[:description]}
-    if @mail_content.has_value?(nil)
+    @invitation = Invitation.new(invitation_params.merge!(inviter_id: current_user.id))
+    if @invitation.save
+      AppMailer.invite_a_user(@invitation).deliver
+      flash[:notice] = "Your invitation has been sent."
+      redirect_to new_invitation_path
+    else
       flash[:notice] = "Please fill out the form entirely."
       render "new"
-    else
-      AppMailer.invite_a_user(@mail_content, current_user).deliver
-      invite = Invitation.create(guest_email: @mail_content["email"], inviter_email: current_user.email)
-      flash[:notice] = "Your invitation has been sent."
-      redirect_to videos_path
     end
+  end
+
+private
+
+  def invitation_params
+    params.require(:invitation).permit(:guest_email, :guest_name, :message, :inviter_id)
+    
   end
 end

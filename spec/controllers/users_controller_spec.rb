@@ -55,26 +55,36 @@ describe UsersController do
         expect(response).to redirect_to videos_path
       end
 
-      it "the guest follows the invitor" do
-        bob = Fabricate(:user, full_name: 'bob smith')
-        invite = Invitation.create(inviter_email: bob.email, guest_email: "cat@example.com")
-        post :create, user: {email: "cat@example.com", password: "password", full_name: "cat"}
-        #binding.pry
-        cat = User.where(email: "cat@example.com").first
-        expect(cat.following?(bob)).to be_true
-      end
-      
-      it "the invitor follows the guest" do
-        bob = Fabricate(:user, full_name: 'bob smith')
-        invite = Invitation.create(inviter_email: bob.email, guest_email: "cat@example.com")
-        post :create, user: {email: "cat@example.com", password: "password", full_name: "cat"}
-        #binding.pry
-        cat = User.where(email: "cat@example.com").first
-        expect(bob.following?(cat)).to be_true
+      context "registering with a token" do
+        it "makes the guest follow the invitor" do
+          bob = Fabricate(:user)
+          invitation = Fabricate(:invitation, guest_email: "alice@example.com", inviter_id: bob.id)
+          post :create, user: {email: "alice@example.com", password: "password", full_name: "alice smith"}, token: invitation.token
+
+          alice = User.where(email: "alice@example.com").first
+          expect(alice.following?(bob)).to be_true
+        end
+        it "makes the inviter follow the guest" do
+          bob = Fabricate(:user)
+          invitation = Fabricate(:invitation, guest_email: "alice@example.com", inviter_id: bob.id)
+          post :create, user: {email: "alice@example.com", password: "password", full_name: "alice smith"}, token: invitation.token
+
+          alice = User.where(email: "alice@example.com").first
+          expect(bob.following?(alice)).to be_true
+        end
+
+        it "expires the invitation upon acceptance" do
+          bob = Fabricate(:user)
+          invitation = Fabricate(:invitation, guest_email: "alice@example.com", inviter_id: bob.id)
+          invitation_token = invitation.token
+          post :create, user: {email: "alice@example.com", password: "password", full_name: "alice smith"}, token: invitation.token
+
+          expect(invitation.reload.token).not_to eq(invitation_token)
+        end
       end
 
       context "email sending" do
-        it "sends out the email" do
+        it "sends out the email about registration" do
           post :create, user: Fabricate.attributes_for(:user)
           expect(ActionMailer::Base.deliveries).to_not be_empty
         end
@@ -90,8 +100,8 @@ describe UsersController do
         end
       end
     end
-    context "with invalid input" do
 
+    context "with invalid input" do
       before do
         post :create, user: { full_name: "jane" }
       end
@@ -106,6 +116,39 @@ describe UsersController do
       it "sets @user" do
         expect(assigns(:user)).to be_instance_of(User)
       end
+    end
+  end
+
+  describe "GET register_with_token" do 
+    it "renders the :new view template" do
+      bob = Fabricate(:user)
+      invitation = Fabricate(:invitation, guest_email: "alice@example.com", inviter_id: bob.id)
+      get :register_with_token, token: invitation.token
+
+      expect(response).to render_template(:new)
+    end
+
+    it "sets @user with recipients email" do
+      bob = Fabricate(:user)
+      invitation = Fabricate(:invitation, guest_email: "alice@example.com", inviter_id: bob.id)
+      get :register_with_token, token: invitation.token
+
+      expect(assigns(:user).email).to eq("alice@example.com")
+    end
+
+    it "sets @invitation_token" do
+      invitation = Fabricate(:invitation)
+      get :register_with_token, token: invitation.token
+
+      expect(assigns(:invitation_token)).to eq(invitation.token)
+    end
+
+    it "redirects to expired token page for invalid tokens" do
+      bob = Fabricate(:user)
+      invitation = Fabricate(:invitation, guest_email: "alice@example.com", inviter_id: bob.id)
+      get :register_with_token, token: '12345'
+
+      expect(response).to redirect_to(expired_token_path)
     end
   end
 end
