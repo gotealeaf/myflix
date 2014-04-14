@@ -4,7 +4,6 @@ describe QueueItem do
   it { should belong_to(:user) }
   it { should belong_to(:video) }
   it { should validate_presence_of(:video_id) }
-  it { should validate_uniqueness_of(:position) }
   it { should validate_uniqueness_of(:video_id).scoped_to(:user_id).with_message("is already in queue") }
 
   describe "#video_title" do
@@ -24,11 +23,39 @@ describe QueueItem do
       expect(queue_item.rating).to eq(review.rating)
     end
 
-    it "returns nil if review does not exist" do
+    it 'returns nil if review does not exist' do
       video = Fabricate(:video)
       user = Fabricate(:user)
       queue_item = Fabricate(:queue_item, user: user, video: video)
-      expect(queue_item.rating).to eq("Unrated")
+      expect(queue_item.rating).to eq(nil)
+    end
+  end
+
+  describe "#rating=" do
+    it "changes the rating of the review if the review is present" do
+      video = Fabricate(:video)
+      user = Fabricate(:user)
+      queue_item = Fabricate(:queue_item, user: user, video: video)
+      review = Fabricate(:review, creator: user, video: video, rating: 3)
+      queue_item.rating = 4
+      expect(queue_item.rating).to eq(4)
+    end
+
+    it "clears the rating of the review if the review is present" do
+      video = Fabricate(:video)
+      user = Fabricate(:user)
+      queue_item = Fabricate(:queue_item, user: user, video: video)
+      review = Fabricate(:review, creator: user, video: video, rating: 3)
+      queue_item.rating = nil
+      expect(queue_item.rating).to be_nil
+    end
+
+    it "creates a review with the rating if no review" do
+      video = Fabricate(:video)
+      user = Fabricate(:user)
+      queue_item = Fabricate(:queue_item, user: user, video: video)
+      queue_item.rating = 3
+      expect(queue_item.rating).to eq(3)
     end
   end
 

@@ -18,4 +18,8 @@ class ApplicationController < ActionController::Base
       redirect_to login_path
     end
   end
+
+  def is_integer?(string)
+    string.to_i.to_s == string
+  end
 end

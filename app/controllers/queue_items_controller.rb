@@ -15,10 +15,18 @@ class QueueItemsController < ApplicationController
     redirect_to my_queue_path
   end
 
+  def update_queue
+    update_queue_item_positions(params[:queue_items])
+    current_user.normalize_queue_item_positions
+    redirect_to my_queue_path
+  end
+
   def destroy
     queue_item = QueueItem.find(params[:id])
-    queue_item.destroy if current_user.queue_items.include?(queue_item)
-    update_queue_item_positions(queue_item.position)
+    if queue_item.user_id == current_user.id
+      queue_item.destroy 
+      current_user.normalize_queue_item_positions
+    end
     redirect_to my_queue_path
   end
 
@@ -28,12 +36,36 @@ class QueueItemsController < ApplicationController
     current_user.queue_items.length + 1
   end
 
-  def update_queue_item_positions deleted_position
-    current_user.queue_items.each do |queue_item|
-      if queue_item.position > deleted_position.to_i
-        queue_item.update_column(:position, queue_item.position - 1) 
+  def update_queue_item_positions(new_queue_values)
+    if (all_queue_positions_valid?(new_queue_values))
+      new_queue_values.each do |queue_item_data|
+        queue_item = QueueItem.find(queue_item_data[:id].to_i)
+        queue_item.update_attributes(position: queue_item_data[:position].to_i, rating: queue_item_data[:rating].to_i) if queue_item.user == current_user
       end
+    elsif !all_queue_positions_integers?(new_queue_values)
+      flash[:danger] = "Non-integer order numbers entered"
+    elsif !all_queue_positions_unique?(new_queue_values)
+      flash[:danger] = "Non-unique order numbers entered"
     end
   end
 
+  def all_queue_positions_valid?(new_queue_values)
+    (all_queue_positions_integers?(new_queue_values) && 
+    all_queue_positions_unique?(new_queue_values))
+  end
+
+  def all_queue_positions_integers?(new_queue_values)
+    new_queue_values.each do |queue_item|
+      return false unless queue_item[:position] == queue_item[:position].to_i.to_s
+    end
+    true
+  end
+
+  def all_queue_positions_unique?(new_queue_values)
+    positions = []
+    new_queue_values.each do |queue_item|
+      positions << queue_item[:position]
+    end
+    positions.uniq.length == positions.length
+  end
 end
