@@ -3,7 +3,7 @@ class Category < ActiveRecord::Base
 
   validates_presence_of :name
 
-  def self.recent_videos category
-  	Category.find(category).videos.order('created_at DESC').take(6)
+  def recent_videos
+  	videos.order('created_at DESC').take(6)
   end
 end

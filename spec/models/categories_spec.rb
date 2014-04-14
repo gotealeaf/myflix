@@ -15,7 +15,7 @@ describe Category do
       video_three = Video.create(title: "Video 3", description: "Brasas brasas.", category: cat2)    
       video_four = Video.create(title: "Video 4", description: "Brasas brasas.", category: cat2) 
       
-      expect(Category.recent_videos(cat1)).to include(video_one, video_two)  
+      expect(cat1.recent_videos).to include(video_one, video_two)  
 
     end
 
@@ -26,7 +26,7 @@ describe Category do
       video_three = Video.create(title: "Video 3", description: "Brasas brasas.", category: cat, created_at: 1.day.ago)    
       video_four = Video.create(title: "Video 4", description: "Brasas brasas.", category: cat) 
       
-      expect(Category.recent_videos(cat)).to eq([video_four, video_three, video_two, video_one])  
+      expect(cat.recent_videos).to eq([video_four, video_three, video_two, video_one])  
     end
 
     it "returns and array of six videos of a category when thay are more than six" do
@@ -40,11 +40,7 @@ describe Category do
       video_seven = Video.create(title: "Video 7", description: "Brasas brasas.", category: cat, created_at: 1.day.ago) 
       video_eight = Video.create(title: "Video 8", description: "Brasas brasas.", category: cat) 
       
-      expect(Category.recent_videos(cat).count).to eq(6) 
+      expect(cat.recent_videos.count).to eq(6) 
     end
-
-
-
   end
-
 end

@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to sign_in_path
     else
-      #flash[:error] = "User couln't be created. #{@user.errors.first}"
+      flash[:error] = "User couln't be created. #{@user.errors.full_messages.first}"
       render :new
     end
   end
