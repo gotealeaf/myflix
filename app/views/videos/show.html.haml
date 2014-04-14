@@ -21,7 +21,7 @@
         = bootstrap_form_for([@video, Review.new]) do |f|
           .row
             .col-sm-3
-              = f.select :rating, options_for_select([5,4,3,2,1].map { |number| [pluralize(number, " Star")] }), include_blank: true
+              = f.select :rating, options_for_video_reviews, include_blank: true
           .form-group.row
             .col-sm-8
               = f.text_area :content, label: "Write Review", rows: "6"

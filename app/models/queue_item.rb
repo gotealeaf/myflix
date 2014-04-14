@@ -14,7 +14,21 @@ class QueueItem < ActiveRecord::Base
   end
 
   def rating
-    review = video.reviews.find_by(user: user)
     review.rating if review
+  end
+
+  def rating=(new_rating)
+    if review
+      review.update_column(:rating, new_rating)
+    else
+      review = Review.new(user: user, video: video, rating: new_rating)
+      review.save(validate: false)
+    end
+  end
+
+  private
+
+  def review
+    @review ||= Review.find_by(user: user, video: video)
   end
 end

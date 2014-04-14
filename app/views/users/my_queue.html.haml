@@ -25,7 +25,7 @@
                   %td
                     = button_to "Play", nil, class: "btn btn-default"
                   %td
-                    = select_tag "queue_items[][rating]", options_for_select([5,4,3,2,1].map { |number| [pluralize(number, " Star")] }, pluralize(queue_item.rating, " Star")), include_blank: true, class: "form-control center-block"
+                    = select_tag "queue_items[][rating]", options_for_video_reviews(queue_item.rating), include_blank: true, class: "form-control center-block"
                   %td
                     = link_to queue_item.category_name, queue_item.category
                   %td
