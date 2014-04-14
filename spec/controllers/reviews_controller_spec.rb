@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ReviewsController do 
   describe "POST create" do
     context "user authenticated" do
-      before do
+      before(:each) do
         user = Fabricate(:user)
         session[:user_id] = user.id
       end
@@ -39,7 +39,7 @@ describe ReviewsController do
       end
 
       context "review not valid" do
-        before do
+        before(:each) do
           video = Fabricate(:video)
         end
 
@@ -62,7 +62,7 @@ describe ReviewsController do
         end
 
         it "sets @reviews" do
-          review = Fabricate(:review, video: Video.first)
+          review = Fabricate(:review, video_id: Video.first.id)
           post :create, review: Fabricate.attributes_for(:review, review_text: ""), video_id: Video.first.id
           expect(assigns(:reviews)).to eq([review])
         end
