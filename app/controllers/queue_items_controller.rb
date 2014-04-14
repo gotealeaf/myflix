@@ -16,10 +16,8 @@ class QueueItemsController < ApplicationController
   end
 
   def update_queue
-    #binding.pry
     update_queue_item_positions(params[:queue_items])
     current_user.normalize_queue_item_positions
-    #update_queue_item_ratings(params[:queue_items])
     redirect_to my_queue_path
   end
 
