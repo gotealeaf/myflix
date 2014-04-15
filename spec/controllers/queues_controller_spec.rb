@@ -80,4 +80,103 @@ describe QueuesController do
       }.to change(QueueItem, :count).by(0)
     end
   end
+
+
+  describe "queues#update_instant (update my_queue data)" do
+    context "params" do
+      it "pass rating per queue item"
+      it "pass list order per queue item"
+    end
+
+    context "update list order and queue" do
+      context "authuentication"do
+        it "redirects to root_path if not logging in" do
+          post :update_instant
+          expect(response).to redirect_to root_path
+        end
+        it "redirects to root_path if queue_item's user not equal current user"
+      end 
+
+      context "no queue" do        
+      end
+      context "single queue" do
+        before do
+          session[:user_id] = user.id
+          @review = Fabricate(:review, user: user, video: video,rating: 4) 
+          @queue_item = Fabricate(:queue_item, user: user, video: video )
+          post :update_instant, queue_items: { @queue_item.id.to_s => { rating: "3", position: "1" }  }
+        end
+        it "saves rating" do
+          expect(QueueItem.first.rating).to eq 3
+        end
+      end 
+
+      context "mutiple queue" do
+        before do
+          Fabricate.times(3, :queue_item_no_review)
+          session[:user_id] = user.id
+        end
+        it "saves all list orders if all vlidation of list order pass" do
+          post :update_instant, queue_items: { 
+            "1" => { position: "3" }, 
+            "2" => { position: "2" }, 
+            "3" => { position: "1" }
+          }
+          queue_items_positions = QueueItem.all.each.map(&:position)
+          expect(queue_items_positions).to eq [3,2,1]
+        end
+        it "not saves all list orders if one of queue_item's validation of list order not pass" do
+          post :update_instant, queue_items: { 
+            "1" => { position: "1" }, 
+            "2" => { position: "2" }, 
+            "3" => { position: "1" }
+          }
+          queue_items_positions = QueueItem.all.each.map(&:position)
+          expect(queue_items_positions).to eq [1,2,3]
+        end
+        it "quicklly change list order to buttom by assign it's list order to maxium of list order now + 1" do
+          post :update_instant, queue_items: { 
+            "1" => { position: "4" }, 
+            "2" => { position: "2" }, 
+            "3" => { position: "3" }
+          }
+          queue_items_positions = QueueItem.all.each.map(&:position)
+          expect(queue_items_positions).to eq [3,1,2]
+        end
+        it "creates review when queue_item have no review and save rating to it" do
+          review = Fabricate(:review, user: user, video: video, rating: 1) 
+          Fabricate(:queue_item, user: user, video: video)
+          post :update_instant, queue_items: { 
+            "1" => { position: "1", rating: "1" }, 
+            "2" => { position: "2", rating: "3" }, 
+            "3" => { position: "3", rating: "4" },
+            "4" => { position: "4", rating: "5 "}
+          }
+          queue_items_ratings = QueueItem.all.map{ |f| f.rating }
+          expect(queue_items_ratings).to eq [1,3,4,5]           
+        end
+      end
+    end
+  end
+
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,3 +1,4 @@
+= form_tag update_instant_queues_path
 %section.my_queue.container
   .row
     .col-sm-10.col-sm-offset-1
@@ -14,5 +15,5 @@
               %th(width="15%") Genre
               %th(width="15%") Remove
           %tbody
-            = render current_user.queue_items
-        = button_to "Update Instant Queue", nil, class: "btn btn-default"
+            = render current_user.queue_items.sort_by{|obj| obj.position}
+        = submit_tag "Update Instant Queue", class: "btn btn-default"

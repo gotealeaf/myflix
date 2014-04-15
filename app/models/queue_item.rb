@@ -12,8 +12,18 @@ class QueueItem < ActiveRecord::Base
     video.reviews.find_by(user: user).try(:rating)
   end
 
+  def save_rating(value)
+    review = video.reviews.find_by(user: user)
+    review.rating = value
+    review.save
+  end
+
   def video_title
     video.title
+  end
+
+  def review?
+    !video.reviews.find_by(user: user).blank?
   end
 end
 

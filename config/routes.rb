@@ -16,6 +16,10 @@ Myflix::Application.routes.draw do
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
 
-  resources :queues, only:[:create, :destroy]
-  get '/my_queue', to: 'queues#index'
+  resources :queues, only:[:create, :destroy] do
+    collection do
+      post 'update_instant'
+    end
+  end
+  get '/my_queue', to: 'queues#index' 
 end

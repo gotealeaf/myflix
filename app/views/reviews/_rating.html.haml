@@ -4,12 +4,7 @@
       %label Rate this video
       .row
         .col-sm-3
-          %select.form-control(name="rating")
-            %option(value="5") 5 Stars
-            %option(value="4") 4 Stars
-            %option(value="3") 3 Stars
-            %option(value="2") 2 Stars
-            %option(value="1") 1 Star
+          = select_tag(:rating, options_for_select( [['5 stars', 5], ['4 stars', 4], ['4 stars', 4], ['2 stars', 2], ['1 stars', 1]], 0), include_blank: true )
     .form-group
       %label Write Review
       .row

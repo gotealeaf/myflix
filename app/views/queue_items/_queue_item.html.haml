@@ -1,17 +1,12 @@
 %tr
   %td
-    %input.form-control(type="text" value="#{queue_item.position}")
+    = text_field_tag("queue_items[#{queue_item.id}][position]", queue_item.position, class: "form-control")
   %td
     = link_to queue_item.video_title
   %td
     = button_to "Play", nil, class: "btn btn-default"
   %td
-    %select.form-group(name="")
-      %option(value="5") 5 Stars
-      %option(value="4") 4 Stars
-      %option(value="3") 3 Stars
-      %option(value="2") 2 Stars
-      %option(value="1") 1 Star
+    = select("queue_items[#{queue_item.id}]","rating", options_for_select( [['5 stars', 5], ['4 stars', 4], ['4 stars', 4], ['2 stars', 2], ['1 stars', 1]], queue_item.rating), include_blank: true )
   %td
     = link_to queue_item.category_name
   %td

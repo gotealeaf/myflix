@@ -18,8 +18,7 @@ class Video < ActiveRecord::Base
   end
 
   def averge_rating
-    reviews.average(:rating).round(1)
-
+    reviews.blank? ? 0 : reviews.average(:rating).round(1)
   end
 
 end
