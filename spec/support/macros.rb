@@ -25,6 +25,13 @@ def fabricate_video_and_post_to_create
   post :create, video_id: video.id
 end
 
+def fabricate_queue_item_with_category
+  user = Fabricate(:user)
+  category = Fabricate(:category)
+  video = Fabricate(:video, category_id: category.id)
+  queue_item = Fabricate(:queue_item, video_id: video.id, user_id: user.id)
+end
+
 def queue_item(id)
   QueueItem.find(id)
 end

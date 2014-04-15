@@ -6,40 +6,44 @@ describe Video do
   it { should validate_presence_of(:description) }
 
   describe "search_by_title" do
+    before do
+
+    end
+
     it "returns an empty array if string does not match any titles" do
-      futurama = Video.create(title: "Futurama", description: "Philip J. Fry etc.")
-      back_to_future = Video.create(title: "Back to Future", description: "time travel")
+      video1 = Fabricate(:video, title: "Futurama")
+      video2 = Fabricate(:video, title: "Back to Future")
       search = "unmatched_title"
       expect(Video.search_by_title(search)).to eq([])
     end
 
     it "returns a one-video array if the string exactly matches one title" do
-      futurama = Video.create(title: "Futurama", description: "Philip J. Fry etc.")
-      back_to_future = Video.create(title: "Back to Future", description: "time travel")
+      video1 = Fabricate(:video, title: "Futurama")
+      video2 = Fabricate(:video, title: "Back to Future")
       search = "futurama"
-      expect(Video.search_by_title(search)).to eq([futurama])
+      expect(Video.search_by_title(search)).to eq([video1])
     end
 
     it "returns an array of one video for a partial match" do
-      futurama = Video.create(title: "Futurama", description: "Philip J. Fry etc.")
-      family_guy = Video.create(title: "Family Guy", description: "Peter Griffin etc.")
-      family_comedy = Video.create(title: "Family Comedy", description: "So generic! etc.")
+      video1 = Fabricate(:video, title: "Futurama")
+      video2 = Fabricate(:video, title: "Family Guy")
+      video3 = Fabricate(:video, title: "Family Comedy")
       search = "futur"
-      expect(Video.search_by_title(search)).to eq([futurama])
+      expect(Video.search_by_title(search)).to eq([video1])
     end
 
     it "returns an array of all matches, ordered by created_at" do
-      futurama = Video.create(title: "Futurama", description: "Philip J. Fry etc.")
-      family_guy = Video.create(title: "Family Guy", description: "Peter Griffin etc.", created_at: 1.day.ago)
-      family_comedy = Video.create(title: "Family Comedy", description: "So generic! etc.")
+      video1 = Fabricate(:video, title: "Futurama")
+      video2 = Fabricate(:video, title: "Family Guy", created_at: 1.day.ago)
+      video3 = Fabricate(:video, title: "Family Comedy")
       search = "family"
-      expect(Video.search_by_title(search)).to eq([family_comedy, family_guy])
+      expect(Video.search_by_title(search)).to eq([video3, video2])
     end
 
     it "returns an empty array when search term is empty string" do
-      futurama = Video.create(title: "Futurama", description: "Philip J. Fry etc.")
-      family_guy = Video.create(title: "Family Guy", description: "Peter Griffin etc.")
-      family_comedy = Video.create(title: "Family Comedy", description: "So generic! etc.")
+      video1 = Fabricate(:video, title: "Futurama")
+      video2 = Fabricate(:video, title: "Family Guy")
+      video3 = Fabricate(:video, title: "Family Comedy")
       search = ""
       expect(Video.search_by_title(search)).to eq([])
     end

@@ -6,7 +6,6 @@ describe UsersController do
       get :new 
       expect(assigns(:user)).to be_instance_of(User)
     end
-    # skipped template render, since assumed Rails functionality
   end
 
   describe "POST create" do
