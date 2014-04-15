@@ -32,7 +32,7 @@ describe QueueItemsController do
         expect(assigns(:queue_items)).to eq(nil)
       end
       
-      it_behaves_like "requires_login"
+      it_behaves_like "requires login"
     end
   end
 
@@ -64,7 +64,7 @@ describe QueueItemsController do
         expect(queue_item2.reload.position).to eq(2)
       end
 
-      it_behaves_like "redirects_to_my_queue_after_action" do
+      it_behaves_like "redirects to my queue after action" do
         let(:action) { fabricate_video_and_post_to_create }
       end
 
@@ -86,7 +86,7 @@ describe QueueItemsController do
         expect(QueueItem.count).to eq(0)
       end
       
-      it_behaves_like "requires_login"
+      it_behaves_like "requires login"
     end
   end
 
@@ -125,7 +125,7 @@ describe QueueItemsController do
       expect(current_user.queue_items.first.position).to eq(1)
     end
 
-    it_behaves_like "redirects_to_my_queue_after_action" do
+    it_behaves_like "redirects to my queue after action" do
       let(:action) { delete :destroy, id: 1 }
     end
 
@@ -139,7 +139,7 @@ describe QueueItemsController do
         expect(User.first.queue_items.count).to eq(3)
       end
 
-      it_behaves_like "requires_login"
+      it_behaves_like "requires login"
     end
   end
   
@@ -150,7 +150,7 @@ describe QueueItemsController do
         create_queue_items
       end
 
-      it_behaves_like "redirects_to_my_queue_after_action" do
+      it_behaves_like "redirects to my queue after action" do
         let(:action) { post :update_queue, queue_items: [{id: "1", position: "1"}] }
       end
 
@@ -194,8 +194,8 @@ describe QueueItemsController do
                                              {id: "3", position: "1.5"}]
         end
 
-        it_behaves_like "redirects_to_my_queue_page"
-        it_behaves_like "sets_a_flash_error_message" do
+        it_behaves_like "redirects to my queue page"
+        it_behaves_like "sets a flash error message" do
           let(:message) { "Non-integer order numbers entered" } 
         end
 
@@ -209,8 +209,8 @@ describe QueueItemsController do
                                                     {id: "2", position: "2"}, 
                                                     {id: "3", position: "2"}] }
 
-        it_behaves_like "redirects_to_my_queue_page"
-        it_behaves_like "sets_a_flash_error_message" do
+        it_behaves_like "redirects to my queue page"
+        it_behaves_like "sets a flash error message" do
           let(:message) { "Non-unique order numbers entered" } 
         end
 
@@ -230,7 +230,7 @@ describe QueueItemsController do
                                           {id: "3", position: "1"}]
       end
 
-      it_behaves_like "requires_login"
+      it_behaves_like "requires login"
 
       it "does not change any queue positions" do
         expect(User.first.queue_items).to eq([queue_item(1), queue_item(2), queue_item(3)])
@@ -248,7 +248,7 @@ describe QueueItemsController do
                                           {id: "3", position: "1"}]
       end
 
-      it_behaves_like "redirects_to_my_queue_page"
+      it_behaves_like "redirects to my queue page"
 
       it "does not change any queue positions" do
         expect(User.first.queue_items).to eq([queue_item(1), queue_item(2), queue_item(3)])

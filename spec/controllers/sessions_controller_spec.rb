@@ -50,7 +50,7 @@ describe SessionsController do
         expect(flash[:danger]).not_to be_blank
       end
 
-      it_behaves_like "requires_login"
+      it_behaves_like "requires login"
     end
   end
 

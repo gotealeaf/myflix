@@ -113,7 +113,7 @@ describe ReviewsController do
         expect(flash[:danger]).to eq("You must be logged in to do that.")
       end
 
-      it_behaves_like "requires_login"
+      it_behaves_like "requires login"
     end
   end
 end
