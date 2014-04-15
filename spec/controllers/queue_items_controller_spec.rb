@@ -1,146 +1,120 @@
 require 'spec_helper'
 
 describe QueueItemsController do
-  describe "GET index" do
-    let(:user) { Fabricate(:user) }
+  before { set_current_user }
 
-    it "redirects to sign_in_path with unauthenticated users" do
-      get :index
-      expect(response).to redirect_to sign_in_path
+  describe "GET index" do
+    let(:queue_item_1) { Fabricate(:queue_item, user: current_user, position: 1) }
+    let(:queue_item_2) { Fabricate(:queue_item, user: current_user, position: 2) }
+
+    before { queue_item_1; queue_item_2; get :index }
+
+    it "renders the queue template" do
+      expect(response).to render_template 'users/my_queue'
     end
 
-    context "with authenticated users" do
-      before :each do
-        session[:user_id] = user
-        @queue_item_1 = Fabricate(:queue_item, user: user, position: 1)
-        @queue_item_2 = Fabricate(:queue_item, user: user, position: 2)
-        get :index
-      end
+    it "sets @queue_items to the current user's queue_items" do
+      expect(assigns(:queue_items)).to match_array([queue_item_1, queue_item_2])
+    end
 
-      it "sets @queue_items" do
-        expect(assigns(:queue_items)).to match_array([@queue_item_1, @queue_item_2])
-      end
-
-      it "renders queue template" do
-        expect(response).to render_template 'users/my_queue'
-      end
+    it_behaves_like "require_sign_in" do
+      let(:action) { get :index }
     end
   end
 
   describe "POST create" do
-    let(:user) { Fabricate(:user) }
-    let(:video) { Fabricate(:video) }
-
-    it "redirects to sign_in_path with unauthenticated users" do
-      post :create
-      expect(response).to redirect_to sign_in_path
+    it "redirects to my_queue_path" do
+      post :create, video_id: Fabricate(:video).id
+      expect(response).to redirect_to my_queue_path
     end
 
+    it_behaves_like "require_sign_in" do
+      let(:action) { post :create }
+    end
 
-    context "video is not in user queue with authenticated users" do
-      it "creates queue_item associated with video and user" do
-        session[:user_id] = user
-        post :create, video_id: video.id
+    context "video is not in user queue" do
+      let(:video) { Fabricate(:video) }
+      let(:action) { post :create, video_id: video.id }
+
+      it "creates a queue_item associated with the video and current user" do
+        action
         expect(QueueItem.first.video).to eq video
-        expect(QueueItem.first.user).to eq user
+        expect(QueueItem.first.user).to eq current_user
       end
 
-      it "assigns next available position to the queue_item" do
-        session[:user_id] = user
-        Fabricate(:queue_item, user: user)
-        post :create, video_id: video.id
+      it "assigns the next available queue position for the current user to the new queue_item" do
+        Fabricate(:queue_item, user: current_user)
+        action
         expect(QueueItem.find_by(video: video).position).to eq 2
       end
 
-      it "assigns the first position if there are no other queue_items for the user" do
-        session[:user_id] = user
-        post :create, video_id: video.id
+      it "assigns the first position to the new queue_item if none exist for the current user" do
+        action
         expect(QueueItem.first.position).to eq 1
-      end
-
-      it "redirects to my_queue path" do
-        session[:user_id] = user
-        post :create, video_id: video.id
-        expect(response).to redirect_to my_queue_path
       end
     end
 
-    context "video is in user queue with authenticated users" do
-      before :each do
-        session[:user_id] = user
-        Fabricate(:queue_item, video: video, user: user)
+    context "video is in user queue" do
+      let(:video) { Fabricate(:video) }
+
+      before do
+        Fabricate(:queue_item, video: video, user: current_user)
         post :create, video_id: video.id
       end
 
-      it "does not save the queue_item" do
+      it "does not save the video as a new queue_item" do
         expect(QueueItem.count).to eq 1
       end
 
-      it "sets warning message" do
+      it "sets the warning message" do
         expect(flash[:warning]).to_not be_blank
       end
 
-      it "redirects to video page" do
+      it "redirects to the video page" do
         expect(response).to redirect_to video
       end
     end
   end
 
   describe "DELETE destroy" do
-    let(:user) { Fabricate(:user) }
-    let(:video) { Fabricate(:video) }
-    let(:queue_item) { Fabricate(:queue_item, video: video, user: user) }
-
     it "redirects to my queue" do
-      session[:user_id] = user
-      delete :destroy, id: queue_item.id
+      delete :destroy, id: Fabricate(:queue_item, user: current_user).id
       expect(response).to redirect_to my_queue_path
     end
 
-    it "removes the queue item from the db" do
-      session[:user_id] = user
-      delete :destroy, id: queue_item.id
+    it "removes the deleted queue_item from the db" do
+      delete :destroy, id: Fabricate(:queue_item, user: current_user).id
       expect(QueueItem.count).to eq 0
     end
 
-    it "does not delete queue item if not in the current user's queue" do
-      session[:user_id] = Fabricate(:user)
-      delete :destroy, id: queue_item.id
+    it "does not delete queue_item if not in the current user's queue" do
+      user = Fabricate(:user)
+      delete :destroy, id: Fabricate(:queue_item, user: user).id
       expect(QueueItem.count).to eq 1
     end
 
     it "normalizes the remaining queue_item positions" do
-      session[:user_id] = user
-      queue_item_1 = Fabricate(:queue_item, user: user, position: 1)
-      queue_item_2 = Fabricate(:queue_item, user: user, position: 2)
+      queue_item_1 = Fabricate(:queue_item, user: current_user, position: 1)
+      queue_item_2 = Fabricate(:queue_item, user: current_user, position: 2)
       delete :destroy, id: queue_item_1.id
-      expect(QueueItem.first.position).to eq 1
+      expect(current_user.queue_items.first.position).to eq 1
     end
 
-    it "redirects to sign_in_path with unauthenticated users" do
-      delete :destroy, id: queue_item.id
-      expect(response).to redirect_to sign_in_path
+    it_behaves_like "require_sign_in" do
+      let(:action) { delete :destroy, id: Fabricate(:queue_item) }
     end
   end
 
   describe "PATCH update_queue" do
-    context "with unauthenticated users" do
-      it "redirects to the sign in path" do
-        patch :update_queue
-        expect(response).to redirect_to sign_in_path
-      end
+    it_behaves_like "require_sign_in" do
+      let(:action) { patch :update_queue }
     end
 
     context "with valid input" do
-      let(:user) { Fabricate(:user) }
       let(:video) { Fabricate(:video) }
-      let(:queue_item_1) { Fabricate(:queue_item, user: user, video: video, position: 1) }
-      let(:queue_item_2) { Fabricate(:queue_item, user: user, position: 2) }
-      let(:queue_item_3) { Fabricate(:queue_item, user: user, position: 3) }
-
-      before :each do
-        session[:user_id] = user
-      end
+      let(:queue_item_1) { Fabricate(:queue_item, user: current_user, video: video, position: 1) }
+      let(:queue_item_2) { Fabricate(:queue_item, user: current_user, position: 2) }
+      let(:queue_item_3) { Fabricate(:queue_item, user: current_user, position: 3) }
 
       it "redirects to my queue" do
         patch :update_queue, queue_items: [{ id: queue_item_1.id, position: "2" },
@@ -151,47 +125,39 @@ describe QueueItemsController do
       it "reorders the queue_items" do
         patch :update_queue, queue_items: [{ id: queue_item_1.id, position: "2" },
                                            { id: queue_item_2.id, position: "1" }]
-        expect(queue_item_1.reload.position).to eq 2
-        expect(queue_item_2.reload.position).to eq 1
+        expect(current_user.queue_items.map(&:id)).to eq [2, 1]
       end
 
-      it "normalies the position numbers" do
+      it "normalizes the position numbers" do
         patch :update_queue, queue_items: [{ id: queue_item_1.id, position: "1" },
                                            { id: queue_item_2.id, position: "4" },
                                            { id: queue_item_3.id, position: "3" }]
-        expect(queue_item_1.reload.position).to eq 1
-        expect(queue_item_2.reload.position).to eq 3
-        expect(queue_item_3.reload.position).to eq 2
+        expect(current_user.queue_items.map(&:id)).to eq [1, 3, 2]
       end
 
       it "does not update other user's queue items" do
         user_2 = Fabricate(:user)
         queue_item_4 = Fabricate(:queue_item, user: user_2, position: 1)
         patch :update_queue, queue_items: [{ id: queue_item_4.id, position: "3" }]
-        expect(queue_item_4.reload.position).to eq 1
+        expect(user_2.queue_items.count).to eq 1
       end
 
       it "sets the rating" do
         patch :update_queue, queue_items: [{ id: queue_item_1.id, position: 1, rating: 3 }]
-        expect(user.queue_items.first.rating).to eq 3 
+        expect(current_user.queue_items.first.rating).to eq 3 
       end
     end
 
     context "with invalid input" do
-      let(:user) { Fabricate(:user) }
-      let(:queue_item_1) { Fabricate(:queue_item, user: user, position: 1) }
-      let(:queue_item_2) { Fabricate(:queue_item, user: user, position: 2) }
-
-      before :each do
-        session[:user_id] = user
-      end
+      let(:queue_item_1) { Fabricate(:queue_item, user: current_user, position: 1) }
+      let(:queue_item_2) { Fabricate(:queue_item, user: current_user, position: 2) }
 
       it "redirects to my queue" do
         patch :update_queue, queue_items: [{ id: queue_item_1.id, position: "t" }]
         expect(response).to redirect_to my_queue_path
       end
 
-      it "sets warning message" do
+      it "sets the warning message" do
         patch :update_queue, queue_items: [{ id: queue_item_1.id, position: "1.2" }]
         expect(flash[:warning]).to_not be_blank
       end
@@ -199,17 +165,8 @@ describe QueueItemsController do
       it "does not change positions" do
         patch :update_queue, queue_items: [{ id: queue_item_1.id, position: "2" },
                                            { id: queue_item_2.id, position: "t" }]
-        expect(queue_item_1.reload.position).to eq 1
-        expect(queue_item_2.reload.position).to eq 2 
+        expect(current_user.queue_items.map(&:id)).to eq [1, 2]
       end  
     end
   end
 end
-
-
-
-
-
-
-
-
