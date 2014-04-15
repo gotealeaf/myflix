@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe UsersController do
+  after { ActionMailer::Base.deliveries.clear }
   describe "GET new" do
     it "sets @user" do
       get :new
@@ -22,6 +23,22 @@ describe UsersController do
       it "redirects to the sign in page" do
         expect(response).to redirect_to sign_in_path
       end
+
+      context "sends email" do
+        it "sends an email" do
+          expect(ActionMailer::Base.deliveries).not_to be_empty
+        end
+
+        it "emails to the correct user" do
+          email = ActionMailer::Base.deliveries.last
+          expect(email.to).to eq([User.last.email])
+        end
+
+        it "email contains proper content" do
+          email = ActionMailer::Base.deliveries.last
+          expect(email.body).to include("#{User.last.full_name}")
+        end
+      end
     end
 
     context "with invalid input" do
@@ -40,6 +57,10 @@ describe UsersController do
 
       it "sets @user" do
         expect(assigns(:user)).to be_instance_of(User)
+      end
+
+      it "does not send welcome email" do
+        expect(ActionMailer::Base.deliveries).to be_empty
       end
     end
   end
