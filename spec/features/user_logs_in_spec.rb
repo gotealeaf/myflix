@@ -3,10 +3,7 @@ require 'spec_helper'
 feature "user logs in" do
   scenario "with correct credentials" do
     alice = Fabricate(:user)
-    visit login_path
-    fill_in 'Email Address', with: alice.email
-    fill_in 'Password', with: alice.password
-    click_button 'Sign in'
+    sign_in_user(alice)
     expect(page).to have_content "Welcome, #{alice.full_name}!"
   end
 

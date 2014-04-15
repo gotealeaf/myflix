@@ -13,7 +13,8 @@
           = @video.description
         .actions
           %a.btn.btn-primary(href="") Watch Now
-          = link_to "+ My Queue", queue_items_path(video_id: @video.id), class: "btn btn-default", method: "post", action: "create" 
+          - unless current_user.queue_items.map(&:video).include? @video
+            = link_to "+ My Queue", queue_items_path(video_id: @video.id), class: "btn btn-default", method: "post", action: "create" 
 
 %section.reviews.container
   .row
