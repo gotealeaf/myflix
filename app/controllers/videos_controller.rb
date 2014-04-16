@@ -1,6 +1,5 @@
 class VideosController < ApplicationController
-  before_action :video_params, only: [:create, :edit, :show, :update]
-  before_action :require_video, only: [:edit, :update, :show]
+  before_action :video_params, only: [:create, :edit, :update]
     
   def index
     @videos = Video.all
@@ -21,11 +20,7 @@ class VideosController < ApplicationController
   end
   
   def show
+    @video = Video.find(params[:id])
   end
   
-  private
-  
-  def video_params
-    params.require(:video).permit(:title, :description)
-  end
 end
