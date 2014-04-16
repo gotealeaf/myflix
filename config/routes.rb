@@ -17,6 +17,8 @@ Myflix::Application.routes.draw do
   get '/reset_password', to: 'password_resets#new'
   patch '/password_resets/:token', to: 'password_resets#update', as: "password_resets"
 
+  resources :invitations, only: [:create, :new]
+
   resources :videos, only: [:show, :index] do
     collection do
       get :search, to: 'videos#search'
