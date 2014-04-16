@@ -13,6 +13,7 @@ class PasswordResetsController < ApplicationController
       flash[:danger] = "You must enter a valid email."
       redirect_to reset_password_path
     end
+
   end
 
   def update
