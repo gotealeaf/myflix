@@ -14,7 +14,7 @@ describe ReviewsController do
       context "data pass validation" do
         before(:each) do
           @review = Fabricate.build(:review)
-          post :create, id: video.id, rating: @review.rating, review_description: @review.review_description
+          post :create, id: @review.id, video_id: video.id, review: { rating: @review.rating, review_description: @review.review_description }
         end
         it "assigns rating to @review" do
           expect(assigns(:review).rating).to eq @review.rating
@@ -32,13 +32,13 @@ describe ReviewsController do
           expect(Review.count).to eq 1
         end
         it "redirect_to videos#show " do
-          expect(response).to redirect_to "videos#show"
+          expect(response).to redirect_to video
         end
       end
       
       context "data not pass validation" do
         before(:each) do
-          post :create, id: video.id, rating: nil, review_description: ""
+          post :create, video_id: video.id, review: { rating: nil, review_description: "" }
         end
         it "does not save review to db" do
           expect(Review.count).to eq 0
@@ -49,7 +49,7 @@ describe ReviewsController do
     context "not logged in" do
       before(:each) do
         @review = Fabricate.build(:review)
-        post :create, id: video.id, rating: @review.rating, review_description: @review.review_description
+        post :create, video_id: video.id, review: { rating: @review.rating, review_description: @review.review_description }
       end
 
       it "does not save rview to db" do

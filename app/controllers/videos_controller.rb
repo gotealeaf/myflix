@@ -8,6 +8,12 @@ class VideosController < ApplicationController
 
   def show
     @video = Video.find(params[:id])
+    # if @video.reviews.where(user: current_user).blank?
+    #   @review = Review.new
+    # elsif
+    #   @review = @video.reviews.where(user: current_user)
+    # end
+        @review = Review.new
   end
 
   def search

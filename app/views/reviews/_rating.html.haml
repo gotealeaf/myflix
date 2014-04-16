@@ -1,16 +1,4 @@
-=form_tag create_review_video_path(@video) do
-  %fieldset
-    .form-group
-      %label Rate this video
-      .row
-        .col-sm-3
-          = select_tag(:rating, options_for_select( [['5 stars', 5], ['4 stars', 4], ['4 stars', 4], ['2 stars', 2], ['1 stars', 1]], 0), include_blank: true )
-    .form-group
-      %label Write Review
-      .row
-        .col-sm-8
-          %textarea.form-control(name="review_description" rows="6")
-  %fieldset.form-group.actions.clearfix
-    %input(type="submit" value="Submit" class="btn")
-    %a(href="") Cancel
-
+=form_for [@video, @review] do |f|
+  = f.select(:rating, options_for_select( [['5 stars', 5], ['4 stars', 4], ['4 stars', 4], ['2 stars', 2], ['1 stars', 1]], @review.rating), include_blank: true )
+  = f.text_field(:review_description)
+  = f.submit "Submit", class: "btn"
