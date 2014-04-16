@@ -23,8 +23,8 @@ feature "user interacts with the queue" do
     set_video_position(video1, 3)
     set_video_position(video2, 2)
     set_video_position(video3, 1)
-
     update_queue
+    
     expect_video_position(video1, 3)
     expect_video_position(video2, 2)
     expect_video_position(video3, 1)
