@@ -12,6 +12,7 @@ gem "bcrypt-ruby"
 gem 'bootstrap_form'
 gem 'nokogiri', '1.3.3'
 gem 'capybara-email'
+gem 'sidekiq'
 
 group :development do
   gem 'sqlite3'

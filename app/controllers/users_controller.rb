@@ -23,7 +23,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to videos_path, notice: "Thank you for signing up"
     elsif @user.save
-      AppMailer.notify_on_registration(@user).deliver
+      EmailWorker.perform_async(@user.id)
       session[:user_id] = @user.id
       redirect_to videos_path, notice: "Thank you for signing up"
     else
