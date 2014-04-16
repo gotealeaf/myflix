@@ -6,10 +6,6 @@ describe Video do
   it { should validate_presence_of(:description) }
 
   describe "search_by_title" do
-    before do
-
-    end
-
     it "returns an empty array if string does not match any titles" do
       video1 = Fabricate(:video, title: "Futurama")
       video2 = Fabricate(:video, title: "Back to Future")
