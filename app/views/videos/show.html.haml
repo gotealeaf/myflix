@@ -12,7 +12,8 @@
           = @video.description
         .actions.clearfix
           %a.btn.btn-primary(href="") Watch Now
-          = link_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: "btn btn-default"
+          -unless current_user.queue_items.map(&:video_title).include?(@video.title)
+            = link_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: "btn btn-default"
 
 %section.reviews.container
   .row

@@ -1,10 +1,11 @@
 require 'spec_helper'
 
 feature 'my queue' do
-  let(:user) { fabricate(:user, password: 'password', password_confirmation: 'password') }
-  let(:video) { fabricate(:video) }
+  let(:user) { Fabricate(:user, password: 'password', password_confirmation: 'password') }
+  let(:video) { Fabricate(:video) }
 
   background do
+    video
     visit sign_in_path
     fill_in 'Email', with: user.email
     fill_in 'Password', with: 'password'
@@ -12,18 +13,14 @@ feature 'my queue' do
   end
 
   scenario "user adds video to queue" do
-    # TODO: Click on the video.
-
-    click_button '+ My Queue'
+    find(:xpath, ".//a[@href='/videos/#{video.id}']" ).click
     expect(page).to have_content video.title
-
-    # TODO: Click on video link.
-
-    expect(page).to_not have_content "+ My Queue"
+    expect(page).to have_content 'Watch Now'
+    click_link '+ My Queue'
+    expect(page).to have_content 'List Order'
+    expect(page).to have_content video.title
+    click_link video.title
+    expect(page).to have_content 'Watch Now'
+    expect(page).to_not have_content '+ My Queue'
   end
-
-  scenario "user reorders videos"
-    # TODO: Add more videos to my queue.
-    # TODO: Reorder videos
-
 end
