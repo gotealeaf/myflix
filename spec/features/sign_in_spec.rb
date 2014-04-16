@@ -3,10 +3,6 @@ require 'spec_helper'
 feature 'user signs in' do
   let(:user) { Fabricate(:user, password: 'password', password_confirmation: 'password') }
   
-  background do
-    user
-  end
-
   scenario "with valid email and password" do
     visit sign_in_path
     fill_in 'Email', with: user.email
