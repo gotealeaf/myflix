@@ -14,9 +14,12 @@ describe InvitationsController do
           post :create, invitee_details: friend
           expect(Invitation.count).to eq(1)
         end
-        it 'sends an email to the invitee' do
-
+        it 'generates a invite token for that invite' do
+          friend = Fabricate.attributes_for(:user)
+          post :create, invitee_details: friend
+          expect(Invitation.first.invite_token).to_not be_nil
         end
+        it 'sends an email to the invitee'
         it 'redirects to the same page'
         it 'shows a confirmation message'
       end
