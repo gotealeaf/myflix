@@ -1,6 +1,4 @@
 class Video < ActiveRecord::Base
-  # has_many :video_categories
-  # has_many :categories, -> { order(:name) }, through: :video_categories
   belongs_to :category
   has_many :reviews, -> { order("created_at DESC") }
   
@@ -9,7 +7,7 @@ class Video < ActiveRecord::Base
 
   def self.search_by_title title
   	return [] if title.blank?
-  	
+      	
   	where("title LIKE ?", "%#{title}%").order("created_at DESC")
   end
 

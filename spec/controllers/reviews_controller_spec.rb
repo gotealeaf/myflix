@@ -6,8 +6,7 @@ describe ReviewsController do
 
     context "authenticated users" do
 
-      let(:current_user) { Fabricate :user }
-      before  { session[:user_id] = current_user.id }
+      before  { set_current_user }
 
       context "valid input" do
         it "redirects to video show page" do
