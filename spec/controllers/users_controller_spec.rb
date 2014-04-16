@@ -19,9 +19,7 @@ describe UsersController do
         expect(User.count).to eq(1)
       end
 
-      it "redirects to login page" do
-        expect(response).to redirect_to login_path
-      end
+      it_behaves_like "requires login"
     end
 
     context "input is invalid" do
@@ -40,6 +38,29 @@ describe UsersController do
       it "renders :new template" do
         expect(response).to render_template :new
       end
+    end
+  end
+
+  describe "GET show" do
+    before do
+      alice = Fabricate(:user)
+      bob = Fabricate(:user)
+    end
+
+    it "sets @user" do
+      set_current_user(User.find(1))
+      get :show, id: User.find(2).id 
+      expect(assigns(:user)).to be_instance_of(User)
+    end
+
+    context "unauthenticated user" do
+      before { get :show, id: User.find(2).id }
+
+      it "does not set @user" do
+        expect(assigns(:user)).not_to be_instance_of(User)
+      end
+
+      it_behaves_like "requires login"
     end
   end
 end
