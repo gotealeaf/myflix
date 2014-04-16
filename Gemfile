@@ -13,6 +13,8 @@ gem 'bootstrap_form'
 gem 'nokogiri', '1.3.3'
 gem 'capybara-email'
 gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'slim'
 
 group :development do
   gem 'sqlite3'

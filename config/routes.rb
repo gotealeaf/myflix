@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Myflix::Application.routes.draw do
   get 'sign_in', to: 'sessions#new'
   post 'log_in', to: 'sessions#create'
@@ -6,6 +8,7 @@ Myflix::Application.routes.draw do
   get 'register_user_with_token/:token', to: 'users#register_with_token', as: 'register_user_with_token'
   get 'expired_token', to: 'reset_passwords#expired_token'
   root to: 'pages#index' 
+  mount Sidekiq::Web, at: '/sidekiq'
 
   resources :videos, only: [:index, :show] do
     collection do

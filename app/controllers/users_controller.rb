@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if params[:token].present?
       guest_user_signs_in_follows_inviter_and_inviter_follows_guest
-      AppMailer.notify_on_registration(@user).deliver
+      EmailWorker.perform_async(@user.id)
       session[:user_id] = @user.id
       redirect_to videos_path, notice: "Thank you for signing up"
     elsif @user.save
