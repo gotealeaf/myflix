@@ -21,6 +21,7 @@ gem 'mini_magick'
 gem 'fog'
 gem 'figaro'
 gem 'stripe'
+gem 'psych','~> 2.0.5'
 
 group :development do
   gem 'sqlite3'
@@ -43,6 +44,10 @@ group :test do
   gem 'capybara'
   gem 'launchy'
   gem 'capybara-email'
+  gem 'vcr'
+  gem 'webmock'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 
 group :production do
