@@ -57,7 +57,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.strategy = :deletion
   end
 
   config.before(:each, :js => true) do
@@ -71,5 +71,10 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
-  
+
+  config.before(:each) do
+    Sidekiq::Worker.clear_all
+  end
 end
+
+Capybara.server_port = 52662

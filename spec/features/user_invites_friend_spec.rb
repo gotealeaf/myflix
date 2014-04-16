@@ -10,7 +10,7 @@ feature 'User invites friend' do
     friend_signs_in
     
     friend_follows(alice)
-    inviter_follows_friend(alice)   
+    inviter_follows_friend(alice)  
 
     clear_email
   end
