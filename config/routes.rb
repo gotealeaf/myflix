@@ -1,4 +1,8 @@
 Myflix::Application.routes.draw do
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
+  
   root to: 'pages#front'
   
   get 'ui(/:action)', controller: 'ui'
@@ -17,6 +21,7 @@ Myflix::Application.routes.draw do
 
   resources :users, only: [:create, :show]
   get 'register', to: 'users#new'
+  get 'register/:token', to: "users#new_with_token", as: 'register_with_token'
   resources :relationships, only: [:create, :destroy]
   get 'people', to: 'relationships#index'
 
@@ -32,8 +37,10 @@ Myflix::Application.routes.draw do
   resources :forgot_passwords, only: [:create]
   get 'forgot_password_confirmation', to: 'forgot_passwords#confirm'
   get 'password_reset/:id', to: 'forgot_passwords#show', as: 'password_reset'
-  get 'expired_token', to: 'forgot_passwords#expired_token'
+  get 'expired_token', to: 'pages#expired_token'
   post 'reset_forgot_password', to: 'forgot_passwords#reset'
+
+  resources :invitations, only: [:new, :create]
 
 
 end
