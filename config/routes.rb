@@ -6,7 +6,7 @@ Myflix::Application.routes.draw do
   get '/login', to: 'sessions#new'
   post '/login_now', to: 'sessions#create'
   get '/', to: 'pages#root'
-  get '/register', to: 'users#new'
+  get '/register/(:invite_token)', to: 'users#new'
   post '/register', to: 'users#create'
   get '/logout', to: 'sessions#logout'
   get '/my_queue', to: 'queue_items#index'

@@ -40,6 +40,25 @@ describe UsersController do
       get :new
       expect(response).to redirect_to home_path
     end
+    context 'with valid invite token' do
+      it 'matches an invite by the invite token' do
+        invitation = Fabricate(:invitation)
+        get :new, invite_token: invitation.invite_token
+        expect(assigns(:user).email).to eq(invitation.email)
+      end
+    end
+    context 'with invalid invite token' do
+      it 'displays an error message to the user' do
+        Fabricate(:invitation)
+        get :new, invite_token: SecureRandom.urlsafe_base64
+        expect(flash[:danger]).to be_present
+      end
+      it 'redirects the user back to the register path' do
+        Fabricate(:invitation)
+        get :new, invite_token: SecureRandom.urlsafe_base64
+        expect(response).to redirect_to register_path
+      end
+    end
   end
 
   describe "POST #create" do
