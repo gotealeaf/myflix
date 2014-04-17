@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :reviews
+  has_many :reviews, -> { order("created_at DESC") }
   has_many :queue_items, -> { order(:position) }
 
   validates :full_name, presence: true, length: {minimum: 3}

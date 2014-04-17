@@ -44,7 +44,7 @@
                   Rating: #{review.rating}/ 5
                 %p
                   by  
-                  = link_to "#{review.creator.full_name}", user_path(review.creator)
+                  = link_to "#{review.creator.full_name}", review.creator
               .col-sm-8
                 %p 
                   = review.review_text
