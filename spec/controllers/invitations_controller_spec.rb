@@ -52,6 +52,9 @@ describe InvitationsController do
     end
 
     context "with invalid inputs" do
+      
+      after(:each) { ActionMailer::Base.deliveries.clear }      
+      
       it "renders a new template with error alerts" do
         set_current_user
         post :create, invitation: { guest_name: "Elena Smith", message: "Join this cool site." }

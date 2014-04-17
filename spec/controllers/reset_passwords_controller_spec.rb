@@ -61,5 +61,4 @@ describe ResetPasswordsController do
       end
     end
   end
-
 end
