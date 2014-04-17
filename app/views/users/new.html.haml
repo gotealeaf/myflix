@@ -6,6 +6,7 @@
         %header
           %h1 Register
         %fieldset
+          = hidden_field_tag 'invite_token', @invitation.invite_token
           = f.email_field :email
           = f.text_field :fullname, label: "Full Name"
           = f.password_field :password

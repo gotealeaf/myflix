@@ -1,6 +1,7 @@
 Hi <%= @invitee_details.fullname %>
 
-Your friend <%= @invitee_details.user.fullname %> has invited you to join Myflix. To accept the invitation go to ....
+Your friend <%= @invitee_details.user.fullname %> has invited you to join Myflix. To accept the invitation go to to this link <%= register_url(@invitee_details.invite_token) %>
+
 
 Thanks
 Matthew

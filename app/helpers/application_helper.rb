@@ -22,6 +22,6 @@ module ApplicationHelper
       false
     else
       true
-    end #true is
+    end
   end
 end
