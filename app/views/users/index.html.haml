@@ -12,7 +12,7 @@
       - current_user.followed_users.each do |followed|
         %tr
           %td
-            %img(src="http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest('knwang@gmail.com'.downcase)}?s=40")
+            %img(src="http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest('followed.email'.downcase)}?s=40")
             = link_to "#{followed.full_name}", user_path(followed)
           %td.extra-padding 
             = "#{followed.queue_items.count}"

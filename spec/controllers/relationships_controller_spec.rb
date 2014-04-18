@@ -10,14 +10,7 @@ describe RelationshipsController do
       post :create, relationship: {user_id: bob.id}, user_id: bob.id
       expect(response).to redirect_to users_path
     end
-    it "creates a followed user" do
-      alice = Fabricate(:user)
-      set_current_user(alice)
-      bob = Fabricate(:user)
-
-      post :create, relationship: {user_id: bob.id}, user_id: bob.id
-      expect(alice.following?(bob)).to be_true
-    end
+    
     it "creates a followed user for the current user" do
       alice = Fabricate(:user)
       set_current_user(alice)

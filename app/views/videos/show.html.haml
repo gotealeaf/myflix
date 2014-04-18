@@ -28,16 +28,17 @@
             = link_to "Cancel", @video
   %header
     %h3 
-      User Reviews #{"#{@video.reviews.count}"}
+      User Reviews 
+      = @video.reviews.count
   %ul
     - @reviews.each do |vid|
       %article.review
         %li.row
           .col-sm-2
             %span 
-              = "#{vid.rating}"
+              = vid.rating
             %p 
-              = link_to "#{vid.user.full_name}", user_path(vid.user)
+              = link_to vid.user.full_name, user_path(vid.user)
           .col-sm-8
             %p 
-              = "#{vid.content}"
+              = vid.content
