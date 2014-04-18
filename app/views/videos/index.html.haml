@@ -1,4 +1,4 @@
-- @categories.all.each do |cat|
+- @categories.load.each do |cat|
   %article.video_category
     %header
       %h3= link_to cat.name, "genre/#{cat.id}" 
