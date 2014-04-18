@@ -28,6 +28,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'fabrication'
   gem 'faker'
+  gem 'capybara'
+  gem 'launchy'
 end
 
 group :production do

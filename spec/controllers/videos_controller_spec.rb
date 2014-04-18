@@ -3,10 +3,8 @@ require 'spec_helper'
 describe VideosController do 
   describe "GET show" do
     context "with authenticated users" do
-      before do
-        session[:user_id] = Fabricate(:user).id
-      end
       let(:video) { Fabricate(:video) }
+      before { session[:user_id] = Fabricate(:user).id }
 
       it "sets the @video variable based on id" do
         get :show, id: video.id
@@ -60,11 +58,9 @@ describe VideosController do
 
   describe "GET search" do
     context "with authenticated users" do
-      before do
-        session[:user_id] = Fabricate(:user).id
-      end
       let(:futurama) { Fabricate(:video, title: "Futurama") }
       let(:videos) { Fabricate.times(4, :video) }
+      before { session[:user_id] = Fabricate(:user).id }
 
       # not necessary, already did this at the model level
       it "sets the @search_results variable if no results found" do

@@ -3,10 +3,7 @@ require 'spec_helper'
 describe ReviewsController do 
   describe "POST create" do
     context "user authenticated" do
-      before do
-        user = Fabricate(:user)
-        session[:user_id] = user.id
-      end
+      before { set_current_user }
 
       context "review valid" do
         before do
@@ -39,9 +36,7 @@ describe ReviewsController do
       end
 
       context "review not valid" do
-        before do
-          video = Fabricate(:video)
-        end
+        before { video = Fabricate(:video) }
 
         it "does not create a new review" do
           post :create, review: Fabricate.attributes_for(:review, review_text: ""), video_id: Video.first.id
@@ -62,7 +57,7 @@ describe ReviewsController do
         end
 
         it "sets @reviews" do
-          review = Fabricate(:review, video: Video.first)
+          review = Fabricate(:review, video_id: Video.first.id)
           post :create, review: Fabricate.attributes_for(:review, review_text: ""), video_id: Video.first.id
           expect(assigns(:reviews)).to eq([review])
         end
@@ -118,9 +113,7 @@ describe ReviewsController do
         expect(flash[:danger]).to eq("You must be logged in to do that.")
       end
 
-      it "redirects to login path" do
-        expect(response).to redirect_to login_path
-      end
+      it_behaves_like "requires login"
     end
   end
 end
