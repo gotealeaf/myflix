@@ -14,4 +14,19 @@ describe User do
     user = User.create(email: "smaug@lonelymountain.com", full_name: "Smaug the Magnificent", password: "gold", password_confirmation: "gold")
     expect(user).to validate_uniqueness_of :email
   end
+
+  describe "#queued_video?" do
+    it "returns true if the video is in the user's queue" do
+      odin = Fabricate(:user)
+      video = Fabricate(:video)
+      Fabricate(:queue_item, user: odin, video: video)
+      expect(odin.queued_video?(video)).to be_true
+    end
+
+    it "returns false if the video is not in the user's queue" do
+      odin = Fabricate(:user)
+      video = Fabricate(:video)
+      expect(odin.queued_video?(video)).to be_false
+    end
+  end
 end

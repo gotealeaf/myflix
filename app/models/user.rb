@@ -15,4 +15,8 @@ class User < ActiveRecord::Base
       queue_item.update(position: index + 1)
     end
   end
+
+  def queued_video?(video)
+    videos.include?(video)
+  end
 end

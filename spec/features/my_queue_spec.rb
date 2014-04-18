@@ -1,18 +1,13 @@
 require 'spec_helper'
 
 feature 'my queue' do
-  let(:user) { Fabricate(:user, password: 'password', password_confirmation: 'password') }
   let(:video) { Fabricate(:video) }
 
-  background do
-    video
-    visit sign_in_path
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: 'password'
-    click_button 'Sign in'
-  end
-
   scenario "user adds video to queue" do
+    video
+    
+    sign_in
+
     find(:xpath, ".//a[@href='/videos/#{video.id}']" ).click
 
     expect(page).to have_content video.title
@@ -31,26 +26,39 @@ feature 'my queue' do
   end
 
   scenario "user reorders videos in queue" do
+    video
     video_2 = Fabricate(:video)
     video_3 = Fabricate(:video)
+    user = sign_in
 
-    visit_and_add_to_queue(video)
-    visit_and_add_to_queue(video_2)
-    visit_and_add_to_queue(video_3)
+    visit_and_add_video_to_queue(video)
+    visit_and_add_video_to_queue(video_2)
+    visit_and_add_video_to_queue(video_3)
     
-    check_queue_placement(video, user, 1)
-    fill_in_queue_position(1, 2)
-
-    check_queue_placement(video_2, user, 2)
-    fill_in_queue_position(2, 3)
-
-    check_queue_placement(video_3, user, 3)
-    fill_in_queue_position(3, 1)
+    fill_in_video_position(video, 2)
+    fill_in_video_position(video_2, 3)
+    fill_in_video_position(video_3, 1)
 
     click_button 'Update Instant Queue'
 
-    check_queue_placement(video_3, user, 1)
-    check_queue_placement(video, user, 2)
-    check_queue_placement(video_2, user, 3)
+    expect_video_position(video, 2)
+    expect_video_position(video_2, 3)
+    expect_video_position(video_3, 1)
+  end
+
+  def visit_and_add_video_to_queue(video)
+    visit home_path
+    find(:xpath, ".//a[@href='/videos/#{video.id}']" ).click
+    click_link '+ My Queue'
+  end
+
+  def fill_in_video_position(video, position)
+    within(:xpath, "//tr[contains(.,'#{video.title}')]") do
+      fill_in 'queue_items__position', with: position
+    end
+  end
+
+  def expect_video_position(video, position)
+    expect(find(:xpath, "//tr[contains(.,'#{video.title}')]//input[@type='text']" ).value).to eq position.to_s
   end
 end
