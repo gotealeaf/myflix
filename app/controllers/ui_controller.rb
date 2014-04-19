@@ -1,5 +1,5 @@
 class UiController < ApplicationController
-  before_filter do
+  before_filter do # This filter checks if the Rails environment is production.
     redirect_to :root if Rails.env.production?
   end
 
