@@ -1,11 +1,9 @@
 class Admin::VideosController < AdminController
   def new
     @video = Video.new
-    @category = Category.new
   end
 
   def create
-    binding.pry
     @video = Video.new(video_params)
     if @video.save
       flash[:notice] = "You sucessfully added the video"
