@@ -27,3 +27,6 @@ group :development, :test do
   gem 'rspec-rails'
 end
 
+group :test do
+  gem 'shoulda-matchers'
+end
