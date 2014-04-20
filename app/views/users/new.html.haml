@@ -2,7 +2,7 @@
   %script(src="https://js.stripe.com/v2/")
   :javascript
     // This identifies your website in the createToken call below
-    Stripe.setPublishableKey("#{ ENV['STRIPE_PUBLISH_KEY'] }");
+    Stripe.setPublishableKey("#{ ENV['STRIPE_TEST_PUBLISH_KEY'] }");
   =javascript_include_tag 'payments'
 
 %section.register.container

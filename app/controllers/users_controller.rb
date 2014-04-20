@@ -19,10 +19,12 @@ class UsersController < ApplicationController
     @amount = 999     #set this as a before filter to a method for form & create
     @token = params[:token]
     @user = User.new(user_params)
-    sign_up_and_pay_or_show_errors
+    sign_up_and_pay_or_render_errors
   end
 
 
+
+  ############################### PRIVATE METHODS ##############################
   private
     def user_params
       params.require(:user).permit(:name, :email, :password, :token)
@@ -32,11 +34,11 @@ class UsersController < ApplicationController
       redirect_to expired_token_path unless Invitation.find_by(token: params[:token])
     end
 
-    def sign_up_and_pay_or_show_errors
+    def sign_up_and_pay_or_render_errors
       ActiveRecord::Base.transaction do
         begin
           @user.save!
-          Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+          Stripe.api_key = ENV['STRIPE_TEST_SECRET_KEY']
           @stripeToken = params[:stripeToken]
           @customer = Stripe::Customer.create( :email => params[:stripeEmail],
                                                :card  => @stripeToken)
@@ -50,7 +52,6 @@ class UsersController < ApplicationController
           flash[:notice] = "Welcome to myFlix!"
           signin_user(@user) and return
         rescue Stripe::CardError => e
-          flash.now[:error] = e.message
           raise ActiveRecord::Rollback
         #Without rescue, it raises error on browser. Would like to get rid of this.
         rescue ActiveRecord::RecordInvalid
@@ -69,7 +70,7 @@ class UsersController < ApplicationController
     end
 
     def set_monthly_fee
-      @amount ||= 999
+      @amount = 999
     end
 
     def users_by_invitation_are_cofollowers
