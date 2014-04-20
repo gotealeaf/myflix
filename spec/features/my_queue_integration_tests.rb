@@ -8,7 +8,7 @@ feature "User interacts with the queue" do
     the_sopranos = Fabricate :video, title: "The Sopranos", category: mafia
     purgatorio = Fabricate :video, title: "Purgatorio", category: mafia
 
-    sign_in 
+    sign_in
 
     add_video_to_queue the_wire
     expect_video_to_be_in_queue the_wire
