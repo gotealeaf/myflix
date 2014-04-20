@@ -94,5 +94,16 @@ position = 1
   position += 1
 end
 
+5.times do
+  Fabricate(:user)
+end
+
+leader_id = 2
+5.times do 
+  Fabricate(:relationship, leader_id: leader_id, follower_id: 1)
+  leader_id += 1
+end
+
+
 
 

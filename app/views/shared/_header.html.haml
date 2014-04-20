@@ -5,7 +5,7 @@
     %ul.col-md-4.clearfix
       %li= link_to "Videos"
       %li= link_to "My Queue", my_queue_path
-      %li= link_to "People"
+      %li= link_to "People", relationship_path(current_user)
     .form-group.col-md-5.navbar-form
       = form_tag(search_videos_path, method: "get") do
         = text_field_tag(:search, nil, placeholder: "Search for videos", class: "form-control")
