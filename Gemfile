@@ -16,7 +16,9 @@ gem 'unicorn'
 gem 'paratrooper'
 gem 'carrierwave'
 gem 'mini_magick'
-gem "fog"
+gem 'fog'
+gem 'figaro'
+gem 'stripe'
 
 
 group :development, :test do

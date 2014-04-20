@@ -1,7 +1,14 @@
+=content_for :head do
+  %script(src="https://js.stripe.com/v2/")
+  :javascript
+    // This identifies your website in the createToken call below
+    Stripe.setPublishableKey("#{ ENV['STRIPE_PUBLISH_KEY'] }");
+  =javascript_include_tag 'payments'
+
 %section.register.container
   .row
     .col-sm-10.col-sm-offset-1
-      = bootstrap_form_for @user, style: :horizontal, html: {class: "form-horizontal"}, left: "col-sm-2", right: "col-sm-6" do |f|
+      =bootstrap_form_for @user, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-6", html: {id: 'payment-form'} do |f|
         %header
           %h1 Register
         %fieldset
@@ -9,6 +16,26 @@
           =f.password_field :password
           =f.text_field     :name,      label: "Full Name"
           = hidden_field_tag :token, @token
+        %fieldset.credit_card
+          .form-group
+            %span.payment-errors
+          .form-group
+            %label.control-label.col-sm-2 Credit Card Number
+            .col-sm-6
+              /last input class is for reference in the JS function
+              %input.form-control.card-number(type="text")
+          .form-group
+            %label.control-label.col-sm-2 Security Code
+            .col-sm-6
+              %input.form-control.card-cvc(type="text")
+          .form-group
+            %label.control-label.col-sm-2 Expiration
+            .col-sm-3
+              = select_month(Date.today, {add_month_numbers: true}, name: nil, class: 'form-control card-expiry-month')
+            .col-sm-2
+              = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, name: nil, class: 'form-control card-expiry-year')
         %fieldset.actions.control-group.col-sm-offset-2
           .controls
-            =f.submit "Sign Up", class: "btn btn-default"
+            /the payment_submit class is so JS can disable/enable the button
+            =f.submit "Sign Up", class: "btn btn-default payment_submit"
+            /%script(src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="pk_test_KBkPLIxf1ELccUq0BZIhL5ms" data-name="MyFLiX" data-description="Subscription" data-amount="999" data-label="Join Now!")
