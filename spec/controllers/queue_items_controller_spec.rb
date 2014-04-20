@@ -3,9 +3,9 @@ require "spec_helper"
 describe QueueItemsController do
   context "authenticated user" do  
 
-    let(:video){ Fabricate :video }     
-    let(:video1){ Fabricate :video }
-    let(:video2){ Fabricate :video }
+    let(:the_wire){ Fabricate :video }     
+    let(:the_sopranos){ Fabricate :video }
+    let(:purgatorio){ Fabricate :video }
 
     before { set_current_user }
   
@@ -24,35 +24,35 @@ describe QueueItemsController do
     describe "POST create" do
     
       it "redirects to my_queue_path" do
-        post :create, video_id: video.id  
+        post :create, video_id: the_wire.id  
         expect(response).to redirect_to my_queue_path
       end
 
       it "creates a queue_item" do   
-        post :create, video_id: video.id  
+        post :create, video_id: the_wire.id  
         expect(QueueItem.count).to eq(1)
       end
 
       it "creates a queue_item associated with the current video" do
-        post :create, video_id: video.id  
-        expect(QueueItem.first.video).to eq(video)
+        post :create, video_id: the_wire.id  
+        expect(QueueItem.first.video).to eq(the_wire)
       end
 
       it "creates a queue_item associated with the current user" do
-        post :create, video_id: video.id  
+        post :create, video_id: the_wire.id  
         expect(QueueItem.first.user).to eq(current_user)
       end
 
       it "sets the video the last one in the user's queue" do
-        Fabricate(:queue_item, user: current_user, video: video, order: 2)
-        post :create, video_id: video1.id  
-        video1_queue_item = QueueItem.where(user: current_user, video: video1).first                  
+        Fabricate(:queue_item, user: current_user, video: the_wire, order: 2)
+        post :create, video_id: the_sopranos.id  
+        video1_queue_item = QueueItem.where(user: current_user, video: the_sopranos).first                  
         expect(video1_queue_item.order).to eq(2)          
       end
 
       it "does not add the video to the queue if the video is already in it" do
-        Fabricate(:queue_item, user: current_user, video: video, order: 2)
-        post :create, video_id: video.id  
+        Fabricate(:queue_item, user: current_user, video: the_wire, order: 2)
+        post :create, video_id: the_wire.id  
         expect(QueueItem.count).to eq(1)  
       end
     end
@@ -83,8 +83,8 @@ describe QueueItemsController do
       end
 
       it "does not delete the queue_item if the queue_item is not in the user's queue" do
-        user1 = Fabricate :user
-        queue_item = Fabricate(:queue_item, user: user1)
+        tom = Fabricate :user
+        queue_item = Fabricate(:queue_item, user: tom)
         delete :destroy, id: queue_item.id
 
         expect(QueueItem.count).to eq(1)
@@ -94,7 +94,7 @@ describe QueueItemsController do
     describe "POST update_queue" do
       context "with valid inputs" do
         it "redirects to my_queue page" do
-          qi1 = Fabricate :queue_item, user: current_user, video: video, order: 1
+          qi1 = Fabricate :queue_item, user: current_user, video: the_wire, order: 1
           queue_items = [{ id: qi1.id, order: 2 }]
 
           post :update_queue, queue_items: queue_items
@@ -103,9 +103,9 @@ describe QueueItemsController do
         end
 
         it "updates the order of many queue elements" do
-          qi1 = Fabricate :queue_item, user: current_user, video: video, order: 1
-          qi2 = Fabricate :queue_item, user: current_user, video: video1, order: 2
-          qi3 = Fabricate :queue_item, user: current_user, video: video2, order: 3
+          qi1 = Fabricate :queue_item, user: current_user, video: the_wire, order: 1
+          qi2 = Fabricate :queue_item, user: current_user, video: the_sopranos, order: 2
+          qi3 = Fabricate :queue_item, user: current_user, video: purgatorio, order: 3
 
           post :update_queue, queue_items: [{ id: qi1.id, order: 2, rating:1 }, { id: qi2.id, order: 1, rating:1 }, { id: qi3.id, order: 4, rating: 1 }]
 
@@ -113,9 +113,9 @@ describe QueueItemsController do
         end
 
         it "reorders the queue following the new order" do
-          qi1 = Fabricate :queue_item, user: current_user, video: video, order: 1
-          qi2 = Fabricate :queue_item, user: current_user, video: video1, order: 2
-          qi3 = Fabricate :queue_item, user: current_user, video: video2, order: 3
+          qi1 = Fabricate :queue_item, user: current_user, video: the_wire, order: 1
+          qi2 = Fabricate :queue_item, user: current_user, video: the_sopranos, order: 2
+          qi3 = Fabricate :queue_item, user: current_user, video: purgatorio, order: 3
 
           post :update_queue, queue_items: [{ id: qi1.id, order: 2 }, { id: qi2.id, order: 1 }, { id: qi3.id, order: 4 }]
 
@@ -123,9 +123,9 @@ describe QueueItemsController do
         end
 
         it "normalizes position numbers" do
-          qi1 = Fabricate :queue_item, user: current_user, video: video, order: 1
-          qi2 = Fabricate :queue_item, user: current_user, video: video1, order: 2
-          qi3 = Fabricate :queue_item, user: current_user, video: video2, order: 3
+          qi1 = Fabricate :queue_item, user: current_user, video: the_wire, order: 1
+          qi2 = Fabricate :queue_item, user: current_user, video: the_sopranos, order: 2
+          qi3 = Fabricate :queue_item, user: current_user, video: purgatorio, order: 3
 
           post :update_queue, queue_items: [{ id: qi1.id, order: 5 }, { id: qi2.id, order: 2 }, { id: qi3.id, order: 3 }]
 
@@ -134,7 +134,7 @@ describe QueueItemsController do
 
         context "the video has not a review created by the logged user" do
           it "creates a review that belongs to the current user setting the input rating" do
-            qi1 = Fabricate :queue_item, user: current_user, video: video, order: 1
+            qi1 = Fabricate :queue_item, user: current_user, video: the_wire, order: 1
             post :update_queue, queue_items: [{ id: qi1.id, order: 1, rating: 3 }]  
 
             expect(Review.count).to eq(1)  
@@ -143,8 +143,8 @@ describe QueueItemsController do
 
         context "the video has already a review created by the logged user" do
           it "does not create a review if current user already has one done" do
-            qi1 = Fabricate :queue_item, user: current_user, video: video, order: 1
-            review1 = Fabricate :review, video: video, creator: current_user, rating: 2
+            qi1 = Fabricate :queue_item, user: current_user, video: the_wire, order: 1
+            review1 = Fabricate :review, video: the_wire, creator: current_user, rating: 2
 
             post :update_queue, queue_items: [{ id: qi1.id, order: 1, rating: 3 }] 
 
@@ -152,10 +152,10 @@ describe QueueItemsController do
           end
 
           it "updates queue items rating" do
-            review1 = Fabricate :review, video: video, creator: current_user, rating: 2
-            review2 = Fabricate :review, video: video1, creator: current_user, rating: 3
-            qi1 = Fabricate :queue_item, user: current_user, video: video, order: 1
-            qi2 = Fabricate :queue_item, user: current_user, video: video1, order: 2       
+            review1 = Fabricate :review, video: the_wire, creator: current_user, rating: 2
+            review2 = Fabricate :review, video: the_sopranos, creator: current_user, rating: 3
+            qi1 = Fabricate :queue_item, user: current_user, video: the_wire, order: 1
+            qi2 = Fabricate :queue_item, user: current_user, video: the_sopranos, order: 2       
 
             post :update_queue, queue_items: [{ id: qi1.id, order: 1,rating: 3 }, { id: qi2.id, order: 2, rating: 4 }] 
             
@@ -166,22 +166,22 @@ describe QueueItemsController do
 
       context "with invalid inputs" do
         it "redirects to my_queue page" do
-          queue_item1 = Fabricate :queue_item, user: current_user, video: video, order: 1
+          queue_item1 = Fabricate :queue_item, user: current_user, video: the_wire, order: 1
           post :update_queue, queue_items: [{ id: queue_item1.id, order: 3.4 }]
 
           expect(response).to redirect_to my_queue_path
         end
 
         it "sets the flash error message" do
-          queue_item1 = Fabricate :queue_item, user: current_user, video: video, order: 1
+          queue_item1 = Fabricate :queue_item, user: current_user, video: the_wire, order: 1
           post :update_queue, queue_items: [{ id: queue_item1.id, order: 2.2 }]
 
           expect(flash[:error]).to be_present
         end
 
         it "does not update queue elements if the input are not integers" do
-          qi1 = Fabricate :queue_item, user: current_user, video: video, order: 1
-          qi2 = Fabricate :queue_item, user: current_user, video: video1, order: 2
+          qi1 = Fabricate :queue_item, user: current_user, video: the_wire, order: 1
+          qi2 = Fabricate :queue_item, user: current_user, video: the_sopranos, order: 2
 
           post :update_queue, queue_items: [{ id: qi1.id, order: 3 }, { id: qi2.id, order: 2.2 }]
 
@@ -189,8 +189,8 @@ describe QueueItemsController do
         end
 
         it "does not change the queue items rating" do
-          review1 = Fabricate :review, video: video, creator: current_user, rating: 2
-          qi1 = Fabricate :queue_item, user: current_user, video: video, order: 1
+          review1 = Fabricate :review, video: the_wire, creator: current_user, rating: 2
+          qi1 = Fabricate :queue_item, user: current_user, video: the_wire, order: 1
 
           post :update_queue, queue_items: [{ id: qi1.id, order: 1.1,rating: 3 }] 
           
@@ -200,9 +200,9 @@ describe QueueItemsController do
 
       context "with queue items that do not belong to the current user" do
         it "does not change the queue items position" do
-          user2 = Fabricate :user
-          qi1 = Fabricate :queue_item, user: user2, video: video, order: 1
-          qi2 = Fabricate :queue_item, user: user2, video: video1, order: 2
+          tom = Fabricate :user
+          qi1 = Fabricate :queue_item, user: tom, video: the_wire, order: 1
+          qi2 = Fabricate :queue_item, user: tom, video: the_sopranos, order: 2
 
           post :update_queue, queue_items: [{ id: qi1.id, order: 3 }, { id: qi2.id, order: 2 }]
           
@@ -210,9 +210,9 @@ describe QueueItemsController do
         end
 
         it "does not change the queue items rating" do
-          user1 = Fabricate :user
-          review1 = Fabricate :review, video: video, creator: user1, rating: 2
-          qi1 = Fabricate :queue_item, user: user1, video: video, order: 1
+          tom = Fabricate :user
+          review1 = Fabricate :review, video: the_wire, creator: tom, rating: 2
+          qi1 = Fabricate :queue_item, user: tom, video: the_wire, order: 1
 
           post :update_queue, queue_items: [{ id: qi1.id, order: 1,rating: 3 }] 
           
@@ -231,8 +231,8 @@ describe QueueItemsController do
 
     describe "POST create" do
       it_behaves_like "require_sign_in" do
-        video = Fabricate :video
-        let(:action) { post :create,  video_id: video.id }
+        the_wire = Fabricate :video
+        let(:action) { post :create,  video_id: the_wire.id }
       end
     end
 

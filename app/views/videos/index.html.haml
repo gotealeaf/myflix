@@ -1,9 +1,9 @@
-- @categories.load.each do |cat|
+- @categories.load.each do |category|
   %article.video_category
     %header
-      %h3= link_to cat.name, "genre/#{cat.id}" 
+      %h3= link_to category.name, "genre/#{category.id}" 
     .videos.row
-      - cat.recent_videos.each do |video|
+      - category.recent_videos.each do |video|
         .video.col-sm-2
           = link_to video do
             %img(src="#{video.small_cover}")
