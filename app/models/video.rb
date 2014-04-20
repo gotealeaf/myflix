@@ -9,4 +9,8 @@ class Video < ActiveRecord::Base
     where("title LIKE ?", "%#{title}%").order("created_at DESC") 
   end
   
+  def recent_videos
+    self.sort_by(&:created_at).reverse
+  end
+  
 end
