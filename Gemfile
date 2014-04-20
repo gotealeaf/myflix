@@ -22,6 +22,7 @@ gem 'fog'
 gem 'figaro'
 gem 'stripe'
 gem 'psych','~> 2.0.5'
+gem 'draper'
 
 group :development do
   gem 'sqlite3'
