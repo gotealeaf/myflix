@@ -9,6 +9,6 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize
-    redirect_to sign_in_path, alert: "Not authortized" unless current_user
+    redirect_to sign_in_path, alert: "Not authorized. Please sign in." unless current_user
   end
 end

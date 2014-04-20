@@ -1,7 +1,6 @@
 class AdminController < ApplicationController
-  before_filter :ensure_admin
-
+  helper_method :ensure_admin
   def ensure_admin
-    redirect_to videos_path unless current_user.admin
+    redirect_to videos_path, notice: "Access denied." unless current_user.admin
   end
 end

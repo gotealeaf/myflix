@@ -1,4 +1,6 @@
 class Admin::VideosController < AdminController
+  before_action :authorize, :ensure_admin
+
   def new
     @video = Video.new
   end
