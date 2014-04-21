@@ -1,17 +1,12 @@
 class FollowshipsController < ApplicationController
+
+  include FollowshipHelper
+
   before_action :require_user, :current_user
 
   def create
     follower_id = params[:follower_ids]
-    followee = User.find(follower_id)
-    if followee != current_user
-      if check_for_existing_followship?(followee)
-        finalise_followship(followee)
-        flash[:success] = "You are now successfully following #{followee.fullname}."
-      else
-        flash[:danger] = "You already are following #{followee.fullname}, you cannot follow them again."
-      end
-    end
+    create_followship(follower_id, current_user.id)
     redirect_to people_path
   end
 
@@ -31,15 +26,6 @@ class FollowshipsController < ApplicationController
 
   private
 
-  def check_for_existing_followship?(followee)
-    number = Followship.where(user: current_user, follower_id: followee.id)
-    if number == []
-      true
-    else
-      false
-    end
-  end
-
   def followship_exist?
     followships = Followship.where(user: current_user, follower_id: params[:id].to_i)
     if followships == []
@@ -47,15 +33,6 @@ class FollowshipsController < ApplicationController
     else
       true
     end
-  end
-
-  def finalise_followship(followee)
-    followship = setup_followship(followee)
-    followship.save
-  end
-
-  def setup_followship(followee)
-    Followship.new(follower_id: followee.id, user_id: current_user.id)
   end
 
   def destroy_followship

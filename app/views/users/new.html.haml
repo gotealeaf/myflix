@@ -10,3 +10,5 @@
           = f.text_field :fullname, label: "Full Name"
           = f.password_field :password
           = f.submit("Submit")
+          - if @invitation
+            = hidden_field_tag 'invite_token', @invitation.invite_token

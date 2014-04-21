@@ -40,6 +40,41 @@ describe UsersController do
       get :new
       expect(response).to redirect_to home_path
     end
+    context 'with an invite token' do
+      context 'with valid invite token' do
+        it 'matches an invite by the invite token' do
+          invitation = Fabricate(:invitation)
+          get :new, invite_token: invitation.invite_token
+          expect(assigns(:user).email).to eq(invitation.email)
+        end
+      end
+
+      context 'with token with status other than pending' do
+        it 'does not let the invitation be used if the status is not pending' do
+          invitation = Fabricate(:invitation, status: "accepted")
+          get :new, invite_token: invitation.invite_token
+          expect(assigns(:user).email).to eq(nil)
+        end
+        it 'displays a warning if the invite is not valid' do
+          invitation = Fabricate(:invitation, status: "accepted")
+          get :new, invite_token: invitation.invite_token
+          expect(flash[:danger]).to be_present
+        end
+      end
+
+      context 'with invalid invite token' do
+        it 'displays an error message to the user' do
+          Fabricate(:invitation)
+          get :new, invite_token: SecureRandom.urlsafe_base64
+          expect(flash[:danger]).to be_present
+        end
+        it 'redirects the user back to the register path' do
+          Fabricate(:invitation)
+          get :new, invite_token: SecureRandom.urlsafe_base64
+          expect(response).to redirect_to register_path
+        end
+      end
+    end
   end
 
   describe "POST #create" do
@@ -67,7 +102,6 @@ describe UsersController do
           message = ActionMailer::Base.deliveries.last
           expect(message.subject).to include("Thank you for signing up for MyFlix")
         end
-
       end
 
       it 'sets the session[user_id] if sucessfully saved' do
@@ -98,6 +132,19 @@ describe UsersController do
       it 'renders #new if the save was not successful' do
         expect(response).to render_template :new
       end
+    end
+  end
+  context 'the user has a valid reset token' do
+    it 'creates a followship between invitee and inviter' do
+      invitation = Fabricate(:invitation)
+      post :create, user: { email: invitation.email, fullname: invitation.fullname, password: "testing123" }, invite_token: invitation.invite_token
+      expect(User.first.followers.count).to eq(1)
+      expect(User.last.followers.count).to eq(1)
+    end
+    it 'updates the status the invitation to accepted' do
+      invitation = Fabricate(:invitation)
+      post :create, user: { email: invitation.email, fullname: invitation.fullname, password: "testing123" }, invite_token: invitation.invite_token
+      expect(Invitation.first.status).to eq("accepted")
     end
   end
 end

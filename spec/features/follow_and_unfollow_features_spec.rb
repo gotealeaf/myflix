@@ -13,8 +13,8 @@ feature "login and follow user and unfollow and test all aspects of feature" do
     video1 = Fabricate(:video, category: category)
     Fabricate(:video, category: category)
     Fabricate(:video, category: category)
-    review1 = Fabricate(:review, user: bob, video: video1)
-    review2 = Fabricate(:review, video: video1)
+    Fabricate(:review, user: bob, video: video1)
+    Fabricate(:review, video: video1)
 
     visit video_path(video1)
 

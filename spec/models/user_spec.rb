@@ -24,6 +24,15 @@ describe User do
     end
   end
 
+  describe 'generate random token for reset password' do
+    it 'generates a random token' do
+      user = Fabricate(:user)
+      user.reset_token = user.generate_token(user.reset_token)
+      user.save
+      expect(User.first).to be_present
+    end
+  end
+
   describe 'user can have many followers' do
     it 'allows user to have many friends' do
       user = Fabricate(:user)

@@ -1,0 +1,11 @@
+%section.sign_in.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = bootstrap_form_for(@invitee_details, url: invitations_path, method: :post) do |f|
+        %header
+          %h1 Invite User to Myflix
+        %fieldset
+          = f.email_field :email
+          = f.text_field :fullname
+          = f.text_area :message
+          = f.submit("Invite User")
