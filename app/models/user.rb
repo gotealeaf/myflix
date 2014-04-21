@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include Tokenable
+
   has_many :followships
   has_many :followers, :through => :followships
   has_many :sent_invitations, :class_name => 'Invitation', :foreign_key => 'user_id'
@@ -23,10 +25,6 @@ class User < ActiveRecord::Base
       queue_count = queue_count + 1
       queue_item.update_column(:position, queue_count)
     end
-  end
-
-  def generate_token(column)
-    column = SecureRandom.urlsafe_base64
   end
 
   def number_of_queue_items
