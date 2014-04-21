@@ -4,8 +4,8 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @user = User.where(email: params[:user][:email]).first
-    if @user && @user.authenticate(params[:user][:password])
+    setup_user
+    if authenticate_user
       flash[:success] = 'You are now logged in.'
       session[:user_id] = @user.id
       redirect_to home_path
@@ -18,5 +18,15 @@ class SessionsController < ApplicationController
   def logout
     session[:user_id] = nil
     redirect_to root_path
+  end
+
+  private
+
+  def authenticate_user
+    @user && @user.authenticate(params[:user][:password])
+  end
+
+  def setup_user
+    @user = User.where(email: params[:user][:email]).first
   end
 end
