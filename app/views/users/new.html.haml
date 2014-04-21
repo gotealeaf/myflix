@@ -12,15 +12,15 @@
             .col-sm-6
               = f.text_field :email, hide_label: true, class: "form-control"
           .form-group
-            %label.control-label.col-sm-2
+            .control-label.col-sm-2
               = f.label :password, "Password"
             .col-sm-6
               = f.password_field :password, hide_label: true, class: "form-control"
           .form-group
-            %label.control-label.col-sm-2
+            .control-label.col-sm-2
               = f.label :full_name, "Full Name"
             .col-sm-6
               = f.text_field :full_name, hide_label: true, class: "form-control"
-          %fieldset.actions.control-group.col-sm-offset-2
+          .actions.control-group
             .controls
               %input(type="submit" value="Register" class="btn btn-default")

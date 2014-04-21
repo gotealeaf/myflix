@@ -10,7 +10,6 @@ class QueueItem < ActiveRecord::Base
 
   def rating
     return review.rating if review
-    nil
   end
 
   # virtual attribute 

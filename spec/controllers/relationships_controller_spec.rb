@@ -1,37 +1,36 @@
 require 'spec_helper'
 
 describe RelationshipsController do 
-  describe "GET show" do
-    before do
-      alice = Fabricate(:user)
+  describe "GET index" do
+    context "user follows one person" do
+      it "sets @relationships to a current user's following relationship" do
+        alice = Fabricate(:user)
+        bob = Fabricate(:user)
+        relationship = Fabricate(:relationship, follower_id: alice.id, leader_id: bob.id)
+        set_current_user(alice)
+        get :index
+        expect(assigns(:relationships)).to eq([relationship])
+      end
     end
 
-    it "sets @user" do
-      set_current_user(User.find(1))
-      get :show, id: User.first
-      expect(assigns(:user)).to be_instance_of(User)
-      expect(assigns(:user)).to eq(User.first)
+    context "user follows multiple people" do
+      it "sets @relationships to array containing all of user's following relationships" do
+        alice = Fabricate(:user)
+        bob = Fabricate(:user)
+        charles = Fabricate(:user)
+        relationship = Fabricate(:relationship, follower_id: alice.id, leader_id: bob.id)
+        relationship2 = Fabricate(:relationship, follower_id: alice.id, leader_id: charles.id)
+        set_current_user(alice)
+        get :index
+        expect(assigns(:relationships)).to eq([relationship, relationship2])
+      end
     end
 
     context "unauthenticated user" do
-      before { get :show, id: User.first }
+      before { get :index }
 
-      it "does not set @user" do
-        expect(assigns(:user)).not_to be_instance_of(User)
-      end
-
-      it_behaves_like "requires login"
-    end
-
-    context "submitted id is not current user's id" do
-      before do
-        set_current_user(User.find(1))
-        bob = Fabricate(:user)
-        get :show, id: User.find(2).id
-      end
-
-      it "does not set @user" do
-        expect(assigns(:user)).not_to be_instance_of(User)
+      it "does not set @relationships" do
+        expect(assigns(:relationships)).to be_nil
       end
 
       it_behaves_like "requires login"
@@ -40,70 +39,89 @@ describe RelationshipsController do
 
   describe "POST create" do
     context "the current user has not followed the person" do
-      before do
+      it "causes the current user to gain the clicked-on user as a leader" do
         alice = Fabricate(:user)
         bob = Fabricate(:user)
-        set_current_user(User.first)
-        post :create, user_id: 2
-      end
-
-      it "causes the current user to gain clicked-on user as a leader" do
-        expect(User.first.leaders.first).to eq(User.find(2))
-        expect(User.first.leaders.count).to eq(1)
+        set_current_user(alice)
+        post :create, leader_id: 2
+        expect(alice.leaders.first).to eq(bob)
+        expect(alice.leaders.count).to eq(1)
       end
       
       it "causes the clicked-on user to gain the current user as a follower" do
-        expect(User.find(2).followers.first).to eq(User.first)
-        expect(User.find(2).followers.count).to eq(1)
+        alice = Fabricate(:user)
+        bob = Fabricate(:user)
+        set_current_user(alice)
+        post :create, leader_id: 2
+        expect(alice.follows?(bob)).to be_true
+        expect(bob.followers.count).to eq(1)
       end
 
       it "flashes a success message containing the followed user's name" do
-        expect(flash[:success]).to eq("You have followed #{User.find(2).full_name}")
+        alice = Fabricate(:user)
+        bob = Fabricate(:user)
+        set_current_user(alice)
+        post :create, leader_id: 2
+        expect(flash[:success]).to eq("You have followed #{bob.full_name}")
       end
 
       it "redirects to the current user's people page" do
-        expect(response).to redirect_to relationship_path(User.first)
+        alice = Fabricate(:user)
+        bob = Fabricate(:user)
+        set_current_user(alice)
+        post :create, leader_id: 2
+        expect(response).to redirect_to people_path
       end
     end
 
     context "the current user has already followed the person" do
-      before do
+      it "does not allow a user to follow the person again" do
         alice = Fabricate(:user)
         bob = Fabricate(:user)
-        set_current_user(User.first)
-        Fabricate(:relationship, user_id: 2, follower_id: 1)
-        post :create, user_id: 2
-      end
-
-      it "does not allow a user to follow the person again" do
-        expect(User.first.leaders.count).to eq(1)
+        set_current_user(alice)
+        Fabricate(:relationship, leader_id: bob.id, follower_id: alice.id)
+        post :create, leader_id: 2
+        expect(alice.leaders.count).to eq(1)
       end
 
       it "shows an error message" do
-        expect(assigns(:new_relationship).errors.empty?).to be_false
+        alice = Fabricate(:user)
+        bob = Fabricate(:user)
+        set_current_user(alice)
+        Fabricate(:relationship, leader_id: bob.id, follower_id: alice.id)
+        post :create, leader_id: 2
+        expect(assigns(:relationship).errors.empty?).to be_false
       end
 
       it "renders the person's profile page" do
+        alice = Fabricate(:user)
+        bob = Fabricate(:user)
+        set_current_user(alice)
+        Fabricate(:relationship, leader_id: bob.id, follower_id: alice.id)
+        post :create, leader_id: 2
         expect(response).to render_template 'users/show'
       end
     end
 
     context "the current user tries to follow themselves" do
-      before do
-        alice = Fabricate(:user)
-        set_current_user(User.first)
-        post :create, user_id: 1
-      end
-
       it "does not allow the user to follow themself" do
-        expect(User.first.leaders.count).to eq(0)
+        alice = Fabricate(:user)
+        set_current_user(alice)
+        post :create, leader_id: 1
+        expect(alice.leaders.count).to eq(0)
       end
 
       it "shows an error message" do
-        expect(assigns(:new_relationship).errors.empty?).to be_false
+        alice = Fabricate(:user)
+        set_current_user(alice)
+        post :create, leader_id: 1
+        expect(assigns(:relationship).errors.empty?).to be_false
       end
 
       it "renders the user's profile page" do
+        alice = Fabricate(:user)
+        set_current_user(alice)
+        post :create, leader_id: 1
         expect(response).to render_template 'users/show'
       end
     end
@@ -112,7 +130,7 @@ describe RelationshipsController do
       before do
         alice = Fabricate(:user)
         bob = Fabricate(:user)
-        post :create, user_id: 2
+        post :create, leader_id: 2
       end
 
       it "does not create a new relationship" do
@@ -125,48 +143,65 @@ describe RelationshipsController do
 
   describe "DELETE destroy" do
     context "the current user has followed the person" do
-      before do 
+      it "deletes the user from the leader's follower list" do
         alice = Fabricate(:user)
         bob = Fabricate(:user)
-        Fabricate(:relationship, user_id: 2, follower_id: 1)
+        alice.follow!(bob)
         set_current_user(alice)
-        post :destroy, leader_id: 2, id: 1
-      end
-
-      it "deletes the user from the leader's follower list" do
-        expect(User.find(2).followers.count).to eq(0)
+        post :destroy, id: 1
+        expect(bob.followers.count).to eq(0)
       end
 
       it "deletes the leader from the user's list" do
-        expect(User.first.leaders.count).to eq(0)
+        alice = Fabricate(:user)
+        bob = Fabricate(:user)
+        alice.follow!(bob)
+        set_current_user(alice)
+        post :destroy, id: 1
+        expect(alice.leaders.count).to eq(0)
       end
 
       it "renders the show template" do
-        expect(response).to redirect_to relationship_path
+        alice = Fabricate(:user)
+        bob = Fabricate(:user)
+        alice.follow!(bob)
+        set_current_user(alice)
+        post :destroy, id: 1
+        expect(response).to redirect_to people_path
       end
     end
 
     context "the current user has not followed the person" do
-      before do 
+      it "does not affect the leader's follower list" do
         alice = Fabricate(:user)
         bob = Fabricate(:user)
         charles = Fabricate(:user)
-        Fabricate(:relationship, user_id: 2, follower_id: 3)
-        Fabricate(:relationship, user_id: 3, follower_id: 1)
+        charles.follow!(bob)
         set_current_user(alice)
-        post :destroy, leader_id: 2, id: 1
-      end
-
-      it "does not affect the leader's follower list" do
-        expect(User.find(2).followers.count).to eq(1)
+        post :destroy, id: 1
+        expect(bob.followers.count).to eq(1)
       end
 
       it "does not affect the user's leader list" do
-        expect(User.first.leaders.count).to eq(1)
+        alice = Fabricate(:user)
+        bob = Fabricate(:user)
+        charles = Fabricate(:user)
+        charles.follow!(bob)
+        alice.follow!(charles)
+        set_current_user(alice)
+        post :destroy, id: 1
+        expect(alice.leaders.count).to eq(1)
       end
 
-      it "renders the show template" do
-        expect(response).to redirect_to relationship_path
+      it "renders the people index" do
+        alice = Fabricate(:user)
+        bob = Fabricate(:user)
+        charles = Fabricate(:user)
+        charles.follow!(bob)
+        alice.follow!(charles)
+        set_current_user(alice)
+        post :destroy, id: 1
+        expect(response).to redirect_to people_path
       end
     end
 
@@ -174,8 +209,8 @@ describe RelationshipsController do
       before do 
         alice = Fabricate(:user)
         bob = Fabricate(:user)
-        Fabricate(:relationship, user_id: 2, follower_id: 1)
-        post :destroy, leader_id: 2, id: 1
+        alice.follow!(bob)
+        post :destroy, id: 1
       end
 
       it "does not affect the leader's follower list" do

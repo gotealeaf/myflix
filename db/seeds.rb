@@ -5,7 +5,12 @@
 
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+require "Fabrication"
+require "Faker"
 
+# note to anyone looking over codebase - these first few sections
+# reflect work done before learning fabrication, getting deep into TDD
+# I haven't refactored them for reference.
 Video.create(title: "Futurama", description: "Philip J Fry blah blah", 
              small_cover_url: "/tmp/futurama.jpg",
              large_cover_url: "/tmp/futurama_large.jpg")
@@ -80,8 +85,6 @@ Video.create(title: "Bob's Burgers", description: "Yum burgers blah blah",
              large_cover_url: "/tmp/bobs_burgers_large.jpg",
              category_id: 1)
 
-require "Fabrication"
-require "Faker"
 
 Fabricate(:user, full_name: "Pete Sanchez", email: "pete@sanchez.com", password: "petepass")
 
