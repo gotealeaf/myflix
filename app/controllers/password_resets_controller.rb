@@ -1,12 +1,9 @@
 class PasswordResetsController < ApplicationController
   def create
     if params[:user][:email] != ""
-      @user = User.find_by_email(params[:user][:email])
+      set_user
       if @user
-        @user.reset_token = @user.generate_token(@user.reset_token)
-        if @user.save
-          UserMailer.password_reset_email(@user).deliver
-        end
+        reset_password
       end
       redirect_to reset_request_confirmation_path
     else
@@ -21,9 +18,7 @@ class PasswordResetsController < ApplicationController
       flash[:danger] = "Your password cannot be blank."
       render :edit
     else
-      @user = User.find_by_reset_token!(params[:token])
-      @user.update_attributes(password: params[:user][:password], reset_token: nil)
-      @user.save
+      save_new_password
       flash[:success] = "Your password has been updated."
       redirect_to login_path
     end
@@ -38,6 +33,23 @@ class PasswordResetsController < ApplicationController
   end
 
   private
+
+  def save_new_password
+    @user = User.find_by_reset_token!(params[:token])
+    @user.update_attributes(password: params[:user][:password], reset_token: nil)
+    @user.save
+  end
+
+  def reset_password
+    @user.reset_token = @user.generate_token(@user.reset_token)
+    if @user.save
+      UserMailer.password_reset_email(@user).deliver
+    end
+  end
+
+  def set_user
+    @user = User.find_by_email(params[:user][:email])
+  end
 
   def find_user_by_token
     User.find_by_reset_token!(params[:reset_token])

@@ -4,9 +4,9 @@ class InvitationsController < ApplicationController
 
   def create
     if search_for_user_email
-      invite = Invitation.new(email: params[:invitation][:email], fullname: params[:invitation][:fullname], user_id: session[:user_id], status: "pending", message: "this is a message to the user", invite_token: SecureRandom.urlsafe_base64)
+      invite = create_invitation
       if invite.save
-        InvitationMailer.invite_user_email(invite).deliver
+        send_invitation
         flash[:success] = "Your invitation has been successfully sent."
       else
         flash[:danger] = "The details you entered were invalid, please correct and resubmit them."
@@ -22,6 +22,14 @@ class InvitationsController < ApplicationController
   end
 
   private
+
+  def create_invitation
+    Invitation.new(email: params[:invitation][:email], fullname: params[:invitation][:fullname], user_id: session[:user_id], status: "pending", message: "this is a message to the user", invite_token: SecureRandom.urlsafe_base64)
+  end
+
+  def send_invitation
+    InvitationMailer.invite_user_email(invite).deliver
+  end
 
   def search_for_user_email
     invite_search = Invitation.find_by email: params[:invitation][:email]
