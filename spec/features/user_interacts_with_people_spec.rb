@@ -12,22 +12,23 @@ feature "user interacts with the people page" do
     visit_video_page(video)
     click_user_name(bob)
     expect_user_to_be_followable(bob)
+    
     follow_user(bob)
-    expect_user_to_be_added_to_people_page(bob)
+    expect_user_to_be_followed(bob)
+    
     click_user_name(bob)
     expect_user_not_to_be_followable(bob)
 
     visit people_path
     delete_leader(bob)
+    expect_user_not_to_be_followed(bob)
+    
+    visit_video_page(video)
+    click_user_name(bob)
+    expect_user_to_be_followable(bob)
     #save_and_open_page
     #find(:xpath, "//tr[contains(.,'#{bob.full_name}')]//td//a[data-method='delete']").click
-    
     #find("#delete_1").click
-    expect(page).not_to have_content("#{bob.full_name}")
-    visit home_path
-    find("a[href='/videos/#{video.id}']").click
-    click_link "#{bob.full_name}"
-    expect(page).to have_content("Follow")
   end
 end
 
@@ -44,13 +45,18 @@ def follow_user(user)
 end
 
 #user not relevant yet... waiting for xpath refactor from solution
-def delete_user(user)
+def delete_leader(user)
   find("a[data-method='delete']").click
 end
 
-def expect_user_to_be_added_to_people_page(user)
+def expect_user_to_be_followed(user)
   expect(page).to have_content("People I Follow")
   expect(page).to have_content("#{user.full_name}")
+end
+
+def expect_user_not_to_be_followed(user)
+  expect(page).to have_content("People I Follow")
+  expect(page).not_to have_content("#{user.full_name}")
 end
 
 def visit_video_page(video)
