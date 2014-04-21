@@ -8,10 +8,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params.require(:user).permit(:full_name, :email, :password))
       if @user.save
-        #session[:user_id] = @user.id
-        redirect_to login_path
+        session[:user_id] = @user.id
+        redirect_to videos_path
       else
-        #flash[:error] = "You could not be signed up."
+        flash[:error] = "You could not be signed up."
         render :new
       end
   end

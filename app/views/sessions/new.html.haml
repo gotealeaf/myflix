@@ -1,19 +1,15 @@
 %section.sign_in.container
   .row
     .col-sm-10.col-sm-offset-1
+    = bootstrap_form_tag url: sessions_path, html: { class: "sign_in" } do |f|
       %form.sign_in
         %header
           %h1 Sign in
         %fieldset
-          .form-group
-            %label Email Address
-            .row
-              .col-sm-4
-                %input.form-control(type="email")
-          .form-group
-            %label Password
-            .row
-              .col-sm-4
-                %input.form-control(type="password")
-        %fieldset.form-group.action
-          %input(type="submit" value="Sign in" class="btn btn-default")
+          = f.email_field :email, label: "Email Address"
+          = f.password_field :password
+        %fieldset
+          = f.submit "Sign in"
+        
+        
+         

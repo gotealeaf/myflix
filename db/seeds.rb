@@ -41,3 +41,4 @@ VideoCategory.create(category_id: 1, video_id: 11)
 VideoCategory.create(category_id: 1, video_id: 12)
 VideoCategory.create(category_id: 1, video_id: 13)
 
+jane = User.create(full_name: "Jane One", email: "jane@example.com", password: "password")

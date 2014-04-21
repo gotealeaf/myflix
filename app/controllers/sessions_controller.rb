@@ -2,24 +2,24 @@ class SessionsController < ApplicationController
   
   def new
     user = User.new
+    redirect_to home_path if current_user
   end
   
   def create
-    user = User.find(params[:id])
+    user = User.where(email: params[:email]).first
     
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      flash[:notice] = "You have successfully logged in."
-      redirect_to root_path
+      redirect_to home_path, notice: "You are signed in, enjoy your movies!"
     else
       flash[:error] = "There is something wrong with your email or password."
-      redirect_to root_path
+      redirect_to login_path
     end
   end
   
-  def delete
+  def destroy
     session[:user_id] = nil
-    flash[:notice] = "You have been signed out."
+    redirect_to root_path, notice: "You have been signed out."
   end
   
 end
