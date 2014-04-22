@@ -8,7 +8,16 @@ class Video < ActiveRecord::Base
 
   def self.search_by_title(search)
     return [] if search.blank?
-    where("title LIKE ?", "%#{search}%").order("created_at DESC")
+    #where("title LIKE ?", "%#{search}%").order("created_at DESC")
+    where('title ilike ?', "%#{search}%").order("created_at DESC")
+  end
+
+  def self.search(query)
+    conditions = <<-EOS
+      to_tsvector('english', title) @@ to_tsquery('english', ?)
+    EOS
+
+    find(:all, :conditions => [conditions, "#{search}" + ':*'])
   end
 
   def average_rating

@@ -43,7 +43,7 @@ describe RelationshipsController do
         alice = Fabricate(:user)
         bob = Fabricate(:user)
         set_current_user(alice)
-        post :create, leader_id: 2
+        post :create, leader_id: bob.id
         expect(alice.leaders.first).to eq(bob)
         expect(alice.leaders.count).to eq(1)
       end
@@ -52,7 +52,7 @@ describe RelationshipsController do
         alice = Fabricate(:user)
         bob = Fabricate(:user)
         set_current_user(alice)
-        post :create, leader_id: 2
+        post :create, leader_id: bob.id
         expect(alice.follows?(bob)).to be_true
         expect(bob.followers.count).to eq(1)
       end
@@ -61,7 +61,7 @@ describe RelationshipsController do
         alice = Fabricate(:user)
         bob = Fabricate(:user)
         set_current_user(alice)
-        post :create, leader_id: 2
+        post :create, leader_id: bob.id
         expect(flash[:success]).to eq("You have followed #{bob.full_name}")
       end
 
@@ -69,7 +69,7 @@ describe RelationshipsController do
         alice = Fabricate(:user)
         bob = Fabricate(:user)
         set_current_user(alice)
-        post :create, leader_id: 2
+        post :create, leader_id: bob.id
         expect(response).to redirect_to people_path
       end
     end
@@ -80,7 +80,7 @@ describe RelationshipsController do
         bob = Fabricate(:user)
         set_current_user(alice)
         Fabricate(:relationship, leader_id: bob.id, follower_id: alice.id)
-        post :create, leader_id: 2
+        post :create, leader_id: bob.id
         expect(alice.leaders.count).to eq(1)
       end
 
@@ -89,7 +89,7 @@ describe RelationshipsController do
         bob = Fabricate(:user)
         set_current_user(alice)
         Fabricate(:relationship, leader_id: bob.id, follower_id: alice.id)
-        post :create, leader_id: 2
+        post :create, leader_id: bob.id
         expect(assigns(:relationship).errors.empty?).to be_false
       end
 
