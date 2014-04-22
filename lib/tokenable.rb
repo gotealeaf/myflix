@@ -3,7 +3,7 @@ module Tokenable
 
   included do
     def generate_token(column)
-      column = SecureRandom.urlsafe_base64
+      self.assign_attributes(column => SecureRandom.urlsafe_base64)
     end
   end
 

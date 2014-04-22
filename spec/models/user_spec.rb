@@ -27,7 +27,7 @@ describe User do
   describe 'generate random token for reset password' do
     it 'generates a random token' do
       user = Fabricate(:user)
-      user.reset_token = user.generate_token(user.reset_token)
+      user.generate_token(:reset_token)
       user.save
       expect(User.first).to be_present
     end

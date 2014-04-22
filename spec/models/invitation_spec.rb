@@ -12,7 +12,7 @@ describe Invitation do
   describe 'random token' do
     it 'generates a random token' do
       invite = Fabricate(:invitation)
-      invite.generate_token(invite.invite_token)
+      invite.generate_token(:invite_token)
       expect(Invitation.first.invite_token).to be_present
     end
   end

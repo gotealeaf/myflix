@@ -41,7 +41,7 @@ class PasswordResetsController < ApplicationController
   end
 
   def reset_password
-    @user.reset_token = @user.generate_token(@user.reset_token)
+    @user.generate_token(:reset_token)
     if @user.save
       UserMailer.password_reset_email(@user).deliver
     end

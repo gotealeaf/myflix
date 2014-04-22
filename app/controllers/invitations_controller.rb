@@ -30,7 +30,7 @@ class InvitationsController < ApplicationController
   end
 
   def generate_invite_token(invitation)
-    invitation.invite_token = invitation.generate_token(invitation.invite_token)
+    invitation.generate_token(:invite_token)
   end
 
   def send_invitation(invite)
