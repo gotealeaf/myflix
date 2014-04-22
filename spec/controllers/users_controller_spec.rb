@@ -23,6 +23,8 @@ describe UsersController do
     end
 
     context "email sending" do
+      after { ActionMailer::Base.deliveries.clear }
+
       it "sends out the email" do
         post :create, user: Fabricate.attributes_for(:user)
         expect(ActionMailer::Base.deliveries).not_to be_empty
@@ -38,6 +40,11 @@ describe UsersController do
         post :create, user: Fabricate.attributes_for(:user)
         message = ActionMailer::Base.deliveries.last
         expect(message.body).to include("Welcome to MyFlix, #{User.first.full_name}!")
+      end
+
+      it "does not send an email with bad input" do
+        post :create, user: { email: 'baduser@example.com' }
+        expect(ActionMailer::Base.deliveries).to be_empty
       end
     end
 
