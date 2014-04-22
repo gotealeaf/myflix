@@ -38,6 +38,8 @@
             %li.row
               .span2
                 %span Rating: #{review.rating} / 5
-                %p by <a href=""> #{review.creator.full_name} </a>
+                %p 
+                  by 
+                  = link_to review.creator.full_name, user_path(review.creator)
               .span8
                 %p #{review.content}

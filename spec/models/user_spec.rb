@@ -5,6 +5,7 @@ describe User do
   it { should validate_presence_of(:password) }
   it { should validate_presence_of(:full_name) }
   it { should have_many(:queue_items).order(:order) }
+  it { should have_many(:reviews).order("created_at DESC") }
   
   it "should be validate uniq of email " do
     user = Fabricate :user
@@ -26,6 +27,18 @@ describe User do
       video = Fabricate :video
       
       user.queued_video?(video).should be_false
+    end
+  end
+
+  describe "#count_queued_videos" do
+    it "returns the number of wueued videos by the user" do
+      ana = Fabricate :user
+      the_wire = Fabricate :video
+      the_sopranos = Fabricate :video
+      queue_item1 = Fabricate :queue_item, user: ana, video: the_wire
+      queue_item2 = Fabricate :queue_item, user: ana, video: the_sopranos
+
+      ana.count_queued_videos.should eq(2)
     end
   end
 end

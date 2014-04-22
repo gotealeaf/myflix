@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :reviews
+  has_many :reviews, -> { order("created_at DESC") }
   has_many :queue_items, -> { order(:order) }
   
   validates_presence_of :email, :password, :full_name
@@ -16,4 +16,8 @@ class User < ActiveRecord::Base
   def queued_video? video
     queue_items.map(&:video).include? video
   end  
+
+  def count_queued_videos
+    queue_items.count
+  end
 end

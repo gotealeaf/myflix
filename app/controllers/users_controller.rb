@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  
+  before_filter :require_user, only: [:show]
+    
   def new
     @user = User.new
   end
@@ -13,6 +14,10 @@ class UsersController < ApplicationController
       flash[:error] = "User couldn't be created. #{@user.errors.full_messages.first}"
       render :new
     end
+  end
+
+  def show
+    @user = User.find(params[:id])
   end
 
   private
