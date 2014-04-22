@@ -18,8 +18,8 @@
             %b.caret
           %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
             %li
+              = link_to "Add Videos", new_admin_video_path if current_user.admin?
               = link_to "Invite a friend", new_invitation_path
-              %a(href="#") Account
-              %a(href="#") Plan and Billing
+              = link_to "Recent Payments", admin_payments_path if current_user.admin?
               = link_to "Sign Out", sign_out_path
   

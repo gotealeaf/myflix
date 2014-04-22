@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 ==Welcome to MyFlix!
 
@@ -75,4 +74,3 @@ This is a proof-of-concept app based on the Netflix site, built using TDD and BD
 * Account and billing management
 * Plan cancellation and lock out
 
->>>>>>> master
