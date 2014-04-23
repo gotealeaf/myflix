@@ -16,9 +16,9 @@
             - @user.queue_items.each do |queue_item|
               %tr
                 %td
-                  = link_to queue_item.video_title
+                  = link_to queue_item.video_title, queue_item.video
                 %td
-                  = link_to queue_item.video.category.name
+                  = link_to queue_item.video.category.name, queue_item.category
 
 %section.user_reviews.container
   .row
@@ -32,7 +32,7 @@
             %li.row
               .col-sm-2
                 %p
-                  = link_to review.video.title
+                  = link_to review.video.title, review.video
                 %col
                   = "Rating: #{review.rating}/5"
               .col-sm-8
