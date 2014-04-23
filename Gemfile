@@ -31,12 +31,6 @@ group :staging, :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem "letter_opener"
-  gem 'pry'
-  gem 'pry-nav'
-  gem 'thin'
-  gem "better_errors"
-  gem "binding_of_caller"
-  gem "letter_opener"
 end
 
 group :test, :staging do
