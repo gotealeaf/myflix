@@ -80,17 +80,18 @@ This is a proof-of-concept app based on the Netflix site, built using TDD and BD
 1. Clone project by running:
   $ clone git@github.com:rickcid/myflix.git
 
-2. Test environment setup procedures:
-* Ruby version 2.0
-* Run ``$ bundle install`` to install gem dependencies.
-* Run   ``$ rake db:migrate db:test:prepare`` and `$ rake db:seed` to set up development database.
+2. Install all of the dependencies (Ruby version 2.0)
+  $ bundle install
+  $ rake db:migrate db:test:prepare
+  $ rake db:seed
 
 3. Local Server Setup:
 * Install Heroku Toolbelt
 * Install Redis-server
 
 4. Running Server:
-* Run Redis-server with `$ src/redis-server` in seperate shell
-* Run `$ foreman start` in seperate shell
-* Run ``$ rails s`` in seperate shell
+(Run each command in seperate shell)
+  $ src/redis-server
+  $ foreman start
+  $ rails s
 
