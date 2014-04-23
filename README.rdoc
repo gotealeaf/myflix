@@ -82,8 +82,8 @@ This is a proof-of-concept app based on the Netflix site, built using TDD and BD
 
 2. Install all of the dependencies (Ruby version 2.0)
   $ bundle install
-  $ rake db:migrate db:test:prepare
   $ rake db:seed
+  $ rake db:migrate db:test:prepare
 
 3. Local Server Setup:
 * Install Heroku Toolbelt
