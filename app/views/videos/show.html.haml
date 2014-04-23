@@ -1,0 +1,45 @@
+%article.video
+  .container
+    .row
+      .video_large_cover.col-sm-7.col-sm-offset-1
+        %img(src="#{@video.large_cover_url}")
+      .video_info.col-sm-3
+        %header
+          %h3= @video.title
+          %span Rating: NA
+        %p= @video.description
+        .actions
+          - if !already_queue_item_for_video_and_user?(@video, current_user)
+            = link_to "+ My Queue", queue_items_path(qitem: {"video_id"=>@video.id, "user_id"=>session[:user_id]}), method: :post, class: "btn btn-default"
+
+%section.reviews.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = form_for [@video, Review.new] do |f|
+        %fieldset
+          .form-group
+            %label Rate this video
+            .row
+              .col-sm-3
+                = f.select :rating, options_for_video_reviews(Review.find_user_rating_for_video(@video, current_user))
+          .form-group
+            %label Write Review
+            .row
+              .col-sm-8
+                = f.text_area :content, rows: 6, class: "form-control"
+        %fieldset.form-group.actions.clearfix
+          %input(type="submit" value="Submit" class="btn")
+          = link_to "Cancel", @video
+      %header
+        %h3 User Reviews (#{@reviews.count})
+      %ul
+        - @reviews.each do |review|
+          %article.review
+            %li.row
+              .col-sm-2
+                %span Rating: #{review.rating}
+                %p
+                  by
+                  =link_to "#{review.user.fullname}", user_path("#{review.user.id}")
+              .col-sm-8
+                %p #{review.content}

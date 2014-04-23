@@ -1,0 +1,6 @@
+- if obj.errors.any?
+  .alert.alert-error
+    %h5 Please correct the following errors.
+    %ul
+      - obj.errors.full_messages.each do |msg|
+        %li= msg
