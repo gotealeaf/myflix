@@ -1,0 +1,24 @@
+%section.admin_payments
+  .container
+    .row
+      .col-sm-10.col-sm-offset-1
+        %section.payment_history
+          %ul.nav.nav-tabs
+            %li.active
+              %a(href="") Recent Payments
+            %li
+              = link_to "Add a New Video", new_admin_video_path
+          %table.table
+            %thead
+              %tr
+                %th Name
+                %th Email
+                %th Amount
+                %th Reference ID
+            %tbody
+              - @payments.each do |payment|
+                %tr
+                  %td= payment.user.full_name
+                  %td= payment.user.email
+                  %td= number_to_currency(payment.amount / 100.0)
+                  %td= payment.reference_id
