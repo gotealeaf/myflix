@@ -71,4 +71,8 @@ describe UsersController do
       expect(assigns(:user)).to eq user
     end
   end
+
+  describe "POST follow" do
+    it "redirects to the followed user's profile page"
+  end
 end
