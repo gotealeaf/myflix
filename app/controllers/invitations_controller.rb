@@ -34,7 +34,7 @@ class InvitationsController < ApplicationController
   end
 
   def send_invitation(invite)
-    InvitationMailer.invite_user_email(invite).deliver
+    InvitationMailer.delay.invite_user_email(invite)
   end
 
   def search_for_user_email

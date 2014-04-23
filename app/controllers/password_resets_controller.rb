@@ -43,7 +43,7 @@ class PasswordResetsController < ApplicationController
   def reset_password
     @user.generate_token(:reset_token)
     if @user.save
-      UserMailer.password_reset_email(@user).deliver
+      UserMailer.delay.password_reset_email(@user)
     end
   end
 

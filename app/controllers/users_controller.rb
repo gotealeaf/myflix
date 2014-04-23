@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   private
 
   def send_welcome_email
-    UserMailer.welcome_email(@user).deliver
+    UserMailer.delay.welcome_email(@user)
   end
 
   def user_has_invite_token
