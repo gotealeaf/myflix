@@ -16,6 +16,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+    require_user
+
+    @user = User.find(params[:id])
+  end
+
   private
 
   def user_params
