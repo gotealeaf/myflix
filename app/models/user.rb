@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: {minimum: 5}
 
   has_secure_password validations: false
+  before_create :generate_token
 
   def normalize_queue_item_positions
     queue_items.each_with_index do |queue_item, index|
@@ -30,5 +31,15 @@ class User < ActiveRecord::Base
 
   def follows?(another_user)
     following_relationships.map(&:leader).include?(another_user)
+  end
+
+  def change_token
+    update_attributes(token: SecureRandom.urlsafe_base64)
+  end
+
+  private
+
+  def generate_token
+    self.token = SecureRandom.urlsafe_base64
   end
 end
