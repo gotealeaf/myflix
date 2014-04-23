@@ -4,19 +4,19 @@ class PasswordResetsController < ApplicationController
     if @user
       render :show
     else
-      redirect_to invalid_token_path
+      redirect_to expired_token_path
     end
   end
 
-  def update
-    user = User.where(id: params[:user_id], token: params[:user_token]).first
+  def create
+    user = User.where(token: params[:user_token]).first
     if user
       user.update_attributes(password: params[:password])
       user.change_token
       flash[:success] = "You reset your password. Please log in."
       redirect_to login_path
     else
-      redirect_to invalid_token_path
+      redirect_to expired_token_path
     end
   end
 end
