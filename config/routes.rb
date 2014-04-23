@@ -5,7 +5,6 @@ Myflix::Application.routes.draw do
   get 'home', to: 'videos#index'
   get 'register', to: 'users#new'
   get 'sign_in', to: 'sessions#new'
-  # post 'sign_in', to: 'sessions#create'
   get 'sign_out', to: 'sessions#destroy'
   get 'my_queue', to: 'queue_items#index'
   patch 'update_queue', to: 'queue_items#update_queue'
@@ -17,9 +16,11 @@ Myflix::Application.routes.draw do
     resources :reviews, only: [:create]
   end
 
+  resources :users, only: [:create, :new, :show] do
+    post 'follow', to: 'users#follow'
+  end
+
   resources :queue_items, only: [:create, :destroy]
-  resources :users, only: [:create, :new, :show]
-  resources :videos, only: [:show]
   resources :categories, only: [:show]  
   resources :sessions, only: [:create]
 end
