@@ -7,6 +7,7 @@ Myflix::Application.routes.draw do
   get 'logout', to: 'sessions#destroy'
   get 'my_queue', to: 'queue_items#index'
   post 'update_queue', to: 'queue_items#update_queue'
+  get 'people', to: 'relationships#index'
 
   resources :videos, only: [:show] do
     collection do
@@ -15,7 +16,8 @@ Myflix::Application.routes.draw do
     resources :reviews, only: [:create]
   end
   resources :categories, only: [:show]
-  resources :users, only: [:create]
+  resources :users, only: [:create, :show]
   resources :sessions, only: [:create]
   resources :queue_items, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
 end

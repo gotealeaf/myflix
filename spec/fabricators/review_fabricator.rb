@@ -4,3 +4,7 @@ Fabricator(:review) do
   video_id { rand(1..10) }
   user_id { rand(1..10) }
 end
+
+Fabricator(:bad_review, from: :review) do
+  review_text { "" }
+end

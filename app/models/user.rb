@@ -1,10 +1,16 @@
 class User < ActiveRecord::Base
-  has_many :reviews
+  has_many :reviews, -> { order("created_at DESC") }
   has_many :queue_items, -> { order(:position) }
 
+  has_many :followers, through: :leading_relationships
+  has_many :leaders, through: :following_relationships
+
+  has_many :following_relationships, foreign_key: "follower_id", class_name: "Relationship"
+  has_many :leading_relationships, foreign_key: "leader_id", class_name: "Relationship"
+  
   validates :full_name, presence: true, length: {minimum: 3}
-  validates :email, presence: true, uniqueness: true, length: {minimum: 6}
-  validates :password, presence: true, on: :create, length: {minimum: 5}
+  validates :email, presence: true, uniqueness: true
+  validates :password, presence: true, length: {minimum: 5}
 
   has_secure_password validations: false
 
@@ -16,5 +22,13 @@ class User < ActiveRecord::Base
 
   def queued_video?(video)
     queue_items.map(&:video).include?(video)
+  end
+
+  def follow!(another_user)
+    Relationship.create(leader_id: another_user.id, follower_id: self.id)
+  end
+
+  def follows?(another_user)
+    following_relationships.map(&:leader).include?(another_user)
   end
 end

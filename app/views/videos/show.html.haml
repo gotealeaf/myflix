@@ -42,8 +42,9 @@
               .col-sm-2
                 %span 
                   Rating: #{review.rating}/ 5
-                %p 
-                  by <a href="">#{review.creator.full_name}</a>
+                %p
+                  by  
+                  = link_to "#{review.creator.full_name}", review.creator
               .col-sm-8
                 %p 
                   = review.review_text

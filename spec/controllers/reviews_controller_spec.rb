@@ -13,7 +13,6 @@ describe ReviewsController do
 
         it "creates a new review" do
           expect(assigns(:review)).to be_instance_of(Review)
-          expect(assigns(:review)).to be_valid
           expect(assigns(:review).save).to be_true
           expect(Review.count).to eq(1)
         end
@@ -39,31 +38,30 @@ describe ReviewsController do
         before { video = Fabricate(:video) }
 
         it "does not create a new review" do
-          post :create, review: Fabricate.attributes_for(:review, review_text: ""), video_id: Video.first.id
+          post :create, review: Fabricate.attributes_for(:bad_review), video_id: Video.first.id
           expect(assigns(:review)).to be_instance_of(Review)
-          expect(assigns(:review)).not_to be_valid
           expect(assigns(:review).save).not_to be_true
           expect(Review.count).to eq(0)
         end
 
         it "sets an error message" do
-          post :create, review: Fabricate.attributes_for(:review, review_text: ""), video_id: Video.first.id
+          post :create, review: Fabricate.attributes_for(:bad_review), video_id: Video.first.id
           expect(flash[:danger]).not_to be_blank
         end
 
         it "sets @video" do
-          post :create, review: Fabricate.attributes_for(:review, review_text: ""), video_id: Video.first.id
+          post :create, review: Fabricate.attributes_for(:bad_review), video_id: Video.first.id
           expect(assigns(:video)).to eq(Video.first)
         end
 
         it "sets @reviews" do
           review = Fabricate(:review, video_id: Video.first.id)
-          post :create, review: Fabricate.attributes_for(:review, review_text: ""), video_id: Video.first.id
+          post :create, review: Fabricate.attributes_for(:bad_review), video_id: Video.first.id
           expect(assigns(:reviews)).to eq([review])
         end
 
         it "renders the video show page" do
-          post :create, review: Fabricate.attributes_for(:review, review_text: ""), video_id: Video.first.id
+          post :create, review: Fabricate.attributes_for(:bad_review), video_id: Video.first.id
           expect(response).to render_template 'videos/show'
         end
       end
@@ -77,7 +75,6 @@ describe ReviewsController do
 
         it "does not create a new review" do
           expect(assigns(:review)).to be_instance_of(Review)
-          expect(assigns(:review)).not_to be_valid
           expect(assigns(:review).save).not_to be_true
           expect(Review.count).to eq(1)
         end
@@ -87,15 +84,15 @@ describe ReviewsController do
         end
 
         it "sets @video" do
-          post :create, review: Fabricate.attributes_for(:review, review_text: ""), video_id: Video.first.id
+          post :create, review: Fabricate.attributes_for(:bad_review), video_id: Video.first.id
           expect(assigns(:video)).to eq(Video.first)
         end
 
         it "sets @reviews" do
-          post :create, review: Fabricate.attributes_for(:review, review_text: ""), video_id: Video.first.id
+          post :create, review: Fabricate.attributes_for(:bad_review), video_id: Video.first.id
           expect(assigns(:reviews)).to eq([Review.first])
         end
-      end     
+      end
     end
 
     context "user not authenticated" do
