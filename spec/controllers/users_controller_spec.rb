@@ -61,11 +61,6 @@ describe UsersController do
       let(:action) { get :show, id: user.id }
     end
 
-    it "renders the user show path" do
-      get :show, id: user.id
-      expect(response).to render_template :show
-    end
-
     it "sets @user" do
       get :show, id: user.id
       expect(assigns(:user)).to eq user
