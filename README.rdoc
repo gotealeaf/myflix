@@ -82,8 +82,8 @@ This is a proof-of-concept app based on the Netflix site, built using TDD and BD
 
 2. Test environment setup procedures:
 * Ruby version 2.0
-* Run `$ bundle install` to install gem dependencies.
-* Run `$ rake db:migrate db:test:prepare` and `$ rake db:seed` to set up development database.
+* Run ``$ bundle install`` to install gem dependencies.
+* Run   ``$ rake db:migrate db:test:prepare`` and `$ rake db:seed` to set up development database.
 
 3. Local Server Setup:
 * Install Heroku Toolbelt
@@ -92,5 +92,5 @@ This is a proof-of-concept app based on the Netflix site, built using TDD and BD
 4. Running Server:
 * Run Redis-server with `$ src/redis-server` in seperate shell
 * Run `$ foreman start` in seperate shell
-* Run `$ rails s` in seperate shell
+* Run ``$ rails s`` in seperate shell
 
