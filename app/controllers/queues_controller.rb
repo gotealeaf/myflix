@@ -24,6 +24,18 @@ class QueuesController < ApplicationController
   end
 
   def update_instant
+
+    assign_ratings
+
+    arrange_and_save_position if validation_of_list_order
+
+    redirect_to my_queue_path
+
+  end
+
+  private
+
+  def assign_ratings
     queue_items_ids = params[:queue_items].map{ |key, value| key.to_i } 
     queue_items_ids.each do |id| 
       queue_item = QueueItem.find(id)
@@ -38,14 +50,7 @@ class QueuesController < ApplicationController
           queue_item.save_rating(rating) 
         end
     end
-
-    arrange_and_save_position if validation_of_list_order
-
-    redirect_to my_queue_path
-
   end
-
-  private
 
   def arrange_position_after_destroy
     queue_item_ids = QueueItem.where(user: current_user).map(&:id)

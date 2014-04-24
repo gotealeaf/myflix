@@ -15,7 +15,7 @@ class QueueItem < ActiveRecord::Base
   def save_rating(value)
     review = video.reviews.find_by(user: user)
     review.rating = value
-    review.save
+    review.save(validate: false)
   end
 
   def video_title
