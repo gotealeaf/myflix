@@ -2,8 +2,8 @@ require 'spec_helper'
 
 feature "User interacts with the queue" do
   scenario "user adds and reorders videos in the queue" do
-    mafia = Category.create(name: 'Mafia')
-    #mafia = Fabricate :category
+    #mafia = Category.create(name: 'Mafia')
+    mafia = Fabricate :category
     the_wire = Fabricate :video, title: "The Wire", category: mafia
     the_sopranos = Fabricate :video, title: "The Sopranos", category: mafia
     purgatorio = Fabricate :video, title: "Purgatorio", category: mafia

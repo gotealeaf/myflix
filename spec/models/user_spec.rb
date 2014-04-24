@@ -4,8 +4,11 @@ describe User do
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:password) }
   it { should validate_presence_of(:full_name) }
+
   it { should have_many(:queue_items).order(:order) }
   it { should have_many(:reviews).order("created_at DESC") }
+  it { should have_many :followers }
+  it { should have_many :followed_people }
   
   it "should be validate uniq of email " do
     user = Fabricate :user
