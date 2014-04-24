@@ -10,14 +10,15 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'bcrypt-ruby', '3.1.2'
 gem 'bootstrap_form'
+gem 'pg'
 
 group :development do
-  gem 'sqlite3'
   gem 'pry'
   gem 'pry-nav'
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
+  gem 'letter_opener'
 end
 
 group :test, :development do
@@ -30,10 +31,10 @@ group :test do
   gem 'faker'
   gem 'capybara'
   gem 'launchy'
+  gem 'database_cleaner'
 end
 
 group :production do
-  gem 'pg'
   gem 'rails_12factor'
 end
 

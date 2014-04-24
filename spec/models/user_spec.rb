@@ -11,10 +11,24 @@ describe User do
   it { should have_many(:following_relationships).with_foreign_key('follower_id') } 
   it { should have_many(:leading_relationships).with_foreign_key('leader_id') } 
 
+  it "generates a token when the user is created" do
+    alice = Fabricate(:user)
+    expect(alice.token).to be_present
+  end
+
+  describe "#change_token" do
+    it "generates a new token and saves it to the user" do
+      alice = Fabricate(:user)
+      prior_token = alice.token
+      alice.change_token
+      expect(alice.reload.token).not_to eq(prior_token)
+    end
+  end
+
   describe "#queued_video?" do
     before do
-      user = Fabricate(:user)
-      video = Fabricate(:video)
+      Fabricate(:user)
+      Fabricate(:video)
     end
 
     it "returns true if video is in user has queued the video" do

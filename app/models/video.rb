@@ -8,7 +8,7 @@ class Video < ActiveRecord::Base
 
   def self.search_by_title(search)
     return [] if search.blank?
-    where("title LIKE ?", "%#{search}%").order("created_at DESC")
+    where('title ilike ?', "%#{search}%").order("created_at DESC")
   end
 
   def average_rating
