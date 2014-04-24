@@ -3,9 +3,10 @@ ruby '2.0.0'
 
 gem 'bootstrap-sass'
 gem 'coffee-rails'
-gem 'rails'
+gem 'rails', '4.0.1'
 gem 'haml-rails'
-gem 'sass-rails'
+gem 'sass-rails', '~> 4.0.0'
+gem 'sprockets', '2.11.0'
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'bcrypt-ruby', '3.1.2'
@@ -32,9 +33,10 @@ group :test do
   gem 'capybara'
   gem 'launchy'
   gem 'database_cleaner'
+  gem 'capybara-email'
+  gem 'selenium-webdriver'
 end
 
 group :production do
   gem 'rails_12factor'
 end
-

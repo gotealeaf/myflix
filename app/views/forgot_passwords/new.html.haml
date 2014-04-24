@@ -13,5 +13,7 @@
               .col-sm-4
                 = text_field_tag :email, nil, class: "form-control"
           .form-group.action
-            %input(type="submit" value="Send Email" class="btn btn-default")
+            // Either of these works in Selenium, neither works in Capybara
+            /%input(type="submit" value="Send Email" class="btn btn-default" id="send_email")
+            = submit_tag "Send Email", class: "btn btn-default"
 
