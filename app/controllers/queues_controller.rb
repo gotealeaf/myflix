@@ -1,3 +1,7 @@
+# params data structure
+#{"queue_item.id" =>{position: "", rating: ""}}
+
+
 class QueuesController < ApplicationController
   before_action :require_user, only: [:create, :destroy, :update_instant]
   def create
@@ -15,6 +19,7 @@ class QueuesController < ApplicationController
   def destroy
    @queue_item =  QueueItem.find(params[:id])
    @queue_item.destroy if @queue_item.user == current_user
+   arrange_position_after_destroy
     redirect_to my_queue_path
   end
 
@@ -34,32 +39,51 @@ class QueuesController < ApplicationController
         end
     end
 
-    if validation_of_list_order
-      id_sequence_array  = arrange_position
-      id_sequence_array.each_with_index do |obj, index| 
-        queue_item = QueueItem.find(obj[:id])
-        queue_item.position = ( index + 1 )
-        queue_item.save
-      end
-    end
+    arrange_and_save_position if validation_of_list_order
+
     redirect_to my_queue_path
 
   end
 
   private
 
-  def arrange_position
-    queue_items_ids = params[:queue_items].map{|key, value| key.to_i } 
-    queue_items = queue_items_ids.map do |id|
+  def arrange_position_after_destroy
+    queue_item_ids = QueueItem.where(user: current_user).map(&:id)
+    queue_items_hash = queue_item_ids.map do |id|
+      { id: id, position: QueueItem.find(id).position }
+    end
+    assign_position_values(queue_item_ids, queue_items_hash)
+  end
+
+  def arrange_and_save_position
+    queue_item_ids = params[:queue_items].map{|key, value| key.to_i } 
+    queue_items_hash = queue_item_ids.map do |id|
       { id: id, position: params[:queue_items][id.to_s][:position] }
     end
-    queue_items.sort_by! {|obj| obj[:position].to_i }
+    assign_position_values(queue_item_ids, queue_items_hash)
+  end
+
+  def assign_position_values(queue_item_ids, queue_items_hash)
+    queue_items_hash.sort_by! {|obj| obj[:position].to_i }
+
+    #[ {id , position}, ... ] array sequence is order sort by position
+    queue_items_hash.each_with_index do |obj, index| 
+      queue_item = QueueItem.find(obj[:id])
+      queue_item.position = ( index + 1 )
+      queue_item.save
+    end
   end
 
   def validation_of_list_order
     queue_items_ids = params[:queue_items].map{|key, value| key.to_i } 
     queue_items_positions = queue_items_ids.each.map{ |id| params[:queue_items][id.to_s][:position].to_i }
     counter = 0
+    #same user check
+    queue_items_ids.each {|id| counter += 1 if QueueItem.find(id).user != current_user}
+
+    #all integer or not check
+    queue_items_positions.each {|position| counter += 1 if !position.is_a? Integer}
+    #position repetition check
     queue_items_positions.each do |position|
       same = 0
       queue_items_positions.each do |check|
@@ -67,6 +91,7 @@ class QueuesController < ApplicationController
       end
       counter += 1 if same > 1
     end
+    #return
     counter == 0 ? true : false
   end
 

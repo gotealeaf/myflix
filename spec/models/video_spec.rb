@@ -61,9 +61,9 @@ describe Video do
 
     #why this faile ???? QQ
 #     @test = Fabricate(:review_no_video, rating: 34, video: @video)
-    Fabricate(:review, video: @video, rating: 2)
+    Fabricate(:review, video: @video, rating: 2, user: Fabricate(:user))
 #     @video.reviews << Fabricate(:review, video: nil, rating: 2)
-    Fabricate(:review, video: @video, rating: 3)
+    Fabricate(:review, video: @video, rating: 3, user: Fabricate(:user))
 
     expect(@video.averge_rating).to eq(2.5) 
     end
