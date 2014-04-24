@@ -2,7 +2,7 @@
   .container
     .row
       .video_large_cover.col-sm-7.col-sm-offset-1
-        %img(src="#{@video.large_cover_url}")
+        = video_tag(@video.video_url, size: '665x375', controls: true, autobuffer: true, poster: @video.large_cover_url)
       .video_info.col-sm-3
         %header
           %h3= @video.title
