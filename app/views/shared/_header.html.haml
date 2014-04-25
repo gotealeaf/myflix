@@ -23,3 +23,4 @@
               = link_to "Profile", user_path(current_user.id)
               = link_to "Log Out", log_out_path
               = link_to "Invite Friends", new_invitation_path
+              = link_to "Add a Video", new_admin_video_path if current_user.admin

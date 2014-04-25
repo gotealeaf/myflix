@@ -41,18 +41,24 @@ describe Admin::VideosController do
 
   describe "POST create" do
     context "with valid input" do
+      it "redirects to the add new video page" do
+        set_current_admin
+        category = Fabricate(:category)
+        post :create, video: { title: "Futurama", category_id: category.id, description: "good show!"}
+        expect(response).to redirect_to(new_admin_video_path)
+      end
+
       it "makes a video" do
         set_current_admin
-
-        post :create, video: Fabricate.attributes_for(:video)
-        expect(Video.count).to eq(1)
+        category = Fabricate(:category)
+        post :create, video: { title: "Futurama", category_id: category.id, description: "good show!"}
+        expect(category.videos.count).to eq(1)
       end
-      it "redirects to the category index" do
+      it "sets the flash success message" do
         set_current_admin
-        post :create, video: Fabricate.attributes_for(:video)
-
-        video = Video.first
-        expect(response).to redirect_to(category_path(video.category.id))
+        category = Fabricate(:category)
+        post :create, video: { title: "Futurama", category_id: category.id, description: "good show!"}
+        expect(flash[:success]).to be_present
       end
     end
     context "with invalid input" do
@@ -72,7 +78,7 @@ describe Admin::VideosController do
       it "shows error messages" do
         set_current_admin
         post :create, video: {title: "invalid video"}
-        expect(flash[:notice]).to eq("Invalid inputs. Please try again.")
+        expect(flash[:error]).to be_present
       end
 
       it "sets @video" do

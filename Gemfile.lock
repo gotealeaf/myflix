@@ -48,6 +48,11 @@ GEM
     capybara-email (2.3.0)
       capybara (~> 2.2.0)
       mail
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     coderay (1.1.0)
@@ -229,6 +234,7 @@ DEPENDENCIES
   bootstrap_form
   capybara
   capybara-email
+  carrierwave
   coffee-rails
   fabrication
   faker

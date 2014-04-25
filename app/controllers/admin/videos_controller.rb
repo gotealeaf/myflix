@@ -8,10 +8,10 @@ class Admin::VideosController < AdminController
   def create
     @video = Video.new(video_params)
     if @video.save
-      flash[:notice] = "You sucessfully added the video"
-      redirect_to category_path(@video.category.id)
+      flash[:success] = "You sucessfully added the video, #{@video.title}."
+      redirect_to new_admin_video_path
     else
-      flash[:notice] = "Invalid inputs. Please try again."
+      flash[:error] = "Invalid inputs. Please try again."
       render :new
     end
   end

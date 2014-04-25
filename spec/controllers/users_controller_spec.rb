@@ -91,6 +91,7 @@ describe UsersController do
         it "sends to the right recipient" do
           post :create, user: Fabricate.attributes_for(:user)
           message = ActionMailer::Base.deliveries
+
           expect(message.last.to).to eq([User.last.email])
         end
         it "has the right content" do
