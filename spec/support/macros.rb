@@ -18,6 +18,11 @@ def sign_in_user(a_user=nil)
   click_button 'Sign in'
 end
 
+def sign_out_user(user)
+  visit home_path
+  click_link "Sign Out"
+end
+
 def create_queue_items
   video1 = Fabricate(:video)
   video2 = Fabricate(:video)

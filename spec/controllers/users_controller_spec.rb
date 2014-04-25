@@ -11,6 +11,7 @@ describe UsersController do
   describe "POST create" do
     context "input is valid" do
       before { post :create, user: Fabricate.attributes_for(:user) }
+      after { ActionMailer::Base.deliveries.clear }
 
       it "creates a new user" do
         expect(assigns(:user)).to be_instance_of(User)

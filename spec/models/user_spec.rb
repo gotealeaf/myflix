@@ -10,6 +10,7 @@ describe User do
   it { should have_many(:leaders).through(:following_relationships) }
   it { should have_many(:following_relationships).with_foreign_key('follower_id') } 
   it { should have_many(:leading_relationships).with_foreign_key('leader_id') } 
+  it { should have_many(:invitations).with_foreign_key('inviter_id') }
 
   it "generates a token when the user is created" do
     alice = Fabricate(:user)

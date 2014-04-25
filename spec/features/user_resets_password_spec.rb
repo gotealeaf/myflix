@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "User resets password" do
-  scenario "user forgets password and resets it via email" do 
+  scenario "user successfully resets the password via email" do 
     alice = Fabricate(:user, password: 'old_password')
     visit_forgot_password_page
     submit_email(alice.email)

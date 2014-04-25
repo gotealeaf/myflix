@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "user logs in" do
+feature "User logs in" do
   scenario "with correct credentials" do
     alice = Fabricate(:user)
     sign_in_user(alice)
