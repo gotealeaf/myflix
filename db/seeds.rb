@@ -6,6 +6,7 @@ reality_tv = Category.create(name: "Reality TV")
 
 
 Video.destroy_all
+=begin
 v1 = Video.create(title: "Futurama", description: "An awesome, nerdy spin off of the Simpsons ...", category_id: comedy.id, created_at: 1.day.ago)
 v2 = Video.create(title: "Futurama", description: "An awesome, nerdy spin off of the Simpsons ...", category_id: comedy.id, created_at: 2.day.ago)
 v3 = Video.create(title: "Futurama", description: "An awesome, nerdy spin off of the Simpsons ...", category_id: comedy.id, created_at: 3.day.ago)
@@ -22,7 +23,8 @@ v11 = Video.create(title: "Family Guy", description: "A cartoon that exhibits mu
 v12 = Video.create(title: "Family Guy", description: "A cartoon that exhibits much of its humor in the form of cutaway gags...", category_id: reality_tv.id, created_at: 2.day.ago)
 v13 = Video.create(title: "Family Guy", description: "A cartoon that exhibits much of its humor in the form of cutaway gags...", category_id: reality_tv.id, created_at: 3.day.ago)
 v14 = Video.create(title: "Family Guy", description: "A cartoon that exhibits much of its humor in the form of cutaway gags...", category_id: reality_tv.id, created_at: 4.day.ago)
-
+=end
+south_park = Video.create(title: "South Park", description: "A show with crude language and dark surreal humor...", small_cover: "/tmp/south_park.jpg", large_cover: "/tmp/monk_large.jpg", category_id: drama.id, created_at: 2.day.ago)
 
 User.destroy_all
 alice = User.create(full_name: "alice", password: "password", email: "alice@example.com", admin: true)
