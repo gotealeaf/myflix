@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 feature 'User invites friend' do
-  scenario 'User successfully invites friend and invitation is accepted', { js: true, vcr: true } do
+  @javascript
+  scenario 'User successfully invites friend and invitation is accepted', { vcr: true } do
     alice = Fabricate(:user)
     sign_in(alice)
 
@@ -40,9 +41,7 @@ feature 'User invites friend' do
   def friend_signs_in    
     fill_in "Email Address", with: "john@example.com"
     fill_in "Password", with: "password"
-    require 'pry'; binding.pry
     click_button "Sign in"
-    save_and_open_page
   end
 
   def friend_should_follow(user)
