@@ -164,7 +164,7 @@ describe QueueItemsController do
       end
 
       it "does not change the queue items" do
-        post :update_queue, queue_items: [{id: queue_item1.id, position: 3}, {id: queue_item2.id, position: 2.3}]
+        post :update_queue, queue_items: [{id: queue_item1.id, position: 3.5}, {id: queue_item2.id, position: 2}]
         expect(queue_item1.reload.position).to eq(1)
       end
     end    

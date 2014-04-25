@@ -44,6 +44,10 @@ group :test do
   gem 'capybara'
   gem 'launchy'
   gem 'capybara-email'
+  gem 'vcr'
+  gem 'webmock'
+  gem 'database_cleaner'
+  gem 'poltergeist'
 end
 
 group :production do

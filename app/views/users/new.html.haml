@@ -23,13 +23,13 @@ Stripe.setPublishableKey("#{ENV['STRIPE_PUBLIC_KEY']}");
           .alert.alert-danger(style="display: none")
             .payment-errors
         .form-group
-          %label.control-label.col-sm-2 Credit Card Number
+          %label.control-label.col-sm-2(for='ccnum') Credit Card Number
           .col-sm-6
-            %input.form-control(type="text" data-stripe='number')
+            %input.form-control#ccnum(type="text" data-stripe='number')
         .form-group
-          %label.control-label.col-sm-2 Security Code
+          %label.control-label.col-sm-2(for='security-code') Security Code
           .col-sm-6
-            %input.form-control(type="text" data-stripe='cvc')
+            %input.form-control#security-code(type="text" data-stripe='cvc')
         .form-group
           %label.control-label.col-sm-2 Expiration
           .col-sm-3
