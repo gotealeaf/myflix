@@ -8,27 +8,23 @@ describe VideosController do
 
   describe "videos#show" do
     it "assigns specific video to video by id when logon" do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       get :show, id: video.id
       expect(assigns(:video)).to eq video
     end
-    it "redirects to root when not logging in" do
-      session[:user_id] = nil
-      get :show, id: video.id
-      expect(response).to redirect_to root_path
+    it_behaves_like "require_sign_in" do
+      let(:action) { get :show, id: video.id }
     end
   end  
 
   describe "videos#search" do
     it "assigns specific videos to @videos by search_item" do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       get :search, search_item: video.title 
       expect(assigns(:videos)).to eq [video]
     end
-    it "redirects to root when not logging in" do
-      session[:user_id] = nil
-      get :search, search_item: video.title 
-      expect(response).to redirect_to root_path
+    it_behaves_like "require_sign_in" do
+      let(:action) {get :search, search_item: video.title}
     end 
   end
 

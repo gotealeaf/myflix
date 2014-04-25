@@ -8,7 +8,7 @@ describe ReviewsController do
   describe "reviews#create" do
     context "logged in" do
       before(:each) do
-        session[:user_id] = user.id
+        set_current_user
       end
 
       context "data pass validation" do
@@ -55,9 +55,9 @@ describe ReviewsController do
       it "does not save rview to db" do
         expect(Review.count).to eq 0
       end
-      it "redirects to root_path" do
-        expect(response).to redirect_to root_path
-      end
+
+      it_behaves_like "require_sign_in"
+
     end
   end
 

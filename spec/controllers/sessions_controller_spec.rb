@@ -6,7 +6,7 @@ describe SessionsController do
 
   describe "sessions#new" do
     it "renders :new if logging in" do
-      session[:user_id] = Fabricate(:user)
+      set_current_user
       get :new
       expect(response).to render_template :new
     end
@@ -39,11 +39,11 @@ describe SessionsController do
 
     describe "sessions#destroy" do
       before(:each) do
-        session[:user_id] = user.id
+        set_current_user
         delete :destroy
       end
       it "logs out" do
-        expect(session[:user_id]).to eq nil 
+        expect(session[:user_id]).to be_nil 
       end
       it "redirects to root_path" do
         expect(response).to redirect_to root_path

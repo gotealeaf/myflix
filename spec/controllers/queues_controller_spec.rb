@@ -9,7 +9,7 @@ describe QueuesController do
   describe "queues#create" do
     context "logged in" do
       before(:each) do
-        session[:user_id] = user.id
+        set_current_user
         post :create, user_id: user.id, video_id: video.id
       end
       it "sets user relationship" do
@@ -31,33 +31,23 @@ describe QueuesController do
       end
     end
 
-    it "redirects to login page if no logging in" do
-      session[:user_id] = nil
-      post :create, user_id: user.id, video_id: video.id
-      expect(response).to redirect_to root_path      
+    it_behaves_like "require_sign_in" do
+      let(:action)  { post :create, user_id: user.id, video_id: video.id }
     end
   end
 
   describe "queues#destroy" do
     context "logged in" do
       before do
-        session[:user_id] = user.id
+        set_current_user
       end
       it "deletes requested queue_item" do
-        queue_item = QueueItem.create(
-          video: video,
-          user: user,
-          position: queue_target
-        ) 
+        queue_item = Fabricate(:queue_item_same_user, user: user) 
         delete :destroy, id: queue_item
         expect(QueueItem.count).to eq 0
       end
       it "redirects to my_queue_path" do
-        queue_item = QueueItem.create(
-          video: video,
-          user: user,
-          position: queue_target
-        ) 
+        queue_item = Fabricate(:queue_item_same_user, user: user) 
         delete :destroy, id: queue_item
         expect(response).to redirect_to my_queue_path
       end
@@ -67,24 +57,15 @@ describe QueuesController do
         expect(QueueItem.all.map(&:position)).to eq [1,2,3]
       end
     end
-    it "redirects to root_path if no logging in" do
-      session[:user_id] = nil
-      queue_item = QueueItem.create(
-        video: video,
-        user: user,
-        position: queue_target
-      ) 
-      delete :destroy, id: queue_item
-      expect(response).to redirect_to root_path 
+    it_behaves_like "require_sign_in" do
+      let(:action) {
+        queue_item = Fabricate(:queue_item_same_user, user: user) 
+        delete :destroy, id: queue_item
+      }
     end
     it "do nothing if it is not current user's queue" do
-      user2 = Fabricate(:user)
-      session[:user_id] = user.id
-      queue_item = QueueItem.create(
-        video: video,
-        user: user2,
-        position: queue_target
-      ) 
+      queue_item = Fabricate(:queue_item_same_user, user: Fabricate(:user)) 
+      set_current_user
       expect{
         delete :destroy, id: queue_item
       }.to change(QueueItem, :count).by(0)
@@ -99,7 +80,7 @@ describe QueuesController do
         expect(response).to redirect_to root_path
       end
       it "do nothing if queue_item's user not equal current user" do
-        session[:user_id] = user.id
+        set_current_user
         user2 = Fabricate(:user)
         Fabricate(:queue_item_same_user, user: user2)
         Fabricate(:queue_item_same_user, user: user2)
@@ -118,7 +99,7 @@ describe QueuesController do
     end
     context "single queue" do
       before do
-        session[:user_id] = user.id
+        set_current_user
         @review = Fabricate(:review, user: user, video: video,rating: 4) 
         @queue_item = Fabricate(:queue_item, user: user, video: video )
         post :update_instant, queue_items: { @queue_item.id.to_s => { rating: "3", position: "1" }  }
@@ -131,7 +112,7 @@ describe QueuesController do
     context "mutiple queue" do
       before do
         Fabricate.times(3, :queue_item_same_user, user: user)
-        session[:user_id] = user.id
+        set_current_user
       end
       it "saves all list orders if all vlidation of list order pass" do
         post :update_instant, queue_items: { 
