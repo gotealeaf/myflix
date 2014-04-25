@@ -8,6 +8,7 @@ Myflix::Application.routes.draw do
   get 'sign_out', to: 'sessions#destroy'
   get 'my_queue', to: 'queue_items#index'
   patch 'update_queue', to: 'queue_items#update_queue'
+  get 'my_people', to: 'user_relationships#index'
 
   resources :videos, only: [:show] do
     collection do

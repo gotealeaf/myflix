@@ -9,6 +9,8 @@ describe User do
   it { should have_many(:reviews).order(created_at: :desc) }
   it { should have_many(:queue_items).order(position: :asc) }
   it { should have_many(:videos).through(:queue_items) }
+  it { should have_many(:user_relationships) }
+  it { should have_many(:followers).through(:user_relationships) }
 
   it "validates uniqueness of email" do
     user = User.create(email: "smaug@lonelymountain.com", full_name: "Smaug the Magnificent", password: "gold", password_confirmation: "gold")

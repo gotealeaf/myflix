@@ -7,8 +7,14 @@ class User < ActiveRecord::Base
   has_many :reviews,  -> { order(created_at: :desc) }
   has_many :queue_items, -> { order(position: :asc) }
   has_many :videos, through: :queue_items
-
+  has_many :user_relationships
+  has_many :followers, through: :user_relationships
+  
   has_secure_password
+
+  def follow_user(user)
+
+  end
 
   def normalize_queue_items_positions
     queue_items.each_with_index do |queue_item, index|
