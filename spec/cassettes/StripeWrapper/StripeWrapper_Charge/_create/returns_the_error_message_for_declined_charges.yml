@@ -1,0 +1,139 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/tokens
+    body:
+      encoding: US-ASCII
+      string: card[number]=4000000000000002&card[exp_month]=4&card[exp_year]=2017&card[cvc]=314
+    headers:
+      Accept:
+      - '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.11.0
+      Authorization:
+      - Bearer sk_test_fM1yxjQ31MAtXonVz0LqAEzR
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.11.0","lang":"ruby","lang_version":"2.0.0 p247 (2013-06-27)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        aleksey-tealeaf-rails-98249 3.13.4 #1 SMP Thu Mar 6 03:42:38 UTC 2014 x86_64
+        x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '81'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 25 Apr 2014 20:14:58 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '570'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "tok_103v5u22Cnd6mhFU6cvtWdVc",
+          "livemode": false,
+          "created": 1398456898,
+          "used": false,
+          "object": "token",
+          "type": "card",
+          "card": {
+            "id": "card_103v5u22Cnd6mhFUOSxKzyTz",
+            "object": "card",
+            "last4": "0002",
+            "type": "Visa",
+            "exp_month": 4,
+            "exp_year": 2017,
+            "fingerprint": "0dITVAnpVlNz9wPJ",
+            "customer": null,
+            "country": "US",
+            "name": null,
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null
+          }
+        }
+    http_version: 
+  recorded_at: Fri, 25 Apr 2014 20:14:58 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/charges
+    body:
+      encoding: US-ASCII
+      string: amount=999&currency=usd&card=tok_103v5u22Cnd6mhFU6cvtWdVc
+    headers:
+      Accept:
+      - '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.11.0
+      Authorization:
+      - Bearer sk_test_fM1yxjQ31MAtXonVz0LqAEzR
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.11.0","lang":"ruby","lang_version":"2.0.0 p247 (2013-06-27)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        aleksey-tealeaf-rails-98249 3.13.4 #1 SMP Thu Mar 6 03:42:38 UTC 2014 x86_64
+        x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '57'
+  response:
+    status:
+      code: 402
+      message: Payment Required
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 25 Apr 2014 20:14:58 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '162'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "error": {
+            "message": "Your card was declined.",
+            "type": "card_error",
+            "code": "card_declined",
+            "charge": "ch_103v5u22Cnd6mhFUIMp8f98i"
+          }
+        }
+    http_version: 
+  recorded_at: Fri, 25 Apr 2014 20:14:58 GMT
+recorded_with: VCR 2.9.0
