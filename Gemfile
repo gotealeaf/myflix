@@ -10,7 +10,7 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem "bcrypt-ruby"
 gem 'bootstrap_form'
-gem 'nokogiri', '1.3.3'
+gem 'nokogiri'
 gem 'capybara-email'
 gem 'sidekiq'
 gem 'sinatra', require: false
@@ -19,6 +19,7 @@ gem 'unicorn'
 gem 'paratrooper'
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'fog'
 
 group :development do
   gem 'sqlite3'
