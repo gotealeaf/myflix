@@ -3,20 +3,17 @@ require 'spec_helper'
 describe InvitationsController do
   describe "GET new" do
     context "user authenticated" do
-      it "sets the invitation instance variable" do
+      it "sets @invitation to a new invitation" do
         alice = Fabricate(:user)
         set_current_user(alice)
         get :new
+        expect(assigns(:invitation)).to be_new_record
         expect(assigns(:invitation)).to be_instance_of(Invitation)
       end
     end
 
     context "user not authenticated" do
-      before do 
-        alice = Fabricate(:user)
-        get :new
-      end
-
+      before { get :new }
       it_behaves_like "requires login"
     end
   end 
@@ -24,17 +21,18 @@ describe InvitationsController do
   describe "POST create" do
     context "user authenticated" do
       context "valid_input" do
-        after { ActionMailer::Base.deliveries.clear }
+        around { ActionMailer::Base.deliveries.clear }
 
         it "sets a success flash message" do
           alice = Fabricate(:user)
           set_current_user(alice)
           invitation = Fabricate.build(:invitation)
           post :create, invitation: invitation.attributes
-          expect(flash[:success]).to eq("Your invitation has been emailed to #{invitation.full_name}")
+          expect(flash[:success]).to eq("Your invitation has been emailed to 
+                                         #{invitation.recipient_name}")
         end 
 
-        it "redirects to the home page" do
+        it "redirects to the invitation page" do
           alice = Fabricate(:user)
           set_current_user(alice)
           invitation = Fabricate.build(:invitation)
@@ -58,16 +56,16 @@ describe InvitationsController do
           expect(ActionMailer::Base.deliveries).not_to be_empty
         end
 
-        it "sends the invitation email to the address input by the user" do
+        it "sends an email to the address input by the user" do
           alice = Fabricate(:user)
           set_current_user(alice)
           invitation = Fabricate.build(:invitation)
           post :create, invitation: invitation.attributes
           message = ActionMailer::Base.deliveries.last
-          expect(message.to).to eq([invitation.email])
+          expect(message.to).to eq([invitation.recipient_email])
         end
 
-        it "sends an invitation email that contains the user's message" do
+        it "sends an email that contains the user's message" do
           alice = Fabricate(:user)
           set_current_user(alice)
           invitation = Fabricate.build(:invitation)
@@ -76,7 +74,7 @@ describe InvitationsController do
           expect(message.body).to include(invitation.message)
         end
 
-        it "sends an invitation email that contains a link to the registration page" do 
+        it "sends an email that contains a link to the register page" do 
           alice = Fabricate(:user)
           set_current_user(alice)
           invitation = Fabricate.build(:invitation)
@@ -87,7 +85,7 @@ describe InvitationsController do
       end
 
       context "invalid input" do
-        after { ActionMailer::Base.deliveries.clear }
+        around { ActionMailer::Base.deliveries.clear }
         
         it "renders the new invitation page again" do
           alice = Fabricate(:user)
@@ -112,31 +110,23 @@ describe InvitationsController do
           post :create, invitation: bad_invitation.attributes
           expect(Invitation.count).to eq(0)
         end
+
+        # no flash error set due to using f.alert_message w/bootstrap_form_for
+
+        it "sets @invitation" do
+          alice = Fabricate(:user)
+          set_current_user(alice)
+          bad_invitation = Fabricate.build(:bad_invitation)
+          post :create, invitation: bad_invitation.attributes
+          expect(assigns(:invitation)).to eq(bad_invitation.merge!(inviter_id: 
+                                                                   alice.id))
+        end
       end
     end
 
     context "user not authenticated" do
       before { post :create }
       it_behaves_like "requires login"
-    end
-  end
-
-  describe "GET show" do
-    it "creates a new user with attributes from the invitation" do
-      alice = Fabricate(:user)
-      set_current_user(alice)
-      invitation = Fabricate(:invitation)
-      get :show, id: invitation.id
-      expect(assigns(:user).full_name).to eq(invitation.full_name)
-      expect(assigns(:user).email).to eq(invitation.email)
-    end
-
-    it "renders the registration page" do
-      alice = Fabricate(:user)
-      set_current_user(alice)
-      invitation = Fabricate(:invitation)
-      get :show, id: invitation.id
-      expect(response).to render_template 'users/new'
     end
   end
 end

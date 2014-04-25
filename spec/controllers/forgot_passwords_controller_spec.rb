@@ -15,7 +15,7 @@ describe ForgotPasswordsController do
     end
 
     context "email in system" do
-      after { ActionMailer::Base.deliveries.clear }
+      around { ActionMailer::Base.deliveries.clear }
 
       it "shows confirm password reset page" do
         alice = Fabricate(:user)

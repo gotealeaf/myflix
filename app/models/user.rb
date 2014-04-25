@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   end
 
   def follow!(another_user)
-    Relationship.create(leader_id: another_user.id, follower_id: self.id)
+    following_relationships.create(leader: another_user)
   end
 
   def follows?(another_user)

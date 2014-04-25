@@ -8,15 +8,15 @@
           %fieldset
             = f.alert_message "Please correct the following errors:"
             .form-group
-              = f.label :full_name, "Friend's Name"
+              = f.label :recipient_name, "Friend's Name"
               .row
                 .col-sm-4
-                  = f.text_field :full_name, hide_label: true, class: "form-control"
+                  = f.text_field :recipient_name, hide_label: true, class: "form-control"
             .form-group
-              = f.label :email, "Friend's Email Address"
+              = f.label :recipient_email, "Friend's Email Address"
               .row
                 .col-sm-4
-                  = f.text_field :email, hide_label: true, class: "form-control"
+                  = f.text_field :recipient_email, hide_label: true, class: "form-control"
             .form-group
               = f.label :message, "Invitation Message"
               .row

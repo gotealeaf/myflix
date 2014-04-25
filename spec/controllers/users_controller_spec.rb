@@ -8,23 +8,92 @@ describe UsersController do
     end
   end
 
-  describe "POST create" do
-    context "input is valid" do
-      before { post :create, user: Fabricate.attributes_for(:user) }
-      after { ActionMailer::Base.deliveries.clear }
-
-      it "creates a new user" do
-        expect(assigns(:user)).to be_instance_of(User)
-        expect(assigns(:user)).to be_valid
-        expect(assigns(:user).save).to be_true
-        expect(User.count).to eq(1)
+  describe "GET new_with_invitation_token" do
+    context "valid token" do
+      it "sets @user with attributes from the invitation" do
+        invitation = Fabricate(:invitation)
+        get :new_with_invitation_token, token: invitation.token
+        expect(assigns(:user).full_name).to eq(invitation.recipient_name)
+        expect(assigns(:user).email).to eq(invitation.recipient_email)
       end
 
-      it_behaves_like "requires login"
+      it "renders the registration page" do
+        invitation = Fabricate(:invitation)
+        get :new_with_invitation_token, token: invitation.token
+        expect(response).to render_template :new
+      end
+
+      it "sets @invitation_token to the invitation's token" do
+        invitation = Fabricate(:invitation)
+        get :new_with_invitation_token, token: invitation.token
+        expect(assigns(:invitation_token)).to eq(invitation.token)
+      end
+    end
+
+    context "invalid token" do 
+      it "redirects to expired token path" do 
+        invitation = Fabricate(:invitation)
+        get :new_with_invitation_token, token: "bad_token"
+        expect(response).to redirect_to expired_token_path
+      end
+    end
+  end
+
+  describe "POST create" do
+    context "input is valid" do
+      it "creates a new user" do
+        post :create, user: Fabricate.attributes_for(:user)
+        expect(assigns(:user)).to be_instance_of(User)
+        expect(assigns(:user).save).to be_true
+      end
+
+      it "makes the user follow the inviter, if invited" do
+        alice = Fabricate(:user)
+        bob = Fabricate.build(:user)
+        invitation = Fabricate(:invitation, recipient_email: bob.email,
+                  recipient_name: bob.full_name, inviter_id: alice.id)
+        (post :create, invitation_token: invitation.token, 
+         user: Fabricate.attributes_for(:user, 
+                                        email: invitation.recipient_email, 
+                                        full_name: invitation.recipient_name))
+        bob = User.find_by(email: bob.email)
+        expect(bob.follows?(alice)).to be_true
+      end 
+
+      it "makes the inviter follow the user, if invited" do 
+        alice = Fabricate(:user)
+        bob = Fabricate.build(:user)
+        invitation = Fabricate(:invitation, recipient_email: bob.email,
+                  recipient_name: bob.full_name, inviter_id: alice.id)
+        (post :create, invitation_token: invitation.token, 
+         user: Fabricate.attributes_for(:user, 
+                                        email: invitation.recipient_email, 
+                                        full_name: invitation.recipient_name))
+        bob = User.find_by(email: bob.email)
+        expect(alice.follows?(bob)).to be_true
+      end
+
+      it "expires the invitation upon acceptance" do
+        alice = Fabricate(:user)
+        bob = Fabricate.build(:user)
+        invitation = Fabricate(:invitation, recipient_email: bob.email,
+                  recipient_name: bob.full_name, inviter_id: alice.id)
+        (post :create, invitation_token: invitation.token, 
+         user: Fabricate.attributes_for(:user, 
+                                        email: invitation.recipient_email, 
+                                        full_name: invitation.recipient_name))
+        expect(invitation.reload.token).to be_nil
+
+      end
+
+      it "redirects to login page" do
+        post :create, user: Fabricate.attributes_for(:user)
+        expect(response).to redirect_to login_path
+      end
     end
 
     context "email sending" do
-      after { ActionMailer::Base.deliveries.clear }
+      around { ActionMailer::Base.deliveries.clear }
 
       it "sends out the email" do
         post :create, user: Fabricate.attributes_for(:user)

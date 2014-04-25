@@ -9,6 +9,7 @@ feature "User resets password" do
     visit_reset_password_page_via_link_in_email(current_email)
     submit_new_password('new_password')
     log_in_user_with_new_password(alice, 'new_password')
+    clear_emails
   end
 end
 

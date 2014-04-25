@@ -21,6 +21,8 @@
               = f.label :full_name, "Full Name"
             .col-sm-6
               = f.text_field :full_name, hide_label: true, class: "form-control"
+          - if @invitation_token
+            = hidden_field_tag(:invitation_token, @invitation_token)
           .actions.control-group
             .controls.col-sm-offset-3
               %input(type="submit" value="Register" class="btn btn-default")
