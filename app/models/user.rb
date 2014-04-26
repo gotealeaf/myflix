@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :queue_items, -> { order(position: :asc) }
   has_many :videos, through: :queue_items
   has_many :user_relationships
+  has_many :followers, through: :user_relationships
   has_many :following_relationships, class_name: :UserRelationship, foreign_key: :follower_id
   
   has_secure_password
