@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'people' do
+feature 'follow' do
   let(:sandy) { Fabricate(:user) }
   let(:video) { Fabricate(:video) }
   
