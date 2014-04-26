@@ -21,7 +21,7 @@ Myflix::Application.routes.draw do
     post 'follow', to: 'users#follow'
   end
 
-  resources :user_relationships, only: [:destroy]
+  resources :user_relationships, only: [:create, :destroy]
   resources :queue_items, only: [:create, :destroy]
   resources :categories, only: [:show]  
   resources :sessions, only: [:create]

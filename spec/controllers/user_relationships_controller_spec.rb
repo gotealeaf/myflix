@@ -21,6 +21,23 @@ describe UserRelationshipsController do
     end
   end
 
+  describe "POST create" do
+    it_behaves_like "require_sign_in" do
+      let(:action) { post :create }
+    end
+
+    it "redirects to the people page" do
+      post :create, user_id: Fabricate(:user)
+      expect(response).to redirect_to people_path
+    end
+
+    it "creates a user_relationship with the current user as the follower of the passed user" do
+      john = Fabricate(:user)
+      post :create, user_id: john.id
+      expect(UserRelationship.first.followee).to eq john
+    end
+  end
+
   describe "DELETE destroy" do
     it_behaves_like "require_sign_in" do
       let(:action) { delete :destroy, id: Fabricate(:user_relationship) }

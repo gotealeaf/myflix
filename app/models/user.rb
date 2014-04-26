@@ -10,11 +10,12 @@ class User < ActiveRecord::Base
   has_many :user_relationships
   has_many :followers, through: :user_relationships
   has_many :following_relationships, class_name: :UserRelationship, foreign_key: :follower_id
+  has_many :followees, through: :following_relationships
   
   has_secure_password
 
-  def follow_user(user)
-
+  def follows_user?(user)
+    followees.include?(user)
   end
 
   def normalize_queue_items_positions

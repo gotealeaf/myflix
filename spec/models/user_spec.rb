@@ -12,10 +12,20 @@ describe User do
   it { should have_many(:user_relationships) }
   it { should have_many(:followers).through(:user_relationships) }
   it { should have_many(:following_relationships).class_name(:UserRelationship).with_foreign_key(:follower_id) }
+  it { should have_many(:followees).through(:following_relationships) }
 
   it "validates uniqueness of email" do
     user = User.create(email: "smaug@lonelymountain.com", full_name: "Smaug the Magnificent", password: "gold", password_confirmation: "gold")
     expect(user).to validate_uniqueness_of :email
+  end
+
+  describe "#follows_user?" do
+    it "returns true if the user already follows the passed user" do
+      john = Fabricate(:user)
+      marcy = Fabricate(:user)
+      Fabricate(:user_relationship, followee: john, follower: marcy)
+      expect(marcy.follows_user?(john)).to be_true
+    end
   end
 
   describe "#queued_video?" do
