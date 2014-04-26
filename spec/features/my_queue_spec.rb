@@ -46,7 +46,7 @@ feature 'my queue' do
 
   def visit_and_add_video_to_queue(video)
     visit home_path
-    find(:xpath, ".//a[@href='/videos/#{video.id}']" ).click
+    click_video_link_on_home_page(video)
     click_link '+ My Queue'
   end
 

@@ -19,3 +19,7 @@ def sign_in(a_user=nil)
   click_button 'Sign in'
   user
 end
+
+def click_video_link_on_home_page(video)
+  find(:xpath, "//a[@href='/videos/#{video.id}']" ).click
+end

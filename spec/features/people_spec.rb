@@ -8,11 +8,10 @@ feature 'people' do
     Fabricate(:review, user: sandy, video: video )
 
     sign_in
-    find(:xpath, "//a[@href='/videos/#{video.id}']" ).click
+    click_video_link_on_home_page(video)
     expect(page).to have_content sandy.full_name
 
     click_link sandy.full_name
-    expect(page).to have_content "#{sandy.full_name}'s video queue"
     expect(page).to have_xpath("//input[@value='Follow']")
 
     click_button 'Follow'
@@ -28,14 +27,11 @@ feature 'people' do
     Fabricate(:user_relationship, followee: sandy, follower: user )
 
     click_link 'People'
-    expect(page).to have_content "People I Follow"
-    expect(page).to have_content sandy.full_name
-
-    click_remove_link(sandy.full_name)
+    click_unfollow_link(sandy.full_name)
     expect(page).to_not have_content sandy.full_name
   end
 
-  def click_remove_link(user_link_text)
+  def click_unfollow_link(user_link_text)
     find(:xpath, "//tr/td/div[a = '#{user_link_text}']/../..//a[@data-method='delete']").click
   end
 end
