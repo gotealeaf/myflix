@@ -135,11 +135,11 @@ QueueItem.create(user: bilbo, video: family_guy, position: 2)
 QueueItem.create(user: bilbo, video: monk, position: 3)
 QueueItem.create(user: bilbo, video: futurama, position: 4)
 
-UserRelationship.create(user: bilbo, follower: gandalf )
-UserRelationship.create(user: bilbo, follower: frodo )
+UserRelationship.create(followee: bilbo, follower: gandalf )
+UserRelationship.create(followee: bilbo, follower: frodo )
 
-UserRelationship.create(user: frodo, follower: bilbo )
-UserRelationship.create(user: frodo, follower: frodo )
+UserRelationship.create(followee: frodo, follower: bilbo )
+UserRelationship.create(followee: frodo, follower: frodo )
 
-UserRelationship.create(user: gandalf, follower: bilbo )
-UserRelationship.create(user: gandalf, follower: frodo )
+UserRelationship.create(followee: gandalf, follower: bilbo )
+UserRelationship.create(followee: gandalf, follower: frodo )
