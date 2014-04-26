@@ -4,15 +4,15 @@
       %article
         %header
           %img(src="http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(@user.email.downcase)}?s=40")
-          %h2 "#{current_user.full_name}'s video collections (#{current_user.count_queued_videos})"
-          %button.btn.btn-default Follow
+          %h2 "#{@user.full_name}'s video collections (#{@user.count_queued_videos})"
+          = link_to "Follow", relationships_path, follower_id: current_user.id, user_id: @user.id, method: :post, class: "button btn btn-default"
         %table.table
           %thead
             %tr
               %th(width="30%") Video Title
               %th(width="15%") Genre
           %tbody
-            - current_user.queue_items.each do |queue_item|
+            - @user.queue_items.each do |queue_item|
               %tr
                 %td
                   = link_to queue_item.video.title, video_path(queue_item.video)
@@ -23,9 +23,9 @@
   .row
     .col-sm-10.col-sm-offset-1
       %header
-        %h3 "#{current_user.full_name}'s Reviews (#{current_user.reviews.count})"
+        %h3 "#{@user.full_name}'s Reviews (#{@user.reviews.count})"
       %ul
-        - current_user.reviews.each do |review|
+        - @user.reviews.each do |review|
           %article.review
             %li.row
               .col-sm-2
