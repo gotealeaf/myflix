@@ -8,7 +8,7 @@ class UserRelationshipsController < ApplicationController
 
   def create
     followee = User.find(params[:user_id])
-    UserRelationship.create(followee: followee, follower: current_user)
+    UserRelationship.create(followee: followee, follower: current_user) if current_user.can_follow?(followee)
     redirect_to people_path
   end
 

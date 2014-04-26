@@ -36,6 +36,18 @@ describe UserRelationshipsController do
       post :create, user_id: john.id
       expect(UserRelationship.first.followee).to eq john
     end
+
+    it "does not create a user_relationship if the current user already follows the passed users" do
+      john = Fabricate(:user)
+      Fabricate(:user_relationship, followee: john, follower: current_user)
+      post :create, user_id: john.id
+      expect(UserRelationship.count).to eq 1
+    end
+
+    it "does not allow a user to follow herself" do
+      post :create, user_id: current_user.id
+      expect(UserRelationship.count).to eq 0
+    end
   end
 
   describe "DELETE destroy" do

@@ -19,15 +19,6 @@ describe User do
     expect(user).to validate_uniqueness_of :email
   end
 
-  describe "#follows_user?" do
-    it "returns true if the user already follows the passed user" do
-      john = Fabricate(:user)
-      marcy = Fabricate(:user)
-      Fabricate(:user_relationship, followee: john, follower: marcy)
-      expect(marcy.follows_user?(john)).to be_true
-    end
-  end
-
   describe "#queued_video?" do
     it "returns true if the video is in the user's queue" do
       odin = Fabricate(:user)
@@ -40,6 +31,41 @@ describe User do
       odin = Fabricate(:user)
       video = Fabricate(:video)
       expect(odin.queued_video?(video)).to be_false
+    end
+  end
+
+  describe "#follows?" do
+    it "returns true if the user already follows the passed user" do
+      john = Fabricate(:user)
+      marcy = Fabricate(:user)
+      Fabricate(:user_relationship, followee: john, follower: marcy)
+      expect(marcy.follows?(john)).to be_true
+    end
+    
+    it "returns false if the user does not follow the passed user" do
+      john = Fabricate(:user)
+      marcy = Fabricate(:user)
+      expect(marcy.follows?(john)).to be_false
+    end
+  end
+
+  describe "#can_follow?(user)" do
+    it "returns false if the user already follows the passed user" do
+      john = Fabricate(:user)
+      marcy = Fabricate(:user)
+      Fabricate(:user_relationship, followee: john, follower: marcy)
+      expect(marcy.can_follow?(john)).to be_false
+    end
+
+    it "returns true if the user does not follow the passed user" do
+      john = Fabricate(:user)
+      marcy = Fabricate(:user)
+      expect(marcy.can_follow?(john)).to be_true
+    end
+
+    it "returns false if the followee is the user" do
+      john = Fabricate(:user)
+      expect(john.can_follow?(john)).to be_false
     end
   end
 end

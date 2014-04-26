@@ -14,10 +14,6 @@ class User < ActiveRecord::Base
   
   has_secure_password
 
-  def follows_user?(user)
-    followees.include?(user)
-  end
-
   def normalize_queue_items_positions
     queue_items.each_with_index do |queue_item, index|
       queue_item.update(position: index + 1)
@@ -26,5 +22,13 @@ class User < ActiveRecord::Base
 
   def queued_video?(video)
     videos.include?(video)
+  end
+
+  def follows?(user)
+    followees.include?(user)
+  end
+
+  def can_follow?(user)
+    true unless self.follows?(user) || self == user
   end
 end
