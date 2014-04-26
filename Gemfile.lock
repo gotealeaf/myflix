@@ -25,8 +25,12 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
+    addressable (2.3.6)
     arel (4.0.1)
     atomic (1.1.14)
+    bcrypt (3.1.7)
+    bcrypt-ruby (3.1.5)
+      bcrypt (>= 3.1.3)
     better_errors (1.0.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -34,7 +38,25 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.0.2.1)
       sass (~> 3.2)
+    bootstrap_form (2.0.1)
     builder (3.1.4)
+    capybara (2.2.1)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (~> 2.0)
+    capybara-email (2.3.0)
+      capybara (~> 2.2.0)
+      mail
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
+    celluloid (0.15.2)
+      timers (~> 1.1.0)
+    cliver (0.3.2)
     coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -43,11 +65,43 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    connection_pool (2.0.0)
+    crack (0.4.2)
+      safe_yaml (~> 1.0.0)
     daemons (1.1.9)
+    database_cleaner (1.2.0)
     debug_inspector (0.0.2)
+    diff-lcs (1.2.5)
     erubis (2.7.0)
     eventmachine (1.0.0)
+    excon (0.33.0)
     execjs (2.0.2)
+    fabrication (2.11.0)
+    faker (1.3.0)
+      i18n (~> 0.5)
+    faraday (0.9.0)
+      multipart-post (>= 1.2, < 3)
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
+    fog (1.22.0)
+      fog-brightbox
+      fog-core (~> 1.21, >= 1.21.1)
+      fog-json
+      nokogiri (~> 1.5, >= 1.5.11)
+    fog-brightbox (0.0.2)
+      fog-core
+      fog-json
+    fog-core (1.22.0)
+      builder
+      excon (~> 0.33)
+      formatador (~> 0.2)
+      mime-types
+      net-scp (~> 1.1)
+      net-ssh (>= 2.1.3)
+    fog-json (1.0.0)
+      multi_json (~> 1.0)
+    formatador (0.2.4)
     haml (4.0.4)
       tilt
     haml-rails (0.4)
@@ -55,20 +109,52 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
+    hashie (2.1.1)
+    heroku-api (0.3.18)
+      excon (~> 0.27)
+      multi_json (~> 1.8)
     hike (1.2.3)
     i18n (0.6.5)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.1)
+    kgio (2.9.2)
+    launchy (2.4.2)
+      addressable (~> 2.3)
+    letter_opener (1.2.0)
+      launchy (~> 2.2)
+    letter_opener_web (1.2.0)
+      letter_opener (~> 1.0)
+      rails (>= 3.2)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     method_source (0.8.2)
     mime-types (1.25)
+    mini_magick (3.7.0)
+      subexec (~> 0.2.1)
+    mini_portile (0.5.3)
     minitest (4.7.5)
     multi_json (1.8.2)
+    multipart-post (2.0.0)
+    net-scp (1.2.0)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.8.0)
+    netrc (0.7.7)
+    nokogiri (1.6.1)
+      mini_portile (~> 0.5.0)
+    paratrooper (2.4.0)
+      excon
+      heroku-api (~> 0.3)
+      netrc (~> 0.7)
+      rendezvous (~> 0.0.1)
     pg (0.17.0)
+    poltergeist (1.5.0)
+      capybara (~> 2.1)
+      cliver (~> 0.3.1)
+      multi_json (~> 1.0)
+      websocket-driver (>= 0.2.0)
     polyglot (0.3.3)
     pry (0.9.12.3)
       coderay (~> 1.0)
@@ -77,6 +163,8 @@ GEM
     pry-nav (0.2.3)
       pry (~> 0.9.10)
     rack (1.5.2)
+    rack-protection (1.5.3)
+      rack
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.0.1)
@@ -97,12 +185,48 @@ GEM
       activesupport (= 4.0.1)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
+    raindrops (0.13.0)
     rake (10.1.0)
+    redis (3.0.7)
+    redis-namespace (1.4.1)
+      redis (~> 3.0.4)
+    rendezvous (0.0.2)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
+    rspec-core (2.14.8)
+    rspec-expectations (2.14.5)
+      diff-lcs (>= 1.1.3, < 2.0)
+    rspec-mocks (2.14.6)
+    rspec-rails (2.14.2)
+      actionpack (>= 3.0)
+      activemodel (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 2.14.0)
+      rspec-expectations (~> 2.14.0)
+      rspec-mocks (~> 2.14.0)
+    safe_yaml (1.0.3)
     sass (3.2.12)
     sass-rails (4.0.1)
       railties (>= 4.0.0, < 5.0)
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
+    sentry-raven (0.8.0)
+      faraday (>= 0.7.6)
+      hashie (>= 1.1.0)
+      uuidtools
+    shoulda-matchers (2.5.0)
+      activesupport (>= 3.0.0)
+    sidekiq (3.0.0)
+      celluloid (>= 0.15.2)
+      connection_pool (>= 2.0.0)
+      json
+      redis (>= 3.0.6)
+      redis-namespace (>= 1.3.1)
+    sinatra (1.4.5)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
     slop (3.4.7)
     sprockets (2.10.0)
       hike (~> 1.2)
@@ -114,6 +238,11 @@ GEM
       activesupport (>= 3.0)
       sprockets (~> 2.8)
     sqlite3 (1.3.8)
+    stripe (1.11.0)
+      json (~> 1.8.1)
+      mime-types (~> 1.25)
+      rest-client (~> 1.4)
+    subexec (0.2.3)
     thin (1.5.0)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -122,6 +251,7 @@ GEM
     thread_safe (0.1.3)
       atomic
     tilt (1.4.1)
+    timers (1.1.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -129,23 +259,61 @@ GEM
     uglifier (2.3.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    unicorn (4.8.2)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
+    uuidtools (2.1.4)
+    vcr (2.9.0)
+    webmock (1.17.4)
+      addressable (>= 2.2.7)
+      crack (>= 0.3.2)
+    websocket-driver (0.3.2)
+    xpath (2.0.0)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt-ruby
   better_errors
   binding_of_caller
   bootstrap-sass
+  bootstrap_form
+  capybara
+  capybara-email
+  carrierwave
   coffee-rails
+  database_cleaner
+  fabrication
+  faker
+  figaro
+  fog
   haml-rails
   jquery-rails
+  launchy
+  letter_opener
+  letter_opener_web
+  mini_magick
+  paratrooper
   pg
+  poltergeist
   pry
   pry-nav
   rails
   rails_12factor
+  redis
+  rspec-rails
   sass-rails
+  sentry-raven
+  shoulda-matchers
+  sidekiq
+  sinatra (>= 1.3.0)
   sqlite3
+  stripe
   thin
   uglifier
+  unicorn
+  vcr
+  webmock

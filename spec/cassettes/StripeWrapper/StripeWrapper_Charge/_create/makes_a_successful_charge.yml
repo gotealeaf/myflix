@@ -1,0 +1,174 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/tokens
+    body:
+      encoding: US-ASCII
+      string: card[number]=4242424242424242&card[exp_month]=4&card[exp_year]=2017&card[cvc]=314
+    headers:
+      Accept:
+      - '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.11.0
+      Authorization:
+      - Bearer sk_test_fM1yxjQ31MAtXonVz0LqAEzR
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.11.0","lang":"ruby","lang_version":"2.0.0 p247 (2013-06-27)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        aleksey-tealeaf-rails-98249 3.13.4 #1 SMP Thu Mar 6 03:42:38 UTC 2014 x86_64
+        x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '81'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 25 Apr 2014 19:27:54 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '570'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "tok_103v5922Cnd6mhFUuOXkCdbW",
+          "livemode": false,
+          "created": 1398454074,
+          "used": false,
+          "object": "token",
+          "type": "card",
+          "card": {
+            "id": "card_103v5922Cnd6mhFU6IgwFJRw",
+            "object": "card",
+            "last4": "4242",
+            "type": "Visa",
+            "exp_month": 4,
+            "exp_year": 2017,
+            "fingerprint": "CrXmdby9jKYifbYP",
+            "customer": null,
+            "country": "US",
+            "name": null,
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null
+          }
+        }
+    http_version: 
+  recorded_at: Fri, 25 Apr 2014 19:27:54 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/charges
+    body:
+      encoding: US-ASCII
+      string: amount=999&currency=usd&card=tok_103v5922Cnd6mhFUuOXkCdbW
+    headers:
+      Accept:
+      - '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.11.0
+      Authorization:
+      - Bearer sk_test_fM1yxjQ31MAtXonVz0LqAEzR
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.11.0","lang":"ruby","lang_version":"2.0.0 p247 (2013-06-27)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        aleksey-tealeaf-rails-98249 3.13.4 #1 SMP Thu Mar 6 03:42:38 UTC 2014 x86_64
+        x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '57'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 25 Apr 2014 19:27:55 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '1000'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "ch_103v5922Cnd6mhFUPDZEraMc",
+          "object": "charge",
+          "created": 1398454074,
+          "livemode": false,
+          "paid": true,
+          "amount": 999,
+          "currency": "usd",
+          "refunded": false,
+          "card": {
+            "id": "card_103v5922Cnd6mhFU6IgwFJRw",
+            "object": "card",
+            "last4": "4242",
+            "type": "Visa",
+            "exp_month": 4,
+            "exp_year": 2017,
+            "fingerprint": "CrXmdby9jKYifbYP",
+            "customer": null,
+            "country": "US",
+            "name": null,
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null,
+            "cvc_check": "pass",
+            "address_line1_check": null,
+            "address_zip_check": null
+          },
+          "captured": true,
+          "refunds": [],
+          "balance_transaction": "txn_103v5922Cnd6mhFUJje3EOzD",
+          "failure_message": null,
+          "failure_code": null,
+          "amount_refunded": 0,
+          "customer": null,
+          "invoice": null,
+          "description": null,
+          "dispute": null,
+          "metadata": {},
+          "statement_description": null
+        }
+    http_version: 
+  recorded_at: Fri, 25 Apr 2014 19:27:55 GMT
+recorded_with: VCR 2.9.0

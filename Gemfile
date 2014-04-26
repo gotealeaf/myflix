@@ -8,6 +8,21 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
+gem 'bootstrap_form'
+gem 'bcrypt-ruby'
+gem 'fabrication'
+gem 'faker'
+gem 'redis'
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', :require => nil
+gem 'unicorn'
+gem 'sentry-raven'
+gem 'paratrooper'
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'fog'
+gem 'stripe'
+gem 'figaro'
 
 group :development do
   gem 'sqlite3'
@@ -16,10 +31,30 @@ group :development do
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
+  gem 'letter_opener'
+  gem 'letter_opener_web'
+end
+
+group :development, :test do
+  gem 'rspec-rails'
+end
+
+group :test do
+  gem 'shoulda-matchers'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'capybara-email'
+  gem 'vcr'
+  gem 'webmock'
+  gem 'database_cleaner'
+  gem 'poltergeist'
 end
 
 group :production do
   gem 'pg'
   gem 'rails_12factor'
 end
+
+
+
 
