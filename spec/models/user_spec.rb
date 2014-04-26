@@ -44,4 +44,22 @@ describe User do
       ana.count_queued_videos.should eq(2)
     end
   end
+
+  describe "#follows?" do
+    it "returns true when a the user already follows another user" do
+      ana = Fabricate :user
+      set_current_user ana
+      tom = Fabricate :user     
+      relationship = Fabricate :relationship, user: tom, follower: ana   
+
+      ana.follows?(relationship).should be_true
+    end
+    it "returns false when a the user do not follow another user" do
+      ana = Fabricate :user
+      set_current_user ana
+      tom = Fabricate :user     
+
+      ana.follows?(relationship).should be_false
+    end
+  end
 end

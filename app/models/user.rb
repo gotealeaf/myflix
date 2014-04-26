@@ -26,4 +26,8 @@ class User < ActiveRecord::Base
   def count_queued_videos
     queue_items.count
   end
+
+  def follows? relationship
+    Relationship.find_by(user: relationship.user, follower:relationship.follower).exists?
+  end  
 end

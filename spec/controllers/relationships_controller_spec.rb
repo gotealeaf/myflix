@@ -58,7 +58,42 @@ describe RelationshipsController do
     end
   end
 
-  describe "GET create" do
+  describe "POST create" do
+    it "redirects to user page" do
+      ana = Fabricate :user
+      set_current_user ana
+      tom = Fabricate :user     
+      relationship = Fabricate :relationship, user: tom, follower: ana   
 
+      post :create, user_id: tom.id
+
+      expect(response).to redirect_to people_path     
+    end
+
+    it "creates a reverse relationship between the current user and the selected user" do
+      ana = Fabricate :user
+      set_current_user ana
+      tom = Fabricate :user     
+
+      post :create, user_id: tom.id
+
+      expect(ana.reverse_relationships.first.follower).to eq(ana)
+      expect(ana.reverse_relationships.first.user).to eq(tom)     
+    end
+
+    it "does not create the relationship if it already exists" do
+      ana = Fabricate :user
+      set_current_user ana
+      tom = Fabricate :user     
+      relationship = Fabricate :relationship, user: tom, follower: ana   
+      
+      post :create, user_id: tom.id
+      
+      expect(ana.reverse_relationships.count).to eq(1)
+    end
+
+    it_behaves_like "require_sign_in" do
+      let(:action) { post :create, user_id: 1 }
+    end
   end
 end
