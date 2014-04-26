@@ -13,8 +13,7 @@ class RelationshipsController < ApplicationController
 
   def create
     user = User.find(params[:user_id])
-    relationship = Relationship.new(user: user, follower: current_user) 
-    relationship.save if current_user.follows? relationship
+    Relationship.create(user: user, follower: current_user)  if current_user.can_follow? user
     redirect_to people_path
   end
 end

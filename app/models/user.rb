@@ -27,7 +27,11 @@ class User < ActiveRecord::Base
     queue_items.count
   end
 
-  def follows? relationship
-    Relationship.find_by(user: relationship.user, follower:relationship.follower).exists?
+  def follows? user
+    reverse_relationships.exists?(user: user)
   end  
+
+  def can_follow? user
+    !(self.follows?(user) || self == user)
+  end
 end

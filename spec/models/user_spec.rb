@@ -48,18 +48,40 @@ describe User do
   describe "#follows?" do
     it "returns true when a the user already follows another user" do
       ana = Fabricate :user
-      set_current_user ana
       tom = Fabricate :user     
       relationship = Fabricate :relationship, user: tom, follower: ana   
 
-      ana.follows?(relationship).should be_true
+      ana.follows?(tom).should be_true
     end
+
     it "returns false when a the user do not follow another user" do
       ana = Fabricate :user
-      set_current_user ana
       tom = Fabricate :user     
 
-      ana.follows?(relationship).should be_false
+      ana.follows?(tom).should be_false
     end
+  end
+
+  describe "#can_follow?" do
+    it "returns false when a the user already follows another user" do
+      ana = Fabricate :user
+      tom = Fabricate :user     
+      relationship = Fabricate :relationship, user: tom, follower: ana   
+
+      ana.can_follow?(tom).should be_false
+    end
+
+    it "returns true when a the user do not follow another user" do
+      ana = Fabricate :user
+      tom = Fabricate :user     
+
+      ana.can_follow?(tom).should be_true
+    end  
+
+    it "returns false when the user is the current user" do
+      ana = Fabricate :user
+
+      ana.can_follow?(ana).should be_false
+    end  
   end
 end

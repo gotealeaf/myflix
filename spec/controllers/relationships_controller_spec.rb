@@ -92,6 +92,15 @@ describe RelationshipsController do
       expect(ana.reverse_relationships.count).to eq(1)
     end
 
+    it "does not create a relationship with the same user" do
+      ana = Fabricate :user
+      set_current_user ana
+      
+      post :create, user_id: ana.id
+      
+      expect(ana.reverse_relationships.count).to eq(0)
+    end
+
     it_behaves_like "require_sign_in" do
       let(:action) { post :create, user_id: 1 }
     end
