@@ -23,7 +23,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to videos_path, notice: "Thank you for signing up"
     elsif @user.save
-      AppMailer.notify_on_registration(@user.id)
+      AppMailer.delay.notify_on_registration(@user.id)
       session[:user_id] = @user.id
       redirect_to videos_path, notice: "Thank you for signing up"
     else
