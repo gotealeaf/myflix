@@ -14,12 +14,10 @@ feature 'my queue' do
     expect(page).to have_content 'Watch Now'
 
     click_link '+ My Queue'
-
     expect(page).to have_content 'List Order'
     expect(page).to have_content video.title
 
     click_link video.title
-
     expect(page).to have_content video.title
     expect(page).to have_content 'Watch Now'
     expect(page).to_not have_content '+ My Queue'
