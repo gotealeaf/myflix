@@ -2,11 +2,13 @@ class UserRelationshipsController < ApplicationController
   before_action :require_user
 
   def index
-    @followees = user_followees(current_user)
-    render 'user_relationships/my_people'
+    @user_relationships = current_user.following_relationships
+    render 'user_relationships/people'
   end
 
-  def user_followees(user)
-    UserRelationship.where(follower: user).map(&:user)
+  def destroy
+    user_relationship = UserRelationship.find(params[:id])
+    user_relationship.destroy if user_relationship.follower == current_user
+    redirect_to people_path
   end
 end
