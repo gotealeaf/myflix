@@ -32,7 +32,7 @@ feature 'my queue' do
     visit_and_add_video_to_queue(video)
     visit_and_add_video_to_queue(video_2)
     visit_and_add_video_to_queue(video_3)
-    
+
     fill_in_video_position(video, 2)
     fill_in_video_position(video_2, 3)
     fill_in_video_position(video_3, 1)
@@ -51,12 +51,12 @@ feature 'my queue' do
   end
 
   def fill_in_video_position(video, position)
-    within(:xpath, "//tr[contains(.,'#{video.title}')]") do
+    within(:xpath, "//tr/td[a = '#{video.title}']/..") do
       fill_in 'queue_items__position', with: position
     end
   end
 
   def expect_video_position(video, position)
-    expect(find(:xpath, "//tr[contains(.,'#{video.title}')]//input[@type='text']" ).value).to eq position.to_s
+    expect(find(:xpath, "//tr/td[a = '#{video.title}']/..//input[@type='text']" ).value).to eq position.to_s
   end
 end
