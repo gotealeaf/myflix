@@ -12,10 +12,18 @@ require 'capybara/poltergeist'
 Sidekiq::Testing.inline!
 
 Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, {debug: false})
+  options = {
+    :js_errors => false,
+    :timeout => 120,
+    :debug => false,
+    :phantomjs_options => ['--load-images=no', '--disk-cache=false', '--ignore-ssl-errors=yes'],
+    :inspector => true
+  }
+  Capybara::Poltergeist::Driver.new(app, options)
 end
 
 Capybara.javascript_driver = :poltergeist
+Capybara.default_wait_time = 30
 
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -84,5 +92,6 @@ RSpec.configure do |config|
 end
 
 Capybara.server_port = 52662
+
 
 
