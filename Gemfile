@@ -11,7 +11,6 @@ gem 'jquery-rails'
 gem "bcrypt-ruby"
 gem 'bootstrap_form'
 gem 'nokogiri'
-gem 'capybara-email'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
@@ -20,6 +19,9 @@ gem 'paratrooper'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
+gem 'stripe'
+gem 'figaro'
+gem 'draper', '~> 1.3'
 
 group :development do
   gem 'sqlite3'
@@ -40,13 +42,19 @@ end
 group :development, :test do
   gem 'fabrication'
   gem "faker"
-	gem 'rspec-rails'#, '~> 3.0.0.beta'
+  gem 'rspec-rails'#, '~> 3.0.0.beta'
   gem 'pry'
   gem 'launchy', '~> 2.4.2'
 end
 
 group :test do
   gem 'shoulda-matchers'
-  gem 'capybara'
+  gem 'capybara', '2.1.0'
+  gem 'capybara-email', '2.1.2'
+  gem 'capybara-webkit'
+  gem 'vcr'
+  gem 'webmock'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 

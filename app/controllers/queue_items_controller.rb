@@ -22,7 +22,7 @@
   def sort
     
     begin
-      ActiveRecord::Base.transaction do
+      ActiveRecord::Base.transaction(requires_new: true) do
         update_queue_item_position
       end
     rescue ActiveRecord::RecordInvalid
