@@ -6,7 +6,7 @@
   %td
     = button_to "Play", nil, class: "btn btn-default"
   %td
-    = select("queue_items[#{queue_item.id}]","rating", options_for_select( [['5 stars', 5], ['4 stars', 4], ['4 stars', 4], ['2 stars', 2], ['1 stars', 1]], queue_item.rating), include_blank: true )
+    = select("queue_items[#{queue_item.id}]","rating", options_for_select_rating(queue_item.rating), include_blank: true )
   %td
     = link_to queue_item.category_name
   %td

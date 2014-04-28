@@ -3,7 +3,9 @@
 
 
 class QueuesController < ApplicationController
+
   before_action :require_user, only: [:create, :destroy, :update_instant]
+
   def create
     queue_target  = ( QueueItem.where(user: current_user).count + 1  )
     @queue_item = QueueItem.create(
@@ -24,13 +26,9 @@ class QueuesController < ApplicationController
   end
 
   def update_instant
-
     assign_ratings
-
     arrange_and_save_position if validation_of_list_order
-
     redirect_to my_queue_path
-
   end
 
   private
@@ -71,7 +69,7 @@ class QueuesController < ApplicationController
   def assign_position_values(queue_item_ids, queue_items_hash)
     queue_items_hash.sort_by! {|obj| obj[:position].to_i }
 
-    #[ {id , position}, ... ] array sequence is order sort by position
+    #[ {id , position}, ... ] array sequence is order by position
     queue_items_hash.each_with_index do |obj, index| 
       queue_item = QueueItem.find(obj[:id])
       queue_item.position = ( index + 1 )
@@ -83,11 +81,13 @@ class QueuesController < ApplicationController
     queue_items_ids = params[:queue_items].map{|key, value| key.to_i } 
     queue_items_positions = queue_items_ids.each.map{ |id| params[:queue_items][id.to_s][:position].to_i }
     counter = 0
+
     #same user check
     queue_items_ids.each {|id| counter += 1 if QueueItem.find(id).user != current_user}
 
     #all integer or not check
     queue_items_positions.each {|position| counter += 1 if !position.is_a? Integer}
+
     #position repetition check
     queue_items_positions.each do |position|
       same = 0
@@ -96,6 +96,7 @@ class QueuesController < ApplicationController
       end
       counter += 1 if same > 1
     end
+
     #return
     counter == 0 ? true : false
   end

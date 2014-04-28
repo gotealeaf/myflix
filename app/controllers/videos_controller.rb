@@ -13,7 +13,7 @@ class VideosController < ApplicationController
     # elsif
     #   @review = @video.reviews.where(user: current_user)
     # end
-        @review = Review.new
+    @review = Review.new
   end
 
   def search

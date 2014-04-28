@@ -4,7 +4,7 @@
       %label Rate this video
       .row
         .col-sm-3
-          = f.select(:rating, options_for_select( [['5 stars', 5], ['4 stars', 4], ['4 stars', 4], ['2 stars', 2], ['1 stars', 1]], @review.rating), include_blank: true )
+          = f.select(:rating, options_for_select_rating(@review_rating), include_blank: true )
     .form-group
       %label Write Review
       .row
