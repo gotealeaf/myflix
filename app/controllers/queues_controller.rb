@@ -9,7 +9,7 @@ class QueuesController < ApplicationController
   def create
     queue_target  = ( QueueItem.where(user: current_user).count + 1  )
     @queue_item = QueueItem.create(
-      video: Video.find( params[:video_id] ),
+      video: Video.find( params[:id] ),
       user: current_user,
       position: queue_target
     ) 

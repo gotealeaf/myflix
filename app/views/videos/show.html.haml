@@ -11,7 +11,7 @@
         .actions
           %a.btn.btn-primary(href="") Watch Now
           - unless video_is_in_my_queue 
-            = link_to "+ My Queue", queues_path(video_id: @video.id), method: "post", class: "btn btn-default"
+            = link_to "+ My Queue", queues_path(id: @video.id), method: "post", class: "btn btn-default"
 
 %section.reviews.container
   .row

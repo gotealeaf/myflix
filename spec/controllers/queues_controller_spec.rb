@@ -10,7 +10,7 @@ describe QueuesController do
     context "logged in" do
       before(:each) do
         set_current_user
-        post :create, video_id: video.id
+        post :create, id: video
       end
       it "sets user relationship" do
         expect(assigns(:queue_item).user).to eq user
@@ -26,7 +26,7 @@ describe QueuesController do
       end
       it "creates nothing if already created" do
         expect {
-          post :create, video_id: video.id
+          post :create, id: video
         }.to change(QueueItem, :count).by(0)
       end
     end

@@ -1,21 +1,21 @@
+= form_for(@user) do |f|
 %section.register.container
   .row
     .col-sm-10.col-sm-offset-1
       %form.form-horizontal
         %header
           %h1 Register
-        = form_for(@user) do |f|
           %fieldset
             .form-group
-              %label.control-label.col-sm-2 Email Address
+              %label.control-label.col-sm-2 email
               .col-sm-6
                 = f.text_field :email, class: "form-control"
             .form-group
-              %label.control-label.col-sm-2 Password
+              %label.control-label.col-sm-2 password
               .col-sm-6
                 = f.password_field :password, class: "form-control"
             .form-group
-              %label.control-label.col-sm-2 Full Name
+              %label.control-label.col-sm-2 name
               .col-sm-6
                 = f.text_field :name, class: "form-control"
           %fieldset.actions.control-group.col-sm-offset-2
