@@ -82,8 +82,7 @@ describe QueuesController do
       it "do nothing if queue_item's user not equal current user" do
         set_current_user
         user2 = Fabricate(:user)
-        Fabricate(:queue_item_same_user, user: user2)
-        Fabricate(:queue_item_same_user, user: user2)
+        Fabricate.times(2, :queue_item_same_user, user: user2)
         post :update_instant, queue_items: {
             "1" => { position: "2" },
             "2" => { position: "1" }
