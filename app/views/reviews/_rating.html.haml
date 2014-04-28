@@ -1,0 +1,16 @@
+=form_for [@video, @review] do |f|
+  %fieldset
+    .form-group
+      %label Rate this video
+      .row
+        .col-sm-3
+          = f.select(:rating, options_for_select_rating(@review_rating), include_blank: true )
+    .form-group
+      %label Write Review
+      .row
+        .col-sm-8
+          = f.text_area(:review_description, rows: "6", class: "form-control")
+  %fieldset.form-group.actions.clearfix
+    = f.submit("Submit", class: "btn")
+    = link_to "Cancel", @video    
+
