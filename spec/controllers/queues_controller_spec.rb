@@ -38,16 +38,15 @@ describe QueuesController do
 
   describe "queues#destroy" do
     context "logged in" do
+      let(:queue_item) { Fabricate(:queue_item_same_user, user: user) }
       before do
         set_current_user
       end
       it "deletes requested queue_item" do
-        queue_item = Fabricate(:queue_item_same_user, user: user) 
         delete :destroy, id: queue_item
         expect(QueueItem.count).to eq 0
       end
       it "redirects to my_queue_path" do
-        queue_item = Fabricate(:queue_item_same_user, user: user) 
         delete :destroy, id: queue_item
         expect(response).to redirect_to my_queue_path
       end
@@ -60,14 +59,15 @@ describe QueuesController do
     it_behaves_like "require_sign_in" do
       let(:action) {
         queue_item = Fabricate(:queue_item_same_user, user: user) 
+        # WHY can not use obj defined by let(:queue_item)
         delete :destroy, id: queue_item
       }
     end
     it "do nothing if it is not current user's queue" do
-      queue_item = Fabricate(:queue_item_same_user, user: Fabricate(:user)) 
+      queue_item_another_user = Fabricate(:queue_item_same_user, user: Fabricate(:user)) 
       set_current_user
       expect{
-        delete :destroy, id: queue_item
+        delete :destroy, id: queue_item_another_user
       }.to change(QueueItem, :count).by(0)
     end
   end
