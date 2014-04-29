@@ -1,0 +1,14 @@
+!!! 5
+%html
+  %head
+    %meta{ 'content' => 'text/html: charset=UTF-8', 'http-equiv' => 'Content-Type' }
+  %body
+    %h2 Welcome to MyFlix
+    %p
+      Hi #{ @user.full_name },
+      %br
+      %br
+      You have been registered. #{ link_to 'Click here to log in.', 'http://localhost:3000/sign_in' }
+      %br
+      %br
+      Thanks!

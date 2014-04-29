@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      UserMailer.registration_email(@user).deliver
       redirect_to sign_in_path
     else
       render :new
