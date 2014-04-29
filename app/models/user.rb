@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include Tokenable
+
   has_many :reviews, -> { order("created_at DESC") }
   has_many :queue_items, -> { order(:position) }
   has_many :invitations, foreign_key: "inviter_id"
@@ -14,7 +16,6 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: {minimum: 5}
 
   has_secure_password validations: false
-  before_create :generate_token
 
   def normalize_queue_item_positions
     queue_items.each_with_index do |queue_item, index|
@@ -36,11 +37,5 @@ class User < ActiveRecord::Base
 
   def change_token
     update_attributes(token: SecureRandom.urlsafe_base64)
-  end
-
-  private
-
-  def generate_token
-    self.token = SecureRandom.urlsafe_base64
   end
 end

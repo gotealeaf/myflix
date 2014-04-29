@@ -12,9 +12,8 @@ describe User do
   it { should have_many(:leading_relationships).with_foreign_key('leader_id') } 
   it { should have_many(:invitations).with_foreign_key('inviter_id') }
 
-  it "generates a token when the user is created" do
-    alice = Fabricate(:user)
-    expect(alice.token).to be_present
+  it_behaves_like "tokenable" do 
+    let(:object) { Fabricate(:user) }
   end
 
   describe "#change_token" do
