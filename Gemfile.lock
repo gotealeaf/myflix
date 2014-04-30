@@ -231,6 +231,7 @@ DEPENDENCIES
   pry-nav
   rails (= 4.0.1)
   rails_12factor
+  redis
   rspec-rails (~> 2.0)
   sass-rails (~> 4.0.0)
   selenium-webdriver
