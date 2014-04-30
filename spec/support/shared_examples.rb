@@ -23,3 +23,9 @@ shared_examples "sets a flash error message" do
   end
 end
 
+shared_examples "tokenable" do 
+  it "generates a random new token when the object is created" do 
+    expect(object.token).to be_present
+  end
+end
+

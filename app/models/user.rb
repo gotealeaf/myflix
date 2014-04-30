@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
+  include Tokenable
+
   has_many :reviews, -> { order("created_at DESC") }
   has_many :queue_items, -> { order(:position) }
+  has_many :invitations, foreign_key: "inviter_id"
 
   has_many :followers, through: :leading_relationships
   has_many :leaders, through: :following_relationships
@@ -13,7 +16,6 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: {minimum: 5}
 
   has_secure_password validations: false
-  before_create :generate_token
 
   def normalize_queue_item_positions
     queue_items.each_with_index do |queue_item, index|
@@ -26,7 +28,7 @@ class User < ActiveRecord::Base
   end
 
   def follow!(another_user)
-    Relationship.create(leader_id: another_user.id, follower_id: self.id)
+    following_relationships.create(leader: another_user)
   end
 
   def follows?(another_user)
@@ -35,11 +37,5 @@ class User < ActiveRecord::Base
 
   def change_token
     update_attributes(token: SecureRandom.urlsafe_base64)
-  end
-
-  private
-
-  def generate_token
-    self.token = SecureRandom.urlsafe_base64
   end
 end

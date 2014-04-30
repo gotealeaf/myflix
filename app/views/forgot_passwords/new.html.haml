@@ -2,7 +2,7 @@
   .row
     .col-sm-10.col-bg-offset-1
       = form_tag forgot_passwords_path do
-        %form.sign_in
+        .sign_in
           %header
             %h1 Forgot Your Password?
             %p
@@ -13,5 +13,5 @@
               .col-sm-4
                 = text_field_tag :email, nil, class: "form-control"
           .form-group.action
-            %input(type="submit" value="Send Email" class="btn btn-default")
+            = submit_tag "Send Email", class: "btn btn-default"
 

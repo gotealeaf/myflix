@@ -1,0 +1,5 @@
+%p Hello, #{@invitation.recipient_name}, #{@invitation.inviter.full_name} has invited you to join MyFlix!
+%p #{@invitation.inviter.full_name}'s message to you:
+%p #{@invitation.message}
+
+= link_to "Click here to join!", register_with_token_url(@invitation.token)
