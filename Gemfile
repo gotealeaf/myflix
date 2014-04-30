@@ -12,6 +12,9 @@ gem 'jquery-rails'
 gem 'bcrypt-ruby', '3.1.2'
 gem 'bootstrap_form'
 gem 'pg'
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'slim'
 
 group :development do
   gem 'pry'
