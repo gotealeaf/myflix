@@ -10,7 +10,6 @@ class InvitationsController < ApplicationController
                                   merge!(inviter_id: current_user.id))
     if @invitation.save
       InvitationMailer.delay.email_invitation(@invitation.id)
-      # AppMailer.invite_email(@invitation).deliver
       flash[:success] = ("Your invitation has been emailed to 
                           #{@invitation.recipient_name}")
       redirect_to new_invitation_path
