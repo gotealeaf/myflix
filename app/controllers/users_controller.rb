@@ -22,6 +22,16 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def reset_email
+    if user = User.find_by_email(params[:email])
+      user.generate_password_token
+      render :confirm_password_reset
+    else
+      flash[:warning] = 'Your email address is not recognized.'
+      redirect_to forgot_password_path
+    end
+  end
+
   private
 
   def user_params

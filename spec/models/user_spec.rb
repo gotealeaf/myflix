@@ -68,4 +68,12 @@ describe User do
       expect(john.can_follow?(john)).to be_false
     end
   end
+
+  describe "#generate_password_token" do
+    it "sets the password_token attribute for the user" do
+      billy = Fabricate(:user)
+      billy.generate_password_token
+      expect(billy.reload.password_token).to_not be_blank
+    end
+  end
 end
