@@ -34,5 +34,6 @@ class User < ActiveRecord::Base
 
   def generate_password_token
     self.update(password_token: SecureRandom.urlsafe_base64)
+    self.password_token
   end
 end

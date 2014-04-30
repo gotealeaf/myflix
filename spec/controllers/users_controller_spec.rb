@@ -111,7 +111,8 @@ describe UsersController do
     context "with valid email" do
       let(:joe) { Fabricate(:user, email: 'joe@mail.com') }
 
-      before { post :reset_email, email: joe.email }      
+      before { post :reset_email, email: joe.email }
+      after { ActionMailer::Base.deliveries = [] }
 
       it "renders the confirm passowrd reset page." do
         expect(response).to render_template :confirm_password_reset
@@ -121,9 +122,17 @@ describe UsersController do
         expect(joe.reload.password_token).to_not be_blank
       end
 
-      it "sends an email"
-      it "sends an email to the user"
-      it "sends an email with the password token"
+      it "sends an email" do
+        expect(ActionMailer::Base.deliveries).to_not be_empty
+      end
+
+      it "sends an email to the user" do
+        expect(ActionMailer::Base.deliveries.last.to).to eq ['joe@mail.com']
+      end
+
+      it "sends an email with the password token" do
+        expect(ActionMailer::Base.deliveries.last.body).to include joe.reload.password_token
+      end
     end
   end
 end

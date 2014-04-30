@@ -24,13 +24,17 @@ class UsersController < ApplicationController
 
   def reset_email
     if user = User.find_by_email(params[:email])
-      user.generate_password_token
+      @url = "http://myflix-crq.heroku.com/reset_password/#{user.generate_password_token}"
+      UserMailer.reset_password_email(user).deliver
       render :confirm_password_reset
     else
       flash[:warning] = 'Your email address is not recognized.'
       redirect_to forgot_password_path
     end
   end
+
+  # def reset_password
+  # end
 
   private
 
