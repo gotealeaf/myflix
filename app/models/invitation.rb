@@ -11,7 +11,7 @@ class Invitation < ActiveRecord::Base
 
   def invitation_is_not_created_for_existing_user
     if User.all.map(&:email).include?(self.recipient_email)
-      self.errors.add(:recipient_email, "User is already signed up")
+      self.errors.add(:recipient_email, "is already signed up")
     end
   end
 end
