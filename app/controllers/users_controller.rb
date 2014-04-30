@@ -11,7 +11,7 @@ class UsersController < ApplicationController
         session[:user_id] = @user.id
         redirect_to videos_path
       else
-        flash[:error] = "You could not be signed up."
+        flash[:danger] = "Your account could not be created. Please make sure all details are filled in correctly."
         render :new
       end
   end
@@ -27,7 +27,7 @@ class UsersController < ApplicationController
       flash[:info] = "Your profile was updated."
       redirect_to user_path(@user)
     else
-      flash[:error] = "Your profile could not be updated."
+      flash[:warning] = "Your profile could not be updated."
     end
   end
     
