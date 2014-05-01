@@ -135,6 +135,44 @@ describe UsersController do
       end
     end
   end
+
+  describe "GET reset_password" do
+    context "invalid password token" do
+      before do 
+        Fabricate(:user)
+        get :reset_password, password_token: 'random'
+      end
+
+      it "redirects to the sign in page" do
+        expect(response).to redirect_to sign_in_path
+      end
+
+      it "sets a warning message" do
+        expect(flash[:warning]).to_not be_blank
+      end
+    end
+
+    context "valid password token" do
+      let(:susan) { Fabricate(:user) }
+
+      before do
+        susan.generate_password_token
+        get :reset_password, password_token: susan.password_token
+      end
+
+      it "renders the password reset page if the password token matches a user" do
+        expect(response).to render_template :reset_password
+      end
+
+      it "associates the password token with a user" do
+        expect(assigns(:user)).to eq susan
+      end
+
+      it "removes the user's password token" do
+        expect(susan.reload.password_token).to be_blank
+      end
+    end
+  end
 end
 
 
