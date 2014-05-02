@@ -15,6 +15,14 @@ describe VideosController do
         expect(assigns(:video)).to eq(video)
       end
       
+      it "should set the @review instance variable" do
+        video = Fabricate(:video)
+        review1 = Fabricate(:review, video: video)
+        review2 = Fabricate(:review, video: video)
+        get :show, id: video.id
+        assigns(:reviews).should =~ [review1, review2]
+      end
+      
       it "should render the show page" do
         video = Fabricate(:video)
         get :show, id: video.id
