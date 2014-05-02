@@ -35,16 +35,24 @@ class UsersController < ApplicationController
 
   def reset_password
     if @user = User.find_by_password_token(params[:password_token])
-      @user.update(password_token: nil)
+      return if request.get?
+      update_password_and_remove_token(@user)
+      flash[:success] = 'Your password has been reset. Please log in.'
     else
       flash[:warning] = 'Invalid Page'
-      redirect_to sign_in_path
     end
+
+    redirect_to sign_in_path
   end
 
   private
 
   def user_params
     params.require(:user).permit(:email, :full_name, :password, :password_confirmation)
+  end
+
+  def update_password_and_remove_token(user)
+    user.update(password: params[:password], password_confirmation: params[:password_confirmation])
+    user.update(password_token: nil)
   end
 end

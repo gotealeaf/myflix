@@ -8,8 +8,7 @@ Myflix::Application.routes.draw do
   get 'register', to: 'users#new'
   get 'forgot_password', to: 'users#forgot_password'
   post 'reset_email', to: 'users#reset_email'
-  get 'reset_password/:password_token', to: 'users#reset_password'
-  post 'reset_password', to: 'users#reset_password'
+  match 'reset_password/:password_token', to: 'users#reset_password', as: :reset_password, via: [:get, :post]
 
   resources :sessions, only: [:create]
   get 'sign_in', to: 'sessions#new'

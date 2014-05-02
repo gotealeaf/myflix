@@ -94,6 +94,7 @@ describe UsersController do
   describe "POST reset_email" do
     context "with invalid email" do
       before { post :reset_email, email: 'invalid@address.com' }
+      after { ActionMailer::Base.deliveries = [] }
 
       it "redirects to the forgot password page" do
         expect(response).to redirect_to forgot_password_path
@@ -137,7 +138,7 @@ describe UsersController do
   end
 
   describe "GET reset_password" do
-    context "invalid password token" do
+    context "with invalid password token" do
       before do 
         Fabricate(:user)
         get :reset_password, password_token: 'random'
@@ -152,7 +153,7 @@ describe UsersController do
       end
     end
 
-    context "valid password token" do
+    context "with valid password token" do
       let(:susan) { Fabricate(:user) }
 
       before do
@@ -168,8 +169,54 @@ describe UsersController do
         expect(assigns(:user)).to eq susan
       end
 
+      it "does not remove the user's password token" do
+        expect(susan.reload.password_token).to_not be_blank
+      end
+    end
+  end
+  
+  describe "POST reset_password" do
+    context "with invalid password token" do
+      before do 
+        Fabricate(:user)
+        post :reset_password, password_token: 'random', password: 'password', password_confirmation: 'password'
+      end
+
+      it "redirects to the sign in page" do
+        expect(response).to redirect_to sign_in_path
+      end
+
+      it "sets a warning message" do
+        expect(flash[:warning]).to_not be_blank
+      end
+    end
+
+    context "with valid password token" do
+      let(:suzy) { Fabricate(:user) }
+
+      before do
+        suzy.generate_password_token
+        post :reset_password, password_token: suzy.password_token, password: 'password2', password_confirmation: 'password2'
+      end
+
+      it "redirects to the sign in page" do
+        expect(response).to redirect_to sign_in_path
+      end
+
+      it "sets success message" do
+        expect(flash[:success]).to_not be_blank
+      end
+
+      it "associates the password token with a user" do
+        expect(assigns(:user)).to eq suzy
+      end
+
+      it "updates the user's password" do
+        expect(suzy.reload.authenticate('password2')).to be_true
+      end
+
       it "removes the user's password token" do
-        expect(susan.reload.password_token).to be_blank
+        expect(suzy.reload.password_token).to be_blank
       end
     end
   end
