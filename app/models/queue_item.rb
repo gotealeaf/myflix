@@ -8,7 +8,7 @@ class QueueItem < ActiveRecord::Base
   
   def category_names
     #if video.categories > 1
-    video.categories { |category| category.name } #if video.categories > 1
+    video.categories 
       
       #.each do |category|
         #category.name

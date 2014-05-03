@@ -4,7 +4,7 @@ describe UsersController do
   describe "GET new" do
     it "sets the @user instance variable" do
       get :new
-      assigns(:user).should be_instance_of(User)
+      expect(assigns(:user)).to be_instance_of(User)
     end
   end # ends the GET new test
   

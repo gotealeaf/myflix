@@ -26,10 +26,10 @@ describe ReviewsController do
           expect(assigns(:video)).to eq(video)
         end
         it "should redirect to the video show page if saved" do
-          response.should redirect_to video_path(video)
+          expect(response).to redirect_to video_path(video)
         end
         it "should display success message if saved" do
-          expect(flash[:success]).to eq("Your review was added.")
+          expect(flash[:success]).not_to be_blank
         end
       end #ends valid input context
         
@@ -42,10 +42,10 @@ describe ReviewsController do
           expect(Review.count).to eq(0)
         end
         it "should render the videos show template if review not saved" do
-          response.should render_template "videos/show"
+          expect(response).to render_template "videos/show"
         end
         it "should display the error message if review not saved" do
-          expect(flash[:danger]).to eq("Your review could not be saved at this time.")
+          expect(flash[:danger]).not_to be_blank
         end
       end #ends with invalid input context 
     end #ends authenticated user context
@@ -55,7 +55,7 @@ describe ReviewsController do
         post :create, video_id: video.id, review: Fabricate.attributes_for(:review)
       end
       it "should redirect to the root path" do
-        response.should redirect_to root_path
+        expect(response).to redirect_to root_path
       end
       it "should display an error message" do
         expect(flash[:danger]).not_to be_blank
