@@ -1,7 +1,7 @@
 %section.reset_password.container
   .row
     .col-sm-10.col-sm-offset-1
-      = form_tag update_password_path(@user.password_token) ,class: 'form-group' do
+      = form_tag password_resets_path ,class: 'form-group' do
         %header
           %h1 Reset Your Password
         .form-group
@@ -13,5 +13,6 @@
           .row
             .col-sm-4
               =password_field_tag :password_confirmation, nil, class: 'form-control'
+          = hidden_field_tag :password_token, @user.password_token
         .form-group.action
           = submit_tag 'Reset Password', class: "btn btn-default"

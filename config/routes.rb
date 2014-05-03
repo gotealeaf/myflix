@@ -31,7 +31,6 @@ Myflix::Application.routes.draw do
   get 'forgot_password', to: 'forgot_passwords#new'
   resources :forgot_passwords, only: [:create]
 
-  resources :password_resets, only: [:show]
+  resources :password_resets, only: [:show, :create]
   get 'expired_token', to: 'password_resets#expired_token'
-  post 'update_password/:password_token', to: 'password_resets#update_password', as: 'update_password'
 end

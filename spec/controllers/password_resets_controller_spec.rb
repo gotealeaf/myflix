@@ -35,11 +35,11 @@ describe PasswordResetsController do
     end
   end
   
-  describe "POST update_password" do
+  describe "POST create" do
     context "with invalid password token" do
       before do 
         Fabricate(:user)
-        post :update_password, password_token: 'random', password: 'password', password_confirmation: 'password'
+        post :create, password_token: 'random', password: 'password', password_confirmation: 'password'
       end
 
       it "redirects to the expired token page" do
@@ -52,7 +52,7 @@ describe PasswordResetsController do
 
       before do
         suzy.generate_password_token
-        post :update_password, password_token: suzy.password_token, password: 'password2', password_confirmation: 'password2'
+        post :create, password_token: suzy.password_token, password: 'password2', password_confirmation: 'password2'
       end
 
       it "redirects to the sign in page" do
@@ -81,7 +81,7 @@ describe PasswordResetsController do
 
       before do
         johnny.generate_password_token
-        post :update_password, password_token: johnny.password_token, password: 'pass1', password_confirmation: 'pass2'
+        post :create, password_token: johnny.password_token, password: 'pass1', password_confirmation: 'pass2'
       end
 
       it "redirects to the show reset password page" do

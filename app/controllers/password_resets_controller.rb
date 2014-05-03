@@ -3,7 +3,7 @@ class PasswordResetsController < ApplicationController
     redirect_to expired_token_path unless @user = User.find_by_password_token(params[:id])
   end
 
-  def update_password
+  def create
     if @user = User.find_by_password_token(params[:password_token])
       unless params[:password] == params[:password_confirmation]
         flash[:warning] = 'The passwords do not match.'
