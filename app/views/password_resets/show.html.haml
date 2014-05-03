@@ -1,7 +1,7 @@
 %section.reset_password.container
   .row
     .col-sm-10.col-sm-offset-1
-      = form_tag update_forget_passwords_path(@user.password_token) ,class: 'form-group' do
+      = form_tag update_password_path(@user.password_token) ,class: 'form-group' do
         %header
           %h1 Reset Your Password
         .form-group
