@@ -6,9 +6,6 @@ Myflix::Application.routes.draw do
     post 'follow', to: 'users#follow'
   end
   get 'register', to: 'users#new'
-  get 'forgot_password', to: 'users#forgot_password'
-  post 'reset_email', to: 'users#reset_email'
-  match 'reset_password/:password_token', to: 'users#reset_password', as: :reset_password, via: [:get, :post]
 
   resources :sessions, only: [:create]
   get 'sign_in', to: 'sessions#new'
@@ -30,4 +27,9 @@ Myflix::Application.routes.draw do
   patch 'update_queue', to: 'queue_items#update_queue'
 
   resources :categories, only: [:show]
+
+  get 'forgot_password', to: 'forgot_passwords#new'
+  get 'reset_password/:password_token', to: 'forgot_passwords#edit', as: 'edit_forget_passwords'
+  post 'reset_password/:password_token', to: 'forgot_passwords#update', as: 'update_forget_passwords'
+  resources :forgot_passwords, only: [:create]
 end
