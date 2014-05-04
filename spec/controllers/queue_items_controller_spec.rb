@@ -48,19 +48,22 @@ describe QueueItemsController do
       expect(QueueItem.first.user). to eq(jane)
     end
     
-    it 'should display a success message if video is successfully added to the queue' do
+    it 'should put the added video as the last one in the existing queue' do
+      monk = Fabricate(:video)
+      queue_item = Fabricate(:queue_item, video: monk, user: jane)
+      futurama = Fabricate(:video, title: 'Futurama')
       session[:user_id] = jane.id
-      post :create, video_id: video.id
-      expect(flash[:success]).not_to be_blank
+      post :create, video_id: futurama.id
+      futurama_queue_item = QueueItem.where(video_id: futurama.id, user_id: jane.id).first
+      expect(futurama_queue_item.list_order).to eq(2)
     end
     
-    it 'should put the added video as the last one in the existing queue' 
-    it 'should not add a duplicate video if existing video title is already in the queue'
-    it 'should display an error message if the video could not be added to the queue' do
-      # add another condition here
+    it 'should not add a duplicate video if existing video title is already in the queue' do
+      monk = Fabricate(:video)
+      queue_item = Fabricate(:queue_item, video: monk, user: jane, video_id: monk.id)
       session[:user_id] = jane.id
-      post :create, video_id: video.id
-      expect(flash[:danger]).not_to be_blank
+      post :create, video_id: monk.id
+      expect(jane.queue_items.count).to eq(1)
     end
   
     it 'should not add a video if the user is not signed in' do
@@ -73,6 +76,9 @@ describe QueueItemsController do
       expect(response).to redirect_to root_path
     end
     
-    it 'should display an error message if user not signed in'
+    it 'should display an error message if user not signed in' do
+      post :create
+      expect(flash[:danger]).not_to be_blank
+    end
   end
 end
