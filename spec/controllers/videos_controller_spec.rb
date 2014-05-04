@@ -26,6 +26,12 @@ describe VideosController do
         get :show, id: video.id
         expect(response).to render_template :show
       end 
+      
+      it "should set the @queue_item instance variable" do
+        queue1 = Fabricate(:queue_item)
+        get :show, id: video.id
+        expect(assigns(:queue_item).to eq(queue1) 
+      end
     end # ends the authenticated users test spec
     
     context "with unauthenticated users" do
