@@ -8,26 +8,11 @@ feature 'reset password' do
   end
 
   scenario 'user resets password' do
-    visit sign_in_path
-    click_link 'Forgot Password?'
-    expect(page).to have_content 'Email Address'
+    request_password_reset_email
+    open_email_and_click_link
+    fill_in_password_and_submit
+    sign_in_with_new_password
 
-    fill_in 'Email Address', with: johnny.email
-    click_button 'Send Email'
-    expect(page).to have_content 'We have send an email'
-
-    open_email(johnny.email)
-    current_email.should have_content johnny.password_token
-
-    current_email.click_link 'Reset Password'
-    expect(page).to have_content 'New password'
-
-    fill_in 'password', with: 'password'
-    fill_in 'password_confirmation', with: 'password'
-    click_button 'Reset Password'
-    expect(page).to have_content 'password has been reset'
-
-    sign_in(johnny)
     expect(page).to have_content 'Access granted!'
   end
 
@@ -39,14 +24,8 @@ feature 'reset password' do
   end
 
   scenario 'user\'s passwords do no match' do
-    visit forgot_password_path
-
-    fill_in 'Email Address', with: johnny.email
-    click_button 'Send Email'
-
-    open_email(johnny.email)
-
-    current_email.click_link 'Reset Password'
+    request_password_reset_email
+    open_email_and_click_link
 
     fill_in 'password', with: 'password'
     fill_in 'password_confirmation', with: 'nomatch'
@@ -57,5 +36,35 @@ feature 'reset password' do
   scenario 'invalid password token is used to visit reset password page' do
     visit('/password_resets/badtoken')
     expect(page).to have_content 'link is expired'
+  end
+
+  private
+
+  def request_password_reset_email
+    visit sign_in_path
+    click_link 'Forgot Password?'
+    expect(page).to have_content 'Email Address'
+
+    fill_in 'Email Address', with: johnny.email
+    click_button 'Send Email'
+  end
+
+  def open_email_and_click_link
+    open_email(johnny.email)
+    current_email.should have_content johnny.password_token
+
+    current_email.click_link 'Reset Password'
+  end
+
+  def fill_in_password_and_submit
+    fill_in 'password', with: 'new_password'
+    fill_in 'password_confirmation', with: 'new_password'
+    click_button 'Reset Password'
+  end
+
+  def sign_in_with_new_password
+    fill_in 'Email', with: johnny.email
+    fill_in 'Password', with: 'new_password'
+    click_button 'Sign in'
   end
 end
