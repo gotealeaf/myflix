@@ -26,7 +26,7 @@ describe InvitationsController do
       it "sets an alert message"
     end
 
-    context "invitee is not already registered" do
+    context "with invitee not already registered" do
       before do
         set_current_user
         post :create, full_name: 'John Adams', email: 'jadams@example.com', message: 'Join the site!'

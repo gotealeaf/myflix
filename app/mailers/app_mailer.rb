@@ -1,4 +1,4 @@
-class UserMailer < ActionMailer::Base
+class AppMailer < ActionMailer::Base
   default from: 'charlesquirin@gmail.com'
 
   def registration_email(user)
