@@ -13,6 +13,7 @@ describe Invitation do
   it "validates that user is not already signed up" do
     alice = Fabricate(:user)
     invitation = Fabricate.build(:invitation, recipient_email: alice.email)
-    expect(invitation).not_to be_valid
+    invitation.save
+    expect(invitation.errors.full_messages).to include("Recipient email is already signed up")
   end
 end

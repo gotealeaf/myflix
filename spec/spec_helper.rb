@@ -6,6 +6,7 @@ require 'rspec/autorun'
 require 'capybara/rails'
 require 'capybara/email/rspec'
 require 'support/database_cleaner'
+require 'sidekiq/testing/inline'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
