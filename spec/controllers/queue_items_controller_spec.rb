@@ -81,4 +81,34 @@ describe QueueItemsController do
       expect(flash[:danger]).not_to be_blank
     end
   end
+  
+  describe "DELETE Destroy" do
+    it 'should delete the video when the user clicks on the delete button' do
+      jane = Fabricate(:user)
+      session[:user_id] = jane.id
+      video = Fabricate(:video)
+      queue_item = Fabricate(:queue_item, video: video, user: jane)
+      delete :destroy, id: queue_item.id
+      expect(QueueItem.count).to eq(0)
+    end
+    it 'should redirect to the my queue page after user deletes video from queue' do
+      session[:user_id] = Fabricate(:user).id
+      queue_item = Fabricate(:queue_item)
+      delete :destroy, id: queue_item.id
+      expect(response).to redirect_to my_queue_path
+    end
+    it "does not delete the queue item if the queue item is not in the current user's queue" do
+      jane = Fabricate(:user)
+      james = Fabricate(:user)
+      session[:user_id] = jane.id
+      queue_item = Fabricate(:queue_item, user: james)
+      delete :destroy, id: queue_item.id
+      expect(QueueItem.count).to eq(1)
+    end
+    it 'redirects to sign in page for unauthenticated users' do
+      queue_item = Fabricate(:queue_item)
+      delete :destroy, id: queue_item.id
+      expect(response).to redirect_to root_path
+    end
+  end
 end
