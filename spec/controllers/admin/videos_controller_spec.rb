@@ -8,18 +8,22 @@ describe Admin::VideosController do
     end
 
     it "redirects to home if user not admin" do 
-      alice = Fabricate(:user, admin: false)
-      set_current_user(alice)
+      set_current_user
       get :new
-      expect(flash[:danger]).to eq("You do not have permission to do that.")
       expect(response).to redirect_to home_path
     end
 
-    it "renders new video page if user is admin" do
-      alice = Fabricate(:user, admin: true)
-      set_current_user(alice)
+    it "sets flash danger message if user not admin" do
+      set_current_user
       get :new
-      expect(response).to render_template :new
+      expect(flash[:danger]).to eq("You do not have permission to do that.")
+    end
+
+    it "sets @video if user is admin" do
+      set_current_admin
+      get :new
+      expect(assigns(:video)).to be_instance_of(Video)
+      expect(assigns(:video)).to be_new_record
     end
   end
 end

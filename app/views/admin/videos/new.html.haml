@@ -2,33 +2,38 @@
   .container
     .row
       .col-md-10.col-md-offset-1
-        %form.form-horizontal
+        = bootstrap_form_for [:admin, @video], html: { class: "form-horizontal" } do |f|
           %ul.nav.nav-tabs
             %li
-              %a(href="/ui/admin_views_payments") Recent Payments
+              %a(href="") Recent Payments
             %li.active
               %a(href="") Add a New Video
           %br
           %fieldset
             .form-group
-              %label.control-label.col-sm-3 Title
+              .control-label.col-sm-3 
+                = f.label :title, "Title"
               .col-sm-3
-                %input.form-control(type="text")
+                = f.text_field :title, hide_label: true, class: "form-control"
             .form-group
-              %label.control-label.col-sm-3 Category
+              .control-label.col-sm-3
+                = f.label :category, "Category"
               .col-sm-6
-                %select.form-control
+                = f.select :category_id, options_for_category, hide_label: true, class: "form-control"
             .form-group
-              %label.control-label.col-sm-3 Description
+              .control-label.col-sm-3
+                = f.label :description, "Description"
               .col-sm-6
-                %textarea.form-control(rows="8")
+                = f.text_area :description, rows: 8, hide_label: true, class: "form-control"
             .form-group
-              %label.control-label.col-sm-3 Large Cover
+              .control-label.col-sm-3 
+                = f.label :large_cover_url, "Large Cover"
               .col-sm-6
                 %col.btn.btn-file
                   %input.form-control(type="file")
             .form-group
-              %label.control-label.col-sm-3 Small Cover
+              .control-label.col-sm-3
+                = f.label :small_cover_url, "Small Cover"
               .col-sm-6
                 %col.btn.btn-file
                   %input.form-control(type="file")
