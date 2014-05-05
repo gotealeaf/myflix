@@ -11,6 +11,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       AppMailer.registration_email(@user).deliver
+      if Invitation.find_by_invitee_email(@user.email)
+        UserRelationship.create(followee: Invitation.find_by_invitee_email(@user.email).user, follower: @user)
+        UserRelationship.create(followee: @user, follower: Invitation.find_by_invitee_email(@user.email).user)
+      end
       redirect_to sign_in_path
     else
       render :new

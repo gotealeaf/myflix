@@ -20,10 +20,17 @@ describe InvitationsController do
         post :create, full_name: john.full_name, email: john.email, message: 'Join the site!'
       end
 
-      it "redirects to the invitee's page"
-      it "does not create a new invitation"
-      it "follows the invitee"
-      it "sets an alert message"
+      it "redirects to the invitee's page" do
+        expect(response).to redirect_to user_path(john)
+      end
+
+      it "does not create a new invitation" do
+        expect(Invitation.first).to be_blank
+      end
+
+      it "sets a warning message" do
+        expect(flash[:warning]).to_not be_blank
+      end
     end
 
     context "with invitee not already registered" do
@@ -31,6 +38,8 @@ describe InvitationsController do
         set_current_user
         post :create, full_name: 'John Adams', email: 'jadams@example.com', message: 'Join the site!'
       end
+
+      after { ActionMailer::Base.deliveries = [] }
 
       it "redirects to the home page" do
         expect(response).to redirect_to home_path
@@ -41,8 +50,9 @@ describe InvitationsController do
         expect(Invitation.first.invitee_email).to eq 'jadams@example.com'
       end
 
-      it "sends an email to the invitee" do
+      it "sends an email to the invitee with register link" do
         expect(ActionMailer::Base.deliveries.last.to).to eq ['jadams@example.com']
+        expect(ActionMailer::Base.deliveries.last.body).to include '/register'
       end
 
       it "sets an success message" do

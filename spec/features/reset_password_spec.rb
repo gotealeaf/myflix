@@ -23,7 +23,7 @@ feature 'reset password' do
     expect(page).to have_content 'not recognized'
   end
 
-  scenario 'user\'s passwords do no match' do
+  scenario "user's passwords do no match" do
     request_password_reset_email
     open_email_and_click_link
 
@@ -43,16 +43,12 @@ feature 'reset password' do
   def request_password_reset_email
     visit sign_in_path
     click_link 'Forgot Password?'
-    expect(page).to have_content 'Email Address'
-
     fill_in 'Email Address', with: johnny.email
     click_button 'Send Email'
   end
 
   def open_email_and_click_link
     open_email(johnny.email)
-    current_email.should have_content johnny.password_token
-
     current_email.click_link 'Reset Password'
   end
 
