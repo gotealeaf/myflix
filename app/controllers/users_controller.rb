@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      AppMailer.send_welcome_email(@user).deliver
       redirect_to sign_in_path
     else
       flash[:error] = "User couldn't be created. #{@user.errors.full_messages.first}"
