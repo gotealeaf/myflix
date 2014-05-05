@@ -40,4 +40,5 @@ group :production do
 end
 
 gem 'therubyracer'
+gem 'thread_safe', '0.2.0'
 
