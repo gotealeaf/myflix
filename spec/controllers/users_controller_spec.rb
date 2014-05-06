@@ -15,6 +15,10 @@ describe UsersController do
       before do
         post :create, user: { email: "paq@paq.com", full_name: "paquito_spec", password: "password", password_confirmation: "password" }
       end
+
+      after do
+        ActionMailer::Base.deliveries.clear
+      end      
       
       it "creates the user" do
         User.first.email.should == "paq@paq.com"
@@ -24,6 +28,20 @@ describe UsersController do
       it "redirect to sign_in path" do
         response.should redirect_to :sign_in
       end
+
+      it "sends out the email" do
+        expect(ActionMailer::Base.deliveries).to_not be_empty
+      end
+
+      it "sends to the right recipient" do
+        message = ActionMailer::Base.deliveries.last
+        expect(message.to).to eq(["paq@paq.com"])
+      end
+
+      it "has the right content" do
+        message = ActionMailer::Base.deliveries.last
+        expect(message.body).to include("Welcome to Myflix paquito_spec!")
+      end       
     end
 
     context "with invalid input" do
@@ -37,6 +55,10 @@ describe UsersController do
 
       it "renders :new template when the input is incorrect" do
         response.should render_template :new
+      end
+
+      it "does not send an email" do
+        expect(ActionMailer::Base.deliveries).to be_empty
       end
     end
   end
