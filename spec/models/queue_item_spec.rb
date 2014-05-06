@@ -3,6 +3,7 @@ require 'spec_helper'
 describe QueueItem do
   it { should belong_to(:user) }
   it { should belong_to(:video) }
+  it { should validate_numericality_of(:list_order).only_integer }
   
   describe '#video_title' do
     it 'should display queue item video title' do
