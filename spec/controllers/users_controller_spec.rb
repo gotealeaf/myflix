@@ -25,6 +25,7 @@ describe UsersController do
   describe "POST create" do
     context "with valid input" do
       before { post :create, user: Fabricate.attributes_for(:user) }
+      after { ActionMailer::Base.deliveries = [] }
 
       it "redirects to sign in" do
         expect(response).to redirect_to sign_in_path
@@ -37,6 +38,7 @@ describe UsersController do
 
     context "with invalid input" do
       before { post :create, user: Fabricate.attributes_for(:user, password: nil) }
+      after { ActionMailer::Base.deliveries = [] }
 
       it "does not create the user" do
         expect(User.count).to eq 0
@@ -79,9 +81,11 @@ describe UsersController do
       let(:jane) { Fabricate(:user) }
 
       before do
-        Invitation.create(user: jane, invitee_email: 'billy@example.com')
+        Invitation.create(inviter: jane, invitee_email: 'billy@example.com')
         post :create, user: Fabricate.attributes_for(:user, email: 'billy@example.com')
       end
+
+      after { ActionMailer::Base.deliveries = [] }
 
       it "has the new user follow another user if invited by that user" do
         expect(jane.followers).to include User.find_by_email('billy@example.com')

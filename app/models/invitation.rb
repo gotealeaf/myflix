@@ -1,6 +1,6 @@
 class Invitation < ActiveRecord::Base
-  validates :user, presence: true
+  validates :inviter, presence: true
   validates :invitee_email, presence: true
 
-  belongs_to :user
+  belongs_to :inviter, class_name: :User, foreign_key: :user_id
 end

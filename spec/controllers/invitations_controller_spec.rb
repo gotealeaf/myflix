@@ -46,7 +46,7 @@ describe InvitationsController do
       end
 
       it "creates an invitation from the user to the invitee" do
-        expect(Invitation.first.user).to eq current_user
+        expect(Invitation.first.inviter).to eq current_user
         expect(Invitation.first.invitee_email).to eq 'jadams@example.com'
       end
 
