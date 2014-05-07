@@ -27,6 +27,32 @@ describe QueueItem do
     end
   end #ends rating
   
+  describe '#rating=' do
+    let(:user) { Fabricate(:user) }
+    let(:video) { Fabricate(:video) }
+    context 'review present' do
+      it 'should change the rating' do
+        review = Fabricate(:review, user: user, video: video, rating: 2)
+        queue_item = Fabricate(:queue_item, user: user, video: video) 
+        queue_item.rating = 4
+        expect(Review.first.rating).to eq(4) #Review.first is used in order to force the retrieval of the record from the db. If one uses review, must write review.reload.rating
+      end
+      it 'should remove the rating' do
+        review = Fabricate(:review, user: user, video: video, rating: 2)
+        queue_item = Fabricate(:queue_item, user: user, video: video) 
+        queue_item.rating = nil
+        expect(Review.first.rating).to be_nil
+      end
+    end #ends the review present context
+    context 'review not present' do
+      it 'should create a review with the rating' do
+        queue_item = Fabricate(:queue_item, user: user, video: video) 
+        queue_item.rating = 3
+        expect(Review.first.rating).to eq(3)
+      end
+    end#ends review not present context
+  end #ends #rating 
+  
   describe '#category_names' do
     let(:user) { Fabricate(:user) }
     let(:category1) { Fabricate(:category, name: 'drama') } 

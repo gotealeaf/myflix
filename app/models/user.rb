@@ -6,4 +6,10 @@ class User < ActiveRecord::Base
   
   has_secure_password validations: false
   
+  def normalize_queue_item_list_order
+     queue_items.each_with_index do |queue_item, index|
+      queue_item.update_attributes(list_order: index+1 ) #must be + 1 because index starts with zero
+    end
+  end
+  
 end

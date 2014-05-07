@@ -8,7 +8,6 @@ class VideosController < ApplicationController
   def show
     @video = Video.find(params[:id])
     @reviews = @video.reviews
-    @new_item = QueueItem.new
   end
   
   def search

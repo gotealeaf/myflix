@@ -5,6 +5,7 @@ describe VideosController do
   
   describe "GET Show" do 
     let(:video) { Fabricate(:video) }
+    
     context "with authenticated users" do
       before do
         session[:user_id] = Fabricate(:user).id
@@ -25,21 +26,15 @@ describe VideosController do
       it "should render the show page" do
         get :show, id: video.id
         expect(response).to render_template :show
-      end 
-      
-      it "should set the @queue_item instance variable" do
-        queue1 = Fabricate(:queue_item)
-        get :show, id: video.id
-        expect(assigns(:queue_item).to eq(queue1) 
       end
-    end # ends the authenticated users test spec
+    end # ends the authenticated users context test spec
     
     context "with unauthenticated users" do
       it "redirects users to the main home page" do
         get :show, id: video.id
         expect(response).to redirect_to root_path
       end
-    end     
+    end #ends unauthenticated users context    
   end # ends the GET Show action test spec
   
   describe "GET Search" do
@@ -66,6 +61,7 @@ describe VideosController do
         get :search
         expect(response).to redirect_to root_path
       end
-    end # ends the GET Search unauthenticated users test spec 
+    end #ends context of unauthenticated users  
+    
   end #ends the GET search test spec
- end #ends the videos controller test
+end #ends the videos controller test
