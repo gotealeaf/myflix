@@ -5,6 +5,13 @@ describe InvitationsController do
     it_behaves_like 'require_sign_in' do
       let(:action) { get :new }
     end
+
+    it "sets @invitation to a new invitation" do
+      set_current_user
+      get :new
+      expect(assigns(:invitation)).to be_new_record
+      expect(assigns(:invitation)).to be_instance_of Invitation
+    end
   end
 
   describe 'POST create' do
@@ -12,31 +19,25 @@ describe InvitationsController do
       let(:action) { post :create }
     end
 
-    context "with invitee already registered" do
-      let(:john) { Fabricate(:user, full_name: 'John Adams', email: 'jadams@example.com') }
-      
+    context "with invalid input" do
       before do
         set_current_user
-        post :create, full_name: john.full_name, email: john.email, message: 'Join the site!'
+        post :create, invitation: { invitee_email: 'jadams@example.com', invitee_name: nil, message: 'Hello' }
       end
 
-      it "redirects to the invitee's page" do
-        expect(response).to redirect_to user_path(john)
+      it "redirects to the invite page" do
+        expect(response).to render_template :new
       end
 
-      it "does not create a new invitation" do
-        expect(Invitation.first).to be_blank
-      end
-
-      it "sets a warning message" do
-        expect(flash[:warning]).to_not be_blank
+      it "sets errors on the invitation" do
+        expect(assigns(:invitation)).to have(1).error_on(:invitee_name)
       end
     end
 
-    context "with invitee not already registered" do
+    context "with valid input" do
       before do
         set_current_user
-        post :create, full_name: 'John Adams', email: 'jadams@example.com', message: 'Join the site!'
+        post :create, invitation: { invitee_email: 'jadams@example.com', invitee_name: 'John Adams', message: 'Hello' }
       end
 
       after { ActionMailer::Base.deliveries = [] }
