@@ -4,6 +4,19 @@ class Admin::VideosController < AdminController
   end
 
   def create
-    binding.pry
+    @video = Video.new(video_params)
+    if @video.save
+      flash[:success] = "The video #{@video.title} has been saved!"
+      redirect_to new_admin_video_path
+    else 
+      flash[:danger] = "The video could not be saved, due to the following errors:"
+      render :new
+    end
+  end
+
+  private
+
+  def video_params
+    params.require(:video).permit(:title, :category_id, :description, :small_cover, :large_cover)
   end
 end

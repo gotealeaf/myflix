@@ -19,6 +19,8 @@ gem 'slim'
 gem 'unicorn'
 gem 'sentry-raven'
 gem 'paratrooper'
+gem 'carrierwave'
+gem 'fog'
 
 group :development do
   gem 'pry'
