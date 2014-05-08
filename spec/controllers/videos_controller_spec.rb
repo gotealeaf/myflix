@@ -1,14 +1,13 @@
 require 'spec_helper'
 
 describe VideosController do
-  #let(:video) { Video.create(name: "futurama", description: "funny movie", id: 1) } alternative
   
   describe "GET Show" do 
     let(:video) { Fabricate(:video) }
     
     context "with authenticated users" do
       before do
-        session[:user_id] = Fabricate(:user).id
+        set_current_user
       end
       
       it "should set the @video instance variable" do
@@ -40,7 +39,7 @@ describe VideosController do
   describe "GET Search" do
     context "with authenticated users" do
       before do
-        session[:user_id] = Fabricate(:user).id
+        set_current_user
       end
     
       it "should set the @results instance variable" do
@@ -57,9 +56,9 @@ describe VideosController do
     end # ends the context for authenticated users
     
     context "with unauthenticated users" do
-      it "should redirect the user to the main home page" do
-        get :search
-        expect(response).to redirect_to root_path
+      
+      it_behaves_like 'require sign in' do
+        let(:action) { get :search }
       end
     end #ends context of unauthenticated users  
     
