@@ -11,7 +11,7 @@ class AppMailer < ActionMailer::Base
     mail(to: @user.email, subject: 'MyFlix Password Reset')
   end
 
-  def invite_email(invitation)
+  def send_invitation_email(invitation)
     @name = invitation.invitee_name
     @message = invitation.message
     mail(to: invitation.invitee_email, subject: 'MyFlix Invitation')

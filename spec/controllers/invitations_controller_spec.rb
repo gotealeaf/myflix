@@ -29,6 +29,14 @@ describe InvitationsController do
         expect(response).to render_template :new
       end
 
+      it "does not create the invitation" do
+        expect(Invitation.first).to be_blank
+      end
+
+      it "does not send out an email" do
+        expect(ActionMailer::Base.deliveries.last).to be_blank
+      end
+
       it "sets errors on the invitation" do
         expect(assigns(:invitation)).to have(1).error_on(:invitee_name)
       end

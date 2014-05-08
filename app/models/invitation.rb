@@ -5,7 +5,7 @@ class Invitation < ActiveRecord::Base
   validates :message, presence: true
   validate :invitation_cannot_have_registered_invitee
 
-  belongs_to :inviter, class_name: :User, foreign_key: :inviter_id
+  belongs_to :inviter, class_name: :User
 
   private
 

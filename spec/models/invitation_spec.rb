@@ -5,7 +5,7 @@ describe Invitation do
   it { should validate_presence_of(:invitee_email) }
   it { should validate_presence_of(:invitee_name) }
   it { should validate_presence_of(:message) }
-  it { should belong_to(:inviter).class_name(:User).with_foreign_key(:inviter_id) }
+  it { should belong_to(:inviter).class_name(:User) }
 
   it "should validate that the email has not been registered" do
     jane = Fabricate(:user)
