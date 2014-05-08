@@ -12,9 +12,8 @@ describe InvitationsController do
       end
     end
 
-    context "user not authenticated" do
-      before { get :new }
-      it_behaves_like "requires login"
+    it_behaves_like "requires login" do
+      let(:action) { get :new }
     end
   end 
 
@@ -124,9 +123,8 @@ describe InvitationsController do
       end
     end
 
-    context "user not authenticated" do
-      before { post :create }
-      it_behaves_like "requires login"
+    it_behaves_like "requires login" do
+      let(:action) { post :create }
     end
   end
 end

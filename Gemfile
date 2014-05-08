@@ -20,11 +20,15 @@ gem 'unicorn'
 gem 'sentry-raven'
 gem 'paratrooper'
 gem 'carrierwave'
+gem 'mini_magick'
 gem 'fog'
 
 group :development do
   gem 'pry'
   gem 'pry-nav'
+  gem 'pry-remote'
+  gem 'pry-stack_explorer'
+  gem 'pry-debugger'
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"

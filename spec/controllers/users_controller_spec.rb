@@ -156,7 +156,9 @@ describe UsersController do
         expect(assigns(:user)).not_to be_instance_of(User)
       end
 
-      it_behaves_like "requires login"
+      it_behaves_like "requires login" do
+        let(:action) { get :show, id: User.find(2).id }   
+      end
     end
   end
 end

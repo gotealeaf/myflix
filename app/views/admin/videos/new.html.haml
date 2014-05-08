@@ -31,13 +31,19 @@
               .col-sm-6
                 %col.btn.btn-file
                   = f.file_field :large_cover, hide_label: true, class: "form-control"
+                  /= f.hidden_field :large_cover_cache
             .form-group
               .control-label.col-sm-3
                 = f.label :small_cover, "Small Cover"
               .col-sm-6
                 %col.btn.btn-file
                   = f.file_field :small_cover, hide_label: true, class: "form-control"
-
+                  /= f.hidden_field :small_cover_cache, value: @video.small_cover_cache
+            .form-group
+              .control-label.col-sm-3
+                = f.label :video_url, "Video URL"
+              .col-sm-6
+                = f.text_field :video_url, hide_label: true, class: "form-control"
           %fieldset.actions.form-group
             .col-sm-6.col-md-offset-3
               %input(type="submit" value="Add Video" class="btn btn-default")

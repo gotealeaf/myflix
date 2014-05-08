@@ -1,13 +1,13 @@
-# encoding: utf-8
-
 class LargeCoverUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
+
+  process :resize_to_fill => [665, 375]
 
   # Choose what kind of storage to use for this uploader:
-  storage :file
+  # Set in config/initializers/carrierwave.rb
   # storage :fog
 
   # Override the directory where uploaded files will be stored.

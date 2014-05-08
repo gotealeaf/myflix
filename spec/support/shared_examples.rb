@@ -1,5 +1,6 @@
 shared_examples "requires login" do
   it "redirects to login path" do
+    action
     expect(response).to redirect_to login_path
   end
 end
@@ -27,5 +28,19 @@ shared_examples "tokenable" do
   it "generates a random new token when the object is created" do 
     expect(object.token).to be_present
   end
+end
+
+shared_examples "requires admin" do
+  it "sets flash danger message" do
+    set_current_user(Fabricate(:user))
+    action
+    expect(flash[:danger]).to eq("You do not have permission to do that.") 
+  end
+
+  it "redirects to home" do
+    set_current_user(Fabricate(:user))
+    action
+    expect(response).to redirect_to home_path        
+  end  
 end
 

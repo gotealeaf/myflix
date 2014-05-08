@@ -1,3 +1,7 @@
+CarrierWave.configure do |config|
+  config.storage :fog
+end
+
 if Rails.env.test?
   CarrierWave.configure do |config|
     config.storage = :file
