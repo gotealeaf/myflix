@@ -81,7 +81,7 @@ describe UsersController do
       let(:jane) { Fabricate(:user) }
 
       before do
-        Invitation.create(inviter: jane, invitee_email: 'billy@example.com')
+        Invitation.create(inviter: jane, invitee_email: 'billy@example.com', invitee_name: 'Billy', message: 'Hi')
         post :create, user: Fabricate.attributes_for(:user, email: 'billy@example.com')
       end
 
