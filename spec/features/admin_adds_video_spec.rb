@@ -29,8 +29,8 @@ def add_video(video, category)
   expect(page).to have_content("Category")
   select "#{category.name}", from: "Category"
   fill_in "Description", with: video.description
-  attach_file "Large Cover", "#{Rails.root}/public/tmp/24_large.jpg"
-  attach_file "Small Cover", "#{Rails.root}/public/tmp/24.jpg"
+  attach_file "Large Cover", "#{Rails.root}/spec/support/uploads/24_large.jpg"
+  attach_file "Small Cover", "#{Rails.root}/spec/support/uploads/24.jpg"
   fill_in "Video URL", with: video.video_url
   click_button "Add Video"
   expect(page).to have_content("The video #{video.title} has been saved!")
@@ -43,5 +43,6 @@ end
 
 def expect_video_link_to_be_available(video)
   find("a[href='/videos/#{video.id}']").click
+  expect(page).to have_selector("img[src='/uploads/video/large_cover/#{video.id}/24_large.jpg']")
   expect(page).to have_link("Watch Now", href: video.video_url)
 end
