@@ -2,23 +2,35 @@ require 'spec_helper'
 
 describe UsersController do
   describe "GET new" do
-    let(:action) { get :new }
+    context "with authenticated user" do
+      before do
+        set_current_user
+        get :new
+      end
 
-    it "sets warning if authenticated" do
-      set_current_user
-      action
-      expect(flash[:warning]).to eq "You are already logged in."
+      it "sets warning if authenticated" do
+        expect(flash[:warning]).to eq "You are already logged in."
+      end
+
+      it "redirects to home path if authenticated" do
+        expect(response).to redirect_to home_path
+      end
     end
 
-    it "redirects to home path if authenticated" do
-      set_current_user
-      action
-      expect(response).to redirect_to home_path
+    context "with no authenticated user and no invitation" do
+      it "sets @user to a new user if unauthenticated" do
+        get :new
+        expect(assigns(:user)).to be_a_new User
+      end
     end
 
-    it "sets @user to a new user if unauthenticated" do
-      action
-      expect(assigns(:user)).to be_a_new User
+    context "with no authenticated user and an invitation" do
+      pending "associates the user with the invitee's name and email" do
+        invitation = Fabricate(:invitation)
+        get :new
+        expect(assigns(:user).email).to eq invitation.invitee_email
+        expect(assigns(:user).full_name).to eq invitation.invitee_name
+      end
     end
   end
 

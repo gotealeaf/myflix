@@ -14,8 +14,8 @@ class UsersController < ApplicationController
     if @user.save
       AppMailer.registration_email(@user).deliver
 
-      if invite = Invitation.find_by_invitee_email(@user.email)
-        create_relationships_from_invite(invite)
+      if invitation = Invitation.find_by_invitee_email(@user.email)
+        create_relationships_from_invitation(invitation)
       end
 
       redirect_to sign_in_path
@@ -35,8 +35,8 @@ class UsersController < ApplicationController
     params.require(:user).permit(:email, :full_name, :password, :password_confirmation)
   end
 
-  def create_relationships_from_invite(invite)
-    UserRelationship.create(followee: invite.inviter, follower: User.find_by_email(invite.invitee_email))
-    UserRelationship.create(followee: User.find_by_email(invite.invitee_email), follower: invite.inviter)
+  def create_relationships_from_invitation(invitation)
+    UserRelationship.create(followee: invitation.inviter, follower: User.find_by_email(invitation.invitee_email))
+    UserRelationship.create(followee: User.find_by_email(invitation.invitee_email), follower: invitation.inviter)
   end
 end

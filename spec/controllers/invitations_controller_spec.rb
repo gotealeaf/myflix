@@ -25,7 +25,9 @@ describe InvitationsController do
         post :create, invitation: { invitee_email: 'jadams@example.com', invitee_name: nil, message: 'Hello' }
       end
 
-      it "redirects to the invite page" do
+      after { ActionMailer::Base.deliveries = [] }
+
+      it "renders the new template" do
         expect(response).to render_template :new
       end
 
@@ -35,6 +37,10 @@ describe InvitationsController do
 
       it "does not send out an email" do
         expect(ActionMailer::Base.deliveries.last).to be_blank
+      end
+
+      it "sets a warning message" do
+        expect(flash[:warning]).to_not be_blank
       end
 
       it "sets errors on the invitation" do
