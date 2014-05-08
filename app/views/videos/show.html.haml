@@ -3,6 +3,7 @@
     .row
       .video_large_cover.col-sm-7.col-sm-offset-1
         %img(src="#{@video.large_cover_url}")
+        /%embed{src: "#{@video.video_url}", controller: "true", height: "400", width: "600", scale: "aspect"}
       .video_info.col-sm-3
         %header
           %h3 
