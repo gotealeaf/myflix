@@ -1,7 +1,13 @@
+= content_for :head do
+  %script{src: "https://js.stripe.com/v2/", type: "text/javascript"}
+  :javascript
+    Stripe.setPublishableKey("pk_test_mkK2UJ7AR8E881nIJZwFqflD");
+  = javascript_include_tag 'payments'
+
 %section.register.container
   .row
     .col-sm-10.col-sm-offset-1
-      = bootstrap_form_for(@user, layout: :horizontal, html: {class: "form-horizontal"} ) do |f|
+      = bootstrap_form_for(@user, html: {class: "form-horizontal", id: 'payment-form'}) do |f|
         %fieldset
           %header
             %h1 Register
@@ -23,7 +29,24 @@
               = f.text_field :full_name, hide_label: true, class: "form-control"
           - if @invitation_token
             = hidden_field_tag(:invitation_token, @invitation_token)
+        %fieldset.credit_card
+          .form-group
+            %label.control-label.col-sm-2 Credit Card Number
+            .col-sm-6
+              %input.form-control.card-number(type="text")
+          .form-group
+            %label.control-label.col-sm-2 Security Code
+            .col-sm-6
+              %input.form-control.card-cvc(type="text")
+          .form-group
+            %label.control-label.col-sm-2 Expiration
+            .col-sm-3
+              /note name: nil is very important for compliance - no info on server!
+              = select_month(Date.today, {add_month_numbers: true}, name: nil, class: 'form-control card-expiry-month')
+            .col-sm-2
+              = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, name: nil, class: 'form-control card-expiry-year')
           .actions.control-group
             .controls.col-sm-offset-3
-              /%input(type="submit" value="Register" class="btn btn-default")
-              %script.stripe-button{"data-amount" => "999", "data-description" => "Register ($9.99)", "data-image" => "/square-image.png", "data-key" => "pk_test_mkK2UJ7AR8E881nIJZwFqflD", "data-name" => "Myflix", src: "https://checkout.stripe.com/checkout.js"}
+              /= submit_tag "Register", class: "btn btn-default btn-register"
+              %input(type="submit" value="Register" class="btn btn-default btn-register")
+              /%script.stripe-button{"data-amount" => "999", "data-description" => "Register ($9.99)", "data-key" => ENV['STRIPE_PUBLIC_KEY'], "data-name" => "Myflix", src: "https://checkout.stripe.com/checkout.js"}

@@ -85,6 +85,9 @@ GEM
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.3)
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
     fog (1.22.0)
       fog-brightbox
       fog-core (~> 1.21, >= 1.21.1)
@@ -294,6 +297,7 @@ DEPENDENCIES
   database_cleaner
   fabrication
   faker
+  figaro
   fog
   haml-rails
   jquery-rails

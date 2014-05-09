@@ -21,14 +21,13 @@ before_action :require_user, only: [:show]
   def create
     @user = User.new(user_params)
     if @user.valid?
-      Stripe.api_key = "sk_test_tO8yd15PGNgYGIUMU5Y5Vlgr"
-      stripe_token = params[:stripeToken]
+      Stripe.api_key = ENV["STRIPE_API_KEY"]
       begin
         charge = Stripe::Charge.create(
           :amount => 999, # amount in cents, again
           :currency => "usd",
-          :card => stripe_token,
-          :description => "#{@user.email}"
+          :card => params[:stripeToken],
+          :description => "Sign up charge for #{@user.email}"
         )
         @user.save
         handle_invitation
