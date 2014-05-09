@@ -84,4 +84,11 @@ describe User do
       ana.can_follow?(ana).should be_false
     end  
   end
+
+  describe "#url_for_reset_password" do
+    let(:ana) { Fabricate :user }
+    it "returns the correct url" do
+      link = "localhost:3000/reset_password/#{ana.token}"
+    end
+  end
 end
