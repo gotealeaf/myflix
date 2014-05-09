@@ -20,12 +20,27 @@ before_action :require_user, only: [:show]
 
   def create
     @user = User.new(user_params)
-    if @user.save
-      handle_invitation
-      AppMailer.registration_email(@user).deliver
-      flash[:success] = "You registered! Welcome, #{params[:user][:full_name]}!"
-      redirect_to login_path
+    if @user.valid?
+      Stripe.api_key = "sk_test_tO8yd15PGNgYGIUMU5Y5Vlgr"
+      stripe_token = params[:stripeToken]
+      begin
+        charge = Stripe::Charge.create(
+          :amount => 999, # amount in cents, again
+          :currency => "usd",
+          :card => stripe_token,
+          :description => "#{@user.email}"
+        )
+        @user.save
+        handle_invitation
+        AppMailer.registration_email(@user).deliver
+        flash[:success] = "You registered! Welcome, #{params[:user][:full_name]}!"
+        redirect_to login_path
+      rescue Stripe::CardError => e
+        flash[:danger] = e.message
+        render :new
+      end
     else
+      @user.save
       render :new
     end
   end

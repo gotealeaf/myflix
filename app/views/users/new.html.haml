@@ -25,4 +25,5 @@
             = hidden_field_tag(:invitation_token, @invitation_token)
           .actions.control-group
             .controls.col-sm-offset-3
-              %input(type="submit" value="Register" class="btn btn-default")
+              /%input(type="submit" value="Register" class="btn btn-default")
+              %script.stripe-button{"data-amount" => "999", "data-description" => "Register ($9.99)", "data-image" => "/square-image.png", "data-key" => "pk_test_mkK2UJ7AR8E881nIJZwFqflD", "data-name" => "Myflix", src: "https://checkout.stripe.com/checkout.js"}
