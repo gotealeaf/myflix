@@ -1,7 +1,7 @@
 = content_for :head do
   %script{src: "https://js.stripe.com/v2/", type: "text/javascript"}
   :javascript
-    Stripe.setPublishableKey("pk_test_mkK2UJ7AR8E881nIJZwFqflD");
+    Stripe.setPublishableKey("#{ENV['STRIPE_PUBLIC_KEY']}");
   = javascript_include_tag 'payments'
 
 %section.register.container
@@ -30,23 +30,21 @@
           - if @invitation_token
             = hidden_field_tag(:invitation_token, @invitation_token)
         %fieldset.credit_card
+          %span.payment-errors
           .form-group
             %label.control-label.col-sm-2 Credit Card Number
             .col-sm-6
-              %input.form-control.card-number(type="text")
+              %input.form-control(type="text" data-stripe="number")
           .form-group
             %label.control-label.col-sm-2 Security Code
             .col-sm-6
-              %input.form-control.card-cvc(type="text")
+              %input.form-control(type="text" data-stripe="cvc")
           .form-group
             %label.control-label.col-sm-2 Expiration
             .col-sm-3
-              /note name: nil is very important for compliance - no info on server!
-              = select_month(Date.today, {add_month_numbers: true}, name: nil, class: 'form-control card-expiry-month')
+              = select_month(Date.today, {add_month_numbers: true}, name: nil, class: 'form-control', data: {stripe: "exp-month"})
             .col-sm-2
-              = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, name: nil, class: 'form-control card-expiry-year')
+              = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, name: nil, class: 'form-control', data: {stripe: "exp-year"})
           .actions.control-group
-            .controls.col-sm-offset-3
-              /= submit_tag "Register", class: "btn btn-default btn-register"
+            .controls.col-sm-offset-2
               %input(type="submit" value="Register" class="btn btn-default btn-register")
-              /%script.stripe-button{"data-amount" => "999", "data-description" => "Register ($9.99)", "data-key" => ENV['STRIPE_PUBLIC_KEY'], "data-name" => "Myflix", src: "https://checkout.stripe.com/checkout.js"}
