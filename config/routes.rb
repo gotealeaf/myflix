@@ -30,5 +30,9 @@ Myflix::Application.routes.draw do
   resources :password_resets, only: [:create, :show]
   resources :invitations, only: [:new, :create]
 
+  namespace :admin do
+    resources :videos, only: [:new, :create]    
+  end
+
   mount Sidekiq::Web => '/sidekiq'
 end

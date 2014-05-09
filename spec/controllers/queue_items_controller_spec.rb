@@ -22,16 +22,16 @@ describe QueueItemsController do
     end
 
     context "user not authenticated" do
-      before do
-        clear_current_user
-        get :index
-      end
+      before { clear_current_user }
 
       it "does not set @queue_items variable" do
+        get :index
         expect(assigns(:queue_items)).to eq(nil)
       end
       
-      it_behaves_like "requires login"
+      it_behaves_like "requires login" do
+        let(:action) { get :index }
+      end
     end
   end
 
@@ -76,16 +76,16 @@ describe QueueItemsController do
     end
 
     context "user not authenticated" do
-      before do
-        clear_current_user
-        fabricate_video_and_post_to_create
-      end
+      before { clear_current_user }
 
       it "does not add the video to the queue" do
+        fabricate_video_and_post_to_create
         expect(QueueItem.count).to eq(0)
       end
       
-      it_behaves_like "requires login"
+      it_behaves_like "requires login" do
+        let(:action) { fabricate_video_and_post_to_create }
+      end
     end
   end
 
@@ -129,16 +129,16 @@ describe QueueItemsController do
     end
 
     context "user not authenticated" do
-      before do
-        clear_current_user
-        delete :destroy, id: 1
-      end
+      before { clear_current_user }
 
       it "does not delete the selected video from user_videos" do
+        delete :destroy, id: 1
         expect(User.first.queue_items.count).to eq(3)
       end
 
-      it_behaves_like "requires login"
+      it_behaves_like "requires login" do
+        let(:action) { delete :destroy, id: 1 }
+      end
     end
   end
   
@@ -224,14 +224,19 @@ describe QueueItemsController do
         set_current_user
         create_queue_items
         clear_current_user
+
+      end
+
+      it_behaves_like "requires login" do
+        let(:action) { post :update_queue, queue_items: [{id: "1", position: "3"}, 
+                                          {id: "2", position: "2"}, 
+                                          {id: "3", position: "1"}] }
+      end
+
+      it "does not change any queue positions" do
         post :update_queue, queue_items: [{id: "1", position: "3"}, 
                                           {id: "2", position: "2"}, 
                                           {id: "3", position: "1"}]
-      end
-
-      it_behaves_like "requires login"
-
-      it "does not change any queue positions" do
         expect(User.first.queue_items).to eq([queue_item(1), queue_item(2), queue_item(3)])
       end
     end

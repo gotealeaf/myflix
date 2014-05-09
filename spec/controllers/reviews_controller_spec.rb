@@ -96,21 +96,23 @@ describe ReviewsController do
     end
 
     context "user not authenticated" do
-      before do
+      it "does not create a new review" do
         video = Fabricate(:video)
         post :create, review: Fabricate.attributes_for(:review), video_id: video.id
-      end
-
-      it "does not create a new review" do
         expect(Review.count).to eq(0)
       end
 
       it "sets a special error message telling user to login" do
+        video = Fabricate(:video)
+        post :create, review: Fabricate.attributes_for(:review), video_id: video.id
         expect(flash[:danger]).not_to be_blank
         expect(flash[:danger]).to eq("You must be logged in to do that.")
       end
 
-      it_behaves_like "requires login"
+      it_behaves_like "requires login" do
+        video = Fabricate(:video)
+        let(:action) { post :create, review: Fabricate.attributes_for(:review), video_id: video.id }
+      end
     end
   end
 end

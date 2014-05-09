@@ -37,20 +37,26 @@ describe SessionsController do
 
     context "with invalid login credentials" do
       before do
-        alice = Fabricate(:user)
-        post :create, email: alice.email, password: alice.password + "asdfsakd"
+
       end
 
       it "does not put the user into the session" do
+        alice = Fabricate(:user)
+        post :create, email: alice.email, password: alice.password + "asdfsakd"
         expect(session[:user_id]).to be_nil
       end
 
       it "flashes an error message" do
+        alice = Fabricate(:user)
+        post :create, email: alice.email, password: alice.password + "asdfsakd"
         expect(session[:user_id]).to be_nil
         expect(flash[:danger]).not_to be_blank
       end
 
-      it_behaves_like "requires login"
+      it_behaves_like "requires login" do
+        alice = Fabricate(:user)
+        let(:action) { post :create, email: alice.email, password: alice.password + "asdfsakd" } 
+      end
     end
   end
 

@@ -27,13 +27,14 @@ describe RelationshipsController do
     end
 
     context "unauthenticated user" do
-      before { get :index }
-
       it "does not set @relationships" do
+        get :index
         expect(assigns(:relationships)).to be_nil
       end
 
-      it_behaves_like "requires login"
+      it_behaves_like "requires login" do
+        let(:action) { get :index }
+      end
     end
   end
 
@@ -130,14 +131,16 @@ describe RelationshipsController do
       before do
         alice = Fabricate(:user)
         bob = Fabricate(:user)
-        post :create, leader_id: 2
       end
 
       it "does not create a new relationship" do
+        post :create, leader_id: 2
         expect(User.first.leaders.count).to eq(0)
       end
 
-      it_behaves_like "requires login"
+      it_behaves_like "requires login" do
+        let(:action) { post :create, leader_id: 2 }
+      end
     end
   end
 
@@ -210,18 +213,21 @@ describe RelationshipsController do
         alice = Fabricate(:user)
         bob = Fabricate(:user)
         alice.follow!(bob)
-        post :destroy, id: 1
       end
 
       it "does not affect the leader's follower list" do
+        post :destroy, id: 1
         expect(User.find(2).followers.count).to eq(1)
       end
       
       it "does not affect the user's leader list" do
+        post :destroy, id: 1
         expect(User.first.leaders.count).to eq(1)
       end
 
-      it_behaves_like "requires login"
+      it_behaves_like "requires login" do
+        let(:action) { post :destroy, id: 1 }
+      end
     end
   end
 end
