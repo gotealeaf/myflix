@@ -6,6 +6,7 @@ Myflix::Application.routes.draw do
     post 'follow', to: 'users#follow'
   end
   get 'register', to: 'users#new'
+  get 'register/:token', to: 'users#new_from_invitation', as: 'invitation_register'
 
   resources :sessions, only: [:create]
   get 'sign_in', to: 'sessions#new'

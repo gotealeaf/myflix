@@ -2,7 +2,7 @@
 %html
   %body
     %p
-      Hi #{ @name }
+      Hi #{ @invitation.invitee_name }
       %br
       %br
       Your friend thought you might be interested in watching some great movies.
@@ -11,10 +11,10 @@
       They left you the message below:
       %br
       %br
-      = @message
+      = @invitation.message
       %br
       %br
       Click the link below in order to register.
       %br
       %br
-      = link_to 'Register Now!', register_url
+      = link_to 'Register Now!', invitation_register_url(@invitation.token)

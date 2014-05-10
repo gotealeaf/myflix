@@ -8,6 +8,19 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def new_from_invitation
+    if logged_in?
+      flash[:warning] = "You are already logged in."
+      redirect_to home_path
+    elsif invitation = Invitation.find_by_token(params[:token])
+      @user = User.new(email: invitation.invitee_email, full_name: invitation.invitee_name )
+      render :new
+    else
+      flash[:warning] = "The token is expired but you can still register."
+      redirect_to register_path
+    end
+  end
+
   def create
     @user = User.new(user_params)
 

@@ -13,4 +13,9 @@ describe Invitation do
     invitation = Invitation.create(inviter: jane, invitee_email: 'sam@example.com', invitee_name: 'Sam', message: 'Hi')
     expect(invitation).to have(1).error_on(:invitee_email)
   end
+
+  it "should set generate a token" do
+    invitation = Fabricate(:invitation)
+    expect(invitation.token).to_not be_blank
+  end
 end

@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20140504205826) do
     t.string   "invitee_email"
     t.string   "invitee_name"
     t.text     "message"
+    t.string   "token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

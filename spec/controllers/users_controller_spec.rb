@@ -2,32 +2,53 @@ require 'spec_helper'
 
 describe UsersController do
   describe "GET new" do
-    context "with authenticated user" do
-      before do
-        set_current_user
-        get :new
-      end
-
-      it "sets warning if authenticated" do
-        expect(flash[:warning]).to eq "You are already logged in."
-      end
-
-      it "redirects to home path if authenticated" do
-        expect(response).to redirect_to home_path
-      end
+    it_behaves_like "register_authenticated_user" do
+      let(:action) { get :new }
     end
 
-    context "with no authenticated user and no invitation" do
-      it "sets @user to a new user if unauthenticated" do
+    context "with no authenticated user" do
+      it "sets @user to a new user" do
         get :new
         expect(assigns(:user)).to be_a_new User
       end
     end
+  end
 
-    context "with no authenticated user and an invitation" do
-      pending "associates the user with the invitee's name and email" do
+
+  describe "GET new_from_invitation" do
+    it_behaves_like "register_authenticated_user" do
+      let(:action) do
         invitation = Fabricate(:invitation)
-        get :new
+        get :new_from_invitation, token: invitation.token
+      end
+    end
+
+    context "with no authenticated user" do
+      it "with invalid token redirects to the registration page" do
+        get :new_from_invitation, token: 'fake_token'
+        expect(response).to redirect_to register_path
+      end
+
+      it "with invalid token sets a warning message" do
+        get :new_from_invitation, token: 'fake_token'
+        expect(flash[:warning]).to_not be_blank
+      end
+
+      it "with valid token renders the new template" do
+        invitation = Fabricate(:invitation)
+        get :new_from_invitation, token: invitation.token
+        expect(response).to render_template :new
+      end
+
+      it "with valid token sets @user to a new user" do
+        invitation = Fabricate(:invitation)
+        get :new_from_invitation, token: invitation.token
+        expect(assigns(:user)).to be_a_new User
+      end
+
+      it "with valid token associates the user with the invitee's name and email" do
+        invitation = Fabricate(:invitation)
+        get :new_from_invitation, token: invitation.token
         expect(assigns(:user).email).to eq invitation.invitee_email
         expect(assigns(:user).full_name).to eq invitation.invitee_name
       end
