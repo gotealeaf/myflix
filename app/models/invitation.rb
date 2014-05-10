@@ -5,6 +5,6 @@ class Invitation < ActiveRecord::Base
   validates_presence_of :guest_email, :guest_name, :message
 
   def generate_token
-    self.token = SecureRandom.urlsafe_base64
+    self.invitation_token = SecureRandom.urlsafe_base64
   end
 end

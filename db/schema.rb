@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140425160902) do
+ActiveRecord::Schema.define(version: 20140510150159) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20140425160902) do
     t.text     "message"
     t.string   "token"
     t.integer  "inviter_id"
+    t.string   "invitation_token"
   end
 
   create_table "queue_items", force: true do |t|

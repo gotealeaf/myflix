@@ -1,7 +1,7 @@
 class UserSignup
-  attr_reader :successful?
+  attr_reader :error_message
 
-  def initializer(user)
+  def initialize(user)
     @user = user  
   end
 
@@ -16,7 +16,6 @@ class UserSignup
         @user.save
         handles_invitation(invitation_token)
         AppMailer.delay.notify_on_registration(@user.id)
-        session[:user_id] = @user.id
         @status = :success
         self
       else
@@ -39,10 +38,10 @@ private
 
   def handles_invitation(invitation_token)
     if invitation_token.present?
-      invitation = Invitation.where(token: invitation_token).first
+      invitation = Invitation.where(invitation_token: invitation_token).first
       @user.follow!(invitation.inviter)
       invitation.inviter.follow!(@user)
-      invitation.update_columns(token: nil)
+      invitation.update_columns(invitation_token: nil)
     end
   end
 end

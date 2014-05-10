@@ -66,7 +66,7 @@ describe UsersController do
         it "makes the guest follow the invitor" do
           bob = Fabricate(:user)
           invitation = Fabricate(:invitation, guest_email: "alice@example.com", inviter_id: bob.id)
-          post :create, user: {email: "alice@example.com", password: "password", full_name: "alice smith"}, token: invitation.token
+          post :create, user: {email: "alice@example.com", password: "password", full_name: "alice smith"}, invitation_token: invitation.invitation_token
 
           alice = User.where(email: "alice@example.com").first
           expect(alice.following?(bob)).to be_true
@@ -74,7 +74,7 @@ describe UsersController do
         it "makes the inviter follow the guest" do
           bob = Fabricate(:user)
           invitation = Fabricate(:invitation, guest_email: "alice@example.com", inviter_id: bob.id)
-          post :create, user: {email: "alice@example.com", password: "password", full_name: "alice smith"}, token: invitation.token
+          post :create, user: {email: "alice@example.com", password: "password", full_name: "alice smith"}, invitation_token: invitation.invitation_token
 
           alice = User.where(email: "alice@example.com").first
           expect(bob.following?(alice)).to be_true
@@ -83,10 +83,10 @@ describe UsersController do
         it "expires the invitation upon acceptance" do
           bob = Fabricate(:user)
           invitation = Fabricate(:invitation, guest_email: "alice@example.com", inviter_id: bob.id)
-          invitation_token = invitation.token
-          post :create, user: {email: "alice@example.com", password: "password", full_name: "alice smith"}, token: invitation.token
+          invitation_token = invitation.invitation_token
+          post :create, user: {email: "alice@example.com", password: "password", full_name: "alice smith"}, invitation_token: invitation.invitation_token
 
-          expect(invitation.reload.token).not_to eq(invitation_token)
+          expect(invitation.reload.invitation_token).not_to eq(invitation_token)
         end
       end
 
@@ -166,7 +166,7 @@ describe UsersController do
     it "renders the :new view template" do
       bob = Fabricate(:user)
       invitation = Fabricate(:invitation, guest_email: "alice@example.com", inviter_id: bob.id)
-      get :register_with_token, token: invitation.token
+      get :register_with_token, invitation_token: invitation.invitation_token
 
       expect(response).to render_template(:new)
     end
@@ -174,22 +174,22 @@ describe UsersController do
     it "sets @user with recipients email" do
       bob = Fabricate(:user)
       invitation = Fabricate(:invitation, guest_email: "alice@example.com", inviter_id: bob.id)
-      get :register_with_token, token: invitation.token
+      get :register_with_token, invitation_token: invitation.invitation_token
 
       expect(assigns(:user).email).to eq("alice@example.com")
     end
 
     it "sets @invitation_token" do
       invitation = Fabricate(:invitation)
-      get :register_with_token, token: invitation.token
+      get :register_with_token, invitation_token: invitation.invitation_token
 
-      expect(assigns(:invitation_token)).to eq(invitation.token)
+      expect(assigns(:invitation_token)).to eq(invitation.invitation_token)
     end
 
     it "redirects to expired token page for invalid tokens" do
       bob = Fabricate(:user)
       invitation = Fabricate(:invitation, guest_email: "alice@example.com", inviter_id: bob.id)
-      get :register_with_token, token: '12345'
+      get :register_with_token, invitation_token: '12345'
 
       expect(response).to redirect_to(expired_token_path)
     end

@@ -19,6 +19,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     result = UserSignup.new(@user).sign_up(params[:stripeToken], params[:invitation_token])
     if result.successful?
+      session[:user_id] = @user.id
       flash[:success] = "Thank you for signing up"
       redirect_to videos_path
     else
@@ -28,9 +29,9 @@ class UsersController < ApplicationController
   end
 
   def register_with_token
-    if @invitation = Invitation.where(token_params).first
-      @user = User.new(email: @invitation.guest_email, token: @invitation.token)
-      @invitation_token = @invitation.token
+    if @invitation = Invitation.where(invitation_token_params).first
+      @user = User.new(email: @invitation.guest_email, token: @invitation.invitation_token)
+      @invitation_token = @invitation.invitation_token
       render 'new'
     else
       redirect_to expired_token_path
@@ -39,8 +40,8 @@ class UsersController < ApplicationController
 
 private
 
-  def token_params
-    params.permit(:token)
+  def invitation_token_params
+    params.permit(:invitation_token)
     
   end
 

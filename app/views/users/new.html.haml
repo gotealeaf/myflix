@@ -16,7 +16,7 @@ Stripe.setPublishableKey("#{ENV['STRIPE_PUBLISHABLE_KEY']}");
           = f.email_field :email, label: "Email Address"
           = f.password_field :password
           = f.text_field :full_name, label: "Full Name"
-          = hidden_field_tag :token, @invitation_token
+          = hidden_field_tag :invitation_token, @invitation_token
         %fieldset.credit_card
           %span.payment-errors
             .form-group
