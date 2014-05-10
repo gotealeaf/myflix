@@ -23,52 +23,47 @@ describe UsersController do
       end
     end
 
-    context "with no authenticated user" do
-      it "with invalid token redirects to the registration page" do
+    context "with no authenticated user and invalid token" do
+      it "redirects to the registration page" do
         get :new_from_invitation, token: 'fake_token'
         expect(response).to redirect_to register_path
       end
 
-      it "with invalid token sets a warning message" do
+      it "sets a warning message" do
         get :new_from_invitation, token: 'fake_token'
         expect(flash[:warning]).to_not be_blank
       end
+    end
 
-      it "with valid token renders the new template" do
+    context "with no authenticated user and valid token" do
+      it "renders the new template" do
         invitation = Fabricate(:invitation)
         get :new_from_invitation, token: invitation.token
         expect(response).to render_template :new
       end
 
-      it "with valid token sets @user to a new user" do
+      it "sets @user to a new user" do
         invitation = Fabricate(:invitation)
         get :new_from_invitation, token: invitation.token
         expect(assigns(:user)).to be_a_new User
       end
 
-      it "with valid token associates the user with the invitee's name and email" do
+      it "associates the user with the invitee's name and email" do
         invitation = Fabricate(:invitation)
         get :new_from_invitation, token: invitation.token
         expect(assigns(:user).email).to eq invitation.invitee_email
         expect(assigns(:user).full_name).to eq invitation.invitee_name
       end
+
+      it "set @token to the invitation token value" do
+        invitation = Fabricate(:invitation)
+        get :new_from_invitation, token: invitation.token
+        expect(assigns(:invitation_token)).to eq invitation.token
+      end
     end
   end
 
   describe "POST create" do
-    context "with valid input" do
-      before { post :create, user: Fabricate.attributes_for(:user) }
-      after { ActionMailer::Base.deliveries = [] }
-
-      it "redirects to sign in" do
-        expect(response).to redirect_to sign_in_path
-      end
-
-      it "creates the user" do
-        expect(User.count).to eq 1
-      end
-    end
-
     context "with invalid input" do
       before { post :create, user: Fabricate.attributes_for(:user, password: nil) }
       after { ActionMailer::Base.deliveries = [] }
@@ -83,6 +78,19 @@ describe UsersController do
 
       it "sets @user" do
         expect(assigns(:user)).to be_instance_of User
+      end
+    end
+
+    context "with valid input" do
+      before { post :create, user: Fabricate.attributes_for(:user) }
+      after { ActionMailer::Base.deliveries = [] }
+
+      it "redirects to sign in" do
+        expect(response).to redirect_to sign_in_path
+      end
+
+      it "creates the user" do
+        expect(User.count).to eq 1
       end
     end
 
@@ -112,20 +120,25 @@ describe UsersController do
 
     context "invited by a user" do
       let(:jane) { Fabricate(:user) }
+      let(:invitation) { Invitation.create(inviter: jane, invitee_email: 'billy@example.com', invitee_name: 'Billy', message: 'Hi') }
 
       before do
-        Invitation.create(inviter: jane, invitee_email: 'billy@example.com', invitee_name: 'Billy', message: 'Hi')
-        post :create, user: Fabricate.attributes_for(:user, email: 'billy@example.com')
+        post :create, user: Fabricate.attributes_for(:user, email: 'billy@example.com'), invitation_token: invitation.token
+        @billy = User.find_by_email('billy@example.com')
       end
 
       after { ActionMailer::Base.deliveries = [] }
 
-      it "has the new user follow another user if invited by that user" do
-        expect(jane.followers).to include User.find_by_email('billy@example.com')
+      it "makes the inviter follow the user" do
+        expect(jane.follows?(@billy)).to be_true
       end
 
-      it "has a user follow the new user if that user invited her" do
-        expect(jane.followees).to include User.find_by_email('billy@example.com')
+      it "makes the user follow the inviter" do
+        expect(@billy.follows?(jane)).to be_true
+      end
+
+      it "expires the invitation" do
+        expect(Invitation.first).to be_blank
       end
     end
   end

@@ -3,10 +3,6 @@ require 'spec_helper'
 feature 'reset password' do
   let(:johnny) { Fabricate(:user) }
 
-  background do
-    clear_emails
-  end
-
   scenario 'user resets password' do
     request_password_reset_email
     open_email_and_click_link
@@ -14,6 +10,8 @@ feature 'reset password' do
     sign_in_with_new_password
 
     expect(page).to have_content 'Access granted!'
+
+    clear_email
   end
 
   scenario 'user fills in incorrect email address' do
@@ -31,6 +29,8 @@ feature 'reset password' do
     fill_in 'password_confirmation', with: 'nomatch'
     click_button 'Reset Password'
     expect(page).to have_content 'do not match'
+
+    clear_email
   end
 
   scenario 'invalid password token is used to visit reset password page' do

@@ -24,6 +24,10 @@ class User < ActiveRecord::Base
     videos.include?(video)
   end
 
+  def follow(user)
+    UserRelationship.create(follower: self, followee: user) if can_follow?(user)
+  end
+
   def follows?(user)
     followees.include?(user)
   end

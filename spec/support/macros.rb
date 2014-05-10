@@ -23,6 +23,10 @@ def sign_in(a_user=nil, a_password=nil)
   user
 end
 
+def sign_out
+  visit sign_out_path
+end
+
 def click_video_link_on_home_page(video)
   find(:xpath, "//a[@href='/videos/#{video.id}']" ).click
 end

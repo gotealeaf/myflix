@@ -34,6 +34,21 @@ describe User do
     end
   end
 
+  describe "#follow" do
+    let(:marcy) { Fabricate(:user) }
+    let(:john) { Fabricate(:user) }
+
+    it "has the user follow the passed user" do
+      marcy.follow(john)
+      expect(marcy.follows?(john)).to be_true
+    end
+
+    it "does not create relationship if following self" do
+      marcy.follow(marcy)
+      expect(marcy.follows?(marcy)).to be_false
+    end
+  end
+
   describe "#follows?" do
     it "returns true if the user already follows the passed user" do
       john = Fabricate(:user)

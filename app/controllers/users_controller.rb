@@ -14,6 +14,7 @@ class UsersController < ApplicationController
       redirect_to home_path
     elsif invitation = Invitation.find_by_token(params[:token])
       @user = User.new(email: invitation.invitee_email, full_name: invitation.invitee_name )
+      @invitation_token = invitation.token
       render :new
     else
       flash[:warning] = "The token is expired but you can still register."
@@ -25,12 +26,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      handle_invitation
       AppMailer.registration_email(@user).deliver
-
-      if invitation = Invitation.find_by_invitee_email(@user.email)
-        create_relationships_from_invitation(invitation)
-      end
-
       redirect_to sign_in_path
     else
       render :new
@@ -48,8 +45,11 @@ class UsersController < ApplicationController
     params.require(:user).permit(:email, :full_name, :password, :password_confirmation)
   end
 
-  def create_relationships_from_invitation(invitation)
-    UserRelationship.create(followee: invitation.inviter, follower: User.find_by_email(invitation.invitee_email))
-    UserRelationship.create(followee: User.find_by_email(invitation.invitee_email), follower: invitation.inviter)
+  def handle_invitation
+    if invitation = Invitation.find_by_token(params[:invitation_token])
+      @user.follow(invitation.inviter)
+      invitation.inviter.follow(@user)
+      invitation.destroy
+    end
   end
 end
