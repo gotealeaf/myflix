@@ -8,8 +8,8 @@
         %fieldset
           = f.email_field :email, label: "Email Address"
           = f.password_field :password
-        %fieldset
-          = f.submit "Sign in"
+        %fieldset.form-group.action
+          = f.submit "Sign in", id: "sign-in"
         
         
          

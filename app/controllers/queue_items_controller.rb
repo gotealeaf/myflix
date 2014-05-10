@@ -40,11 +40,15 @@ class QueueItemsController < ApplicationController
   end
   
   def update_queue_items
+    if current_user.queue_items.any?
     ActiveRecord::Base.transaction do
       params[:queue_items].each do |queue_item_data| # note: not moving this to model layer as params (with the form) is tied closely to what a controller should do
         queue_item = QueueItem.find(queue_item_data["id"])
         queue_item.update_attributes!(list_order: queue_item_data["list_order"], rating: queue_item_data["rating"]) 
         end
       end
-  end 
+    else
+      flash[:danger] = "Your queue is empty."
+    end
+  end
 end
