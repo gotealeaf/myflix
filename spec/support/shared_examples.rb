@@ -20,3 +20,16 @@ shared_examples "register_authenticated_user" do
     expect(response).to redirect_to home_path
   end
 end
+
+shared_examples "tokenable" do
+  it "generates a token on creation" do
+    expect(object.token).to_not be_blank 
+  end
+
+  it "can generate a new token" do
+    old_token = object.token
+    object.generate_token
+    object.save
+    expect(old_token).to_not eq object.reload.token
+  end
+end

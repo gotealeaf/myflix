@@ -14,6 +14,10 @@ describe User do
   it { should have_many(:following_relationships).class_name(:UserRelationship).with_foreign_key(:follower_id) }
   it { should have_many(:followees).through(:following_relationships) }
 
+  it_behaves_like "tokenable" do
+    let(:object) { Fabricate(:user) }
+  end
+
   it "validates uniqueness of email" do
     user = User.create(email: "smaug@lonelymountain.com", full_name: "Smaug the Magnificent", password: "gold", password_confirmation: "gold")
     expect(user).to validate_uniqueness_of :email
@@ -81,14 +85,6 @@ describe User do
     it "returns false if the followee is the user" do
       john = Fabricate(:user)
       expect(john.can_follow?(john)).to be_false
-    end
-  end
-
-  describe "#generate_password_token" do
-    it "sets the password_token attribute for the user" do
-      billy = Fabricate(:user)
-      billy.generate_password_token
-      expect(billy.reload.password_token).to_not be_blank
     end
   end
 end

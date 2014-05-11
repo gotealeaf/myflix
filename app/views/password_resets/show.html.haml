@@ -13,6 +13,6 @@
           .row
             .col-sm-4
               =password_field_tag :password_confirmation, nil, class: 'form-control'
-          = hidden_field_tag :password_token, @user.password_token
+          = hidden_field_tag :token, @user.token
         .form-group.action
           = submit_tag 'Reset Password', class: "btn btn-default"

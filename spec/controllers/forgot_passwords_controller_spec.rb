@@ -29,16 +29,12 @@ describe ForgotPasswordsController do
         expect(response).to render_template :create
       end
 
-      it "creates a random password token for the user" do
-        expect(joe.reload.password_token).to_not be_blank
-      end
-
       it "sends an email to the user" do
         expect(ActionMailer::Base.deliveries.last.to).to eq ['joe@mail.com']
       end
 
       it "sends an email with the password token" do
-        expect(ActionMailer::Base.deliveries.last.body).to include joe.reload.password_token
+        expect(ActionMailer::Base.deliveries.last.body).to include joe.reload.token
       end
     end
   end

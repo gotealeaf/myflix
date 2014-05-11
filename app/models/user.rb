@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include Tokenable
+
   validates :email, presence: true, uniqueness: :true
   validates :password, presence: true, on: :create
   validates :password_confirmation, presence: true, on: :create
@@ -34,9 +36,5 @@ class User < ActiveRecord::Base
 
   def can_follow?(user)
     true unless self.follows?(user) || self == user
-  end
-
-  def generate_password_token
-    self.update(password_token: SecureRandom.urlsafe_base64)
   end
 end

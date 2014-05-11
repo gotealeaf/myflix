@@ -17,8 +17,7 @@ describe PasswordResetsController do
       let(:susan) { Fabricate(:user) }
 
       before do
-        susan.generate_password_token
-        get :show, id: susan.password_token
+        get :show, id: susan.token
       end
 
       it "renders the password reset page if the password token matches a user" do
@@ -30,7 +29,7 @@ describe PasswordResetsController do
       end
 
       it "does not remove the user's password token" do
-        expect(susan.reload.password_token).to_not be_blank
+        expect(susan.reload.token).to_not be_blank
       end
     end
   end
@@ -39,7 +38,7 @@ describe PasswordResetsController do
     context "with invalid password token" do
       before do 
         Fabricate(:user)
-        post :create, password_token: 'random', password: 'password', password_confirmation: 'password'
+        post :create, token: 'random', password: 'password', password_confirmation: 'password'
       end
 
       it "redirects to the expired token page" do
@@ -51,8 +50,7 @@ describe PasswordResetsController do
       let(:suzy) { Fabricate(:user) }
 
       before do
-        suzy.generate_password_token
-        post :create, password_token: suzy.password_token, password: 'password2', password_confirmation: 'password2'
+        post :create, token: suzy.token, password: 'password2', password_confirmation: 'password2'
       end
 
       it "redirects to the sign in page" do
@@ -71,8 +69,8 @@ describe PasswordResetsController do
         expect(suzy.reload.authenticate('password2')).to be_true
       end
 
-      it "removes the user's password token" do
-        expect(suzy.reload.password_token).to be_blank
+      it "updates the user's token" do
+        expect(suzy.token).to_not eq suzy.reload.token
       end
     end
 
@@ -80,12 +78,11 @@ describe PasswordResetsController do
       let(:johnny) { Fabricate(:user) }
 
       before do
-        johnny.generate_password_token
-        post :create, password_token: johnny.password_token, password: 'pass1', password_confirmation: 'pass2'
+        post :create, token: johnny.token, password: 'pass1', password_confirmation: 'pass2'
       end
 
       it "redirects to the show reset password page" do
-        expect(response).to redirect_to password_reset_path(johnny.password_token)
+        expect(response).to redirect_to password_reset_path(johnny.token)
       end
 
       it "sets a warning message" do
