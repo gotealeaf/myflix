@@ -1,0 +1,43 @@
+%article.video
+  .container
+    .row
+      .video_large_cover.col-sm-7.col-sm-offset-1
+        %img(src="http://dummyimage.com/665x375/000000/00a2ff")
+      .video_info.col-sm-3
+        %header
+          %h3 
+            = @video.title
+          %span Rating: #{@average_rating}
+        %p
+          = @video.description
+        .actions.clearfix
+          %a.btn.btn-primary(href="") Watch Now
+          = link_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: "btn btn-default" unless current_user.queued_video?(@video)
+
+%section.reviews.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %fieldset
+        = bootstrap_form_for([@video, Review.new]) do |f|
+          .row
+            .col-sm-3
+              = f.select :rating, options_for_video_reviews, include_blank: true
+          .form-group.row
+            .col-sm-8
+              = f.text_area :content, label: "Write Review", rows: "6"
+          %fieldset.form-group.actions.clearfix
+            =f.form_group do
+              = f.submit "Submit", class: "btn"
+            = link_to "Cancel", @video
+      %header
+        %h3 User Reviews (#{@reviews.count})
+      %ul
+        - @reviews.each do |review|
+          %article.review
+            %li.row
+              .col-sm-2
+                %span Rating: #{review.rating} / 5
+
+                %p by #{link_to review.user.full_name, review.user}
+              .col-sm-8
+                %p= review.content

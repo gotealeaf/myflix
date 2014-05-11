@@ -1,0 +1,8 @@
+%section.genre
+  %header.clearfix
+    %h1 Search Results
+  %article.row
+    - @results.each do |video|
+      .video.col-md-2
+        = link_to "", nil do 
+          %img(src="#{video.small_cover_url}")

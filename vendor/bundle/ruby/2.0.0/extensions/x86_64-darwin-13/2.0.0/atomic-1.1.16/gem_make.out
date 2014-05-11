@@ -1,0 +1,4 @@
+/Users/charles/.rvm/rubies/ruby-2.0.0-p353/bin/ruby extconf.rb 
+/Users/charles/.rvm/rubies/ruby-2.0.0-p353/bin/ruby: invalid option -B  (-h will show valid options) (RuntimeError)
+
+extconf failed, exit code 1

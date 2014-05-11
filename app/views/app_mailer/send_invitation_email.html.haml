@@ -1,0 +1,20 @@
+!!! 5
+%html
+  %body
+    %p
+      Hi #{ @invitation.invitee_name }
+      %br
+      %br
+      Your friend thought you might be interested in watching some great movies.
+      %br
+      %br
+      They left you the message below:
+      %br
+      %br
+      = @invitation.message
+      %br
+      %br
+      Click the link below in order to register.
+      %br
+      %br
+      = link_to 'Register Now!', invitation_register_url(@invitation.token)
