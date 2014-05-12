@@ -20,14 +20,46 @@ before_action :require_user, only: [:show]
 
   def create
     @user = User.new(user_params)
-    if @user.save
-      handle_invitation
-      AppMailer.registration_email(@user).deliver
-      flash[:success] = "You registered! Welcome, #{params[:user][:full_name]}!"
-      redirect_to login_path
+    if @user.valid?
+      Stripe.api_key = ENV["STRIPE_API_KEY"]
+      begin
+        charge = Stripe::Charge.create(
+          :amount => 999, 
+          :currency => "usd",
+          :card => params[:stripeToken],
+          :description => "Sign up charge for #{@user.email}"
+        )
+        @user.save
+        handle_invitation
+        AppMailer.registration_email(@user).deliver
+        flash[:success] = "You registered! Welcome, #{params[:user][:full_name]}!"
+        redirect_to login_path
+      rescue Stripe::CardError => e
+        flash[:danger] = e.message
+        render :new
+      end
     else
+      # hack-y to generate errors on invalid @user this way - better option?
+      @user.save
       render :new
     end
+
+    # solution controller - saves user with declined card with complete info
+    # if @user.save
+    #   handle_invitation
+    #   Stripe.api_key = ENV["STRIPE_API_KEY"]
+    #   charge = Stripe::Charge.create(
+    #     :amount => 999, # amount in cents, again
+    #     :currency => "usd",
+    #     :card => params[:stripeToken],
+    #     :description => "Sign up charge for #{@user.email}"
+    #   )
+    #   AppMailer.registration_email(@user).deliver
+    #   flash[:success] = "You registered! Welcome, #{params[:user][:full_name]}!"
+    #   redirect_to login_path
+    # else
+    #   render :new 
+    # end
   end
 
   def show

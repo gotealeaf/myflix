@@ -22,6 +22,8 @@ gem 'paratrooper'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
+gem 'stripe'
+gem 'figaro', '>= 1.0.0.rc1'
 
 group :development do
   gem 'pry'
