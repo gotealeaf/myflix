@@ -50,6 +50,8 @@ group :test do
   gem 'database_cleaner'
   gem 'capybara-email'
   gem 'selenium-webdriver'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :staging, :production do

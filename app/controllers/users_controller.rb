@@ -22,20 +22,19 @@ before_action :require_user, only: [:show]
     @user = User.new(user_params)
     if @user.valid?
       Stripe.api_key = ENV["STRIPE_API_KEY"]
-      begin
-        charge = Stripe::Charge.create(
-          :amount => 999, 
-          :currency => "usd",
-          :card => params[:stripeToken],
-          :description => "Sign up charge for #{@user.email}"
-        )
+      charge = StripeWrapper::Charge.create(
+        :amount => 999, 
+        :card => params[:stripeToken],
+        :description => "Sign up charge for #{@user.email}"
+      )
+      if charge.successful?
         @user.save
         handle_invitation
         AppMailer.registration_email(@user).deliver
         flash[:success] = "You registered! Welcome, #{params[:user][:full_name]}!"
         redirect_to login_path
-      rescue Stripe::CardError => e
-        flash[:danger] = e.message
+      else
+        flash[:danger] = charge.error_message
         render :new
       end
     else
@@ -43,23 +42,6 @@ before_action :require_user, only: [:show]
       @user.save
       render :new
     end
-
-    # solution controller - saves user with declined card with complete info
-    # if @user.save
-    #   handle_invitation
-    #   Stripe.api_key = ENV["STRIPE_API_KEY"]
-    #   charge = Stripe::Charge.create(
-    #     :amount => 999, # amount in cents, again
-    #     :currency => "usd",
-    #     :card => params[:stripeToken],
-    #     :description => "Sign up charge for #{@user.email}"
-    #   )
-    #   AppMailer.registration_email(@user).deliver
-    #   flash[:success] = "You registered! Welcome, #{params[:user][:full_name]}!"
-    #   redirect_to login_path
-    # else
-    #   render :new 
-    # end
   end
 
   def show
