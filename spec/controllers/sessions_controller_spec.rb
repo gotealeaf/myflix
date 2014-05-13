@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 
 describe SessionsController do
   describe "GET new" do
@@ -36,10 +35,6 @@ describe SessionsController do
     end
 
     context "with invalid login credentials" do
-      before do
-
-      end
-
       it "does not put the user into the session" do
         alice = Fabricate(:user)
         post :create, email: alice.email, password: alice.password + "asdfsakd"

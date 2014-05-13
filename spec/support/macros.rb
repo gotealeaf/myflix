@@ -23,8 +23,7 @@ def sign_in_user(a_user=nil)
 end
 
 def sign_out_user(user)
-  visit home_path
-  click_link "Sign Out"
+  visit logout_path
 end
 
 def create_queue_items

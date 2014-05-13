@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "User invites a friend" do
-  scenario "user invites friend, who accepts invitation and registers" do
+  scenario "user invites friend, who accepts invitation and registers", js: true do
     alice = Fabricate(:user)
     bob = Fabricate.build(:user)
 
@@ -25,7 +25,7 @@ feature "User invites a friend" do
 end
 
 def send_invite(user)
-  click_link("Invite Friend")
+  visit new_invitation_path
   expect(page).to have_content("Invite a friend to join MyFlix!")
   fill_in "Friend's Name", with: user.full_name
   fill_in "Friend's Email Address", with: user.email
@@ -43,8 +43,20 @@ def register_with_invitation(user)
   expect(find_field("Full Name").value).to have_content(user.full_name)
   expect(find_field("Email Address").value).to have_content(user.email)
   fill_in "Password", with: user.password
-  click_button "Register"
+  fill_in "Credit Card Number", with: "4242424242424242"
+  fill_in "Security Code", with: "123"
+  find("#date_month").select("6 - June")
+  find("#date_year").select("2017")
+  VCR.use_cassette("valid_card_feature_spec") do
+    click_button "Register"
+  end
   expect(page).to have_content "You registered! Welcome, #{user.full_name}!"
+end
+
+def stub_charge
+  charge = double('charge')
+  charge.stub(:successful?).and_return(true)
+  StripeWrapper::Charge.stub(:create).and_return(charge)
 end
 
 def verify_user_registered(user)

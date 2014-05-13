@@ -3,8 +3,6 @@ require 'spec_helper'
 describe StripeWrapper do
   describe StripeWrapper::Charge do
     describe ".create" do
-      before { StripeWrapper.set_api_key } 
-
       let(:token) do
         Stripe::Token.create(
           :card => {
@@ -22,9 +20,7 @@ describe StripeWrapper do
         it "charges the card successfully" do
           VCR.use_cassette('valid_card') do
             charge = StripeWrapper::Charge.create(amount: 300, card: token)
-            expect(charge).to be_successful
-            expect(charge.response.amount).to eq(300)
-            expect(charge.response.currency).to eq('usd')
+            expect(charge.successful?).to be_true
           end
         end
       end
@@ -35,7 +31,7 @@ describe StripeWrapper do
         it "does not charge the card" do
           VCR.use_cassette('invalid_card') do
             charge = StripeWrapper::Charge.create(amount: 300, card: token)
-            expect(charge).to_not be_successful
+            expect(charge.successful?).to_not be_true
           end
         end
 

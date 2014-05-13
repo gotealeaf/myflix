@@ -35,12 +35,11 @@ before_action :require_user, only: [:show]
         redirect_to login_path
       else
         flash[:danger] = charge.error_message
-        render :new
+        set_invitation_and_render_new
       end
     else
-      # hack-y to generate errors on invalid @user this way - better option?
       @user.save
-      render :new
+      set_invitation_and_render_new
     end
   end
 
@@ -61,5 +60,11 @@ before_action :require_user, only: [:show]
       invitation.inviter.follow!(@user)
       invitation.update_column(:token, nil)
     end
+  end
+
+  def set_invitation_and_render_new
+    @invitation = Invitation.find_by(token: params[:invitation_token])
+    @invitation_token = @invitation.token if @invitation
+    render :new
   end
 end

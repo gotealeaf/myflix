@@ -1,9 +1,9 @@
 module StripeWrapper
   class Charge
     attr_reader :response, :status
-    def initialize(response, status)
-      @response = response
-      @status = status
+    def initialize(options={})
+      @response = options[:response]
+      @status = options[:status]
     end
 
     def self.create(options={})
@@ -13,14 +13,14 @@ module StripeWrapper
                                          currency: 'usd', 
                                          card: options[:card],
                                          description: options[:description])
-        new(response, :success)
+        new(response: response, status: "success")
       rescue Stripe::CardError => e
-        new(e, :error)
+        new(response: e, status: "error")
       end
     end
 
     def successful?
-      @status == :success
+      @status == "success"
     end
 
     def error_message
