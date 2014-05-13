@@ -8,6 +8,6 @@ describe Invitation do
 
   it "generates a random token when the invitation is created" do
     invitation = Fabricate(:invitation)
-    expect(invitation.token).to be_present
+    expect(invitation.invitation_token).to be_present
   end
 end
