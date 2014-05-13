@@ -30,6 +30,7 @@ def send_invite(user)
   fill_in "Friend's Name", with: user.full_name
   fill_in "Friend's Email Address", with: user.email
   click_button "Send Invitation"
+  #require 'pry'; binding.pry
   expect(page).to have_content("Your invitation has been emailed to #{Invitation.first.recipient_name}")
 end
 

@@ -37,18 +37,16 @@ group :development do
   gem 'letter_opener'
 end
 
-group :test, :development do
-  gem "rspec-rails", "~> 2.0"
-end
-
 group :test do
+  gem "rspec-rails", "~> 2.0"
   gem 'shoulda-matchers'
   gem 'fabrication'
   gem 'faker'
   gem 'capybara'
+  gem 'capybara-email'
+  gem 'capybara-webkit'
   gem 'launchy'
   gem 'database_cleaner'
-  gem 'capybara-email'
   gem 'selenium-webdriver'
   gem 'vcr'
   gem 'webmock'

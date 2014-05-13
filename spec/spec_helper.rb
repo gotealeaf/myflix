@@ -5,7 +5,7 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rails'
 require 'capybara/email/rspec'
-require 'support/database_cleaner'
+require 'support/database_cleaner_config'
 require 'sidekiq/testing/inline'
 require 'vcr'
 
@@ -26,7 +26,8 @@ end
 
 Capybara.run_server = true 
 Capybara.server_port = 7000
-Capybara.app_host = "http://localhost:#{Capybara.server_port}" 
+Capybara.app_host = "http://localhost:#{Capybara.server_port}"
+Capybara.javascript_driver = :webkit
 
 RSpec.configure do |config|
   # ## Mock Framework
