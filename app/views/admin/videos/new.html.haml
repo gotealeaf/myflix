@@ -1,0 +1,41 @@
+%section.admin_add_video
+  .container
+    .row
+      .col-md-10.col-md-offset-1
+        %ul.nav.nav-tabs
+          %li
+            %a(href="/ui/admin_views_payments") Recent Payments
+          %li.active
+            %a(href="") Add a New Video
+        %br
+        = form_for [:admin, @video], html: {class: 'form-horizontal'} do |f|
+          %fieldset
+            .form-group
+              %label.control-label.col-sm-3 Title
+              .col-sm-3
+                = f.text_field(:title, class: 'form-control')
+            .form-group
+              %label.control-label.col-sm-3 Category
+              .col-sm-6
+                = f.collection_select :category_id, Category.order(:name),:id,:name, include_blank: true, class: 'form-control'
+            .form-group
+              %label.control-label.col-sm-3 Description
+              .col-sm-6
+                = f.text_area(:description, class: 'form-control')
+            .form-group
+              %label.control-label.col-sm-3 Large Cover
+              .col-sm-6
+                %col.btn.btn-file
+                  = f.file_field(:large_cover, class: 'btn btn-file')
+            .form-group
+              %label.control-label.col-sm-3 Small Cover
+              .col-sm-6
+                %col.btn.btn-file
+                  = f.file_field(:small_cover, class: 'btn btn-file')
+            .form-group
+              %label.control-label.col-sm-3 Video Url
+              .col-sm-3
+                = f.text_field(:video_url, class: 'form-control')
+          %fieldset.actions.form-group
+            .col-sm-6.col-md-offset-3
+              = f.submit "Add Video", class: 'btn btn-default'

@@ -1,0 +1,9 @@
+!!! 5
+%html(lang="en-US")
+  %body
+    %p 
+      = "#{@invitation['guest_name']}"
+    %p 
+      = "#{@a_user} has invited you to join MyFLiX. Please register here:"
+      = link_to "register", register_user_with_token_url(invitation_token: @invitation.invitation_token)
+      &copy 2013 MyFLiX
