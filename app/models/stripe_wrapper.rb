@@ -1,5 +1,6 @@
 module StripeWrapper
   class Charge
+    attr_reader :response, :status
     def initialize(response, status)
       @response = response
       @status = status
