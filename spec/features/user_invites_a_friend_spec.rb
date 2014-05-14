@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "User invites a friend" do
-  scenario "user invites friend, who accepts invitation and registers", js: true do
+  scenario "user invites friend, who accepts invitation and registers", js: true, driver: :selenium do
     alice = Fabricate(:user)
     bob = Fabricate.build(:user)
 
@@ -14,12 +14,12 @@ feature "User invites a friend" do
     register_with_invitation(bob)
     
     sign_in_user(bob)
-    verify_user_registered(bob)
-    verify_user_following(alice)
+    confirm_user_registered(bob)
+    confirm_user_following(alice)
     sign_out_user(bob)
     
     sign_in_user(alice)
-    verify_user_following(bob)
+    confirm_user_following(bob)
     clear_emails
   end
 end
@@ -30,7 +30,6 @@ def send_invite(user)
   fill_in "Friend's Name", with: user.full_name
   fill_in "Friend's Email Address", with: user.email
   click_button "Send Invitation"
-  #require 'pry'; binding.pry
   expect(page).to have_content("Your invitation has been emailed to #{Invitation.first.recipient_name}")
 end
 
@@ -54,17 +53,7 @@ def register_with_invitation(user)
   expect(page).to have_content "You registered! Welcome, #{user.full_name}!"
 end
 
-def stub_charge
-  charge = double('charge')
-  charge.stub(:successful?).and_return(true)
-  StripeWrapper::Charge.stub(:create).and_return(charge)
-end
-
-def verify_user_registered(user)
-  expect(page).to have_content("Welcome, #{user.full_name}")
-end
-
-def verify_user_following(another_user)
+def confirm_user_following(another_user)
   click_link "People"
   expect(page).to have_content("#{another_user.full_name}")
 end

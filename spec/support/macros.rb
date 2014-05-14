@@ -50,3 +50,11 @@ end
 def queue_item(id)
   QueueItem.find(id)
 end
+
+def confirm_user_registered(user)
+  expect(page).to have_content("Welcome, #{user.full_name}")
+end
+
+def confirm_user_not_registered
+  expect(page).to have_content("Something was wrong with the email or password you entered. Please try again.")
+end

@@ -5,6 +5,10 @@ Fabricator(:user) do
   admin { false }
 end
 
+Fabricator(:bad_user, from: :user) do
+  email { "" }
+end
+
 Fabricator(:admin, from: :user) do 
   admin { true }
 end

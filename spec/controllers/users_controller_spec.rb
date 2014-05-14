@@ -143,22 +143,6 @@ describe UsersController do
           expect(ActionMailer::Base.deliveries).to be_empty
         end
 
-        it "does not expire the invitation, if one exists" do
-          alice = Fabricate(:user)
-          bob = Fabricate.build(:user)
-          invitation = Fabricate(:invitation,
-                                 recipient_email: bob.email,
-                                 recipient_name: bob.full_name,
-                                 inviter_id: alice.id)
-          (post :create, 
-            invitation_token: invitation.token, 
-            user: Fabricate.attributes_for(:user, 
-                                           email: invitation.recipient_email, 
-                                           full_name: invitation.recipient_name))
-          expect(invitation.reload.token).to_not be_nil
-          expect(assigns(:invitation_token)).to eq(invitation.token)
-        end
-
         it "sets a flash danger message with the card error message" do
           post :create, user: Fabricate.attributes_for(:user)
           expect(flash[:danger]).to eq("Your card was declined.")
@@ -191,23 +175,6 @@ describe UsersController do
       it "does not send an email" do
         post :create, user: { email: 'baduser@example.com' }
         expect(ActionMailer::Base.deliveries).to be_empty
-      end
-
-      it "does not expire the invitation, if one exists" do
-        alice = Fabricate(:user)
-        bob = Fabricate.build(:user)
-        invitation = Fabricate(:invitation,
-                               recipient_email: bob.email,
-                               recipient_name: bob.full_name,
-                               inviter_id: alice.id)
-        (post :create, 
-          invitation_token: invitation.token, 
-          user: Fabricate.attributes_for(:user, 
-                                         email: invitation.recipient_email,
-                                         password: "",
-                                         full_name: invitation.recipient_name))
-        expect(invitation.reload.token).to_not be_nil
-        expect(assigns(:invitation_token)).to eq(invitation.token)
       end
 
       it "renders :new template" do

@@ -35,12 +35,9 @@ before_action :require_user, only: [:show]
         redirect_to login_path
       else
         flash[:danger] = charge.error_message
-        set_invitation
         render :new
       end
     else
-      @user.save
-      set_invitation
       render :new
     end
   end
@@ -62,10 +59,5 @@ before_action :require_user, only: [:show]
       invitation.inviter.follow!(@user)
       invitation.update_column(:token, nil)
     end
-  end
-
-  def set_invitation
-    @invitation = Invitation.find_by(token: params[:invitation_token])
-    @invitation_token = @invitation.token if @invitation
   end
 end
