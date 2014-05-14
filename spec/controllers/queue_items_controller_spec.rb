@@ -109,7 +109,7 @@ describe QueueItemsController do
         queue_item1 = Fabricate(:queue_item, user: jane, list_order: 1)
         queue_item2 = Fabricate(:queue_item, user: jane, list_order: 2)
         delete :destroy, id: queue_item1.id
-        expect(QueueItem.first.list_order).to eq(1)
+        expect(queue_item2.reload.list_order).to eq(1) #reload required, if not, user QueueItem.first.list_order to hit the db directly
       end
       
       it "does not delete the queue item if the queue item is not in the current user's queue" do
@@ -178,6 +178,11 @@ describe QueueItemsController do
       
       it 'should show a flash message indicating error' do
         post :update_queue, queue_items: [{id: queue_item1.id, list_order: 3.4}, {id: queue_item2.id, list_order: 1}]
+        expect(flash[:danger]).not_to be_blank
+      end
+      
+      it 'should show an error flash message when user clicks on the button when there are no queue items in the queue' do
+        post :update_queue
         expect(flash[:danger]).not_to be_blank
       end
     end #ends invalid input context

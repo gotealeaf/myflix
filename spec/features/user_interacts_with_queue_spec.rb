@@ -42,9 +42,9 @@ feature "user interacts with the queue" do
     # finding using data input:
     # expect(find("input[data-video-id='#{monk.id}']").value).to eq ("3")
     
-    expect_video_position(monk, 3)
-    expect_video_position(futurama, 1)
-    expect_video_position(south_park, 2)
+    expect_video_position(monk, "3")
+    expect_video_position(futurama, "1")
+    expect_video_position(south_park, "2" )
     
     # finding using id:
     # expect(find("video_#{monk.id}").value).to eq ("3")
@@ -67,7 +67,7 @@ feature "user interacts with the queue" do
     
   def add_video_to_queue(video)
     visit home_path
-    find("a[href='/videos/#{video.id}']").click
+    find("a[href='/videos/#{video.id}']").click # find the video by ID position
     click_link "+ My Queue"
   end
 
@@ -76,6 +76,6 @@ feature "user interacts with the queue" do
   end
 
   def expect_video_position(video, position)
-    expect(find("input[data-video-id='#{video.id}']").value).to eq (position)
+    expect(find("input[data-video-id='#{video.id}']").value).to eq(position)
   end
 end
