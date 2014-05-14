@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "User invites a friend" do
-  scenario "user invites friend, who accepts invitation and registers", { js: true, driver: :selenium, vcr: true } do
+  scenario "user invites friend, who accepts invitation and registers", { js: true, vcr: true } do
     alice = Fabricate(:user)
     bob = Fabricate.build(:user)
 
@@ -30,7 +30,7 @@ def send_invite(user)
   fill_in "Friend's Name", with: user.full_name
   fill_in "Friend's Email Address", with: user.email
   click_button "Send Invitation"
-  expect(page).to have_content("Your invitation has been emailed to #{Invitation.first.recipient_name}")
+  expect(page).to have_content("Your invitation has been emailed to #{user.full_name}")
 end
 
 def click_registration_link(current_email)
