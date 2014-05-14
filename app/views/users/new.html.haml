@@ -1,0 +1,50 @@
+= content_for :head do
+  %script{src: "https://js.stripe.com/v2/", type: "text/javascript"}
+  :javascript
+    Stripe.setPublishableKey("#{ENV['STRIPE_PUBLIC_KEY']}");
+  = javascript_include_tag 'payments'
+
+%section.register.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = bootstrap_form_for(@user, html: {class: "form-horizontal", id: 'payment-form'}) do |f|
+        %fieldset
+          %header
+            %h1 Register
+          = f.alert_message "Please correct the following errors:"
+          .form-group
+            .control-label.col-sm-2
+              = f.label :email, "Email Address"
+            .col-sm-6
+              = f.text_field :email, hide_label: true, class: "form-control"
+          .form-group
+            .control-label.col-sm-2
+              = f.label :password, "Password"
+            .col-sm-6
+              = f.password_field :password, hide_label: true, class: "form-control"
+          .form-group
+            .control-label.col-sm-2
+              = f.label :full_name, "Full Name"
+            .col-sm-6
+              = f.text_field :full_name, hide_label: true, class: "form-control"
+          - if @invitation_token
+            = hidden_field_tag(:invitation_token, @invitation_token)
+        %fieldset.credit_card
+          %span.payment-errors
+          .form-group
+            %label.control-label.col-sm-2(for="credit-card-number") Credit Card Number
+            .col-sm-6
+              %input.form-control(type="text" data-stripe="number" id="credit-card-number")
+          .form-group
+            %label.control-label.col-sm-2(for="security-code") Security Code
+            .col-sm-6
+              %input.form-control(type="text" data-stripe="cvc" id="security-code")
+          .form-group
+            %label.control-label.col-sm-2 Expiration
+            .col-sm-3
+              = select_month(Date.today, {add_month_numbers: true}, name: nil, class: 'form-control', data: {stripe: "exp-month"})
+            .col-sm-2
+              = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, name: nil, class: 'form-control', data: {stripe: "exp-year"})
+          .actions.control-group
+            .controls.col-sm-offset-2
+              %input(type="submit" value="Register" class="btn btn-default btn-register")

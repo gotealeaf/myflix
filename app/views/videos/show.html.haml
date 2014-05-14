@@ -1,0 +1,52 @@
+%article.video
+  .container
+    .row
+      .video_large_cover.col-sm-7.col-sm-offset-1
+        %img(src="#{@video.large_cover_url}")
+        /%embed{src: "#{@video.video_url}", controller: "true", height: "400", width: "600", scale: "aspect"}
+      .video_info.col-sm-3
+        %header
+          %h3 
+            = @video.title
+          %span 
+            Rating: #{@video.average_rating} / 5
+        %p 
+          = @video.description
+        .actions
+          = link_to "Watch Now", @video.video_url, class: "btn btn-primary"
+          = link_to "+ My Queue", queue_items_path(video_id: @video.id), class: "btn btn-default", method: "post", action: "create" unless current_user.queued_video?(@video)
+
+%section.reviews.container
+  .row
+    = render 'shared/errors', object: @review
+    .col-sm-10.col-sm-offset-1
+      = bootstrap_form_for [@video, @review] do |f|
+        %fieldset
+          .form-group
+            .row
+              .col-sm-3
+                = f.select :rating, options_for_video_reviews
+          .form-group
+            = f.label "Write Review"
+            .row
+              .col-sm-8
+                = f.text_area :review_text, rows: 6, class: "form-control", hide_label: true
+        %fieldset.form-group.actions.clearfix
+          = f.submit "Submit" 
+      %header
+        %h3 
+          User Reviews (#{@reviews.count})
+      %ul
+        - @reviews.each do |review|
+          %article.review
+            %li.row
+              .col-sm-2
+                %span 
+                  Rating: #{review.rating}/ 5
+                %p
+                  by  
+                  = link_to "#{review.creator.full_name}", review.creator
+              .col-sm-8
+                %p 
+                  = review.review_text
+                  

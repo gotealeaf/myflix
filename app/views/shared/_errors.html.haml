@@ -1,0 +1,14 @@
+- if object.errors.any?
+  .row.alert.alert-danger.col-sm-10.col-sm-offset-1
+    %a.close{"data-dismiss" => "alert"} &#215;
+    %ul
+      - if object == @relationship 
+        - object.errors.messages.each do |attr, msg|      
+          %li
+            = msg[0].to_s
+      - else
+        - object.errors.full_messages.each do |msg|      
+          %li
+            = msg
+
+
