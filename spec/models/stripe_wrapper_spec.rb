@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe StripeWrapper do
+describe StripeWrapper, vcr: true do
   describe StripeWrapper::Charge do
     describe ".create" do
       let(:token) do
@@ -18,10 +18,8 @@ describe StripeWrapper do
         let(:card_number) { '4242424242424242' }
         
         it "charges the card successfully" do
-          VCR.use_cassette('valid_card') do
-            charge = StripeWrapper::Charge.create(amount: 300, card: token)
-            expect(charge.successful?).to be_true
-          end
+          charge = StripeWrapper::Charge.create(amount: 300, card: token)
+          expect(charge.successful?).to be_true
         end
       end
 
@@ -29,17 +27,13 @@ describe StripeWrapper do
         let(:card_number) { '4000000000000002' }
 
         it "does not charge the card" do
-          VCR.use_cassette('invalid_card') do
-            charge = StripeWrapper::Charge.create(amount: 300, card: token)
-            expect(charge.successful?).to_not be_true
-          end
+          charge = StripeWrapper::Charge.create(amount: 300, card: token)
+          expect(charge.successful?).to_not be_true
         end
 
         it "contains an error message" do
-          VCR.use_cassette('invalid_card') do
-            charge = StripeWrapper::Charge.create(amount: 300, card: token)
-            expect(charge.error_message).to eq('Your card was declined.')
-          end
+          charge = StripeWrapper::Charge.create(amount: 300, card: token)
+          expect(charge.error_message).to eq('Your card was declined.')
         end
       end
     end

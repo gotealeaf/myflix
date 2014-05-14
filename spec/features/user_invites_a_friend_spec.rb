@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "User invites a friend" do
-  scenario "user invites friend, who accepts invitation and registers", js: true, driver: :selenium do
+  scenario "user invites friend, who accepts invitation and registers", { js: true, driver: :selenium, vcr: true } do
     alice = Fabricate(:user)
     bob = Fabricate.build(:user)
 
@@ -47,9 +47,7 @@ def register_with_invitation(user)
   fill_in "Security Code", with: "123"
   find("#date_month").select("6 - June")
   find("#date_year").select("2017")
-  VCR.use_cassette("valid_card_feature_spec") do
-    click_button "Register"
-  end
+  click_button "Register"
   expect(page).to have_content "You registered! Welcome, #{user.full_name}!"
 end
 
