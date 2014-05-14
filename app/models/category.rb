@@ -1,5 +1,5 @@
 class Category < ActiveRecord::Base
   has_many :videos
 
-  validates_uniquness_of :name
+  validates_uniqueness_of :name
 end
