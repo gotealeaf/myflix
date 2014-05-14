@@ -9,7 +9,7 @@ describe ReviewsController do
      
       context "with valid input" do
         before do
-          session[:user_id] = current_user.id
+          set_current_user(current_user)
           post :create, video_id: video.id, review: Fabricate.attributes_for(:review)
         end   
         
@@ -35,7 +35,7 @@ describe ReviewsController do
         
       context "with invalid input" do
         before do
-          session[:user_id] = current_user.id
+          set_current_user(current_user)
           post :create, video_id: video.id, review: { rating: 4 }
         end
         it "should not create a review" do
@@ -51,13 +51,12 @@ describe ReviewsController do
     end #ends authenticated user context
     
     context "unauthenticated user" do
-      before do
-        post :create, video_id: video.id, review: Fabricate.attributes_for(:review)
-      end
-      it "should redirect to the root path" do
-        expect(response).to redirect_to root_path
+      
+      it_behaves_like 'require sign in' do
+        let(:action) { post :create, video_id: video.id, review: Fabricate.attributes_for(:review) } 
       end
       it "should display an error message" do
+        post :create, video_id: video.id, review: Fabricate.attributes_for(:review)
         expect(flash[:danger]).not_to be_blank
       end
     end #ends unauthenticated user context

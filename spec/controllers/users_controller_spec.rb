@@ -23,18 +23,18 @@ describe UsersController do
     end # ends context with valid input
     
     context "with invalid input" do
-      before do
-        post :create, user: { email: "user@example.com", password: "password" }
-      end
       it "does not create a user" do
+        post :create, user: { email: "user@example.com", password: "password" }
         expect(User.count).to eq(0)
       end
       
       it "renders the new template if user is unable to be created" do
+        post :create, user: { email: "user@example.com", password: "password" }
         response.should render_template :new
       end
       
       it "sets the @user instance variable to be used in the new template" do
+        post :create, user: { email: "user@example.com", password: "password" }
         assigns(:user).should be_instance_of(User)
       end  
     end # ends context with invalid input

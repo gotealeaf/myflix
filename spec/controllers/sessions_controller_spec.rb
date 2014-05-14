@@ -7,35 +7,32 @@ describe SessionsController do
       expect(response).to render_template :new
     end
     it "redirects to the home page if user authenticated" do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       get :new
       expect(response).to redirect_to home_path
     end
   end #ends GET new
   
   describe "POST create" do
+    let(:bob) { Fabricate(:user) }
     context "valid login input" do
-      
-      it "sets session for signed in user" do
-        bob = Fabricate(:user)
+      before do
         post :create, email: bob.email, password: bob.password
+      end
+      it "sets session for signed in user" do
         expect(session[:user_id]).to eq(bob.id)
       end  
       it "should redirect to home path" do
-        bob = Fabricate(:user)
-        post :create, email: bob.email, password: bob.password
         expect(response).to redirect_to home_path
       end
       it "displays success flash notice" do
-        bob = Fabricate(:user)
-        post :create, email: bob.email, password: bob.password
         expect(flash[:success]).to eq("You are signed in, enjoy your movies!")
       end
      end # ends valid input context
     
     context "invalid login input" do
+      
       before do
-        bob = Fabricate(:user)
         post :create, email: bob.email
       end
       
