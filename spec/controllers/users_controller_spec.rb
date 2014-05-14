@@ -39,4 +39,17 @@ describe UsersController do
       end  
     end # ends context with invalid input
   end #ends POST create 
+  
+  describe "GET Show" do
+    let(:jane) { Fabricate(:user) }
+    it 'should set the @user' do
+      set_current_user(jane)
+      get :show, id: jane.id
+      expect(assigns(:user)).to eq(jane)
+    end
+    
+    it_behaves_like "require sign in" do
+      let(:action) { get :show, id: jane.id }
+    end
+  end # ends GET Show
 end # ends users controller test
