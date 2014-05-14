@@ -5,3 +5,27 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+comedy = Category.find_or_create_by({name: 'TV Comedies'})
+drama = Category.find_or_create_by({name: 'TV Dramas'})
+
+Video.create([{title: 'South Park', 
+               description: 'South Park is an American adult animated sitcom created by Trey Parker and Matt Stone for the Comedy Central television network.',
+               small_cover_url: 'covers/south_park.jpg',
+               large_cover_url: 'covers/south_park_large.jpg',
+               category: comedy},
+              {title: 'Family Guy', 
+               description: 'Family Guy is an American adult animated sitcom created by Seth MacFarlane for the Fox Broadcasting Company',
+               small_cover_url: 'covers/family_guy.jpg',
+               large_cover_url: 'covers/family_guy_large.jpg',
+               category: comedy},
+              {title: 'Futurama', 
+               description: 'Futurama is an American adult animated science fiction sitcom created by Matt Groening and developed by Groening and David X. Cohen for the Fox Broadcasting Company',
+               small_cover_url: 'covers/futurama.jpg',
+               large_cover_url: 'covers/futurama_large.jpg',
+               category: comedy},
+              {title: 'Monk', 
+               description: 'Monk is an American comedy-drama detective mystery television series created by Andy Breckman and starring Tony Shalhoub as the eponymous character, Adrian Monk.',
+               small_cover_url: 'covers/monk.jpg',
+               large_cover_url: 'covers/monk_large.jpg',
+               category: drama}])
