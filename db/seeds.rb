@@ -9,7 +9,8 @@
 comedy = Category.find_or_create_by({name: 'TV Comedies'})
 drama = Category.find_or_create_by({name: 'TV Dramas'})
 
-Video.create([{title: 'South Park', 
+3.times do
+  Video.create([{title: 'South Park', 
                description: 'South Park is an American adult animated sitcom created by Trey Parker and Matt Stone for the Comedy Central television network.',
                small_cover_url: 'covers/south_park.jpg',
                large_cover_url: 'covers/south_park_large.jpg',
@@ -29,3 +30,4 @@ Video.create([{title: 'South Park',
                small_cover_url: 'covers/monk.jpg',
                large_cover_url: 'covers/monk_large.jpg',
                category: drama}])
+end
