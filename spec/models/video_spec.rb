@@ -28,6 +28,12 @@ describe Video do
       video2 = Video.create(title: 'The Family Guy', description: 'A comedy about a family and their dog.')
       expect(Video.search_by_title('Family')).to eq([video2, video])
     end
+
+    it "returns an empty array if the search term is blank" do
+      video = Video.create(title: 'The Family Guy', description: 'A comedy about a family and their dog.', created_at: 1.day.ago)
+      video2 = Video.create(title: 'The Family Guy', description: 'A comedy about a family and their dog.')
+      expect(Video.search_by_title('')).to eq([])
+    end
   end
   
 end
