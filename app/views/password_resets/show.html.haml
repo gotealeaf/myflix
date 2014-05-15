@@ -8,6 +8,15 @@
           = hidden_field_tag :token, @user.token 
           .row
             .col-sm-4
-              = password_field_tag :password 
+              = label_tag :password, "New password"
+          .row
+            .col-sm-4              
+              = password_field_tag :password
+          .row
+            .col-sm-4              
+              = label_tag :password_confirmation, "Password confirmation"
+          .row
+            .col-sm-4              
+              = password_field_tag :password_confirmation
         %fieldset.form-group.action
           %input(type="submit" value="Reset Password" class="btn btn-default")

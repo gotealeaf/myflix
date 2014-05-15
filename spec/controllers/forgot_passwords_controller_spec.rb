@@ -28,6 +28,13 @@ describe ForgotPasswordsController do
 
         expect(ActionMailer::Base.deliveries.last.to).to eq(["paq@paq.com"])
       end
+
+      it "sets reset_password_email_sent_at with the current time" do
+        ana = Fabricate :user, email: "paq@paq.com"
+        post :create, email: "paq@paq.com"
+
+        expect(ana.reload.reset_password_email_sent_at).to eq(ActionMailer::Base.deliveries.last.date)        
+      end
     end
 
     context "with non existing email" do
