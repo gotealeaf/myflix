@@ -9,7 +9,7 @@ Myflix::Application.routes.draw do
     resources :reviews, only: [:create]
   end
 
-  resources :users, only: [:create, :show] 
+  resources :users, only: [:create, :show, :update] 
   resources :queue_items, only: [:create, :destroy]
   resources :sessions, only: [:create]
   resources :relationships, only: [:create, :destroy]
@@ -24,8 +24,14 @@ Myflix::Application.routes.draw do
 
   get 'profile', to: 'users#profile'
   get 'register', to: 'users#new'
-  post 'forgot_password', to: 'users#forgot_password'
-  get 'reset_password', to: 'users#reset_password'
+
+  get 'forgot_password', to: 'forgot_passwords#new'
+
+  resources :forgot_passwords, only: [:create]
+  get 'forgot_password_confirmation', to: 'forgot_passwords#confirmation'
+
+  resources :password_resets, only: [:show, :create]
+  get 'expired_token', to: 'password_resets#expired_token'
 
   get 'people', to: 'relationships#index'
 

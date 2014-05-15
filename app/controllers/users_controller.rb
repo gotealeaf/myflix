@@ -22,10 +22,10 @@ class UsersController < ApplicationController
   end
 
   def forgot_password
-     user = User.find_by_email(params[:email])
-    if user
-      message = AppMailer.send_forgot_password_email(user).deliver 
-      set_reset_password_email_at user
+     @user = User.find_by_email(params[:email])
+    if @user
+      message = AppMailer.send_forgot_password_email(@user).deliver 
+      set_reset_password_email_at @user
       redirect_to sign_in_path
     else
       flash[:error] = "There is no user account registered with this email, please type it again or register if you have not done it yet."
@@ -33,7 +33,11 @@ class UsersController < ApplicationController
   end
 
   def reset_password
-    
+    user = User.find_by_token(params[:id])
+  end
+
+  def update
+    user = User.find_by_token(params[:token])
   end
 
   private

@@ -39,15 +39,9 @@ class User < ActiveRecord::Base
     !(self.follows?(user) || self == user)
   end
 
-  def url_for_reset_password    
-    url_for(controller: 'users', action: 'reset_password', id: token, host: 'localhost:3000')
-  end
-
   def to_param
     token
   end
-
-  private
 
   def generate_token
     self.token = SecureRandom.urlsafe_base64

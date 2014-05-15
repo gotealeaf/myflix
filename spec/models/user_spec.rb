@@ -10,6 +10,11 @@ describe User do
   it { should have_many :followers }
   it { should have_many :followed_people }
   
+  it "generates a random token when the user is created" do
+    ana = Fabricate :user
+    expect(ana.token).to be_present
+  end
+
   it "should be validate uniq of email " do
     user = Fabricate :user
     user.save
@@ -83,12 +88,5 @@ describe User do
 
       ana.can_follow?(ana).should be_false
     end  
-  end
-
-  describe "#url_for_reset_password" do
-    let(:ana) { Fabricate :user }
-    it "returns the correct url" do
-      link = "localhost:3000/reset_password/#{ana.token}"
-    end
   end
 end
