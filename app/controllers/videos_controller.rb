@@ -8,6 +8,10 @@ class VideosController < ApplicationController
   def show
   end
   
+  def search
+    @videos = Video.search_by_title(params[:search_term])
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_video
