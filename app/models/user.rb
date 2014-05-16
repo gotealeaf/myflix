@@ -19,4 +19,12 @@ class User < ActiveRecord::Base
     queue_items.map(&:video).include?(video)
   end
   
+  def follows?(another_user)
+    following_relationships.map(&:leader).include?(another_user)
+  end
+  
+  def can_follow?(another_user)
+    !(self.follows?(another_user) || self == another_user) #can only follow if you are not the other user or not following the other user
+  end
+  
 end

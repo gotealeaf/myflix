@@ -56,4 +56,46 @@ describe RelationshipsController do
       end
     end
   end #ends DELETE destroy
+  
+  describe "POST create" do
+    
+    it_behaves_like "require sign in" do
+        let(:action) { post :create }
+      end
+    
+    context "signed in user" do
+      
+      let(:jane) { Fabricate(:user) }
+      let(:bob) { Fabricate(:user) } 
+      before do
+        set_current_user(jane)
+      end
+      
+      it 'should create a relationship between the current_user and the person being followed (ie: the leader)' do
+        post :create, leader_id: bob.id
+        expect(jane.following_relationships.first.leader).to eq(bob)
+      end
+      
+      it 'should redirect to the people page' do
+        post :create, leader_id: bob.id
+        expect(response).to redirect_to people_path
+      end
+      
+      it 'should display a flash message if relationship could be created' do
+        post :create, leader_id: bob.id
+        expect(flash[:success]).not_to be_blank
+      end
+      
+      it 'should not allow a user to follow themselves' do
+        post :create, leader_id: jane.id
+        expect(Relationship.count).to eq(0)
+      end
+      
+      it 'should not allow the current user to create a relationship with the same user more than once' do
+        relationship = Fabricate(:relationship, leader: bob, follower: jane)
+        post :create, leader_id: bob.id
+        expect(Relationship.count).to eq(1) #just the one above
+      end
+    end #ends signed in user context
+  end #ends POST create
 end

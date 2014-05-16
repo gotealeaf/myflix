@@ -6,6 +6,10 @@ class RelationshipsController < ApplicationController
   end
   
   def create
+    leader = User.find(params[:leader_id])
+    @relationship = Relationship.create(leader_id: params[:leader_id], follower: current_user) if current_user.can_follow?(leader)
+    flash[:success] = "You are now following #{leader.full_name}."
+    redirect_to people_path
   end
   
   def destroy
@@ -13,7 +17,6 @@ class RelationshipsController < ApplicationController
     relationship.delete if relationship.follower == current_user
     flash[:danger] = "Relationship deleted."
     redirect_to people_path
-    #relationship = Relationship.find(params[:id])
   end
   
 end
