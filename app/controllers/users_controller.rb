@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params.require(:user).permit(:full_name, :email, :password))
       if @user.save
+        AppMailer.send_welcome_email(@user).deliver
         session[:user_id] = @user.id
         redirect_to videos_path
       else

@@ -22,6 +22,27 @@ describe UsersController do
       end
     end # ends context with valid input
     
+    context "send welcome email" do
+      after { ActionMailer::Base.deliveries.clear } #this will clear the queue after each run. We have to specify this because ActionMailer is not part of database transactions, so it will not automatically roll back
+      
+      it 'should send email to the right recipient if input was valid' do
+        post :create, user: { email: "user@example.com", password: "password", full_name: "Cool User"}
+        message = ActionMailer::Base.deliveries.last
+        expect(message.to).to eq(["user@example.com"])
+      end
+      
+      it 'should send email with the right content if input was valid' do
+        post :create, user: { email: "user@example.com", password: "password", full_name: "Cool User"}
+        message = ActionMailer::Base.deliveries.last
+        expect(message.body).to include('Cool User')
+      end
+      
+      it 'should not send out email if input was invalid' do
+        post :create, user: { email: "user@example.com" }
+        expect(ActionMailer::Base.deliveries).to be_empty
+      end
+    end #ends send welcome email context
+    
     context "with invalid input" do
       it "does not create a user" do
         post :create, user: { email: "user@example.com", password: "password" }
