@@ -2,23 +2,25 @@
   %header
     %h3= link_to "TV Commedies"
   .videos.row
-    - 6.times do
+    - @videos.each do |video|
       .video.col-sm-2
         = link_to "", nil do
-          %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
+          %img(src="#{video.small_cover_url}")
 
 %article.video_category
   %header
     %h3= link_to "TV Dramas"
   .videos.row
-    - 6.times do
+    - @videos.each do |video|
       .video.col-sm-2
-        %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
+        = link_to "", nil do
+          %img(src="#{video.small_cover_url}")
 
 %article.video_category
   %header
     %h3= link_to "Reality TV"
   .videos.row
-    - 6.times do
+    - @videos.each do |video|
       .video.col-sm-2
-        %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
+        = link_to "", nil do
+          %img(src="#{video.small_cover_url}")

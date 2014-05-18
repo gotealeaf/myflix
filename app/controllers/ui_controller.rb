@@ -5,6 +5,7 @@ class UiController < ApplicationController
 
   layout "application"
 
-  def index
+  def home
+  	@videos = Video.all
   end
 end
