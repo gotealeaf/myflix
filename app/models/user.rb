@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   
   has_secure_password validations: false
   
+  before_create :generate_token
+  
   def normalize_queue_item_list_order
      queue_items.each_with_index do |queue_item, index|
       queue_item.update_attributes(list_order: index+1 ) #must be + 1 because index starts with zero
@@ -25,6 +27,12 @@ class User < ActiveRecord::Base
   
   def can_follow?(another_user)
     !(self.follows?(another_user) || self == another_user) #can only follow if you are not the other user or not following the other user
+  end
+  
+  private
+  
+  def generate_token
+    self.token = SecureRandom.urlsafe_base64
   end
   
 end
