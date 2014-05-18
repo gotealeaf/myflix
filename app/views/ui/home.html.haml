@@ -2,25 +2,16 @@
   %header
     %h3= link_to "TV Commedies"
   .videos.row
-    - @videos.each do |video|
-      .video.col-sm-2
-        = link_to "", nil do
-          %img(src="#{video.small_cover_url}")
+    = render partial: 'shared/video', collection: @videos
 
 %article.video_category
   %header
     %h3= link_to "TV Dramas"
   .videos.row
-    - @videos.each do |video|
-      .video.col-sm-2
-        = link_to "", nil do
-          %img(src="#{video.small_cover_url}")
+    = render partial: 'shared/video', collection: @videos
 
 %article.video_category
   %header
     %h3= link_to "Reality TV"
   .videos.row
-    - @videos.each do |video|
-      .video.col-sm-2
-        = link_to "", nil do
-          %img(src="#{video.small_cover_url}")
+    = render partial: 'shared/video', collection: @videos
