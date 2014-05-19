@@ -7,6 +7,7 @@ class VideosController < ApplicationController
   end
   
   def show
+    @reviews = @video.reviews
   end
   
   def search
@@ -20,8 +21,8 @@ class VideosController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def video_params
-      params.require(:video).permit(:title, :description, :small_cover_url, :large_cover_url)
-    end
+    # def video_params
+    #   params.require(:video).permit(:title, :description, :small_cover_url, :large_cover_url)
+    # end
   
 end

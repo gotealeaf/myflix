@@ -30,6 +30,18 @@ describe VideosController do
         get :show, id: video
         expect(response).to render_template(:show)
       end
+      context "for video with reviews" do
+        let(:review1) {Fabricate(:review, video: video, created_at: 1.day.ago)}
+        let(:review2) {Fabricate(:review, video: video)}
+        it "assigns @reviews" do
+          get :show, id: video
+          expect(assigns(:reviews)).to eq(video.reviews)      
+        end
+        it "presents reviews by created_at in desending order" do
+          get :show, id: video
+          expect(assigns(:reviews)).to eq([review2, review1])
+        end
+      end
     end
   
     describe "GET #search" do
