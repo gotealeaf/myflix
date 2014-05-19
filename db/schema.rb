@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20140519160502) do
   end
 
   create_table "reviews", force: true do |t|
-    t.text     "review"
+    t.text     "content"
     t.integer  "rating"
     t.integer  "user_id"
     t.integer  "video_id"
