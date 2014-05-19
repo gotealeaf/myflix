@@ -4,13 +4,4 @@ class UiController < ApplicationController
   end
 
   layout "application"
-
-  def home
-  	@comedies = Video.comedy
-  	@dramas   = Video.dramas
-  	@action   = Video.action
-  end
-  def video
-  	@video = Video.first
-  end
 end
