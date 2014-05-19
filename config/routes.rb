@@ -1,4 +1,9 @@
 Myflix::Application.routes.draw do
+  
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: '/letter_opener'
+  end
+  
   get 'ui(/:action)', controller: 'ui'
   
   root to: 'pages#front'  
@@ -14,6 +19,10 @@ Myflix::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :categories, only: [:show]
   resources :queue_items, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
+  resources :forgot_passwords, only: [:create]
+  resources :password_resets, only: [:show, :create]
+  
   get '/home', to: 'videos#index'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
@@ -21,6 +30,11 @@ Myflix::Application.routes.draw do
   get '/register', to: 'users#new'
   get '/my_queue', to: 'queue_items#index'
   post '/update_queue', to: 'queue_items#update_queue'
+  get '/people', to: 'relationships#index'
+  get '/forgot_password', to: 'forgot_passwords#new'
+  get '/forgot_password_confirmation', to: 'forgot_passwords#confirm'
+  get '/invalid_token', to: 'password_resets#invalid_token'
+  
 
 
 end
