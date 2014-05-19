@@ -12,3 +12,13 @@ Video.create(title: "Monk", description: "Monk is an American comedy-drama detec
 Video.create(title: "South Park", description: "South Park is an American adult animated sitcom created by Trey Parker and Matt Stone for the Comedy Central television network", small_cover_url: "/tmp/south_park.jpg", large_cover_url: "/tmp/south_park.jpg")
 Video.create(title: "Futurama", description: "Pizza boy Philip J. Fry awakens in the 31st century after 1,000 years of cryogenic preservation in this animated series.", small_cover_url: "/tmp/futurama.jpg", large_cover_url: "/tmp/futurama.jpg")
 Video.create(title: "Family Guy", description: "The show follows the adventures of an endearingly ignorant dad, PETER GRIFFIN (Seth MacFarlane), and his hilariously odd family of middle-class New Englanders.", small_cover_url: "/tmp/family_guy.jpg", large_cover_url: "/tmp/family_guy.jpg")
+
+Category.create(name: "Action")
+Category.create(name: "Comedy")
+Category.create(name: "Drama")
+Category.create(name: "Romance")
+
+Categorization.create(category_id: 1, video_id: 1)
+Categorization.create(category_id: 2, video_id: 2)
+Categorization.create(category_id: 3, video_id: 3)
+Categorization.create(category_id: 4, video_id: 4)

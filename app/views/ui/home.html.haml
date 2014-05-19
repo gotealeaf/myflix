@@ -2,16 +2,16 @@
   %header
     %h3= link_to "TV Commedies"
   .videos.row
-    = render partial: 'shared/video', collection: @videos
+    = render partial: 'shared/video', collection: @comedies
 
 %article.video_category
   %header
     %h3= link_to "TV Dramas"
   .videos.row
-    = render partial: 'shared/video', collection: @videos
+    = render partial: 'shared/video', collection: @dramas
 
 %article.video_category
   %header
     %h3= link_to "Reality TV"
   .videos.row
-    = render partial: 'shared/video', collection: @videos
+    = render partial: 'shared/video', collection: @action
