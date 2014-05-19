@@ -27,6 +27,8 @@ end
 group :test do
   gem 'shoulda-matchers'
   gem 'simplecov', '~> 0.8.2'
+  gem 'fabrication', '~> 2.11.2'
+  gem 'faker', '~> 1.3.0'
 end
 
 group :production do
