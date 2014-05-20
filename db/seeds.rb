@@ -29,3 +29,8 @@ futurama1 = Video.search_by_title("Futurama 1").first
 Review.create(video: futurama1, user: user1, rating: 2, content: "This is the text of the first review. Critics panned this episode.")
 Review.create(video: futurama1, user: user2, rating: 5, content: "This is the text of the second review.  William Shatner loves Futurama")
 Review.create(video: futurama1, user: user3, rating: 4, content: "This is the text of the last review. The general public enjoyed it.")
+
+monk1 = Video.search_by_title("Monk 1").first
+
+QueueItem.create(video: futurama1, user: user2, position: 1)
+QueueItem.create(video: monk1, user: user2, position: 2)

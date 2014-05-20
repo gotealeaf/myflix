@@ -8,7 +8,8 @@
           %h3= @video.title
           %span Rating: #{@video.average_rating}/5.0
         %p= @video.description
-
+        .actions
+          = link_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: "btn btn-default"
 %section.reviews.container
   .row
     .col-sm-10.col-sm-offset-1
