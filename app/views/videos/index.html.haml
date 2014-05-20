@@ -3,7 +3,7 @@
     %header
       %h3= link_to "TV #{category.name}"
   .videos.row
-    - @videos.each do |video|
+    - @videos.category_id(category.id).each do |video|
       .video.col-sm-2
         = link_to "", nil do
           %img(src="#{video.small_cover_url}")
