@@ -29,12 +29,13 @@ Myflix::Application.routes.draw do
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
   get '/register', to: 'users#new'
+  get '/register/:token', to: 'users#new_with_token', as: 'register_with_token'
   get '/my_queue', to: 'queue_items#index'
   post '/update_queue', to: 'queue_items#update_queue'
   get '/people', to: 'relationships#index'
   get '/forgot_password', to: 'forgot_passwords#new'
   get '/forgot_password_confirmation', to: 'forgot_passwords#confirm'
-  get '/invalid_token', to: 'password_resets#invalid_token'
+  get '/invalid_token', to: 'pages#invalid_token'
   
 
 

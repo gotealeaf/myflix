@@ -40,4 +40,20 @@ describe User do
       expect(jane.follows?(bob)).to be_false
     end
   end # ends follows
+  
+  describe "#follow" do
+    
+    it 'follows another user' do
+      jane = Fabricate(:user)
+      bob = Fabricate(:user)
+      bob.follow(jane)
+      expect(bob.follows?(jane)).to be_true
+    end
+    
+    it 'does not follow one self' do
+      jane = Fabricate(:user)
+      jane.follow(jane)
+      expect(jane.follows?(jane)).to be_false
+    end
+  end #ends follow
 end

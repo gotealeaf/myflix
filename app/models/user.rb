@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
   has_many :reviews, -> { order("created_at DESC") }
   has_many :queue_items, -> { order(:list_order) }
+  has_many :invitations, foreign_key: :inviter_id
+  
   
   has_many :following_relationships, class_name: "Relationship", foreign_key: :follower_id # because the table is Relationships and it only contains either leader_id or follower_id, so we need to specify it clearly
   has_many :leading_relationships, class_name: "Relationship", foreign_key: :leader_id
@@ -25,8 +27,16 @@ class User < ActiveRecord::Base
     following_relationships.map(&:leader).include?(another_user)
   end
   
+  def follow(another_user)
+    following_relationships.create(leader: another_user) if can_follow?(another_user)
+  end
+  
   def can_follow?(another_user)
     !(self.follows?(another_user) || self == another_user) #can only follow if you are not the other user or not following the other user
+  end
+  
+  def new_invite?(recipient)
+    !(self.invitations.map(&:recipient_email).include?(recipient))
   end
   
   def generate_token
