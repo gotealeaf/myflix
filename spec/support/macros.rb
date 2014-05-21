@@ -10,6 +10,10 @@ def clear_current_user
   session[:user_id] = nil
 end
 
+def sign_out_user
+  visit logout_path
+end
+
 def sign_in_user(a_user=nil) 
   user = a_user ||= Fabricate(:user)
   visit login_path
