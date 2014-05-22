@@ -5,3 +5,9 @@ shared_examples 'require sign in' do
     expect(response).to redirect_to root_path
   end
 end
+
+shared_examples 'generate token' do
+  it 'generates a random token when tokenable is called' do
+    expect(object.token).to be_present
+  end
+end

@@ -22,8 +22,7 @@ describe InvitationsController do
     end
     
     context "valid input" do
-    let(:jane) { Fabricate(:user) }
-      
+      let(:jane) { Fabricate(:user) } 
       after { ActionMailer::Base.deliveries.clear } # to clear everything after it runs. Matters for the invalid input (where no mails are supposed to be sent out)
       
       it 'should create a new invitation between the current user and the invited friend' do
@@ -53,6 +52,7 @@ describe InvitationsController do
     
     context "invalid input" do
       let(:jane) { Fabricate(:user) }
+      after { ActionMailer::Base.deliveries.clear }
       
       it 'should not create an invitation' do
         set_current_user(jane)

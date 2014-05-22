@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  include Tokenable
   validates_presence_of :email, :password, :full_name
   validates_uniqueness_of :email
   has_many :reviews, -> { order("created_at DESC") }
@@ -11,7 +12,7 @@ class User < ActiveRecord::Base
   
   has_secure_password validations: false
   
-  before_create :generate_token
+  #before_create :generate_token
   
   def normalize_queue_item_list_order
      queue_items.each_with_index do |queue_item, index|
@@ -39,8 +40,8 @@ class User < ActiveRecord::Base
     !(self.invitations.map(&:recipient_email).include?(recipient))
   end
   
-  def generate_token
-    self.token = SecureRandom.urlsafe_base64
-  end
+  #def generate_token
+    #self.token = SecureRandom.urlsafe_base64
+  #end
   
 end
