@@ -16,7 +16,7 @@ describe Category do
       rudy = Video.create(title: "Rudy", description: "Heartwarming drama", category: category)
       lost = Video.create(title: "Lost", description: "Mystery drama", category: category)
       bsg = Video.create(title: "Battle Star Galactica", description: "Sci-Fi drama", category: category)
-      expect(category.recent_videos.count).to eq(31)
+      expect(category.recent_videos.count).to eq(3)
     end
 
     it "returns only 6 videos if there are more than 6" do

@@ -32,9 +32,9 @@ ActiveRecord::Schema.define(version: 20140516221221) do
     t.string   "description"
     t.string   "small_cover_url"
     t.string   "large_cover_url"
-    t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "category_id"
   end
 
 end
