@@ -1,6 +1,6 @@
 class InvitationsController < ApplicationController
   before_filter :require_user
-  require 'pry'
+
   
   def new
     @invitation = Invitation.new

@@ -1,6 +1,6 @@
 class QueueItemsController < ApplicationController
   before_action :require_user
-  require 'pry'
+
   
   def index
     @queue_items = current_user.queue_items
