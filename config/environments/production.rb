@@ -18,6 +18,10 @@ Myflix::Application.configure do
 
   config.active_support.deprecation = :notify
   
+  DATABASE_OPERATOR = {
+  like_operator: 'ILIKE'
+  }
+  
   config.action_mailer.default_url_options = { host: 'teoanne-myflix.herokuapp.com' }
   
   # mailgun settings

@@ -7,7 +7,7 @@ class Video < ActiveRecord::Base
   
   def self.search_by_title(title)
     return [] if title.blank?
-    where("title ILIKE ?", "%#{title}%").order("created_at DESC") 
+    where("title #{DATABASE_OPERATOR[:like_operator]} ?", "%#{title}%").order("created_at DESC") 
   end
   
   def recent_videos
