@@ -14,3 +14,4 @@ Video.create(title: "Monk", description: "Story about a monk detetctive", small_
 Category.create(name: "Comedy")
 Category.create(name: "Drama")
 Category.create(name: "Reality")
+
