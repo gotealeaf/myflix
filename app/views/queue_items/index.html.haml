@@ -19,18 +19,12 @@
                 %td
                   %input.form-control(type="text" value="1")
                 %td
-                  = link_to "Futurama"
+                  = link_to queue_item.video_title, queue_item.video
                 %td
                   = button_to "Play", nil, class: "btn btn-default"
+                %td= queue_item.rating
                 %td
-                  %select.form-group(name="")
-                    %option(value="5") 5 Stars
-                    %option(value="4") 4 Stars
-                    %option(value="3") 3 Stars
-                    %option(value="2") 2 Stars
-                    %option(value="1") 1 Star
-                %td
-                  = link_to "TV Shows"
+                  = link_to queue_item.category_name, queue_item.category
                 %td
                   = link_to "", method: :post do
                     %i.glyphicon.glyphicon-remove
