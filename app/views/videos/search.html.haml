@@ -1,0 +1,5 @@
+%article.video_category
+  - @results.each do |video|
+    .video.span2
+      = link_to video do
+        %img(src="#{video.small_cover_url}")
