@@ -21,7 +21,7 @@ describe QueueItemsController do
       session[:user_id] = Fabricate(:user).id
       video = Fabricate(:video)
       post :create, video_id: video.id
-      expect(response).to redirect_to queue_items_path
+      expect(response).to redirect_to my_queue_path
     end
     it "creates a queue item" do
       session[:user_id] = Fabricate(:user).id
