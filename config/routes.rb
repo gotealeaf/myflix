@@ -11,7 +11,7 @@ Myflix::Application.routes.draw do
     end
     resources :reviews, only: [:create]
   end
-
+  post 'update_queue', to: 'queue_items#update_queue'
   get 'ui(/:action)', controller: 'ui'
   get 'my_queue', to: 'queue_items#index'
   get 'home',     to: 'videos#index'
