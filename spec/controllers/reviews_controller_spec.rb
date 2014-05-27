@@ -29,7 +29,7 @@ describe ReviewsController do
 
 
         
-      end #context
+      end #context valid imputs
     
       context "with invalid inputs" do
         before { post :create, review: {rating: 2},  video_id: video.id, user_id: session[:user_id]}
@@ -52,7 +52,7 @@ describe ReviewsController do
           expect(assigns(:reviews)).to match_array([review1])
         end
 
-      end #context
+      end #context invalid input
     end #context auth user
 
     context "unauthenticated user" do

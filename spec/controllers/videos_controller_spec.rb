@@ -11,12 +11,12 @@ describe VideosController do
           session[:user_id] = user.id
         end
 
-      it "sets the @videos variable" do
-        vids = Fabricate.times(2, :video)
-        get :index
+      #it "sets the @videos variable" do
+      #  vids = Fabricate.times(2, :video)
+      #  get :index
 
-        expect(assigns(:videos)).to eq vids
-      end
+      #  expect(assigns(:videos)).to eq vids
+      #end
 
       it "sets the @categories variable" do
         comedy = Category.create(name: "comedy")
@@ -61,6 +61,7 @@ describe VideosController do
           review2 = Fabricate(:review, video: video)
           get :show, id: video.id
           expect(assigns(:reviews)).to match_array([review1, review2])
+          # assigns(:reviews).should =~ [review1, review2]   <<-- this syntax can be used as well
         end
 
         it "displays the latest review at the top of the list" do
