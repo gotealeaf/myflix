@@ -11,6 +11,8 @@ describe Category do
 
 
   it {should have_many(:videos)} #shoulda-matchers
+  it {should validate_presence_of(:name)}
+
   describe "#recent_videos" do  # the # is the convention to show that a method is being tested
     it "should return a blank array if there are no videos in a category" do
       cat = Category.create(name: "comedy")

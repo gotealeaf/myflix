@@ -32,7 +32,7 @@ describe SessionsController do
 
       end
       it "displays notice about successful login" do
-        expect(flash[:success]).to include "log" #alternative is to_not be_blank #eq "You are logged in"
+        expect(flash[:success]).to include "log" #alternative is not_to be_blank #eq "You are logged in"
       end
       it "redirects to home path" do
         expect(response).to redirect_to home_path
@@ -54,7 +54,7 @@ describe SessionsController do
       end
 
       it "should flash notice about invalid login" do
-        expect(flash[:danger]).to_not be_blank
+        expect(flash[:danger]).not_to be_blank
       end
 
     end # context invalid
