@@ -18,4 +18,7 @@ Myflix::Application.configure do
   config.assets.debug = true
 
   config.eager_load = false
+
+  #'false' will prevent having to restart the webrick server after every change
+  config.reload_classes_only_on_change = false
 end

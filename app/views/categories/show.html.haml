@@ -1,0 +1,6 @@
+%article.video_category
+  %header
+    - if !@category.videos.empty?
+      %h1= @category.name
+  = render 'videos/videos', cat: @category
+  

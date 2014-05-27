@@ -1,13 +1,19 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 3.1.1'
 gem 'coffee-rails'
 gem 'rails'
 gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
+gem 'therubyracer'
+gem 'bcrypt-ruby', '~> 3.1.0'
+gem 'bootstrap_form'
+gem 'fabrication'
+gem 'faker'
+
 
 group :development do
   gem 'sqlite3'
@@ -16,6 +22,14 @@ group :development do
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
+end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0.0.beta'
+end
+
+group :test do
+  gem 'shoulda-matchers'
 end
 
 group :production do
