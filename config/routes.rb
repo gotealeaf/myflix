@@ -1,7 +1,9 @@
+require 'sidekiq/web'
 Myflix::Application.routes.draw do
   
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: '/letter_opener'
+    mount Sidekiq::Web => '/sidekiq'
   end
   
   get 'ui(/:action)', controller: 'ui'
