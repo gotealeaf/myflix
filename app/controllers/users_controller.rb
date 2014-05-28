@@ -40,6 +40,11 @@ class UsersController < ApplicationController
     user = User.find_by_token(params[:token])
   end
 
+  def invitation_register
+    @invited_user = User.new(email: params[:email])
+    create
+  end
+
   private
 
   def user_params

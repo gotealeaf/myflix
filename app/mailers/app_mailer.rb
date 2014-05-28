@@ -8,4 +8,10 @@ class AppMailer < ActionMailer::Base
     @user = user
     mail to: user.email, from: "unai.myflix@gmail.com", subject: "Forgot password."
   end
+
+  def send_invitation_email user, input
+    @user = user
+    @input = input
+    mail to: input[:friend_email], from: "unai.myflix@gmail.com", subject: "MyFlix Inviotation"
+  end
 end

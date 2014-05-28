@@ -72,4 +72,11 @@ describe UsersController do
       expect(assigns :user).to eq(ana)
     end
   end 
+
+  describe "GET invitation_register" do
+    it "sets @user variable" do
+      get :invitation_register, email: "paq@paq.com"
+      expect(assigns :invited_user).to_not be_nil
+    end 
+  end
 end 
