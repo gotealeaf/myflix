@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     @user = User.new(params.require(:user).permit(:full_name, :email, :password))
       if @user.save
         handle_invitation
-        AppMailer.delay.send_welcome_email(@user).deliver
+        AppMailer.delay.send_welcome_email(@user)
         session[:user_id] = @user.id
         flash[:success] = "You are now logged in."
         redirect_to videos_path

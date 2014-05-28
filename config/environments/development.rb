@@ -20,5 +20,5 @@ Myflix::Application.configure do
   config.assets.debug = true
 
   config.eager_load = false
-  #ENV['REDIS_PROVIDER'] = 'redis://localhost:6379' 
+  ENV['REDISTOGO_URL'] = 'redis://localhost:6379' 
 end
