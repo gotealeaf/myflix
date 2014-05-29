@@ -7,7 +7,7 @@ describe SessionsController do
       expect(response).to render_template :new
     end
     it "redirect to the home page for authenticated users" do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       get :new
       expect(response).to redirect_to home_path
     end
@@ -15,14 +15,13 @@ describe SessionsController do
 
   describe "POST create" do
     context "with valid credentials" do
-
+      let(:user) { Fabricate(:user) }
       before do
-        @user = Fabricate(:user)
-        post :create, email: @user.email, password: @user.password
+        post :create, email: user.email, password: user.password
       end
 
       it "puts the signed in user in the session" do
-        expect(session[:user_id]).to eq(@user.id)
+        expect(session[:user_id]).to eq(user.id)
       end
       it "redirect to the home page" do
         expect(response).to redirect_to home_path
@@ -33,10 +32,9 @@ describe SessionsController do
     end
 
     context "with invalid credentials" do
-
+      let(:user) { Fabricate(:user) }
       before do
-        @user = Fabricate(:user)
-        post :create, email: @user.email, password: @user.password + 'asdfasde'
+        post :create, email: user.email, password: user.password + 'asdfasde'
       end
 
       it "does not put the signed in user in the session" do
