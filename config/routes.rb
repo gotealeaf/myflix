@@ -1,7 +1,7 @@
 Myflix::Application.routes.draw do
   root "pages#front"
   
-  resources :users,      only: [:create]
+  resources :users,      only: [:create, :show]
   resources :sessions,   only: [:create]
   resources :categories, only: [:show]
   resources :queue_items,only: [:create, :destroy]
