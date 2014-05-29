@@ -15,12 +15,12 @@ feature "Password reset" do
 
     open_email('paq5@paq.com')
     current_email.click_link "Reset my password"
+
     page.should have_content "Reset Your Password"
     fill_in "New password", with:"987654321"
     fill_in "Password confirmation", with: "987654321"
     click_button "Reset Password"
 
     ana.reload.authenticate("987654321").should be_true 
-
   end
 end

@@ -1,5 +1,5 @@
 %html(lang="en-US")
   %body 
     %p Hi #{@input[:friend_name]}! #{@user.full_name} has intited you to join MyFlix! Please, click the following link to register. Thank you!
-    %p= link_to "Join Myflix!", "#{invitation_register_url}?email=#{@input[:friend_email]}" 
+    %p= link_to "Join Myflix!", "#{register_url}?email=#{@input[:friend_email]};token=#{@user.token}" 
     %p= @input[:invitation_message]

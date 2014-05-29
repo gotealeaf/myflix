@@ -2,7 +2,9 @@ class UsersController < ApplicationController
   before_filter :require_user, only: [:show]
     
   def new
+    @user_token = params[:token]
     @user = User.new
+    @user.email = params[:email]
   end
 
   def create
@@ -10,6 +12,8 @@ class UsersController < ApplicationController
 
     if @user.save
       AppMailer.send_welcome_email(@user).deliver
+      old_user = User.find_by_token(params[:token])
+      create_relationships old_user, @user if old_user
       redirect_to sign_in_path
     else
       flash[:error] = "User couldn't be created. #{@user.errors.full_messages.first}"
@@ -42,7 +46,6 @@ class UsersController < ApplicationController
 
   def invitation_register
     @invited_user = User.new(email: params[:email])
-    create
   end
 
   private
@@ -57,5 +60,10 @@ class UsersController < ApplicationController
       user.reset_password_email_sent_at = message.date 
       user.save(:validate => false)
     end
+  end
+
+  def create_relationships old_user, invited_user
+    Relationship.create(user: old_user, follower: invited_user)
+    Relationship.create(user: invited_user, follower: old_user)   
   end
 end
