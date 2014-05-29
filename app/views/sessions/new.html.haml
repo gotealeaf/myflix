@@ -1,12 +1,14 @@
 %section.sign_in.container
   .row
-    .col-sm-6.col-sm-offset-3
+    .col-sm-10.col-sm-offset-1
       = bootstrap_form_tag url: sessions_path do |f|
         %header
           %h1 Sign in
         %fieldset
-          .col-sm-12
-            = f.email_field    :email, label: "Email Address"
-            = f.password_field :password, label: "Password"
-          .col-sm-4   
-            = f.submit "Sign in"
+          .row
+            .col-sm-4
+              = f.email_field    :email, label: "Email Address"
+              = f.password_field :password, label: "Password"
+          .row
+            .col-sm-4   
+              = f.submit "Sign in"
