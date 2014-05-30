@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'capybara/email/rspec'
 
 feature "Password reset" do

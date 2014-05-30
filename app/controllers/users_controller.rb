@@ -14,6 +14,7 @@ class UsersController < ApplicationController
       AppMailer.send_welcome_email(@user).deliver
       old_user = User.find_by_token(params[:token])
       create_relationships old_user, @user if old_user
+      flash[:notice] = "You have succesfully created your account"
       redirect_to sign_in_path
     else
       flash[:error] = "User couldn't be created. #{@user.errors.full_messages.first}"
