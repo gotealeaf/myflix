@@ -36,14 +36,18 @@ describe Admin::VideosController do
     end
     
     context "valid input" do
+      
+      let(:category1) { Fabricate(:category, name: "Drama") }
+      let(:category2) { Fabricate(:category, name: "Thriller") }
+      
       before do
         set_admin
-        category1 = Fabricate(:category, name: "Drama")
-        category2 = Fabricate(:category, name: "Thriller")
-        post :create, video: {description: "Funny as hell!", title: "Monk 2", categories: [category1, category2]}
+        post :create, video: {description: "Funny as hell!", title: "Monk 2", category_ids: [category1.id, category2.id]}
       end
+      
       it 'adds a video' do
         expect(Video.count).to eq(1)
+        #expect(category1.videos.count).to eq(1)
       end
       
       it 'redirects to the add video path' do
@@ -57,6 +61,7 @@ describe Admin::VideosController do
     end #ends valid input context
     
     context "invalid input" do
+      
       before do
         set_admin
         post :create, video: {description: "Funny as hell!"}
