@@ -8,15 +8,15 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
+gem 'bootstrap_form'
 
-group :test, :development do
+group :development do
   gem 'sqlite3'
   gem 'pry'
   gem 'pry-nav'
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
-  gem 'rspec-rails'
 end
 
 group :test, :development do

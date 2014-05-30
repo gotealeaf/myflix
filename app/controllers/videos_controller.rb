@@ -1,6 +1,10 @@
 class VideosController < ApplicationController
   before_filter :find_video, only: [:show]
   
+  def index
+    @categories = Category.all
+  end
+
   def show
   end
   
