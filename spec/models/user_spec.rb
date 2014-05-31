@@ -10,9 +10,8 @@ describe User do
   it { should have_many :followers }
   it { should have_many :followed_people }
   
-  it "generates a random token when the user is created" do
-    ana = Fabricate :user
-    expect(ana.token).to be_present
+  it_behaves_like "require_token" do
+    let(:object) { Fabricate :user }
   end
 
   it "should be validate uniq of email " do

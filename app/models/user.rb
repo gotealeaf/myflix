@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   include Rails.application.routes.url_helpers
+  include Tokenable
 
   has_many :reviews, -> { order("created_at DESC") }
   has_many :queue_items, -> { order(:order) }
@@ -10,8 +11,6 @@ class User < ActiveRecord::Base
   has_many :reverse_relationships, class_name: "Relationship", foreign_key: :follower_id
   has_many :followed_people, through: :reverse_relationships, source: :user
 
-  before_create :generate_token
-  
   validates_presence_of :email, :password, :full_name
   validates_uniqueness_of :email
 
@@ -41,10 +40,6 @@ class User < ActiveRecord::Base
 
   def to_param
     token
-  end
-
-  def generate_token
-    self.token = SecureRandom.urlsafe_base64
   end
 
   def reset_passsword password
