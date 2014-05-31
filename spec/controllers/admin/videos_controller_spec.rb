@@ -38,7 +38,7 @@ describe Admin::VideosController do
     context "valid input" do
       
       let(:category1) { Fabricate(:category, name: "Drama") }
-      let(:category2) { Fabricate(:category, name: "Thriller") }
+      let(:category2) { Fabricate(:category, name: "Action") }
       
       before do
         set_admin
@@ -47,7 +47,7 @@ describe Admin::VideosController do
       
       it 'adds a video' do
         expect(Video.count).to eq(1)
-        #expect(category1.videos.count).to eq(1)
+        expect(category1.videos.count).to eq(1)
       end
       
       it 'redirects to the add video path' do
