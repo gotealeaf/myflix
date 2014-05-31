@@ -41,16 +41,34 @@ describe UsersController do
       end
     end
 
-    describe "GET show" do
-      it_behaves_like "requires sign in" do
-        let(:action) { get :show, id: 3 }
+    context "sending emails" do
+
+      after { ActionMailer::Base.deliveries.clear }
+
+      it "sends out email to the user with valid inputs" do
+        post :create, user: { email: "joe@example.com", password: "secret", full_name: "Joe Smith" }
+        expect(ActionMailer::Base.deliveries.last.to).to eq(['joe@example.com'])
       end
-      it "sets @user" do
-        set_current_user
-        alice = Fabricate(:user)
-        get :show, id: alice.id
-        expect(assigns(:user)).to eq(alice)
+      it "sends out email containing the user's name with valid inputs" do
+        post :create, user: { email: "joe@example.com", password: "secret", full_name: "Joe Smith" }
+        expect(ActionMailer::Base.deliveries.last.body).to include("Joe Smith")
       end
+      it "does not send out email with invalid inputs" do
+        post :create, user: { email: "joe@example.com" }
+        expect(ActionMailer::Base.deliveries).to be_empty
+      end
+    end
+  end
+
+  describe "GET show" do
+    it_behaves_like "requires sign in" do
+      let(:action) { get :show, id: 3 }
+    end
+    it "sets @user" do
+      set_current_user
+      alice = Fabricate(:user)
+      get :show, id: alice.id
+      expect(assigns(:user)).to eq(alice)
     end
   end
 end
