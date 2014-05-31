@@ -19,6 +19,9 @@ gem 'slim'
 gem 'unicorn'
 gem 'sentry-raven'
 gem 'paratrooper'
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'fog'
 
 group :development do
   gem 'sqlite3'

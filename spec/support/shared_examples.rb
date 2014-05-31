@@ -11,3 +11,11 @@ shared_examples 'generate token' do
     expect(object.token).to be_present
   end
 end
+
+shared_examples 'require admin' do
+  it 'redirects to home path if user is not authorised to access the page' do
+      set_current_user
+      action
+      expect(response).to redirect_to home_path
+    end
+end

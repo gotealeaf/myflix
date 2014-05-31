@@ -10,8 +10,8 @@ class SessionsController < ApplicationController
     
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      flash[:success] = "You are signed in, enjoy your movies!"
-      redirect_to home_path 
+      flash[:success] = current_user.admin? ? "Welcome to the admin page" : "You are signed in, enjoy your movies!"
+      redirect_to current_user.admin? ? new_admin_video_path : home_path 
     else
       flash[:danger] = "There is something wrong with your email or password."
       redirect_to login_path
