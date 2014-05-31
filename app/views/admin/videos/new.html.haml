@@ -16,5 +16,6 @@
             = f.text_area :description, rows: 8, class: 'span6'
             = f.file_field :large_cover, label: "Large Cover", class: "btn btn-file"
             = f.file_field :small_cover, label: "Small Cover", class: "btn btn-file"
+            = f.text_field :video_url, class: 'span3', label: "Video URL"
           %fieldset.actions.form-group
             = f.submit "Add Video", class: "btn btn-default"
