@@ -10,11 +10,11 @@
               %a(href="") Add a New Video
           %br          
           %fieldset.form-group
-            = f.text_field :title, class: 'col-md-3'
+            = f.text_field :title, class: 'span3'
             = f.collection_check_boxes :category_ids, Category.all, :id, :name, label: 'Categories (you may select more than one)' do |cb|
               - cb.label(class: 'checkbox-inline') {cb.check_box(class: 'checkbox') + cb.text}
-            = f.text_area :description, rows: 8, class: 'col-md-6'
-            = f.file_field :large_cover, label: "Large Cover", class: "form-control"
-            = f.file_field :small_cover, label: "Small Cover", class: "form-control"
+            = f.text_area :description, rows: 8, class: 'span6'
+            = f.file_field :large_cover, label: "Large Cover", class: "btn btn-file"
+            = f.file_field :small_cover, label: "Small Cover", class: "btn btn-file"
           %fieldset.actions.form-group
             = f.submit "Add Video", class: "btn btn-default"
