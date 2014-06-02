@@ -19,6 +19,7 @@ group :development do
 end
 
 group :production do
+  #gem 'pg', '--with-pg-config=/Application/Postgres.app/Contents/Versions/9.3/bin/pg_config'
   gem 'pg'
   gem 'rails_12factor'
 end
