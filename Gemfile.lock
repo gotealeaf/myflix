@@ -53,6 +53,9 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.0)
     execjs (2.0.2)
+    fabrication (2.11.2)
+    faker (1.3.0)
+      i18n (~> 0.5)
     haml (4.0.4)
       tilt
     haml-rails (0.4)
@@ -159,6 +162,8 @@ DEPENDENCIES
   bootstrap-sass
   bootstrap_form
   coffee-rails
+  fabrication
+  faker
   haml-rails
   jquery-rails
   pg
