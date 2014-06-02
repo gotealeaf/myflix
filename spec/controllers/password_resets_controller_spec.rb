@@ -22,28 +22,21 @@ describe PasswordResetsController do
 
   describe "PUT update" do
     context "with valid token" do
-      it "redirects to the sign in page" do
-        alice = Fabricate(:user, password: "old_password")
+      let(:alice) { Fabricate(:user, password: "old_password") }
+      before do
         alice.update_column(:token, "12345")
         put :update, id: "12345", user: { password: "new_password" }
+      end
+      it "redirects to the sign in page" do
         expect(response).to redirect_to sign_in_path
       end
       it "updates the user's password" do
-        alice = Fabricate(:user, password: "old_password")
-        alice.update_column(:token, "12345")
-        put :update, id: "12345", user: { password: "new_password" }
         expect(alice.reload.authenticate('new_password')).to be_true
       end
       it "sets the flash success message" do
-        alice = Fabricate(:user, password: "old_password")
-        alice.update_column(:token, "12345")
-       put :update, id: "12345", user: { password: "new_password" }
         expect(flash[:success]).to be_present
       end
       it "regenerates the user token" do
-        alice = Fabricate(:user, password: "old_password")
-        alice.update_column(:token, "12345")
-        put :update, id: "12345", user: { password: "new_password" }
         expect(alice.reload.token).not_to eq('12345')
       end
     end
