@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'pry'
+
 
 feature "signing in" do
   scenario "with correct email and password" do

@@ -35,7 +35,7 @@ feature "user invites a friend" do
     expect(page).to have_content("Register")
     fill_in "Full Name", with: "Joe Bloggs"
     fill_in "Password", with: "password"
-    click_button "Register"
+    click_button "Sign Up"
     expect(page).to have_content("Welcome, Joe Bloggs")
   end
   

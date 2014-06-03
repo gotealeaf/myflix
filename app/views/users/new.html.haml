@@ -1,7 +1,12 @@
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">Stripe.setPublishableKey("#{ENV['STRIPE_PUBLISHABLE_KEY']}"); </script>
+
+= javascript_include_tag 'payment'
+
 %section.register.container
   .row
     .col-sm-10.col-sm-offset-1
-    = bootstrap_form_for @user, html: { class: "form-horizontal" } do |f|
+    = bootstrap_form_for @user, html: { class: "form-horizontal", id: "payment-form" } do |f|
       %header
         %h1 Register
       %fieldset
@@ -10,6 +15,7 @@
         = f.text_field :full_name, label: "Full Name"
         = hidden_field_tag :invitation_token, @invitation_token #will track the token but will not hash it into the user params
       %fieldset.credit_card
+        %span.payment-errors
         .form-group
           %label.control-label.col-sm-2 Credit Card Number
           .col-sm-6
