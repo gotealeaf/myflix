@@ -1,0 +1,21 @@
+%section.admin_add_video
+  .container
+    .row
+      .col-md-10.col-md-offset-1
+        = bootstrap_form_for [:admin, @video], html: {class: "form-horizontal"} do |f|
+          %ul.nav.nav-tabs
+            %li
+              %a(href="/ui/admin_views_payments") Recent Payments
+            %li.active
+              %a(href="") Add a New Video
+          %br          
+          %fieldset.form-group
+            = f.text_field :title, class: 'span3'
+            = f.collection_check_boxes :category_ids, Category.all, :id, :name, label: 'Categories (you may select more than one)' do |cb|
+              - cb.label(class: 'checkbox-inline') {cb.check_box(class: 'checkbox') + cb.text}
+            = f.text_area :description, rows: 8, class: 'span6'
+            = f.file_field :large_cover, label: "Large Cover", class: "btn btn-file"
+            = f.file_field :small_cover, label: "Small Cover", class: "btn btn-file"
+            = f.text_field :video_url, class: 'span3', label: "Video URL"
+          %fieldset.actions.form-group
+            = f.submit "Add Video", class: "btn btn-default"

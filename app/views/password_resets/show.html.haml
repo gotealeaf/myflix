@@ -1,0 +1,13 @@
+%section.reset_password.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = bootstrap_form_tag url: password_resets_path do |f|
+        %header
+          %h1 Reset Your Password
+        %fieldset.form-group
+          = f.password_field :password, label: "New Password"
+          = hidden_field_tag :token, @token
+          .row
+            .col-sm-4
+        %fieldset.form-group.action
+          %input(type="submit" value="Reset Password" class="btn btn-default")
