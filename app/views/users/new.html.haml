@@ -9,8 +9,26 @@
         = f.password_field :password
         = f.text_field :full_name, label: "Full Name"
         = hidden_field_tag :invitation_token, @invitation_token #will track the token but will not hash it into the user params
-      %fieldset
-        = f.submit "Register"
+      %fieldset.credit_card
+        .form-group
+          %label.control-label.col-sm-2 Credit Card Number
+          .col-sm-6
+            %input.form-control(type="text")
+        .form-group
+          %label.control-label.col-sm-2 Security Code
+          .col-sm-6
+            %input.form-control(type="text")
+        .form-group
+          %label.control-label.col-sm-2 Expiration
+          .col-sm-3
+            = select_month(Date.today, {add_month_numbers: true},  class: 'form-control')
+          .col-sm-2
+            = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'form-control')
+      %fieldset.actions.control-group.col-sm-offset-2
+        .controls
+          %input(type="submit" value="Sign Up" class="btn btn-default")
+        %br
+        %script(src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="#{ENV['STRIPE_PUBLISHABLE_KEY']}" data-name="MyFlix" data-description="Monthly Plan ($9.99)" data-amount="999")
      
         
       
