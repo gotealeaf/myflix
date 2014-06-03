@@ -3,7 +3,7 @@ ruby '2.1.1'
 
 gem 'bootstrap-sass'
 gem 'coffee-rails'
-gem 'rails'
+gem 'rails', '4.1.1'
 gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
@@ -16,6 +16,10 @@ group :development do
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
+end
+
+group :development, :test do
+    gem 'rspec-rails', '~> 3.0.0'
 end
 
 group :production do
