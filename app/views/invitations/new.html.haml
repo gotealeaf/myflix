@@ -1,24 +1,24 @@
 %section.invite.container
   .row
     .col-sm-10.col-sm-offset-1
-      = form_tag invitations_path, class: "sign_in" do
+      = form_for @invitation, class: "invite" do |f|
         %header
           %h1 Invite a friend to join MyFlix!
         %fieldset
           .form-group
-            = label_tag :friend_name, "Friend's Name"
+            = f.label :recipient_name, "Friend's Name"
             .row
               .col-sm-4
-                = text_field_tag :friend_name
+                = f.text_field :recipient_name
           .form-group
-            = label_tag :friend_email, "Friend's Email Address"
+            = f.label :recipient_email, "Friend's Email Address"
             .row
               .col-sm-4
-                = email_field_tag :friend_email
+                = f.email_field :recipient_email
           .form-group
-            = label_tag :invitation_message, "Invitation Message"
+            = f.label :invitation_message, "Invitation Message"
             .row
               .col-sm-6
-                = text_area_tag :invitation_message
+                = f.text_area :invitation_message
         %fieldset.form-group.action
           %input(type="submit" value="Send Invitation" class="btn btn-default")
