@@ -1,7 +1,10 @@
 %article.video_category
-  .videos.row
-    - @videos.each do |video|
-      .video.col-sm-2
-        = video.category.name
-        = link_to image_tag("#{video.small_cover_url}"), video
+  - @categories.each do |category|
+    %header
+      %h3= link_to category.name, category unless category.videos.nil?
+    .videos.row
+      - category.recent_videos.each do |video|
+        .video.col-sm-2
+          = link_to image_tag("#{video.small_cover_url}"), video
+    %br
 
