@@ -12,8 +12,7 @@ class UsersController < ApplicationController
 
     if @user.save
       AppMailer.send_welcome_email(@user).deliver
-      old_user = User.find_by_token(params[:token])
-      create_relationships old_user, @user if old_user
+      create_invitation_relationships @user, params
       flash[:notice] = "You have succesfully created your account"
       redirect_to sign_in_path
     else
@@ -45,11 +44,25 @@ class UsersController < ApplicationController
     user = User.find_by_token(params[:token])
   end
 
-  def invitation_register
-    @invited_user = User.new(email: params[:email])
+  def new_with_invitation_token    
+    @invitation = Invitation.find_by_token(params[:token])
+    if @invitation
+      @user = User.new(email: @invitation.recipient_email)
+      render :new
+    else
+      redirect_to expired_token_path
+    end
   end
 
   private
+
+  def create_invitation_relationships user, params
+    invitation = Invitation.find_by_token(params[:invitation_token])
+    if invitation
+      create_relationships invitation.inviter, user 
+      invitation.update_column(:token, nil)
+    end        
+  end
 
   def user_params
     params.require(:user).permit(:email, :password, :full_name, :password_confirmation)
@@ -63,8 +76,8 @@ class UsersController < ApplicationController
     end
   end
 
-  def create_relationships old_user, invited_user
-    Relationship.create(user: old_user, follower: invited_user)
-    Relationship.create(user: invited_user, follower: old_user)   
+  def create_relationships inviter_user, invited_user
+    inviter_user.follow invited_user
+    invited_user.follow inviter_user
   end
 end

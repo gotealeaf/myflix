@@ -1,5 +1,5 @@
 %html(lang="en-US")
   %body 
     %p Hi #{@invitation.recipient_name}! #{@invitation.inviter.full_name} has intited you to join MyFlix! Please, click the following link to register. Thank you!
-    %p= link_to "Join Myflix!", "#{register_url}?email=#{@invitation.recipient_email};token=#{@invitation.inviter.token}" 
+    %p= link_to "Join Myflix!", register_with_token_url(@invitation.token)
     %p= @invitation.invitation_message

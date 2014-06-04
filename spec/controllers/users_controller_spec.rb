@@ -6,37 +6,22 @@ describe UsersController do
       get :new
       expect(assigns :user).to be_instance_of User
     end
-
-    context "from an invitation" do 
-      it "sets @user_token variable with the token" do
-        get :new, token: "1234"
-        expect(assigns :user_token).to eq("1234")
-      end 
-
-      it "sets @user email with the email if it is passed via url" do
-        get :new, email: "paq@paq.com"
-        expect(assigns(:user).email).to eq("paq@paq.com")
-      end
+   
+    it "sets @token variable with nil if there is no token passed via url" do
+      get :new
+      expect(assigns :token).to be_nil
     end 
 
-    context "normal sign up" do    
-      it "sets @token variable with nil if there is no token passed via url" do
-        get :new
-        expect(assigns :token).to be_nil
-      end 
-
-      it "does not sets @tuser email if there is no email passed via url" do
-        get :new
-        expect(assigns(:user).email).to be_nil
-      end     
-    end
+    it "does not sets @tuser email if there is no email passed via url" do
+      get :new
+      expect(assigns(:user).email).to be_nil
+    end     
   end
 
   
   describe "POST create" do
     context "with valid input" do
       
-      # before { post :create, user: { email: "paq@paq.com", full_name: "paquito_spec", password: "password", password_confirmation: "password" } }
       after { ActionMailer::Base.deliveries.clear }
       
       it "creates the user" do
@@ -76,12 +61,21 @@ describe UsersController do
       context "from an invitation" do
         it "creates a bidirectional relationship between the user and the invited user" do
           ana = Fabricate :user
-          ana.update_column(:token, "1234")
+          invitation = Fabricate :invitation, inviter: ana, recipient_email: "paq@paq.com"
 
-          post :create, token: "1234", user: { email: "paq@paq.com", full_name: "paquito_spec", password: "password", password_confirmation: "password" }
+          post :create, invitation_token: invitation.token, user: { email: invitation.recipient_email, full_name: invitation.recipient_name, password: "password", password_confirmation: "password" }
         
-          expect(ana.followers).to eq([User.last]) 
-          expect(User.last.followers).to eq([ana])
+          expect(ana.follows? User.last).to be_true
+          expect(User.last.follows? ana).to be_true
+        end
+
+        it "expires " do
+          ana = Fabricate :user
+          invitation = Fabricate :invitation, inviter: ana, recipient_email: "paq@paq.com"
+
+          post :create, invitation_token: invitation.token, user: { email: invitation.recipient_email, full_name: invitation.recipient_name, password: "password", password_confirmation: "password" }
+        
+          expect(Invitation.last.token).to be_nil
         end
       end
     end
@@ -119,4 +113,32 @@ describe UsersController do
       expect(assigns :user).to eq(ana)
     end
   end 
+
+  describe "new_with_invitation_token" do
+    it "renders new template with valid tokens" do
+      invitation = Fabricate :invitation      
+      get :new_with_invitation_token, token: invitation.token
+      
+      expect(response).to render_template :new
+    end
+
+    it "sets @invitation" do
+      invitation = Fabricate :invitation      
+      get :new_with_invitation_token, token: invitation.token
+      
+      expect(assigns(:invitation)).to eq(invitation)
+    end
+
+    it "sets @user with recipient's email" do
+      invitation = Fabricate :invitation      
+      get :new_with_invitation_token, token: invitation.token
+      
+      expect(assigns(:user).email).to eq(invitation.recipient_email)
+    end
+    
+    it "redirects to expired token page with invalid tokens" do
+      get :new_with_invitation_token, token: "jodiejwd"    
+      expect(response).to redirect_to expired_token_path
+    end
+  end
 end 

@@ -38,6 +38,10 @@ class User < ActiveRecord::Base
     !(self.follows?(user) || self == user)
   end
 
+  def follow user
+    Relationship.create(user: user, follower: self) if can_follow? user
+  end
+
   def to_param
     token
   end

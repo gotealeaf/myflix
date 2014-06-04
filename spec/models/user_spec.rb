@@ -84,8 +84,24 @@ describe User do
 
     it "returns false when the user is the current user" do
       ana = Fabricate :user
-
       ana.can_follow?(ana).should be_false
     end  
+  end
+
+  describe "follow" do
+    it "follows another user" do
+      ana = Fabricate :user
+      roberto = Fabricate :user
+      ana.follow roberto
+
+      expect(ana.follows? roberto).to be_true
+    end
+
+    it "does not follow one self" do
+      ana = Fabricate :user
+      ana.follow ana
+
+      expect(ana.follows? ana).to be_false
+    end
   end
 end

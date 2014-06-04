@@ -10,6 +10,7 @@
           = f.password_field :password
           = f.password_field :password_confirmation
           = f.text_field :full_name, label: "Full name"
+          = hidden_field_tag :invitation_token, @invitation.token
         %fieldset.credit_card
           .form-group
             %label.control-label.col-sm-2 Credit Card Number
