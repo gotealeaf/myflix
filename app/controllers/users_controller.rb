@@ -21,26 +21,19 @@ class UsersController < ApplicationController
     @user = User.new(params.require(:user).permit(:full_name, :email, :password))
       if @user.save
         handle_invitation
-        Stripe.api_key = ENV['STRIPE_SECRET_KEY']
         token = params[:stripeToken]
         # Create the charge on Stripe's servers - this will charge the user's card
-        begin
-          charge = Stripe::Charge.create(
-            :amount => 999, 
-            :currency => "gbp",
-            :card => token,
-            :description => "Sign up charge for #{@user.email}"
-          )
-        rescue Stripe::CardError => e
-          # The card has been declined
+        charge = StripeWrapper::Charge.create(amount => 999, card => token, description => "Sign up charge for #{@user.email}")
+        if charge.successful?
+          AppMailer.delay.send_welcome_email(@user)
+          session[:user_id] = @user.id
+          flash[:success] = "Welcome to MyFlix, #{@user.full_name}. You have successfully paid GBP 9.99 for a one month membership."
+          #flash[:success] = "You are now logged in."
+          redirect_to videos_path
+        else
+          flash[:danger] = e.error_message.any? ? e.error_message : "Your account could not be created. Please make sure all details are filled in correctly."
+          render :new
         end
-        AppMailer.delay.send_welcome_email(@user)
-        session[:user_id] = @user.id
-        flash[:success] = "You are now logged in."
-        redirect_to videos_path
-      else
-        flash[:danger] = "Your account could not be created. Please make sure all details are filled in correctly."
-        render :new
       end
   end
     
