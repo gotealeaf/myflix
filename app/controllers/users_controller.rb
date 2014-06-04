@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(category_params)
+    @user = User.new(user_params)
     if @user.save
       redirect_to sign_in_path
     else
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
 
   private
 
-  def category_params
+  def user_params
     params.require(:user).permit(:full_name, :email, :password)
   end
 end
