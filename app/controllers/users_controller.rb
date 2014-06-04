@@ -18,11 +18,10 @@ class UsersController < ApplicationController
   end
   
   def create
-    @user = User.new(params.require(:user).permit(:full_name, :email, :password))
+    @user = User.new(user_params)
       if @user.save
         handle_invitation
         token = params[:stripeToken]
-        # Create the charge on Stripe's servers - this will charge the user's card
         charge = StripeWrapper::Charge.create(amount => 999, card => token, description => "Sign up charge for #{@user.email}")
         if charge.successful?
           AppMailer.delay.send_welcome_email(@user)
@@ -31,7 +30,7 @@ class UsersController < ApplicationController
           #flash[:success] = "You are now logged in."
           redirect_to videos_path
         else
-          flash[:danger] = e.error_message.any? ? e.error_message : "Your account could not be created. Please make sure all details are filled in correctly."
+          flash[:danger] = e.error_message
           render :new
         end
       end
@@ -65,6 +64,10 @@ class UsersController < ApplicationController
       invitation.inviter.follow(@user) #where existing user follows the person invited
       invitation.update_column(:token, nil) #expires the token upon acceptance
     end
+  end
+  
+  def user_params
+    params.require(:user).permit(:full_name, :email, :password)
   end
 
 end
