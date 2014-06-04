@@ -21,6 +21,19 @@ class UsersController < ApplicationController
     @user = User.new(params.require(:user).permit(:full_name, :email, :password))
       if @user.save
         handle_invitation
+        Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+        token = params[:stripeToken]
+        # Create the charge on Stripe's servers - this will charge the user's card
+        begin
+          charge = Stripe::Charge.create(
+            :amount => 999, 
+            :currency => "gbp",
+            :card => token,
+            :description => "Sign up charge for #{@user.email}"
+          )
+        rescue Stripe::CardError => e
+          # The card has been declined
+        end
         AppMailer.delay.send_welcome_email(@user)
         session[:user_id] = @user.id
         flash[:success] = "You are now logged in."
