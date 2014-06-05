@@ -32,7 +32,7 @@ feature "user invites a friend" do
   end
   
   def friend_successfully_registers
-    expect(page).to have_content("Sign Up")
+    expect(page).to have_content("Register")
     fill_in "Full Name", with: "Joe Bloggs"
     fill_in "Password", with: "password"
     fill_in "credit-card-number", with: "4242424242424242"
