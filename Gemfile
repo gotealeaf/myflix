@@ -47,6 +47,8 @@ group :test do
   gem 'launchy'
   gem 'vcr'
   gem 'webmock', '1.11.0'
+  gem 'poltergeist'
+  gem 'database_cleaner'
 end
 
 group :production do

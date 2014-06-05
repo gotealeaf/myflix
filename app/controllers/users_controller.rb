@@ -22,17 +22,21 @@ class UsersController < ApplicationController
       if @user.save
         handle_invitation
         token = params[:stripeToken]
-        charge = StripeWrapper::Charge.create(amount => 999, card => token, description => "Sign up charge for #{@user.email}")
-        if charge.successful?
-          AppMailer.delay.send_welcome_email(@user)
-          session[:user_id] = @user.id
-          flash[:success] = "Welcome to MyFlix, #{@user.full_name}. You have successfully paid GBP 9.99 for a one month membership."
-          #flash[:success] = "You are now logged in."
-          redirect_to videos_path
-        else
-          flash[:danger] = e.error_message
-          render :new
-        end
+        Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+        charge = StripeWrapper::Charge.create(
+          :amount => 999, 
+          :card => token, 
+          :description => "Sign up charge for #{@user.email}"
+          )
+        #if charge.successful?
+        AppMailer.delay.send_welcome_email(@user)
+        session[:user_id] = @user.id
+        flash[:success] = "Welcome to MyFlix, #{@user.full_name}. You have successfully paid GBP 9.99 for a one month membership."
+        #flash[:success] = "You are now logged in."
+        redirect_to videos_path
+      else
+        flash[:danger] = "Test error message" #e.error_message
+        render :new
       end
   end
     

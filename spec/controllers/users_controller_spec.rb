@@ -36,8 +36,13 @@ describe UsersController do
   
   describe "POST create" do
     context "with valid input" do
+      before do
+        StripeWrapper::Charge.stub(:create)#.and_return(charge)
+      end
      
       it "creates a new user" do
+        #charge = double('charge')
+        #charge.stub(:successful?).and_return(true)
         post :create, user: Fabricate.attributes_for(:user) 
         expect(User.count).to eq(1) 
       end
@@ -73,7 +78,13 @@ describe UsersController do
     end # ends context with valid input
     
     context "send welcome email" do
-      after { ActionMailer::Base.deliveries.clear } #this will clear the queue after each run. We have to specify this because ActionMailer is not part of database transactions, so it will not automatically roll back
+      before do
+        StripeWrapper::Charge.stub(:create)
+      end
+      
+      after do 
+        ActionMailer::Base.deliveries.clear 
+      end #this will clear the queue after each run. We have to specify this because ActionMailer is not part of database transactions, so it will not automatically roll back
       
       it 'should send email to the right recipient if input was valid' do
         post :create, user: { email: "user@example.com", password: "password", full_name: "Cool User"}
