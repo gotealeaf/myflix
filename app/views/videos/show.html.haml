@@ -32,6 +32,7 @@
         %h3= "User Reviews (#{@video.reviews.count})"
       %ul
         - @video.reviews.each do |r|
+          -# unless !r.rating? && !r.comment?
           %article.review
             %li.row
               .col-sm-2

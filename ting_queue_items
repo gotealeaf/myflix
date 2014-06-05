@@ -1,0 +1,30 @@
+
+[1mFrom:[0m /vagrant/app/controllers/queue_items_controller.rb @ line 54 QueueItemsController#update_queue_items:
+
+    [1;34m52[0m: [32mdef[0m [1;34mupdate_queue_items[0m
+    [1;34m53[0m:   existing_queue_items = current_user.queue_items
+ => [1;34m54[0m:   binding.pry
+    [1;34m55[0m:   [1;34;4mActiveRecord[0m::[1;34;4mBase[0m.transaction [32mdo[0m
+    [1;34m56[0m: 
+    [1;34m57[0m:       existing_positions=[]
+    [1;34m58[0m:       new_positions = []
+    [1;34m59[0m:       existing_positions = existing_queue_items.map(&[33m:position[0m)
+    [1;34m60[0m:       params[[33m:queue_items[0m].each [32mdo[0m |queue_item_data|
+    [1;34m61[0m:         queue_item = [1;34;4mQueueItem[0m.find(queue_item_data[[31m[1;31m"[0m[31mid[1;31m"[0m[31m[0m])
+    [1;34m62[0m:         
+    [1;34m63[0m:         queue_item.update_attributes!([35mposition[0m: queue_item_data[[31m[1;31m"[0m[31mposition[1;31m"[0m[31m[0m]) [32mif[0m queue_item.user == current_user  
+    [1;34m64[0m:          
+    [1;34m65[0m:       [32mend[0m
+    [1;34m66[0m:         
+    [1;34m67[0m:         
+    [1;34m68[0m:        
+    [1;34m69[0m:       
+    [1;34m70[0m:         
+    [1;34m71[0m: 
+    [1;34m72[0m:   [32mend[0m
+    [1;34m73[0m:   new_positions = current_user.queue_items.map(&[33m:position[0m)
+    [1;34m74[0m:       ary = position_changed?(existing_positions, new_positions)
+    [1;34m75[0m:       
+    [1;34m76[0m:    binding.pry
+    [1;34m77[0m: [32mend[0m
+
