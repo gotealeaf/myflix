@@ -27,7 +27,7 @@ class UsersController < ApplicationController
           :card => token, 
           :description => "Sign up charge for #{@user.email}"
         )
-        #if charge was successful, check if user was successfully saved
+        #if user input is valid, check if the charge is successful
         if charge.successful?
           @user.save
           handle_invitation
