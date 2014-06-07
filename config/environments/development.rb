@@ -18,4 +18,5 @@ Myflix::Application.configure do
   config.assets.debug = true
 
   config.eager_load = false
+
 end

@@ -1,10 +1,6 @@
 - @categories.each do |category|
-
   %article.video_category
     %header
       %h3= link_to "TV #{category.name}", genre_path(category)
     .videos.row
-      - category.videos.each do |video|
-        .video.col-sm-2
-          = link_to video_path(video), nil do 
-            = image_tag "/tmp/#{video.small_cover_url}.jpg"
+      = render category.recent_videos
