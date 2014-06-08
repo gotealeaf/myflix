@@ -18,28 +18,30 @@ class UsersController < ApplicationController
   end
   
   def create
-    @user = User.new(params.require(:user).permit(:full_name, :email, :password))
-      if @user.save
-        handle_invitation
-        Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+    @user = User.new(user_params)
+      if @user.valid?
         token = params[:stripeToken]
-        # Create the charge on Stripe's servers - this will charge the user's card
-        begin
-          charge = Stripe::Charge.create(
-            :amount => 999, 
-            :currency => "gbp",
-            :card => token,
-            :description => "Sign up charge for #{@user.email}"
-          )
-        rescue Stripe::CardError => e
-          # The card has been declined
+        Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+        charge = StripeWrapper::Charge.create(
+          :amount => 999, 
+          :card => token, 
+          :description => "Sign up charge for #{@user.email}"
+        )
+        #if user input is valid, check if the charge is successful
+        if charge.successful?
+          @user.save
+          handle_invitation
+          AppMailer.delay.send_welcome_email(@user)
+          session[:user_id] = @user.id
+          flash[:success] = "Welcome to MyFlix, #{@user.full_name}. You have successfully paid GBP 9.99 for a one month membership."
+          #flash[:success] = "You are now logged in."
+          redirect_to videos_path
+        else
+          flash[:danger] = charge.error_message
+          render :new
         end
-        AppMailer.delay.send_welcome_email(@user)
-        session[:user_id] = @user.id
-        flash[:success] = "You are now logged in."
-        redirect_to videos_path
       else
-        flash[:danger] = "Your account could not be created. Please make sure all details are filled in correctly."
+        flash[:danger] = "Your account could not be created."
         render :new
       end
   end
@@ -72,6 +74,10 @@ class UsersController < ApplicationController
       invitation.inviter.follow(@user) #where existing user follows the person invited
       invitation.update_column(:token, nil) #expires the token upon acceptance
     end
+  end
+  
+  def user_params
+    params.require(:user).permit(:full_name, :email, :password)
   end
 
 end

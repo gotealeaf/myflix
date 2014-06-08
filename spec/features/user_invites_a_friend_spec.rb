@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "user invites a friend" do
-  scenario "friend joins and they follow each other" do 
+  scenario "friend joins and they follow each other", { js: true, vcr: true } do 
     jane = Fabricate(:user)
     sign_in_user(jane)  
     
@@ -35,6 +35,10 @@ feature "user invites a friend" do
     expect(page).to have_content("Register")
     fill_in "Full Name", with: "Joe Bloggs"
     fill_in "Password", with: "password"
+    fill_in "credit-card-number", with: "4242424242424242"
+    fill_in "cvc", with: "123"
+    select "7 - July", from: "date_month"
+    select "2017", from: "date_year"
     click_button "Sign Up"
     expect(page).to have_content("Welcome, Joe Bloggs")
   end

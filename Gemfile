@@ -24,6 +24,7 @@ gem 'mini_magick'
 gem 'fog'
 gem 'stripe'
 gem 'figaro'
+gem 'draper'
 
 group :development do
   gem 'sqlite3'
@@ -45,6 +46,10 @@ group :test do
   gem 'capybara-email'
   gem 'shoulda-matchers'
   gem 'launchy'
+  gem 'vcr'
+  gem 'webmock', '1.11.0'
+  gem 'poltergeist'
+  gem 'database_cleaner'
 end
 
 group :production do
