@@ -6,6 +6,7 @@ gem 'coffee-rails'
 gem 'rails'
 gem 'haml-rails'
 gem 'sass-rails'
+gem 'sprockets', '2.11.0'
 gem 'uglifier'
 gem 'jquery-rails'
 
@@ -16,6 +17,14 @@ group :development do
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
+end
+
+group :test, :development do
+  gem 'rspec-rails'
+end
+
+group :test do
+  gem 'shoulda-matchers'
 end
 
 group :production do
