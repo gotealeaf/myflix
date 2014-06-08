@@ -19,7 +19,7 @@ class Video < ActiveRecord::Base
   end
  
   def average_rating
-    reviews.blank? ? 0 : reviews.average(:rating).to_f.round(1)
+    reviews.average(:rating).to_f.round(1) if reviews.average(:rating)
   end
   
 end
