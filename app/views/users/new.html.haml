@@ -9,5 +9,6 @@
             = f.email_field    :email, label: "Email Address"
             = f.password_field :password
             = f.text_field     :full_name, label: "Full Name"
+            = hidden_field_tag :invitation_token, @invitation_token
           .col-sm-4  
             = f.submit "Sign Up"

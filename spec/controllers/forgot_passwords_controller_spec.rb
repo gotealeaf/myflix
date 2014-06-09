@@ -12,6 +12,7 @@ describe ForgotPasswordsController do
         expect(flash[:danger]).to be_present
       end
     end
+
     context "with existing email" do
       it "redirect to the forgot password confirmation page" do
         Fabricate(:user, email: "joe@example.com")
@@ -24,6 +25,7 @@ describe ForgotPasswordsController do
         expect(ActionMailer::Base.deliveries.last.to).to eq(["joe@example.com"])
       end
     end
+    
     context "with non-existing email" do
       it "redirect to the forgot password page" do
         post :create, email: "foo@example.com"

@@ -18,6 +18,7 @@ class PasswordResetsController < ApplicationController
       flash[:success] = "Your password has been changed. Please sign in."
       redirect_to sign_in_path
     else
+      @token = @user.token
       render :edit
     end
   end
