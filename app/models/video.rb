@@ -18,7 +18,7 @@ class Video < ActiveRecord::Base
     self.sort_by(&:created_at).reverse
   end
  
-  def average_rating
+def rating
     reviews.average(:rating).to_f.round(1) if reviews.average(:rating)
   end
   

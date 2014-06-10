@@ -9,6 +9,7 @@ require 'capybara/email/rspec'
 require 'sidekiq/testing'
 require 'vcr'
 require 'capybara/poltergeist'
+#require 'draper'
 
 Sidekiq::Testing.inline!
 
