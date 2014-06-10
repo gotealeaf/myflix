@@ -165,7 +165,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails
   shoulda-matchers
-  sprockets (= 2.11.0)
+  sprockets
   sqlite3
   thin
   uglifier
