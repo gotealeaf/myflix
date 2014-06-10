@@ -6,7 +6,7 @@ gem 'coffee-rails'
 gem 'rails'
 gem 'haml-rails'
 gem 'sass-rails'
-gem 'sprockets'
+gem 'sprockets', '2.11.0'
 gem 'uglifier'
 gem 'jquery-rails'
 
