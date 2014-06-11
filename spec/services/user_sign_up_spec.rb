@@ -5,9 +5,9 @@ describe UserSignUp do
     context "valid personal info and valid credit card" do
       
       before do
-        charge = double('charge')
-        charge.stub(:successful?).and_return(true)
-        StripeWrapper::Charge.should_receive(:create).and_return(charge)
+        customer = double('customer')
+        customer.stub(:successful?).and_return(true)
+        StripeWrapper::Customer.should_receive(:create).and_return(customer)
       end
       
       after do 
@@ -59,10 +59,10 @@ describe UserSignUp do
     context "with valid personal info but card declined" do
       
       before do
-        charge = double('charge')
-        charge.stub(:successful?).and_return(false)
-        charge.stub(:error_message).and_return('Your card was declined.')
-        StripeWrapper::Charge.should_receive(:create).and_return(charge)
+        customer = double('customer')
+        customer.stub(:successful?).and_return(false)
+        customer.stub(:error_message).and_return('Your card was declined.')
+        StripeWrapper::Customer.should_receive(:create).and_return(customer)
         #post :create, user: Fabricate.attributes_for(:user)
       end
       

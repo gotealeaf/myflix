@@ -35,8 +35,8 @@ module StripeWrapper
     attr_accessor :response, :error_message
 
     def initialize(options={})
-      @response = response
-      @error_message = error_message
+      @response = options[:response]
+      @error_message = options[:error_message]
     end
 
     def self.create(options={})
