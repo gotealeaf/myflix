@@ -5,7 +5,7 @@
     %li= link_to "Videos"
     %li= link_to "My Queue"
     %li= link_to "People"
-  = form_tag search_videos_path, method: "get", class: "col-md-5-navbar-form" do
+  = form_tag search_videos_path, method: "get", class: "col-md-5 navbar-form" do
     .form-group
       = text_field_tag 'search_term', nil, class: "form-control"
       %button.btn.btn-default(type="submit") Search
