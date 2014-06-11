@@ -10,7 +10,7 @@ gem 'uglifier'
 gem 'jquery-rails'
 
 group :development do
-  gem 'sqlite3'
+  gem 'pg'
   gem 'pry'
   gem 'pry-nav'
   gem 'thin'
@@ -30,4 +30,3 @@ group :production do
   gem 'pg'
   gem 'rails_12factor'
 end
-
