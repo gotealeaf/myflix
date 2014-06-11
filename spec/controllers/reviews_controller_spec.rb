@@ -1,12 +1,13 @@
 require 'spec_helper'
 
 describe ReviewsController do
-
+  before do
+   set_current_user  # macro created in spec/support/macros.rb
+  end
+  let(:alice){ current_user }
   describe "POST create" do
     let(:video) {video = Fabricate(:video)}
     context "with authenticated user" do
-       let(:current_user) {Fabricate(:user)}
-        before { session[:user_id] = current_user.id }
       context "with valid inputs" do
         before {post :create, review: Fabricate.attributes_for(:review),  video_id: video.id}
         
@@ -56,9 +57,8 @@ describe ReviewsController do
     end #context auth user
 
     context "unauthenticated user" do
-      it "redirects to sign-in path" do
-          post :create, review: Fabricate.attributes_for(:review),  video_id: video.id
-          expect(response).to redirect_to sign_in_path
+      it_behaves_like "require_sign_in" do
+        let(:action) { post :create, review: Fabricate.attributes_for(:review),  video_id: video.id }
       end
     end #context un-auth user
   end

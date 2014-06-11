@@ -38,6 +38,8 @@ class QueueItem < ActiveRecord::Base
       review.save(validate: false)
     end
   end
+
+  
   
   private
 

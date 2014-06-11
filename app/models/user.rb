@@ -15,4 +15,9 @@ validates_uniqueness_of :email
     end
     
   end
+
+  def queued_video?(video)
+    queue_items.map(&:video).include?(video)
+  end
+
 end
