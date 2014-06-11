@@ -1,0 +1,45 @@
+
+
+Finished in 0.00022 seconds
+0 examples, 0 failures
+
+Randomized with seed 6686
+
+F
+
+Failures:
+
+  1) user interacts with queue user adds and reorders videos in queue
+     Failure/Error: save_and_open_page
+     Launchy::CommandNotFoundError:
+       Unable to find a browser command. If this is unexpected, Please rerun with environment variable LAUNCHY_DEBUG=true or the '-d' commandline option and file a bug at https://github.com/copiousfreetime/launchy/issues/new
+     # ./spec/features/user_interacts_with_queue_spec.rb:10:in `block (2 levels) in <top (required)>'
+
+Finished in 2.64 seconds
+1 example, 1 failure
+
+Failed examples:
+
+rspec ./spec/features/user_interacts_with_queue_spec.rb:4 # user interacts with queue user adds and reorders videos in queue
+
+Randomized with seed 33775
+
+F
+
+Failures:
+
+  1) user interacts with queue user adds and reorders videos in queue
+     Failure/Error: save_and_open_page
+     Launchy::CommandNotFoundError:
+       Unable to find a browser command. If this is unexpected, Please rerun with environment variable LAUNCHY_DEBUG=true or the '-d' commandline option and file a bug at https://github.com/copiousfreetime/launchy/issues/new
+     # ./spec/features/user_interacts_with_queue_spec.rb:10:in `block (2 levels) in <top (required)>'
+
+Finished in 2.68 seconds
+1 example, 1 failure
+
+Failed examples:
+
+rspec ./spec/features/user_interacts_with_queue_spec.rb:4 # user interacts with queue user adds and reorders videos in queue
+
+Randomized with seed 40763
+

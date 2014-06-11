@@ -19,7 +19,7 @@
                 %tr
                   %td
                     = hidden_field_tag "queue_items[][id]", queue_item.id
-                    = text_field_tag "queue_items[][position]", queue_item.position
+                    = text_field_tag "queue_items[][position]", queue_item.position, data: {video_id: queue_item.video.id}
                   %td
                     = link_to queue_item.video_title, queue_item.video  #the interface like video_title etc are written before coding.  Going from outside-in..when coding this UI.  First write what we need, write the test and then code it.
                   %td
