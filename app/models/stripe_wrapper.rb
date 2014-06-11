@@ -43,7 +43,8 @@ module StripeWrapper
       begin
         response = Stripe::Customer.create(
           card: options[:card],
-          email: options[:user].email
+          email: options[:user].email, 
+          plan: "base"
         )
         new(response: response)
       rescue Stripe::CardError => e
@@ -53,6 +54,10 @@ module StripeWrapper
 
     def successful?
       response.present?
+    end
+    
+    def customer_token
+      response.id
     end
   end #ends class Customer
 end

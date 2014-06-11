@@ -43,6 +43,6 @@ Myflix::Application.routes.draw do
   get '/forgot_password_confirmation', to: 'forgot_passwords#confirm'
   get '/invalid_token', to: 'pages#invalid_token'
   
-
+  mount StripeEvent::Engine => '/stripe_events'
 
 end

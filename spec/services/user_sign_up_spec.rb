@@ -7,6 +7,7 @@ describe UserSignUp do
       before do
         customer = double('customer')
         customer.stub(:successful?).and_return(true)
+        customer.stub(:customer_token).and_return('12345')
         StripeWrapper::Customer.should_receive(:create).and_return(customer)
       end
       
@@ -17,6 +18,11 @@ describe UserSignUp do
       it "creates a new user" do
         UserSignUp.new(Fabricate.build(:user)).sign_up('stripeToken', nil)
         expect(User.count).to eq(1) 
+      end
+      
+      it 'stores the customer token from stripe' do
+        UserSignUp.new(Fabricate.build(:user)).sign_up('stripeToken', nil)
+        expect(User.first.customer_token).to eq('12345')
       end
       
       it "makes the user follow the inviter" do #for users invited with token

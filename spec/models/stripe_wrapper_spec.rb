@@ -67,6 +67,7 @@ describe StripeWrapper do
   describe StripeWrapper::Customer do
     
     describe ".create" do
+      
       it 'creates a customer with a valid card', :vcr do
         foo = Fabricate(:user)
         response = StripeWrapper::Customer.create(
@@ -74,6 +75,15 @@ describe StripeWrapper do
           card: valid_token
         )
         expect(response).to be_successful
+      end
+      
+      it 'returns the customer token for a valid card', :vcr do
+        foo = Fabricate(:user)
+        response = StripeWrapper::Customer.create(
+          user: foo,
+          card: valid_token
+        )
+        expect(response.customer_token).to be_present
       end
       
       it 'does not create a customer with a declined card', :vcr do
