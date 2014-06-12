@@ -5,7 +5,7 @@
         = bootstrap_form_for [:admin, @video], html: {class: "form-horizontal"} do |f|
           %ul.nav.nav-tabs
             %li
-              %a(href="/ui/admin_views_payments") Recent Payments
+              =link_to "View Payments", admin_payments_path
             %li.active
               %a(href="") Add a New Video
           %br          
