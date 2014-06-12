@@ -1,0 +1,35 @@
+%section.billing.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      .plan_and_payments
+        %section.plan
+          %header
+            %h1 Billing
+          %table.table
+            %thead
+              %tr
+                %th
+                %th Next Billing Date
+                %th Price
+            %tbody
+              %tr
+                %td The All You Can Watch Plan
+                %td 03/19/2013
+                %td 9.99 per month
+        = button_to "Cancel Service", nil, class: "btn btn-default"
+
+        %section.payment_history
+          %header
+            %h3 Payment History
+          %table.table
+            %thead
+              %tr
+                %th Date
+                %th Service Duration
+                %th Total
+            %tbody
+              - 8.times do
+                %tr
+                  %td 12/09/2012
+                  %td 12/09/2012 - 01/08/2013
+                  %td $9.99

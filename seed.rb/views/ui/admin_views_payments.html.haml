@@ -1,0 +1,24 @@
+%section.admin_payments
+  .container
+    .row
+      .col-sm-10.col-sm-offset-1
+        %section.payment_history
+          %ul.nav.nav-tabs
+            %li.active
+              %a(href="") Recent Payments
+            %li
+              %a(href="/ui/admin_add_video") Add a New Video
+          %table.table
+            %thead
+              %tr
+                %th Name
+                %th Email
+                %th Amount
+                %th Reference ID
+            %tbody
+              - 8.times do
+                %tr
+                  %td Jane Doe
+                  %td jane@example.com
+                  %td $9.99
+                  %td csdgw321s-ad3

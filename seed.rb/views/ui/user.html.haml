@@ -1,0 +1,36 @@
+%section.user.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %article
+        %header
+          %img(src="http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest('knwang@gmail.com'.downcase)}?s=40")
+          %h2 Kevin Wang's video collections (8)
+          %button.btn.btn-default Follow
+        %table.table
+          %thead
+            %tr
+              %th(width="30%") Video Title
+              %th(width="15%") Genre
+          %tbody
+            - 8.times do
+              %tr
+                %td
+                  = link_to "Futurama"
+                %td
+                  = link_to "TV Shows"
+
+%section.user_reviews.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %header
+        %h3 Kevin Wang's Reviews (253)
+      %ul
+        - 8.times do
+          %article.review
+            %li.row
+              .col-sm-2
+                %p
+                  = link_to "\"Futurama\""
+                %col Rating: 5 / 5
+              .col-sm-8
+                %p In my opinion, this is one of the best shows ever made. It's not only funny, but despite being so frequently silly, it's very smart as well. Math, science, history, all get referenced. The best parts of the show are the subtle things, those little things in the background or just on screen for a couple of seconds that just make you laugh out loud if you were paying attention. The writers even appear to have been thinking ahead, because if you play close attention to the first episode, you can see a literal shadow of an event revealed seasons later.
