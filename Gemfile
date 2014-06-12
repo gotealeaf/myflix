@@ -8,9 +8,9 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
+gem 'pg'
 
 group :development do
-  gem 'pg'
   gem 'pry'
   gem 'pry-nav'
   gem 'thin'
@@ -27,6 +27,5 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
   gem 'rails_12factor'
 end
