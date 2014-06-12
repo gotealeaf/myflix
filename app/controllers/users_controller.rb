@@ -44,6 +44,10 @@ class UsersController < ApplicationController
       flash[:warning] = "Your profile could not be updated."
     end
   end
+  
+  def account
+    
+  end
     
   private
   

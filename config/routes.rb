@@ -36,6 +36,7 @@ Myflix::Application.routes.draw do
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
   get '/register', to: 'users#new'
+  get '/profile', to: 'users#account'
   get '/register/:token', to: 'users#new_with_token', as: 'register_with_token'
   get '/my_queue', to: 'queue_items#index'
   post '/update_queue', to: 'queue_items#update_queue'
