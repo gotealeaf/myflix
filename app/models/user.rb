@@ -41,6 +41,10 @@ class User < ActiveRecord::Base
     !(self.invitations.map(&:recipient_email).include?(recipient))
   end
   
+  def deactivate!
+    update_column(:active, false)
+  end
+  
   #def generate_token
     #self.token = SecureRandom.urlsafe_base64
   #end

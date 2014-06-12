@@ -1,7 +1,6 @@
 class SessionsController < ApplicationController
   
   def new
-    #user = User.new
     redirect_to home_path if current_user
   end
   
@@ -9,9 +8,14 @@ class SessionsController < ApplicationController
     user = User.where(email: params[:email]).first
     
     if user && user.authenticate(params[:password])
-      session[:user_id] = user.id
-      flash[:success] = current_user.admin? ? "Welcome to the admin page" : "You are signed in, enjoy your movies!"
-      redirect_to current_user.admin? ? new_admin_video_path : home_path 
+      if user.active?
+        session[:user_id] = user.id
+        flash[:success] = current_user.admin? ? "Welcome to the admin page" : "You are signed in, enjoy your movies!"
+        redirect_to current_user.admin? ? new_admin_video_path : home_path 
+      else
+        flash[:danger] = "Your account is no longer active. Please contact us."
+        redirect_to login_path
+      end
     else
       flash[:danger] = "There is something wrong with your email or password."
       redirect_to login_path
