@@ -1,0 +1,9 @@
+%article.video.category
+  %header
+    %h3 Search results for "#{@search_term}"
+    %br
+  .videos.row
+    - @videos.each do |video|
+      .video.col-sm-2
+        = link_to video do
+          %img(src="#{video.small_cover_url}")
