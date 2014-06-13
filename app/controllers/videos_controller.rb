@@ -6,7 +6,7 @@ class VideosController < ApplicationController
   end
 
   def show
-
+  
   end
 
   def new
@@ -28,7 +28,7 @@ class VideosController < ApplicationController
   private
 
   def set_video
-    @video = Video.find(params[:id])
+    @video = Video.find_by(slug: params[:id])
   end
 
 end
