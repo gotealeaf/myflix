@@ -9,6 +9,8 @@ gem 'sass-rails'
 gem 'sprockets', '2.11.0'
 gem 'uglifier'
 gem 'jquery-rails'
+gem 'bootstrap_form'
+gem 'bcrypt-ruby'
 
 group :development do
   gem 'sqlite3'
