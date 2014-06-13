@@ -1,8 +1,9 @@
-%article.video_category
-  %header
-    %h3= link_to "Add Categories"
-  .videos.row
-    - @videos.each do |video|
-      .video.col-sm-2
-        = link_to video_path(video) do
-          = image_tag "/assets/#{video.small_cover_url}", class: 'img-thumbnail'
+- @genres.each do |genre|
+  %article.video_category
+    %header
+      %h3= link_to genre.name, genre_path(genre)
+    .videos.row
+      - genre.videos.each do |video|
+        .video.col-sm-2
+          = link_to video_path(video) do
+            = image_tag "/assets/#{video.small_cover_url}", class: 'img-thumbnail'
