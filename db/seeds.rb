@@ -28,3 +28,12 @@ Video.create(name: 'Avatar',
              large_cover_url: 'avatar_lrg.jpg',
              small_cover_url: 'avatar_sml.jpg',
              description: "Avatar is the story of an ex-Marine who finds himself thrust into hostilities on an alien planet filled with exotic life forms. As an Avatar, a human mind in an alien body, he finds himself torn between two worlds, in a desperate fight for his own survival and that of the indigenous people.")
+
+Genre.create(name: 'Action',
+             slug: 'action')
+
+Genre.create(name: 'SciFi',
+             slug: 'scifi')
+
+Genre.create(name: 'Comedy',
+             slug: 'comedy')
