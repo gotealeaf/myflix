@@ -11,10 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140611105152) do
+ActiveRecord::Schema.define(version: 20140613044724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "genres", force: true do |t|
+    t.string "name"
+    t.string "slug"
+  end
 
   create_table "videos", force: true do |t|
     t.string   "name"
@@ -26,6 +31,7 @@ ActiveRecord::Schema.define(version: 20140611105152) do
     t.datetime "updated_at"
     t.string   "small_cover_url"
     t.string   "large_cover_url"
+    t.integer  "genre_id"
   end
 
 end
