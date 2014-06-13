@@ -13,6 +13,8 @@ gem 'bcrypt'
 gem 'fabrication'
 gem 'faker'
 gem 'sidekiq'
+gem 'sentry-raven'
+gem 'paratrooper'
 
 group :development do
   gem 'sqlite3'
