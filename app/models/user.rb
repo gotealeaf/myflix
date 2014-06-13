@@ -1,3 +1,6 @@
 class User < ActiveRecord::Base
-  validates_presence_of :email, :password, :full_name
+  has_secure_password validations: false
+  validates :email, presence: true, uniqueness: true
+  validates :password, presence: true, on: :create, length: {minimum: 5}
+  validates :full_name, presence: true
 end
