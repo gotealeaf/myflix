@@ -2,27 +2,22 @@ class VideosController < ApplicationController
   before_action :set_video, only: [:show, :edit, :update, :destroy]
 
   def index
-    @videos = Video.all
-  end
-
-  def show
-  
+    @genres = Genre.all
   end
 
   def new
-
+    @video = Video.new
   end
 
   def edit
-
-  end
-
-  def update
-
-  end
-
-  def destroy
-
+    @video = Video.new(video_params)
+    # To do: Associate genre
+    if @video.save
+      flash[:notice] = "#{video.name} has been added successfully!"
+      redirect_to home_path
+    else
+      render :new
+    end
   end
 
   private
@@ -31,4 +26,7 @@ class VideosController < ApplicationController
     @video = Video.find_by(slug: params[:id])
   end
 
+  def video_params
+    params.require(:video).permit!
+  end
 end
