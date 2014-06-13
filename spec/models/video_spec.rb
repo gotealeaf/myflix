@@ -8,7 +8,7 @@ describe Video do
                       small_cover_url:'http://placehold.it/166x236',
                       large_cover_url:'http://placehold.it/665x375')
     video.save
-    Video.first.title.should eq('Aliens')
+    expect(Video.first.title).to eq('Aliens')
   end
   
 end
