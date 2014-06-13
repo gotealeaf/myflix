@@ -7,12 +7,18 @@ Myflix::Application.routes.draw do
   resources :sessions,   only: [:create]
   resources :categories, only: [:show]
   resources :queue_items,only: [:create, :destroy]
+
   resources :videos,     only: [:show] do
     collection do
       get :search, to: "videos#search"
     end
     resources :reviews, only: [:create]
   end
+
+  namespace :admin do 
+    resources :videos, only: [:new, :create]
+  end
+
   get 'forgot_password', to: 'forgot_passwords#new'
   get 'forgot_password_confirmation', to: 'forgot_passwords#confirm'
   get 'expired_token', to: 'pages#expired_token'
