@@ -17,6 +17,18 @@ class QueueItemsController < ApplicationController
     redirect_to my_queue_path
   end
 
+  def update_queue
+    params[:queue_items].each do |queue_item_data|
+      queue_item = QueueItem.find(queue_item_data["id"])
+      queue_item.update_attributes(position: queue_item_data["position"])
+    end
+
+    current_user.queue_items.each_with_index do |queue_item, index|
+      queue_item.update_attributes(position: index+1)
+    end
+    redirect_to my_queue_path
+  end
+
   private
 
   def queue_video(video)
@@ -30,5 +42,4 @@ class QueueItemsController < ApplicationController
   def current_user_queued_vide?(video)
     current_user.queue_items.map(&:video).include?(video)
   end
-
 end

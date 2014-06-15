@@ -96,4 +96,38 @@ describe QueueItemsController do
       expect(response).to redirect_to sign_in_path
     end
   end
+
+  describe "POST update_queue" do
+    context "with valid inputs" do
+      it "redirects to the my queue page" do
+        alice = Fabricate(:user)
+        session[:user_id] = alice.id
+        queue_item1 = Fabricate(:queue_item, user: alice, position: 1)
+        queue_item2 = Fabricate(:queue_item, user: alice, position: 2)
+        post :update_queue, queue_items: [{id: queue_item1.id, position: 2}, {id: queue_item2.id, position: 1}]
+        expect(response).to redirect_to my_queue_path
+      end
+
+      it "reorders the queue items" do
+        alice = Fabricate(:user)
+        session[:user_id] = alice.id
+        queue_item1 = Fabricate(:queue_item, user: alice, position: 1)
+        queue_item2 = Fabricate(:queue_item, user: alice, position: 2)
+        post :update_queue, queue_items: [{id: queue_item1.id, position: 2}, {id: queue_item2.id, position: 1}]
+        expect(alice.queue_items).to eq([queue_item2, queue_item1])
+      end
+
+      it "normalizes the position numbers" do
+        alice = Fabricate(:user)
+        session[:user_id] = alice.id
+        queue_item1 = Fabricate(:queue_item, user: alice, position: 1)
+        queue_item2 = Fabricate(:queue_item, user: alice, position: 2)
+        post :update_queue, queue_items: [{id: queue_item1.id, position: 3}, {id: queue_item2.id, position: 2}]
+        expect(alice.queue_items.map(&:position)).to eq([1,2])
+      end
+    end
+    context "with invalid inputs"
+    context "with unauthenticated users"
+    context "with queue items that do not belong to the current user"
+  end
 end
