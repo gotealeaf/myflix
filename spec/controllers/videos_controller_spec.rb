@@ -1,4 +1,4 @@
-require 'rails_helper.rb'
+require 'spec_helper.rb'
 
 describe VideosController do
   let(:video) { Fabricate(:video) }

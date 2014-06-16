@@ -1,4 +1,4 @@
-require 'rails_helper.rb'
+require 'spec_helper.rb'
 
 describe User do
   it { should validate_presence_of(:email)}

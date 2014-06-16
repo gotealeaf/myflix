@@ -1,4 +1,4 @@
-require 'rails_helper.rb'
+require 'spec_helper.rb'
 
 # shoulda gem syntax
 describe Video do

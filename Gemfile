@@ -6,7 +6,7 @@ gem 'coffee-rails'
 gem 'rails'
 gem 'haml-rails'
 gem 'sass-rails'
-gem 'sprockets', '2.11.0'
+gem 'sprockets'
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'bootstrap_form'
@@ -14,15 +14,15 @@ gem 'bcrypt-ruby'
 
 group :development do
   gem 'sqlite3'
-  gem 'pry'
-  gem 'pry-nav'
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
 end
 
 group :test, :development do
-  gem 'rspec-rails'
+  gem 'pry'
+  gem 'pry-nav'
+  gem 'rspec-rails', '2.99'
   gem 'fabrication'
   gem 'faker'
 end
