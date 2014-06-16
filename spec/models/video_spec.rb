@@ -25,4 +25,38 @@ describe Video do
   #   video = Video.create(title: "I don't have a description!")
   #   expect(Video.count).to eq(0)
   # end
+
+  describe "search_by_title" do
+    it "returns an empty array if no match" do
+      matrix = Video.create(title: "Matrix", description: "Take the blue pill!")
+      walking_dead = Video.create(title: "The Walking Dead", description: "AHHH!")
+      expect(Video.search_by_title('test search')).to eq([])
+    end
+
+    it "returns an array of one video for an exact match" do
+      matrix = Video.create(title: "Matrix", description: "Take the blue pill!")
+      walking_dead = Video.create(title: "The Walking Dead", description: "AHHH!")
+      expect(Video.search_by_title("Matrix")).to eq([matrix])
+    end
+
+    it "returns an array of one video for a partial match" do
+      matrix = Video.create(title: "Matrix", description: "Take the blue pill!")
+      walking_dead = Video.create(title: "The Walking Dead", description: "AHHH!")
+      expect(Video.search_by_title("trix")).to eq([matrix])
+    end
+
+    it "returns an array of all matches ordered by created_at" do
+      matrix = Video.create(title: "Matrix", description: "Take the blue pill!", created_at: 1.day.ago)
+      walking_dead = Video.create(title: "The Walking Dead", description: "AHHH!")
+      expect(Video.search_by_title("A")).to eq([walking_dead, matrix])
+    end
+
+    it "returns an empty array for an empty search" do
+      matrix = Video.create(title: "Matrix", description: "Take the blue pill!", created_at: 1.day.ago)
+      walking_dead = Video.create(title: "The Walking Dead", description: "AHHH!")
+      expect(Video.search_by_title("")).to eq([])
+    end
+  end
 end
+
+
