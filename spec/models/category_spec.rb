@@ -1,4 +1,4 @@
-require 'spec_helper.rb'
+require 'rails_helper.rb'
 
 # shoulda gem syntax
 describe Category do
