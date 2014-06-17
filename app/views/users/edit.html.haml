@@ -1,0 +1,22 @@
+%section.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = bootstrap_form_for(@user) do |f|
+        %header
+          %h1 Edit your Profile
+        %fieldset
+          .form-group
+            = f.text_field :full_name
+            .row
+              .col-sm-4
+          .form-group
+            = f.email_field :email, label: "Email Address"
+            .row
+              .col-sm-4
+          .form-group
+            .row
+              .col-sm-4
+                = f.text_field :password
+        %fieldset.form-group.action
+          = f.submit(value: "Save Profile", class: "btn btn-default")
+          = link_to "Cancel", user_path(current_user)

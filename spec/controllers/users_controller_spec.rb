@@ -83,4 +83,17 @@ describe UsersController do
       let(:action) { get :show, id: jane.id }
     end
   end # ends GET Show
+  
+  describe "GET Edit" do
+    let(:jane) { Fabricate(:user) }
+    
+    it_behaves_like "require sign in" do
+      let(:action) { get :edit, id: jane.id }
+    end
+  end
+  
+  describe "POST Update" do
+    let(:jane) { Fabricate(:user) }
+    
+  end
 end # ends users controller test
