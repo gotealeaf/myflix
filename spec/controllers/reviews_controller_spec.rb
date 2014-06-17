@@ -33,7 +33,7 @@ describe ReviewsController do
     end
 
     context "with unauthorized users" do
-      it "no authorization cannot post review"
+      it "cannot post review"
     end
   end
 end
