@@ -10,6 +10,8 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'bootstrap_form', :git => "git://github.com/bootstrap-ruby/rails-bootstrap-forms"
 gem 'bcrypt-ruby'
+gem 'fabrication'
+gem 'faker'
 
 group :development do
   gem 'sqlite3'
@@ -21,7 +23,8 @@ group :development do
 end
 
 group :test, :development do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~>2.14.2'
+  # gem 'rspec-expectations', '~>3.0.1'
 end
 
 group :test do

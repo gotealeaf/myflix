@@ -16,6 +16,11 @@ Video.create(title: 'Casper', description: 'A classic ghost story', small_cover_
 Video.create(title: 'Gravity', description: 'A film about the future', small_cover_url: '/tmp/family_guy.jpg', large_cover_url: '/tmp/monk_large.jpg', category: comedies)
 Video.create(title: 'South_Park', description: 'A classic about fighting in space', small_cover_url: '/tmp/family_guy.jpg', large_cover_url: '/tmp/monk_large.jpg', category: comedies)
 Video.create(title: 'Futurama', description: 'A wanna be classic about space', small_cover_url: '/tmp/futurama.jpg', large_cover_url: '/tmp/monk_large.jpg', category: comedies)
-Video.create(title: 'Monk', description: 'A thriller about F-1 racing', small_cover_url: '/tmp/monk.jpg', large_cover_url: '/tmp/monk_large.jpg', category: dramas)
+monk = Video.create(title: 'Monk', description: 'A thriller about F-1 racing', small_cover_url: '/tmp/monk.jpg', large_cover_url: '/tmp/monk_large.jpg', category: dramas)
 Video.create(title: 'Family Guy', description: 'A classic ghost story', small_cover_url: '/tmp/south_park.jpg', large_cover_url: '/tmp/monk_large.jpg', category: dramas)
 Video.create(title: 'Hitman', description: 'A film about the future', small_cover_url: '/tmp/family_guy.jpg', large_cover_url: '/tmp/monk_large.jpg', category: dramas)
+
+tim = User.create(username: "Tim Watson", password: "password", email: "tim@example.com")
+
+Review.create(user: tim, video: monk, rating: 3, content: "This is a very lame movie!")
+Review.create(user: tim, video: monk, rating: 1, content: "This is a very very lame movie!")
