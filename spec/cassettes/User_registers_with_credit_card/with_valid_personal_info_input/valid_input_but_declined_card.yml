@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.stripe.com/v1/charges
+    uri: https://api.stripe.com/v1/customers
     body:
       encoding: US-ASCII
-      string: amount=999&currency=gbp&card=tok_104AZh4tb5cZffxRXmpcHm8Y&description=Sign%20up%20charge%20for%20foo%40example.com
+      string: card=tok_104CT64tb5cZffxRcp5GYAm1&email=foo%40example.com
     headers:
       Accept:
       - '*/*; q=0.5, application/xml'
@@ -22,7 +22,7 @@ http_interactions:
         myflix-104012 3.13.4 #1 SMP Mon Mar 3 09:07:22 UTC 2014 x86_64 x86_64 x86_64
         GNU/Linux"}'
       Content-Length:
-      - '114'
+      - '57'
   response:
     status:
       code: 402
@@ -31,19 +31,19 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Fri, 06 Jun 2014 04:01:46 GMT
+      - Wed, 11 Jun 2014 05:21:10 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
-      - '162'
-      Access-Control-Allow-Methods:
-      - GET, POST, HEAD, OPTIONS, DELETE
+      - '117'
       Access-Control-Max-Age:
       - '300'
       Cache-Control:
       - no-cache, no-store
       Access-Control-Allow-Credentials:
       - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
       Stripe-Version:
       - '2014-05-19'
       Strict-Transport-Security:
@@ -55,10 +55,9 @@ http_interactions:
           "error": {
             "message": "Your card was declined.",
             "type": "card_error",
-            "code": "card_declined",
-            "charge": "ch_104AZh4tb5cZffxRvYgA5JeS"
+            "code": "card_declined"
           }
         }
     http_version: 
-  recorded_at: Fri, 06 Jun 2014 04:01:46 GMT
+  recorded_at: Wed, 11 Jun 2014 05:21:10 GMT
 recorded_with: VCR 2.9.2

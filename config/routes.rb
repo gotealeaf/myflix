@@ -19,6 +19,7 @@ Myflix::Application.routes.draw do
   
   namespace :admin do
     resources :videos, only: [:new, :create]
+    resources :payments, only: [:index]
   end
   
   resources :users, except: [:delete]
@@ -35,6 +36,7 @@ Myflix::Application.routes.draw do
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
   get '/register', to: 'users#new'
+  get '/profile', to: 'users#account'
   get '/register/:token', to: 'users#new_with_token', as: 'register_with_token'
   get '/my_queue', to: 'queue_items#index'
   post '/update_queue', to: 'queue_items#update_queue'
@@ -43,6 +45,6 @@ Myflix::Application.routes.draw do
   get '/forgot_password_confirmation', to: 'forgot_passwords#confirm'
   get '/invalid_token', to: 'pages#invalid_token'
   
-
+  mount StripeEvent::Engine => '/stripe_events'
 
 end

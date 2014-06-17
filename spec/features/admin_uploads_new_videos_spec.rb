@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 feature "admin uploads new videos" do
+  background do
+    bob = Fabricate(:user)
+    Fabricate(:payment, amount: 999, user: bob)
+  end
   scenario "successfully uploads video and it is searchable by users" do
     admin = Fabricate(:admin)
     drama = Fabricate(:category, name: "Drama")

@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :reviews, -> { order("created_at DESC") }
   has_many :queue_items, -> { order(:list_order) }
   has_many :invitations, foreign_key: :inviter_id
+  has_many :payments
   
   
   has_many :following_relationships, class_name: "Relationship", foreign_key: :follower_id # because the table is Relationships and it only contains either leader_id or follower_id, so we need to specify it clearly
@@ -38,6 +39,10 @@ class User < ActiveRecord::Base
   
   def new_invite?(recipient)
     !(self.invitations.map(&:recipient_email).include?(recipient))
+  end
+  
+  def deactivate!
+    update_column(:active, false)
   end
   
   #def generate_token
