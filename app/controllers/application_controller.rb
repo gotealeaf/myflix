@@ -10,4 +10,11 @@ class ApplicationController < ActionController::Base
   def logged_in?
     !!current_user
   end
+
+  def require_user
+    unless logged_in? 
+      flash[:danger] = "That area is restricted to registered users"
+      redirect_to root_path
+    end
+  end
 end

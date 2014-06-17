@@ -1,14 +1,12 @@
 %section.register.container
-  .row.col-sm-10.col-sm-offset-1
-  
-    = bootstrap_form_for(@user, layout: :horizontal) do |f|
-      %header
-        %h1.text-center Register
-
-      = f.alert_message "Please fix the following errors:"
-
-      = f.text_field :name
-      = f.email_field :email
-      = f.password_field :password
-      = f.form_group do
-        = f.submit "Sign Up"
+  .row
+    .col-sm-10.col-sm-offset-1
+      = bootstrap_form_for(@user, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-4") do |f|
+        %header
+          %h1.text-center Register
+        %fieldset
+          = f.text_field :name
+          = f.email_field :email
+          = f.password_field :password
+          = f.form_group do
+            = f.submit "Sign Up"
