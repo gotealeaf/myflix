@@ -7,3 +7,18 @@
         %header
           %h3= @video.title
         %p= @video.description
+
+%section.reviews.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %header
+        %h3 User Reviews (#{@reviews.count})
+      %ul
+        - @review.each do |review|
+          %article.review
+            %li.row
+              .col-sm-2
+                %span Rating: #{review.rating} / 5
+                %p by <a href="">#{review.user.full_name}</a>
+              .col-sm-8
+                %p review.content
