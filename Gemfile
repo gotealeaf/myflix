@@ -8,6 +8,8 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
+gem 'bcrypt'
+gem 'bootstrap_form'
 
 group :development do
   gem 'sqlite3'
