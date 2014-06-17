@@ -46,6 +46,13 @@ class User < ActiveRecord::Base
     update_column(:active, false)
   end
   
+  def next_billing
+    
+  end
+  
+  def previous_billing
+  end
+  
   #def generate_token
     #self.token = SecureRandom.urlsafe_base64
   #end
