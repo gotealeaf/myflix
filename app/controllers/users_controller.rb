@@ -34,14 +34,22 @@ class UsersController < ApplicationController
   end
   
   def edit
+    if @user.update
+      flash[:success] = "Your profile has been updated."
+      redirect_to home_path
+    else
+      flash[:danger] = "Your profile could not be updated."
+      render :edit
+    end
   end
   
   def update
-    if @user.update
+    if @user.update(user_params)
       flash[:info] = "Your profile was updated."
       redirect_to user_path(@user)
     else
       flash[:warning] = "Your profile could not be updated."
+      render :edit
     end
   end
   
