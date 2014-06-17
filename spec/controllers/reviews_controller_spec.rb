@@ -17,15 +17,18 @@ describe ReviewsController do
         it "creates a review" do
           expect(Review.count).to eq(1)
         end
-        it "creates a review association with the video" do
-          expect(Review.first.video).to eq(video)
-        end
-        it "creates a review association with the user" do
-          expect(Review.first.user).to eq(current_user)
-        end
+        # it "creates a review association with the video" do
+        #   expect(Review.first.video).to eq(video)
+        # end
+        # it "creates a review association with the user" do
+        #   expect(Review.first.user).to eq(current_user)
+        # end
       end
       context "with invalid input" do
-
+        it "does not create a review"
+        it "renders teh videos/show template"
+        it "sets the @video"
+        it "sets the @reviews"
       end
     end
 
