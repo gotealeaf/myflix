@@ -1,13 +1,17 @@
 %section.sign_in.container
   .row
-    .col-sm-10.col-sm-offset-1
-      = bootstrap_form_tag url: '/sign_in', layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-4" do |f|
+    .col-sm-4.col-sm-offset-4
+      = bootstrap_form_tag url: '/sign_in', label_col: "col-sm-0", control_col: "col-sm-4" do |f|
         %header
           %h1.text-center Sign In
-        = f.email_field :email
-        = f.password_field :password
+        %fieldset.col-sm-offset-3
+        = f.email_field :email, hide_label: true, placeholder: "Email"
+        = f.password_field :password, hide_label: true, placeholder: "Password"
         = f.form_group do
-          = f.submit "Sign In"
+          = f.submit "Sign In", class: "btn btn-success btn-block"
+        %p.text-center
+          Need to create an account?
+          = link_to "Register here", register_path
 
 
 

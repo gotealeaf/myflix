@@ -1,0 +1,55 @@
+%nav.navbar.navbar-default{role: "navigation"}
+  .container-fluid
+    / Brand and toggle get grouped for better mobile display
+    .navbar-header
+      %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", type: "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      = link_to "MyFLiX", root_path, class: "navbar-brand"
+
+    -unless logged_in?
+      / Sign in box
+      #collapsed-navbar.collapse.navbar-collapse 
+        .navbar-nav.navbar-right#nav-signin
+          = bootstrap_form_tag url: '/sign_in', layout: :inline do |f|
+            = f.email_field :email, hide_label: true, placeholder: "Email"
+            = f.password_field :password, hide_label: true, placeholder: "Password"
+            = f.form_group do
+              = f.submit "Sign In", class: "btn btn-success"  
+    
+    -else  
+      / Collect the nav links, forms, and other content for toggling
+      #bs-example-navbar-collapse-1.collapse.navbar-collapse
+        %ul.nav.navbar-nav
+          %li.dropdown
+            %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+              Videos
+              %b.caret
+            %ul.dropdown-menu
+              - Category.all.each do |category|
+                %li
+                  = link_to category.name, category_path(category)
+          %li
+            = link_to "My Queue", "#"
+          %li
+            = link_to "People", "#"
+        
+        = form_tag search_videos_path, method: "get", class: "navbar-form navbar-left" do
+          = text_field_tag :search_term, nil, placeholder: "Search", class: "form-control"
+          %button.btn.btn-default Submit
+        
+        %ul.nav.navbar-nav.navbar-right
+          %li.dropdown
+            %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+              = "#{current_user.name}"
+              %b.caret
+            %ul.dropdown-menu
+              %li
+                %a{href: "#"} Account
+              %li
+                %a{href: "#"} Plan & Billing
+              %li.divider  
+              %li
+                = link_to "Sign Out", sign_out_path 

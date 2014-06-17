@@ -2,7 +2,8 @@
   .container
     .row
       .video_large_cover.col-sm-7.col-sm-offset-1
-        %img(src="#{@video.large_cover_url}")
+        .crop-large
+          %img(src="#{@video.large_cover_url}" class="img-responsive img-thumbnail")
       .video_info.col-sm-3
         %header
           %h3= @video.title
