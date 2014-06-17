@@ -15,8 +15,8 @@ describe VideosController do
       review1 = Fabricate(:review, video: video)
       review2 = Fabricate(:review, video: video)
       get :show, id: video.id
-      # =~ matches array contents but not in order
       expect(assigns(:reviews)).to match_array([review1, review2])
+      # =~ matches array contents but not in order, match_array same
       # assigns(:reviews).should =~ [review1, review2]
     end
 
