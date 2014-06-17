@@ -90,10 +90,56 @@ describe UsersController do
     it_behaves_like "require sign in" do
       let(:action) { get :edit, id: jane.id }
     end
+    
+    it_behaves_like "require same user" do
+      let(:action) { get :edit, id: Fabricate(:user).id }
+    end
   end
   
   describe "POST Update" do
     let(:jane) { Fabricate(:user) }
     
+    it_behaves_like "require same user" do
+      let(:action) {post :update, id: Fabricate(:user).id, user: { full_name: "Boo", password: "wrongpassword" } }
+    end
+    
+    context "valid input" do
+      
+      before do
+        set_current_user(jane)
+        post :update, id: jane.id, user: { full_name: "Joe Bloggs", email: "joebloggs@example.com", password: "password" }
+      end
+      
+      it "successfully updates the current user's profile" do
+        expect(jane.reload.full_name).to eq("Joe Bloggs")
+      end
+      
+      it "sets the success message" do
+        expect(flash[:success]).to be_present
+      end
+      
+      it "redirects to the user's profile page" do
+        expect(response).to redirect_to user_path(jane)
+      end
+    end
+    
+    context "invalid input" do
+      before do
+        set_current_user(jane)
+        post :update, id: jane.id, user: { full_name: "Me" }
+      end
+      
+      it "does not update the user's profile" do
+        expect(jane.reload.full_name).not_to eq("Me")
+      end
+      
+      it "sets the flash error message" do
+        expect(flash[:danger]).to eq("Your profile could not be updated. Check errors below.")
+      end
+      
+      it "renders the edit page again" do
+        expect(response).to render_template :edit
+      end
+    end
   end
 end # ends users controller test

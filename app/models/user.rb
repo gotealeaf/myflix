@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   include Tokenable
   validates_presence_of :email, :password, :full_name
   validates_uniqueness_of :email
+  validates_length_of :full_name, in: 3..25
   has_many :reviews, -> { order("created_at DESC") }
   has_many :queue_items, -> { order(:list_order) }
   has_many :invitations, foreign_key: :inviter_id

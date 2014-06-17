@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :find_user, only: [:edit, :update, :show]
   before_action :require_user, except: [:new, :create, :new_with_token]
+  before_action :require_same_user, only: [:edit, :update]
  
   def new
     @user = User.new
@@ -34,21 +35,14 @@ class UsersController < ApplicationController
   end
   
   def edit
-    if @user.update
-      flash[:success] = "Your profile has been updated."
-      redirect_to home_path
-    else
-      flash[:danger] = "Your profile could not be updated."
-      render :edit
-    end
   end
   
   def update
     if @user.update(user_params)
-      flash[:info] = "Your profile was updated."
+      flash[:success] = "Your profile was updated."
       redirect_to user_path(@user)
     else
-      flash[:warning] = "Your profile could not be updated."
+      flash[:danger] = "Your profile could not be updated. Check errors below."
       render :edit
     end
   end
@@ -65,6 +59,13 @@ class UsersController < ApplicationController
   
   def user_params
     params.require(:user).permit(:full_name, :email, :password)
+  end
+  
+  def require_same_user #for edit and update 
+    if current_user != @user
+      flash[:danger] = "You do not have permission to do that."
+      redirect_to login_path
+    end
   end
 
 end
