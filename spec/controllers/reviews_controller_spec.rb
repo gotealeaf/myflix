@@ -8,7 +8,9 @@ describe ReviewsController do
       let(:current_user) {Fabricate(:user)}
       before {session[:user_id] = current_user.id}
       context "with valid imputs" do
-        post :create, review: Fabricate.attributes_for(:review), video_id: video.id
+        before do
+          post :create, review: Fabricate.attributes_for(:review), video_id: video.id
+        end
         it "redirects to the video show page" do
           expect(response).to redirect_to video
         end
