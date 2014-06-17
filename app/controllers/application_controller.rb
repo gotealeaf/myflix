@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   def require_user
     unless logged_in? 
-      flash[:danger] = "That area is restricted to registered users"
+      flash[:danger] = "Sorry, you'll need to log in to do that"
       redirect_to root_path
     end
   end
