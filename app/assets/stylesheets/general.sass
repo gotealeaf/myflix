@@ -1,8 +1,15 @@
 body
   margin: 20px
-  background-color: #E1E1E1
+  background: url(/tmp/dark-bg.png) no-repeat center center fixed
+  -webkit-background-size: cover
+  -moz-background-size: cover
+  -o-background-size: cover
+  background-size: cover
   a
-    color: #AE1D00
+    color: #b9090b
+  a:hover
+    text-decoration: none
+    color: lighten(#b9090b, 15%)  
   section.content
     padding-bottom: 50px
     border-bottom: 3px solid #B9090B
@@ -15,3 +22,6 @@ section.ui-index
 fieldset.actions
   input[type="submit"]
     margin-right: 10px
+
+hr
+  border: 1px solid #282828

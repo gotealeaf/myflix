@@ -9,7 +9,19 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require bootstrap
+ *= require rails_bootstrap_forms
  *= require whitespace-reset
  *= require_tree .
 */
+
+$navbar-default-bg: #B9090B;
+$navbar-default-link-color: #eaeaea;
+$navbar-default-link-hover-color: white;
+$navbar-default-link-active-color: #e1e1e1;
+$navbar-default-link-active-bg: $navbar-default-bg;
+$navbar-default-brand-hover-color: white;
+
+$font-family-sans-serif: "Droid Sans";
+$font-family-serif: "Josefin Slab";
+
+@import "bootstrap";
