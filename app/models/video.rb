@@ -1,6 +1,9 @@
 class Video < ActiveRecord::Base
   belongs_to :category
-  has_many :reviews
+  # rails 3 syntax deprecated:
+  # has_many :reviews, order: "created_at DESC"
+  # rails 4 now requires scope blocks:
+  has_many :reviews, -> { order 'created_at DESC' }
 
   validates_presence_of :title, :description
 
