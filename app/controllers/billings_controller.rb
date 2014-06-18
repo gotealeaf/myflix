@@ -3,7 +3,7 @@ class BillingsController < ApplicationController
   before_filter :find_user
   
   def show
-    
+    @billing = Payment.find(params[:payment])
   end
   
   private

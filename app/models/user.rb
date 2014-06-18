@@ -46,11 +46,12 @@ class User < ActiveRecord::Base
     update_column(:active, false)
   end
   
-  def next_billing
-    
+  def next_billing_date
+      Payment.last.created_at + 1.month
   end
   
-  def previous_billing
+  def previous_billing_date
+    Payment.last.created_at
   end
   
   #def generate_token
