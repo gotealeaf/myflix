@@ -37,6 +37,8 @@
             %li.row
               .col-sm-2
                 %span= "Rating: #{r.rating}"
-                %p=  link_to " by #{r.user.full_name} "
+                %p
+                  by
+                  = link_to "#{r.user.full_name} ", r.user
               .col-sm-8
                 %p= r.comment
