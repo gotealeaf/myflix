@@ -75,4 +75,5 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 =end
+  config.deprecation_stream = 'log/deprecations.log'
 end

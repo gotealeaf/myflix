@@ -170,7 +170,7 @@ DEPENDENCIES
   pry-nav
   rails (= 4.1.1)
   rails_12factor
-  rspec-rails (~> 3.0.0)
+  rspec-rails
   sass-rails
   shoulda-matchers
   sqlite3
