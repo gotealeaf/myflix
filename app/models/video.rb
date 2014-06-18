@@ -8,6 +8,11 @@ class Video < ActiveRecord::Base
   validates :description, presence: true
 
   belongs_to :category
+  has_many :reviews
+
+  def average_rating
+    Review.average_rating_for_video(self)
+  end
 
   def self.search_by_title(search_term)
     return [] if search_term.blank?

@@ -11,6 +11,13 @@ describe VideosController do
       expect(assigns(:video)).to eq(video)
     end
 
+    it "sets @new_review if user is signed in" do
+      cookies[:auth_token] = Fabricate(:user).auth_token
+      video = Fabricate(:video)
+      get :show, id: video.id
+      expect(assigns(:new_review)).to be_instance_of(Review)
+    end
+
     it "redirects user to sign in page if not signed in" do
       video = Fabricate(:video)
       get :show, id: video.id
