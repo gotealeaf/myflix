@@ -54,6 +54,31 @@ describe UsersController do
       end
 
     end #end context invalid
+  end #end POST create
+
+  describe "GET #show" do
+
+    context "with authenticated users" do
+      it_behaves_like "require_sign_in" do
+        let(:action) {get :show, id: 3}  #id: is not necessary.  This calls the shared example.
+      end
+      it "sets @user" do
+       set_current_user
+       alice = Fabricate(:user)
+        get :show, id: alice.id
+        expect(assigns(:user)).to eq(alice)
+
+
+      end
+
+      it "lists the videos in users queue"
+
+      it "shows all the reviews written by the user"
+
+      it "is visible to any logged in user"
+
+    end
+
   end
 
 end

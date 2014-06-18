@@ -10,6 +10,8 @@
   thriller = Category.create(name: "Thriller")
   indian = Category.create(name: "Foreign-Indian")
 
+  
+
   Video.create(title: "Futurama", description: "Pizza boy Philip J. Fry awakens in the 31st century 
   after 1,000 years of cryogenic preservation in this animated series. After he gets a job at an interplanetary 
   delivery service, Fry embarks on ridiculous escapades to make sense of his predicament.",
@@ -83,8 +85,12 @@
     parody of a middle class American lifestyle epitomized by its family of the same name, which 
     consists of Homer, Marge, Bart, Lisa, and Maggie. The show is set in the fictional town of 
     Springfield and parodies American culture, society, television, and many aspects of the human 
-    condition.", small_cover_url: "/tmp/simpsons.png", large_cover_url: "/tmp/simpsons_large.jpg", category: comedy)                        
+    condition.", small_cover_url: "/tmp/simpsons.png", large_cover_url: "/tmp/simpsons_large.jpg", category: comedy)                       
   
-  azs = User.create(email: "azs@example.com", full_name:"AZS", password: "asd")
-  Review.create(rating: 5, comment: "Great", video: chak, user: azs)
-  Review.create(rating: 2, comment: "Really bad", video: chak, user: azs)
+  #azs = User.create(email: "azs@example.com", full_name:"AZS", password: "asd")
+  #Review.create(rating: 5, comment: "Great", video: chak, user: azs)
+  #Review.create(rating: 2, comment: "Really bad", video: chak, user: azs)
+
+  alex = User.create(email: "alex@example.com", full_name: "alex", password: "asd")
+
+  radha = User.create(email: "radha@example.com", full_name: "radha", password: "asd")

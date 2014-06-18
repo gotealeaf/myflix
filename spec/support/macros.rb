@@ -18,3 +18,7 @@ end
 def remove_current_user
   session[:user_id] = nil
 end
+
+def find_and_click_video_on_home_page(video)
+  find("a [href= '/videos/#{video.id}']").click
+end
