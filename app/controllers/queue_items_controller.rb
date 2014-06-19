@@ -22,8 +22,10 @@ class QueueItemsController < ApplicationController
   def destroy
     queue_item = QueueItem.find(params[:id])
     video_title = queue_item.video.title
-    queue_item.destroy
-    flash[:success] = "#{video_title} was removed from your queue"
+    if current_user.queue_items.include?(queue_item)
+      queue_item.destroy
+      flash[:success] = "#{video_title} was removed from your queue"
+    end
     redirect_to my_queue_path
   end
 

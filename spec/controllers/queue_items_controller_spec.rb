@@ -87,6 +87,12 @@ describe QueueItemsController do
         delete :destroy, id: qitem.id
         expect(flash[:success]).not_to be_blank
       end
+      it "does not delete queue item if it does not belong to the current user" do
+        joker = Fabricate(:user)
+        qitem = Fabricate(:queue_item, user: joker, video: video)
+        delete :destroy, id: qitem.id
+        expect(joker.queue_items.count).to eq(1)
+      end
     end
 
   end
