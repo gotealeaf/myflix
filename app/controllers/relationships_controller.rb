@@ -7,7 +7,10 @@ class RelationshipsController < ApplicationController
 
   def create
     leader = User.find(params[:leader_id])
-    Relationship.create(leader_id: leader.id, follower_id: current_user.id) if current_user.can_follow?(leader)
+    if current_user.can_follow?(leader)
+      Relationship.create(leader_id: leader.id, follower_id: current_user.id)
+      AppMailer.mail_to_leader_when_followed(leader, current_user).deliver
+    end
     redirect_to people_path
   end
 
