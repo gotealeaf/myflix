@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
 
   has_secure_password
   has_many :reviews
-
+  has_many :queue_items
+  
   after_create :new_auth_token
 
   def new_auth_token

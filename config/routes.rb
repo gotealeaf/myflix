@@ -12,6 +12,9 @@ Myflix::Application.routes.draw do
   get 'home', to: 'videos#index'
 
   resources :users, only: [:create,:new]
+  
+  resources :queue_items
+  get 'my-queue', to: 'queue_items#index', as: 'my_queue'
 
   resources :sessions, only: [:new,:create,:destroy]
   get 'sign-in', to: 'sessions#new', as: 'sign_in'
