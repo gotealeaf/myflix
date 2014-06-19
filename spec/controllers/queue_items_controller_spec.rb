@@ -13,8 +13,9 @@ describe QueueItemsController do
       
       it "should assign the @queue_items variable for the signed in user" do
         qitem = Fabricate(:queue_item, video: video, user: user)
+        qitem2 = Fabricate(:queue_item, video: video, user: user)
         get :index
-        expect(assigns(:queue_items)).to eq([qitem])
+        expect(assigns(:queue_items)).to match_array([qitem,qitem2])
       end
 
     end
@@ -24,8 +25,6 @@ describe QueueItemsController do
   context "users who are NOT signed in" do
     describe "GET index" do
       it "should redirect to the sign_in page" do
-        user = Fabricate(:user)
-        video = Fabricate(:video)
         get :index
         expect(response).to redirect_to(sign_in_path)
       end

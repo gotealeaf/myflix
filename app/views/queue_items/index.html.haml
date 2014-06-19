@@ -19,7 +19,7 @@
                 %td
                   %input.form-control(type="text" value="1")
                 %td
-                  = link_to qi.video.title, qi.video
+                  = link_to qi.video_title, qi.video
                 %td
                   = button_to "Play", nil, class: "btn btn-default"
                 %td
@@ -30,7 +30,7 @@
                     %option(value="2") 2 Stars
                     %option(value="1") 1 Star
                 %td
-                  = link_to qi.video.category.name, qi.video.category
+                  = link_to qi.category_name, qi.category
                 %td
                   = link_to "", method: :post do
                     %i.glyphicon.glyphicon-remove
