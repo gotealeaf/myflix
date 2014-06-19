@@ -65,6 +65,30 @@ describe QueueItemsController do
       end
     end
 
+    describe "DELETE destroy" do
+      let(:user) { Fabricate(:user) }
+      let(:video) { Fabricate(:video) }
+      before do
+        cookies[:auth_token] = user.auth_token
+      end
+
+      it "should remove the queue item from the user's queue" do
+        qitem = Fabricate(:queue_item, user: user, video: video)
+        delete :destroy, id: qitem.id
+        expect(user.queue_items.count).to eq(0)
+      end
+      it "should redirect to the my queue page" do
+        qitem = Fabricate(:queue_item, user: user, video: video)
+        delete :destroy, id: qitem.id
+        expect(response).to redirect_to(my_queue_path)
+      end
+      it "should place a flash success informing user video was removed" do
+        qitem = Fabricate(:queue_item, user: user, video: video)
+        delete :destroy, id: qitem.id
+        expect(flash[:success]).not_to be_blank
+      end
+    end
+
   end
 
   context "users who are NOT signed in" do
@@ -77,6 +101,13 @@ describe QueueItemsController do
     describe "POST create" do
       it "should redirect to sign_in page" do
         post :create
+        expect(response).to redirect_to(sign_in_path)
+      end
+    end
+    describe "DELETE destroy" do
+      it "should redirect to sign_in page" do
+        qitem = Fabricate(:queue_item)
+        delete :destroy, id: qitem.id
         expect(response).to redirect_to(sign_in_path)
       end
     end

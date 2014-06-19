@@ -31,7 +31,7 @@
                 %td
                   = link_to qi.category_name, qi.category
                 %td
-                  = link_to "", method: :post do
+                  = link_to queue_item_path(qi) ,method: :delete do
                     %i.glyphicon.glyphicon-remove
 
         = button_to "Update Instant Queue", nil, class: "btn btn-default"
