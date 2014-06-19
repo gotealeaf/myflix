@@ -16,8 +16,7 @@
           %tbody
             - @queue_items.each do |qi|
               %tr
-                %td
-                  %input.form-control(type="text" value="1")
+                %td= qi.position
                 %td
                   = link_to qi.video_title, qi.video
                 %td

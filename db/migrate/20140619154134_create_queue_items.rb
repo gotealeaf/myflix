@@ -3,8 +3,8 @@ class CreateQueueItems < ActiveRecord::Migration
     create_table :queue_items do |t|
       t.belongs_to :user
       t.belongs_to :video
-      t.integer :list_order
-      
+      t.integer :position
+
       t.timestamps
     end
   end
