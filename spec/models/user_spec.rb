@@ -64,21 +64,4 @@ describe User do
       expect(jane).not_to be_active
     end
   end
-  
-  describe "#next_billing_date" do
-    it "shows the user's next billing date" do
-      jane = Fabricate(:user)
-      payment = Fabricate(:payment, user: jane, created_at: Time.now)
-      expect(jane.next_billing_date).to eq(payment.created_at + 1.month)
-      
-    end
-  end
-  
-  describe "previous_billing_date" do
-    it "shows the user's previous billing date" do
-      jane = Fabricate(:user)
-      payment = Fabricate(:payment, user: jane, created_at: 1.month.ago)
-      expect(jane.previous_billing_date).to eq(payment.created_at)
-    end
-  end
 end

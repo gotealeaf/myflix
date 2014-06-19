@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   include Tokenable
-  validates_presence_of :email, :password, :full_name
+  validates_presence_of :email, :full_name
+  validates_presence_of :password, on: :create
   validates_uniqueness_of :email
   validates_length_of :full_name, in: 3..25
   has_many :reviews, -> { order("created_at DESC") }
@@ -47,11 +48,11 @@ class User < ActiveRecord::Base
   end
   
   def next_billing_date
-      Payment.last.created_at + 1.month
+    self.payments.last.created_at + 1.month
   end
   
   def previous_billing_date
-    Payment.last.created_at
+    self.payments.last.created_at
   end
   
   #def generate_token

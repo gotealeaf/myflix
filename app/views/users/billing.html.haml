@@ -1,0 +1,31 @@
+%section.invite.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %header
+        %h1 Billing
+        %table.table
+          %thead
+            %tr
+              %th Plan
+              %th Next Billing Date
+              %th Price
+          %tbody
+            %tr
+              %td The All You Can Watch Plan
+              %td #{current_user.next_billing_date.strftime('%m/%d/%Y')}
+              %td 9.99 per month
+      = button_to "Cancel Subscription", nil, class: "btn btn-default"
+      %header
+        %h1 Payment History
+        %table.table
+          %thead
+            %tr
+              %th Date
+              %th Subscription Period
+              %th Total
+          %tbody
+            - current_user.payments.each do |payment|
+              %tr
+                %td #{payment.created_at.strftime('%m/%d/%Y')}
+                %td #{payment.created_at.strftime('%m/%d/%Y')} to #{(payment.created_at + 1.month).yesterday.strftime('%m/%d/%Y')}
+                %td #{number_to_currency(payment.amount / 100.0)}

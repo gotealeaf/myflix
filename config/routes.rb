@@ -44,7 +44,7 @@ Myflix::Application.routes.draw do
   get '/forgot_password', to: 'forgot_passwords#new'
   get '/forgot_password_confirmation', to: 'forgot_passwords#confirm'
   get '/invalid_token', to: 'pages#invalid_token'
-  get '/billing', to: 'billings#show'
+  get '/billing', to: 'users#billing'
   
   mount StripeEvent::Engine => '/stripe_events'
 
