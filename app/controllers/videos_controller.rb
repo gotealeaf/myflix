@@ -7,6 +7,7 @@ class VideosController < ApplicationController
   end
 
   def show
+    @reviews = @video.reviews
     @new_review = Review.new()
   end
 
