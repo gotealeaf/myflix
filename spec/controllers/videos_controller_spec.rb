@@ -21,13 +21,6 @@ describe VideosController do
       expect(assigns(:reviews)).to match_array([review1,review2])
     end
 
-    it "sets @new_review if user is signed in" do
-      cookies[:auth_token] = user = Fabricate(:user).auth_token
-      video = Fabricate(:video)
-      get :show, id: video.id
-      expect(assigns(:new_review)).to be_instance_of(Review)
-    end
-
     it "redirects user to sign in page if not signed in" do
       video = Fabricate(:video)
       get :show, id: video.id

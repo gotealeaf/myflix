@@ -17,13 +17,13 @@
 %section.reviews.container
   .row
     .col-sm-10.col-sm-offset-1
-      = bootstrap_form_for [@video,@new_review] do |f|
+      = bootstrap_form_for [@video, Review.new] do |f|
         %fieldset
-          = f.select :rating, options_for_select([1,2,3,4,5].map{|i| ["#{i} Stars",i]}), label: 'Rate this video'
+          = f.select :rating, options_for_select([1,2,3,4,5].map{|i| [pluralize(i,'Star'),i]}), label: 'Rate this video'
           = f.text_area :content, label: 'Write Review', rows: 6
         %fieldset.form-group.actions.clearfix
           = f.submit
-          %a(href="") Cancel
+          = link_to "Cancel", @video
       %header
         %h3 User Reviews (#{@reviews.count})
       %ul

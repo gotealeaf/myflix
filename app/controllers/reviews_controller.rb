@@ -3,11 +3,12 @@ class ReviewsController < ApplicationController
   before_filter :find_video
 
   def create
-    @new_review = Review.new(review_params.merge({video: @video, user: current_user}))
-    if @new_review.save
+    @review = @video.reviews.build(review_params.merge!({user: current_user}))
+    if @review.save
       flash[:success] = "Thanks for reviewing this video!"
       redirect_to video_path(@video)
     else
+      @reviews = @video.reviews.reload
       flash.now[:error] = "There was an error submitting your review."
       render 'videos/show'
     end

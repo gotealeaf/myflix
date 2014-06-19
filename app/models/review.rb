@@ -3,7 +3,7 @@ class Review < ActiveRecord::Base
   belongs_to :user
 
   validates :rating, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 5  }
-  validates_presence_of :video, :user
+  validates_presence_of :video, :user, :content
 
   default_scope { order("created_at DESC") }
 
