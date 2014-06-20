@@ -7,6 +7,10 @@ class Video < ActiveRecord::Base
 
   #validates :slug, uniqueness: true
 
+  def self.search_by_name(name)
+    where("name ILIKE ?", "%#{name}%")
+  end
+
   def to_param
     self.slug
   end
