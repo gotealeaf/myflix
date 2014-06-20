@@ -9,13 +9,12 @@
     = form_tag search_videos_path, method: "get", class: "col-md-5 navbar-form" do
       .form-group
         = text_field_tag 'search_term', nil, class: "form-control"
-        %button.btn.btn-default(type="submit") Search
+      %button.btn.btn-default(type="submit") Search
     #user_links.pull-right
       %ul
         %li.dropdown
           %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
-            Welcome,
-            = current_user.full_name
+            = "Welcome, #{User.find(session[:user_id]).full_name}"
             %b.caret
           %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
             %li
