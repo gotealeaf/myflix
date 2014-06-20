@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
     if @user.save
       session[:user_id] = @user.id
-      flash[:success] = "You are now signed in as #{@user.name}"
+      flash[:success] = "Welcome to MyFLiX! You are now signed in as #{@user.name}"
       redirect_to home_path
     else
       render 'new'
