@@ -3,6 +3,7 @@ class VideosController < ApplicationController
 
   def index
     @genres = Genre.all
+    @videos = Video.all
   end
 
   def new
@@ -18,6 +19,10 @@ class VideosController < ApplicationController
     else
       render :new
     end
+  end
+
+  def search
+    @results = Video.search_by_name(params[:name])
   end
 
   private
