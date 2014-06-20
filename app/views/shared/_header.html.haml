@@ -5,15 +5,15 @@
     %li= link_to "Videos"
     %li= link_to "My Queue"
     %li= link_to "People"
-  %form.col-md-5.navbar-form(action="")
+  = form_tag search_videos_path, class: "col-md-5 navbar-form", method: 'get' do
     .form-group
-      %input.form-control(type="text" placeholder="Search for videos here")
-    %button.btn.btn-default(type="submit") Search
+      = text_field_tag('name', 'Search for videos here', class: 'form-control')
+      = submit_tag("search", class: 'btn btn-default')
   #user_links.pull-right
     %ul
       %li.dropdown
         %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
-          Welcome, Philip J. Fry
+          Welcome, Dito
           %b.caret
         %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
           %li
