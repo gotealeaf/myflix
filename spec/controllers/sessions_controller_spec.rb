@@ -17,12 +17,13 @@ describe SessionsController do
   describe "POST create" do
     context "with valid sign in credentials" do
       before do
-        alice = Fabricate(:user)
-        post :create, email: alice.email, password: alice.password
+        @alice = Fabricate(:user) 
+        # Had to use instance variable in order for the next spec (which calls the variable in the assertion) to pass
+        post :create, email: @alice.email, password: @alice.password
       end
-      
+
       it "saves the signed in user to the session" do
-        expect(session[:user_id]).to eq(alice.id)
+        expect(session[:user_id]).to eq(@alice.id)
       end
 
       it "redirects the user to the home path" do
