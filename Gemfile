@@ -13,7 +13,7 @@ gem 'bcrypt-ruby', '~> 3.1.0'
 gem 'bootstrap_form'
 gem 'fabrication'
 gem 'faker'
-
+gem 'figaro'
 
 group :development do
   gem 'sqlite3'
@@ -38,5 +38,6 @@ end
 group :production do
   gem 'pg'
   gem 'rails_12factor'
+  
 end
 
