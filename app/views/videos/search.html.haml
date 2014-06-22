@@ -1,5 +1,6 @@
 - @results.each do |video|
-  .videos.row
-    .video.span2
-      = link_to video_path(video) do
-        %img(src="#{video.small_cover_url}")
+  %header    
+    .videos.row
+      .video.col-sm-2
+        = link_to video do
+          %img(src="#{video.small_cover_url}")
