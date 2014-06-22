@@ -1,7 +1,7 @@
 - @genres.each do |genre|
   %article.video_category
     %header
-      %h3= link_to genre.name, genre_path(genre)
+      %h3= link_to genre.name.titleize, genre_path(genre)
     .videos.row
       - genre.recent_videos.each do |video|
         .video.col-sm-2
