@@ -31,7 +31,7 @@ Video.create(
   large_cover_url: "/tmp/brooklyn-nine-nine-large.jpg",
   category: comedy)
 
-Video.create(
+revolution = Video.create(
   title: "Revolution",
   description: "Everyone in the world forgot to pay their electric bill.",
   small_cover_url: "/tmp/revolution.jpg",
@@ -93,3 +93,17 @@ Video.create(
   small_cover_url: "/tmp/house-of-cards.jpg",
   large_cover_url: "/tmp/house-of-cards-large.jpg",
   category: drama)
+
+cullen = User.create(name: "Cullen Jett", email: "cullenjett@gmail.com", password: "password")
+
+Review.create(
+  user: cullen, 
+  video: revolution, 
+  rating: 5, 
+  content: "Holy poop this is a good show!")
+
+Review.create(
+  user: cullen, 
+  video: revolution, 
+  rating: 1, 
+  content: "I've changed my mind. Turn the power back on!")
