@@ -9,6 +9,6 @@ Myflix::Application.routes.draw do
   end
 
   resources :genres, except: :index
-
+  resources :users, except: [:index, :destroy]
   get 'ui(/:action)', controller: 'ui'
 end
