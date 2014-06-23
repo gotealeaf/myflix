@@ -26,6 +26,8 @@ describe Video do
   #   expect(Video.count).to eq(0)
   # end
 
+  it { should have_many (:reviews) }
+
   describe "search_by_title" do
     it "returns an empty array if no match" do
       matrix = Video.create(title: "Matrix", description: "Take the blue pill!")

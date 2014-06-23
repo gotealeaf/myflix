@@ -11,39 +11,32 @@
         %p= @video.description
         .actions
           %a.btn.btn-primary(href="") Watch Now
-          %a.btn.btn-default(href="") + My Queue
+          = link_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: "btn btn-default"
 
 %section.reviews.container
   .row
     .col-sm-10.col-sm-offset-1
-      %form
+      = form_for [@video, Review.new] do |f|
         %fieldset
           .form-group
-            %label Rate this video
-            .row
-              .col-sm-3
-                %select.form-control(name="")
-                  %option(value="5") 5 Stars
-                  %option(value="4") 4 Stars
-                  %option(value="3") 3 Stars
-                  %option(value="2") 2 Stars
-                  %option(value="1") 1 Star
+            %label Rate video
+            = f.select :rating, options_for_select([5,4,3,2,1].map {|number| [pluralize(number, "stars")]})
           .form-group
-            %label Write Review
+            %label Write a review
             .row
               .col-sm-8
-                %textarea.form-control(name="" rows="6")
+                = f.text_area :content, rows: 6, class: "form-control"
         %fieldset.form-group.actions.clearfix
-          %input(type="submit" value="Submit" class="btn")
-          %a(href="") Cancel
+          %input(type="submit" value="Submit" class="btn btn-default")
+          = link_to "Cancel", @video
       %header
-        %h3 User Reviews (253)
+        %h3 User Reviews (#{@reviews.count})
       %ul
-        - 8.times do
+        - @reviews.each do |review|
           %article.review
             %li.row
               .col-sm-2
-                %span Rating: 5 / 5
-                %p by <a href="">John A. Zoidberg</a>
+                %span Rating: #{review.rating} / 5
+                %p by <a href="">#{review.user.name}</a>
               .col-sm-8
-                %p In my opinion, this is one of the best shows ever made. It's not only funny, but despite being so frequently silly, it's very smart as well. Math, science, history, all get referenced. The best parts of the show are the subtle things, those little things in the background or just on screen for a couple of seconds that just make you laugh out loud if you were paying attention. The writers even appear to have been thinking ahead, because if you play close attention to the first episode, you can see a literal shadow of an event revealed seasons later.
+                %p #{review.content}

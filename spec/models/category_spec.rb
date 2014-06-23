@@ -14,6 +14,7 @@ describe Category do
   #   flash_forward = Video.create(title: "Flash Forward", description: "A one season wonder.", category: hyper_action)
   #   expect(hyper_action.videos).to eq([flash_forward, walking_dead])
   # end
+  it { should validate_presence_of(:name) }
 
   describe '#recent_videos' do
     it 'returns the videos in reverse chronological order by created_at' do
