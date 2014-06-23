@@ -5,14 +5,7 @@ class Video < ActiveRecord::Base
   validates :name, uniqueness: true
   validates :description, presence: true
 
-  #validates :slug, uniqueness: true
-
   def self.search_by_name(name)
     where("name ILIKE ?", "%#{name}%")
   end
-
-  def to_param
-    self.slug
-  end
-
 end
