@@ -1,9 +1,8 @@
 class VideosController < ApplicationController
-  before_action :set_video, only: [:show, :edit, :update, :destroy]
+  before_action :set_video, except: [:index, :new, :search]
 
   def index
     @genres = Genre.all
-    @videos = Video.all
   end
 
   def new
