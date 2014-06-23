@@ -4,4 +4,5 @@ class Review < ActiveRecord::Base
 
   validates :body, presence: true, length: { minimum: 10 }
   validates :rating, presence: true
+  validates_uniqueness_of :creator, scope: [:user_id, :video_id]
 end

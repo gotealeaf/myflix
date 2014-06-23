@@ -9,9 +9,7 @@ class QueueItem < ActiveRecord::Base
   def video_rating
     video_review = video.reviews.where(user = user)
 
-    if video_review.empty?
-      return "not rated"
-    end
+    return "not rated" if video_review.empty?
   
     video_review.each do |review|
       return review.rating
