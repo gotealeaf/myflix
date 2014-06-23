@@ -12,10 +12,13 @@ Myflix::Application.routes.draw do
     resources :reviews, only: [:create]
   end
   resources :users, only: [:create]
+  resources :queue_items, only: [:create, :destroy]
   
   get '/register', to: 'users#new', as: 'register'
 
   get '/sign_in', to: 'sessions#new', as: 'sign_in'
   post '/sign_in', to: 'sessions#create'
   get '/sign_out', to: 'sessions#destroy', as: 'sign_out'
+
+  get '/my_queue', to: 'queue_items#index'
 end
