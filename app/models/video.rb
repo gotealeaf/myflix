@@ -1,6 +1,7 @@
 class Video < ActiveRecord::Base
   belongs_to :category
-  has_many :reviews, order: "created_at DESC"
+  has_many :queue_items
+  has_many :reviews, -> { order(created_at: :desc) }
 
   validates :title, :description, presence: true
 
@@ -13,6 +14,7 @@ class Video < ActiveRecord::Base
     if reviews.empty?
       return "Be the first to rate this video!"
     end
+    
     total = 0.0
     reviews.each do |review|
       total += review.rating.to_f
