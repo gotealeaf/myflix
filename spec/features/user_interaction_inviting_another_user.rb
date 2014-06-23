@@ -43,5 +43,7 @@ feature "User interaction with invitations" do
 
     visit people_path
     page.should have_content "#{ana.full_name}"
+
+    clear_email
   end
 end

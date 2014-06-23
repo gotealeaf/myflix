@@ -23,5 +23,7 @@ feature "Password reset" do
     click_button "Reset Password"
 
     ana.reload.authenticate("987654321").should be_true 
+
+    clear_email
   end
 end
