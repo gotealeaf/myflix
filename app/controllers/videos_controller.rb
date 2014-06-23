@@ -1,5 +1,7 @@
 class VideosController < ApplicationController
+
   before_action :set_video, except: [:index, :new, :search]
+  before_action :require_user
 
   def index
     @genres = Genre.all

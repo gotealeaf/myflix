@@ -1,5 +1,7 @@
 class GenresController < ApplicationController
 
+  before_action :require_user
+
   def show
     @genre = Genre.find(params[:id])
   end
