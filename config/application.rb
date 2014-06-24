@@ -15,5 +15,8 @@ module Myflix
       g.orm :active_record
       g.template_engine :haml
     end
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance|
+  "<div class=\"field_with_errors has-error\">#{html_tag}</div>".html_safe
+}
   end
 end
