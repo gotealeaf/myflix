@@ -12,7 +12,6 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:email])
     if @user && @user.authenticate(params[:password])
       session[:username] = @user.username
-      binding.pry
       flash[:success] = "Welcome #{@user.username}"
       redirect_to videos_path
     else
