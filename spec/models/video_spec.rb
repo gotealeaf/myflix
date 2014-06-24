@@ -4,7 +4,7 @@ describe Video do
   it { should belong_to(:category) }
   it { validate_presence_of(:title) }
   it { should validate_presence_of(:description) } 
-  it { should have_many(:reviews).order("created_at DESC")}
+  it { should have_many(:reviews).order(created_at: :desc)}
 
 
   describe "search_by_title" do
@@ -41,19 +41,20 @@ describe Video do
 
   describe "calculate_rating" do
     before { @monk = Fabricate(:video) }
+
     context "video with reviews" do
       before do
-        review1 = Fabricate(:review, video_id: @monk.id, rating: 5)
-        review2 = Fabricate(:review, video_id: @monk.id, rating: 3)
-        review3 = Fabricate(:review, video_id: @monk.id, rating: 4)
+        review1 = Fabricate(:review, video_id: @monk.id, user_id: Fabricate(:user).id, rating: 5)
+        review2 = Fabricate(:review, video_id: @monk.id, user_id: Fabricate(:user).id, rating: 3)
+        review3 = Fabricate(:review, video_id: @monk.id, user_id: Fabricate(:user).id, rating: 4)
       end
-
+   
       it "returns the average rating of all of a videos reviews" do
         expect(@monk.calculate_rating).to eq(4.0)
       end
 
       it "returns the rating rounded to one decimal place" do
-        review4 = Fabricate(:review, video_id: @monk.id, rating: 5)
+        review4 = Fabricate(:review, video_id: @monk.id, user_id: Fabricate(:user).id, rating: 5)
         expect(@monk.calculate_rating).to eq(4.3)
       end
     end

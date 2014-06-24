@@ -2,10 +2,7 @@ require "spec_helper"
 
 describe ReviewsController do
   describe "POST create" do
-    let(:video) { Fabricate(:video) }
-
     context "with authenticated user" do
-
       before do
         @user = Fabricate(:user)
         session[:user_id] = @user.id
@@ -18,15 +15,15 @@ describe ReviewsController do
         end
 
         it "saves a new review to the database" do
-          expect(Review.count).to eq(4)
+          expect(Review.count).to eq(1)
         end
 
         it "creates a review associated with the video" do
-          expect(Review.find(4).video).to eq(@video)
+          expect(Review.first.video).to eq(@video)
         end
 
         it "creates a review associated with logged in user" do
-          expect(Review.find(4).creator).to eq(@user)
+          expect(Review.first.creator).to eq(@user)
         end
 
         it "sends notice" do
@@ -45,7 +42,7 @@ describe ReviewsController do
         end
 
         it "does not save a new video to database" do
-          expect(Review.count).to eq(3)
+          expect(Review.count).to eq(0)
         end
 
         it "renders videos/show template" do
@@ -57,7 +54,8 @@ describe ReviewsController do
 
   context "with unauthenticated user" do
     it "redirects to login page" do
-      post :create, review: Fabricate.attributes_for(:review), video_id: @video.id
+      video = Fabricate(:video)
+      post :create, review: Fabricate.attributes_for(:review), video_id: video.id
       expect(response).to redirect_to login_path
     end
   end

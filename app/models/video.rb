@@ -11,9 +11,7 @@ class Video < ActiveRecord::Base
   end
 
   def calculate_rating
-    if reviews.empty?
-      return "Be the first to rate this video!"
-    end
+    return "Be the first to rate this video!" if reviews.empty?
     
     total = 0.0
     reviews.each do |review|
