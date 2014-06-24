@@ -1,31 +1,21 @@
 %section.register.container
   .row
-    .col-sm-6.col-sm-offset-3
-      = form_for @user, builder: MyFormBuilder, html: {class: 'form-horizontal'} do |f|
+    .col-sm-10.col-sm-offset-1
+      = bootstrap_form_for @user, html: {class: 'form-horizontal'} do |f|
         %header
           %h1 Register
         %fieldset
           .form-group
-            .col-xs-8.col-md-offset-2
-              = f.label :username, 'Username', class: 'col-sm-12'
-              = f.text_field :username, class: 'form-control'
+            .col-sm-6= f.text_field :username
           .form-group
-            .col-xs-8.col-md-offset-2
-              = f.label :full_name, 'Full Name', class: 'col-sm-12'
-              = f.text_field :full_name, class: 'form-control'
+            .col-sm-6= f.text_field :full_name, label: "Full Name"
           .form-group
-            .col-xs-8.col-md-offset-2
-              = f.label :email, 'Email Address', class: 'col-sm-12'
-              = f.text_field :email, class: 'form-control'
+            .col-sm-6= f.text_field :email, label: 'Email Address'
           .form-group
-            .col-xs-8.col-md-offset-2
-              = f.label :password, 'Password', class: 'col-sm-12'
-              = f.password_field :password, class: 'form-control'
-          .form-group
-            .col-xs-8.col-md-offset-2
-              = f.label :password_confirmation, 'Password Confirmation', class: 'col-sm-12'
-              = f.password_field :password_confirmation, class: 'form-control'
+            .col-sm-6= f.password_field :password
+          .form-group  
+            .col-sm-6= f.password_field :password_confirmation, label: 'Password Confirmation'
         %fieldset.credit_card
         %fieldset.actions.control-group
-          .controls.col-md-offset-2
+          .controls
             = f.submit 'Sign Up', class: 'btn btn-default'
