@@ -1,31 +1,31 @@
 %section.register.container
   .row
-    .col-sm-10.col-sm-offset-1
-      = form_for @user, html: {class: 'form-horizontal'} do |f|
+    .col-sm-6.col-sm-offset-3
+      = form_for @user, builder: MyFormBuilder, html: {class: 'form-horizontal'} do |f|
         %header
           %h1 Register
         %fieldset
           .form-group
-            = f.label :username, class: 'control-label col-sm-2'
-            .col-sm-6
+            .col-xs-8.col-md-offset-2
+              = f.label :username, 'Username', class: 'col-sm-12'
               = f.text_field :username, class: 'form-control'
           .form-group
-            = f.label :full_name, class: 'control-label col-sm-2'
-            .col-sm-6
+            .col-xs-8.col-md-offset-2
+              = f.label :full_name, 'Full Name', class: 'col-sm-12'
               = f.text_field :full_name, class: 'form-control'
           .form-group
-            = f.label 'Email Address', class: 'control-label col-sm-2'
-            .col-sm-6
+            .col-xs-8.col-md-offset-2
+              = f.label :email, 'Email Address', class: 'col-sm-12'
               = f.text_field :email, class: 'form-control'
           .form-group
-            = f.label :password, class: 'control-label col-sm-2'
-            .col-sm-6
+            .col-xs-8.col-md-offset-2
+              = f.label :password, 'Password', class: 'col-sm-12'
               = f.password_field :password, class: 'form-control'
           .form-group
-            = f.label :password_confirmation, class: 'control-label col-sm-2'
-            .col-sm-6
+            .col-xs-8.col-md-offset-2
+              = f.label :password_confirmation, 'Password Confirmation', class: 'col-sm-12'
               = f.password_field :password_confirmation, class: 'form-control'
         %fieldset.credit_card
-        %fieldset.actions.control-group.col-sm-offset-2
-          .controls
+        %fieldset.actions.control-group
+          .controls.col-md-offset-2
             = f.submit 'Sign Up', class: 'btn btn-default'
