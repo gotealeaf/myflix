@@ -13,7 +13,6 @@ class UsersController < ApplicationController
       session[:user] = @user.username
       redirect_to videos_path
     else
-      flash.now[:danger] = @user.errors.full_messages # FIX! Errors not showing
       render :new
     end
   end
