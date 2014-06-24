@@ -48,6 +48,7 @@ class UsersController < ApplicationController
   end
   
   def unsubscribe
+    #to handle this via webhooks as well. replace actual customer key with variable
     Stripe.api_key = ENV['STRIPE_SECRET_KEY']
     customer = Stripe::Customer.retrieve("cus_3R1W8PG2DmsmM9")
     customer.subscriptions.retrieve("sub_3R3PlB2YlJe84a").delete(:at_period_end => true)
