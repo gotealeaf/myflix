@@ -45,9 +45,10 @@ class UsersController < ApplicationController
   end
 
   def new_with_invitation_token    
-    @invitation = Invitation.find_by_token(params[:token])
-    if @invitation
-      @user = User.new(email: @invitation.recipient_email)
+    invitation = Invitation.find_by_token(params[:token])
+    if invitation
+      @user = User.new(email: invitation.recipient_email)
+      @invitation_token = invitation.token
       render :new
     else
       redirect_to expired_token_path

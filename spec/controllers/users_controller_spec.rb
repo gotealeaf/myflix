@@ -122,11 +122,11 @@ describe UsersController do
       expect(response).to render_template :new
     end
 
-    it "sets @invitation" do
+    it "sets @invitation_token" do
       invitation = Fabricate :invitation      
       get :new_with_invitation_token, token: invitation.token
       
-      expect(assigns(:invitation)).to eq(invitation)
+      expect(assigns(:invitation_token)).to eq(invitation.token)
     end
 
     it "sets @user with recipient's email" do
