@@ -6,6 +6,7 @@ describe ReviewsController do
       before do
         @user = Fabricate(:user)
         session[:user_id] = @user.id
+        @video = Fabricate(:video)
       end
 
       context "with valid input" do
