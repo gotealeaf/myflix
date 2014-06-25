@@ -14,6 +14,12 @@ class Video < ActiveRecord::Base
 
   end
 
-  
+  #def to_param
+  #  token
+  #end  
+
+  #def generate_token #not needed in the apps context as new videos are not being created.
+  #  self.token = SecureRandom.urlsafe_base64
+  #end
 
 end

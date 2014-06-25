@@ -54,6 +54,28 @@ describe UsersController do
       end
 
     end #end context invalid
+
+    context "sending email" do
+
+      after { ActionMailer::Base.deliveries.clear }
+      
+      it "send email to user with valid inputs" do
+        post :create, user:{ email: "joe@example.com", password: "password", full_name: "Joe Johnson"}
+        expect(ActionMailer::Base.deliveries.last.to).to eq(["joe@example.com"])
+      end
+      it "send email contaning the users name" do
+        post :create, user:{ email: "joe@example.com", password: "password", full_name: "Joe Johnson"}
+        expect(ActionMailer::Base.deliveries.last.body).to include("Joe Johnson")
+      
+      end
+
+      it "does not send email with invalid inputs" do
+        post :create, user:{ email: "joe@example.com" }
+        expect(ActionMailer::Base.deliveries).to be_empty
+        
+      end
+
+    end #context sending email
   end #end POST create
 
   describe "GET #show" do
@@ -71,12 +93,7 @@ describe UsersController do
 
       end
 
-      it "lists the videos in users queue"
-
-      it "shows all the reviews written by the user"
-
-      it "is visible to any logged in user"
-
+      
     end
 
   end

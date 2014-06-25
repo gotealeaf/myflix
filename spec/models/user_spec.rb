@@ -7,6 +7,12 @@ describe User do
   it { should validate_uniqueness_of(:email) }
   it { should have_many(:queue_items).order(:position) }
   it { should have_many(:reviews).order("created_at DESC") }
+
+  it 'creates a random token when a user is created' do
+    alice = Fabricate(:user)
+    expect(alice.token).to be_present
+  end
+
   describe "queued_video?" do
     it "returns true if video is in queue of current_user" do
       alice = Fabricate(:user)
