@@ -45,7 +45,7 @@ describe QueueItemsController do
       expect(QueueItem.first.user).to eq(alice)
     end
 
-    it "puts the vide as the last one in the queue" do
+    it "puts the video as the last one in the queue" do
       alice = Fabricate(:user)
       set_current_user(alice)
       monk = Fabricate(:video)
