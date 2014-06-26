@@ -94,6 +94,41 @@ describe QueueItemsController do
         expect(joker.queue_items.count).to eq(1)
       end
     end
+    
+    describe "PUT update" do
+      let(:user) { Fabricate(:user) }
+      let(:video) { Fabricate(:video) }
+      let(:video2) { Fabricate(:video) }
+      let(:qitem1) { Fabricate(:queue_item, user: user, video: video, position: 1) }
+      let(:qitem2) { Fabricate(:queue_item, user: user, video: video2, position: 2) }
+      before do
+        cookies[:auth_token] = user.auth_token
+      end
+      
+      it "should reorder queue items based on user input" do
+        post :update, items: [{id: qitem1.id, position: 3}, {id: qitem2.id, position: 1}]
+        qitem1.reload
+        expect(qitem1.position).to eq(2)
+      end
+      # it "should not allow non-integer values" do
+      #   post :update, items: {"#{qitem1.id}" => {position: 1.5}, "#{qitem2.id}" => {position: 1}}
+      #   qitem1.reload
+      #   expect(qitem1.position).to eq(1)
+      # end
+      it "should use the order numbers as relative, but assign numbers sequentially" do
+        post :update, items: [{id: qitem1.id, position: 2}, {id: qitem2.id, position: 5}]
+        qitem2.reload
+        expect(qitem2.position).to eq(2)
+      end
+      it "should redirect to the my_queque path" do
+        post :update, items: [{id: qitem1.id, position: 2}, {id: qitem2.id, position: 1}]
+        expect(response).to redirect_to(my_queue_path)
+      end
+      it "should add a flash:success message for correct values" do
+        post :update, items: [{id: qitem1.id, position: 2}, {id: qitem2.id, position: 1}]
+        expect(flash[:success]).not_to be_blank
+      end
+    end
 
   end
 

@@ -4,34 +4,35 @@
       %article
         %header
           %h2 My Queue
-        %table.table
-          %thead
-            %tr
-              %th(width="10%") List Order
-              %th(width="30%") Video Title
-              %th(width="10%") Play
-              %th(width="20%") Rating
-              %th(width="15%") Genre
-              %th(width="15%") Remove
-          %tbody
-            - @queue_items.each do |qi|
+        = form_tag update_queue_items_path, method: :post do
+          %table.table
+            %thead
               %tr
-                %td= qi.position
-                %td
-                  = link_to qi.video_title, qi.video
-                %td
-                  = button_to "Play", nil, class: "btn btn-default"
-                %td
-                  %select.form-group(name="")
-                    %option(value="5") 5 Stars
-                    %option(value="4") 4 Stars
-                    %option(value="3") 3 Stars
-                    %option(value="2") 2 Stars
-                    %option(value="1") 1 Star
-                %td
-                  = link_to qi.category_name, qi.category
-                %td
-                  = link_to queue_item_path(qi) ,method: :delete do
-                    %i.glyphicon.glyphicon-remove
-
-        = button_to "Update Instant Queue", nil, class: "btn btn-default"
+                %th(width="10%") List Order
+                %th(width="30%") Video Title
+                %th(width="10%") Play
+                %th(width="20%") Rating
+                %th(width="15%") Genre
+                %th(width="15%") Remove
+            %tbody
+              - @queue_items.each do |qi|
+                %tr
+                  %td
+                    = text_field_tag "items[#{qi.id}][position]", qi.position
+                  %td
+                    = link_to qi.video_title, qi.video
+                  %td
+                    = button_to "Play", nil, class: "btn btn-default"
+                  %td
+                    %select.form-group(name="")
+                      %option(value="5") 5 Stars
+                      %option(value="4") 4 Stars
+                      %option(value="3") 3 Stars
+                      %option(value="2") 2 Stars
+                      %option(value="1") 1 Star
+                  %td
+                    = link_to qi.category_name, qi.category
+                  %td
+                    = link_to queue_item_path(qi) ,method: :delete do
+                      %i.glyphicon.glyphicon-remove
+          = submit_tag "Update Instant Queue", class: "btn btn-default"
