@@ -15,8 +15,18 @@ class QueueItem < ActiveRecord::Base
 =end
 
   def rating
-    review = Review.where(user_id: user.id, video_id: video.id).first
-    review.rating if review
+    @review.rating if review
+  end
+
+  def rating=(new_rating)
+    if review
+      # update column here instead of update_attributes, bypasses validation of content
+      @review.update_column(:rating, new_rating)
+    else
+      # have to do new / save to bypass validation of content, Review.create is nil otherwise
+      review = Review.new(user: user, video: video, rating: new_rating)
+      review.save(validate: false)
+    end
   end
 
   def category_name
@@ -29,15 +39,10 @@ class QueueItem < ActiveRecord::Base
   end
 =end
 
-  def update_queue
-    begin
-      update_queue_items
-      normalize_queue_item_positions
-    rescue ActiveRecord::RecordInvalid
-      flash[:error] = "Invalid Position Numbers"
-    end
+  private
+
+  def review
+    @review ||= Review.where(user_id: user.id, video_id: video.id).first
   end
-
-
 
 end
