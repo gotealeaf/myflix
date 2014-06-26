@@ -28,4 +28,16 @@ class QueueItem < ActiveRecord::Base
     video.category
   end
 =end
+
+  def update_queue
+    begin
+      update_queue_items
+      normalize_queue_item_positions
+    rescue ActiveRecord::RecordInvalid
+      flash[:error] = "Invalid Position Numbers"
+    end
+  end
+
+
+
 end
