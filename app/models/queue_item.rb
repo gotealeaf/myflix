@@ -2,9 +2,11 @@ class QueueItem < ActiveRecord::Base
   belongs_to :user
   belongs_to :video
 
-  # rails methods instead of writing methods commented out below
+  # rails delegate methods instead of writing method examples commented out below
   delegate :category, to: :video
   delegate :title, to: :video, prefix: :video
+
+  validates :position, numericality: { only_integer: true }
 
 =begin
   def video_title
