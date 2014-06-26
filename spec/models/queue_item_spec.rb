@@ -6,6 +6,7 @@ describe QueueItem do
   it { should belong_to(:video) }
   it { should validate_presence_of(:video) }
   it { should validate_presence_of(:user) }
+  it { should validate_numericality_of(:position).only_integer }
 
   describe 'video_title' do
     it 'returns the title of the video' do

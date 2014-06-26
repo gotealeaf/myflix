@@ -93,6 +93,13 @@ describe QueueItemsController do
         delete :destroy, id: qitem.id
         expect(joker.queue_items.count).to eq(1)
       end
+      it "should renormalize remaining queue item positions" do
+        item1 = Fabricate(:queue_item, user: user, position: 1)
+        item2 = Fabricate(:queue_item, user: user, position: 2)
+        delete :destroy, id: item1.id
+        item2.reload
+        expect(item2.position).to eq(1)
+      end
     end
     
     describe "PUT update" do
@@ -107,18 +114,19 @@ describe QueueItemsController do
       
       it "should reorder queue items based on user input" do
         post :update, items: [{id: qitem1.id, position: 3}, {id: qitem2.id, position: 1}]
-        qitem1.reload
+        qitem1.reload;qitem2.reload
         expect(qitem1.position).to eq(2)
+        expect(qitem2.position).to eq(1)
       end
-      # it "should not allow non-integer values" do
-      #   post :update, items: {"#{qitem1.id}" => {position: 1.5}, "#{qitem2.id}" => {position: 1}}
-      #   qitem1.reload
-      #   expect(qitem1.position).to eq(1)
-      # end
+      it "should have queue items sorted by position" do
+        post :update, items: [{id: qitem1.id, position: 3}, {id: qitem2.id, position: 1}]
+        expect(user.queue_items).to eq([qitem2,qitem1])
+      end
       it "should use the order numbers as relative, but assign numbers sequentially" do
         post :update, items: [{id: qitem1.id, position: 2}, {id: qitem2.id, position: 5}]
-        qitem2.reload
+        qitem1.reload;qitem2.reload
         expect(qitem2.position).to eq(2)
+        expect(qitem1.position).to eq(1)
       end
       it "should redirect to the my_queque path" do
         post :update, items: [{id: qitem1.id, position: 2}, {id: qitem2.id, position: 1}]
@@ -127,6 +135,23 @@ describe QueueItemsController do
       it "should add a flash:success message for correct values" do
         post :update, items: [{id: qitem1.id, position: 2}, {id: qitem2.id, position: 1}]
         expect(flash[:success]).not_to be_blank
+      end
+      it "should give a flash:danger with invalid input" do
+        post :update, items: [{id: qitem1.id, position: 2.5}, {id: qitem2.id, position: 5}]
+        expect(flash[:danger]).not_to be_blank
+      end
+      it "should not change queue items with invalid inputs" do
+        post :update, items: [{id: qitem1.id, position: 2.5}, {id: qitem2.id, position: 1}]
+        qitem1.reload;qitem2.reload
+        expect(qitem1.position).to eq(1)
+        expect(qitem2.position).to eq(2)
+      end
+      it "should not update the positions of other user's items" do
+        second_user = Fabricate(:user)
+        other_item = Fabricate(:queue_item, position: 2, video: video)
+        post :update, items: [{id: other_item.id, position: 1}]
+        other_item.reload
+        expect(other_item.position).to eq(2)
       end
     end
 
@@ -149,6 +174,12 @@ describe QueueItemsController do
       it "should redirect to sign_in page" do
         qitem = Fabricate(:queue_item)
         delete :destroy, id: qitem.id
+        expect(response).to redirect_to(sign_in_path)
+      end
+    end
+    describe "POST update" do
+      it "should redirect to sign_in page" do
+        post :update, items: [{id: 1, position: 1}]
         expect(response).to redirect_to(sign_in_path)
       end
     end

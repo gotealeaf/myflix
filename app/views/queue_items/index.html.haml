@@ -18,7 +18,8 @@
               - @queue_items.each do |qi|
                 %tr
                   %td
-                    = text_field_tag "items[#{qi.id}][position]", qi.position
+                    = hidden_field_tag "items[][id]", qi.id
+                    = text_field_tag "items[][position]", qi.position
                   %td
                     = link_to qi.video_title, qi.video
                   %td

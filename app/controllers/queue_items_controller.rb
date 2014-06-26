@@ -13,7 +13,7 @@ class QueueItemsController < ApplicationController
       if queue_video(@video)
         flash[:success] = "#{@video.title} was added to your queue"
       else
-        flash[:error] = "There was an error adding #{@video.title} to your queue."
+        flash[:danger] = "There was an error adding #{@video.title} to your queue."
       end
     end
     redirect_to my_queue_path
@@ -24,14 +24,19 @@ class QueueItemsController < ApplicationController
     video_title = queue_item.video.title
     if current_user.queue_items.include?(queue_item)
       queue_item.destroy
+      normalize_item_positions()
       flash[:success] = "#{video_title} was removed from your queue"
     end
     redirect_to my_queue_path
   end
   
   def update
-    @items = pull_and_sort_items(params[:items])
-    flash[:success] = "Your Queue Items have been updated." if update_sorted_items(@items)
+    @qitems = set_positions(params[:items])
+    if save_item_positions(@qitems)
+      flash[:success] = "Your Queue Items have been updated." 
+    else
+      flash[:danger] = "Invalid positions for queue items." 
+    end
     redirect_to my_queue_path
   end
 
@@ -49,26 +54,35 @@ class QueueItemsController < ApplicationController
     current_user.queue_items.map(&:video).include?(@video)
   end
   
-  def pull_and_sort_items(items_array)
-    item_objects = []
-    sorted = items_array.sort_by {|item| item['position'] }
-    sorted.each do |item|
-      item = QueueItem.find(item['id'])
-      item_objects.push(item)
+  def set_positions(form_item_array)
+    objects = []
+    form_item_array.each do |i| 
+      qi = QueueItem.find(i['id'])
+      qi.position = i['position']
+      objects.push(qi)
     end
-    return item_objects
+    return objects
+  end
+
+  def save_item_positions(object_array)
+    successful = true
+    begin
+      ActiveRecord::Base.transaction do
+        object_array.each do |item|
+          item.save! if item.user == current_user
+        end
+      end
+      normalize_item_positions()
+    rescue ActiveRecord::RecordInvalid
+      successful = false
+    end
+    return successful
   end
   
-  def update_sorted_items(item_objects)
-    item_objects.each_with_index do |item,index|
-      item.position = index + 1
+  def normalize_item_positions
+    current_user.queue_items.each_with_index do |item,index|
+      item.update_attribute(:position, index + 1)
     end
-    QueueItem.transaction do
-      item_objects.each do |item|
-        item.save!
-      end
-    end
-    return true
   end
   
 end
