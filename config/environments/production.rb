@@ -29,5 +29,5 @@ Myflix::Application.configure do
 
   ActionMailer::Base.delivery_method = :smtp
   
-  # config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  config.action_mailer.default_url_options = { host: 'http://myflix-unai.herokuapp.com/' }
 end
