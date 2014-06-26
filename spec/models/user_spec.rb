@@ -1,9 +1,10 @@
 require 'rails_helper.rb'
 
 describe User do
-  it { should validate_presence_of(:email)}
-  it { should validate_presence_of(:password)}
-  it { should validate_presence_of(:full_name)}
+  it { should validate_presence_of(:email) }
+  it { should validate_presence_of(:password) }
+  it { should validate_presence_of(:full_name) }
+  it { should have_many(:queue_items).order(:position) }
 
   it "password must be greater than five characters" do
     u = User.create(email: "joshleeman@gmail.com", password: "abc", full_name: "Josh Leeman")
