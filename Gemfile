@@ -45,3 +45,4 @@ gem 'thread_safe', '0.2.0'
 gem 'sidekiq'
 gem 'unicorn'
 gem "sentry-raven"
+gem 'paratrooper'
