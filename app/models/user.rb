@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-
+include Sluggable
 has_secure_password validations: false
 
 has_many :reviews, -> {order('created_at DESC')}
@@ -12,6 +12,8 @@ has_many :following_relationships, class_name: "Relationship", foreign_key: :fol
 has_many :leading_relationships, class_name: "Relationship", foreign_key: :leader_id
 
 before_create :generate_token
+
+sluggable_column :full_name
 
   def normalize_queue_item_positions
    queue_items.each_with_index do |queue_item, index|
@@ -38,5 +40,7 @@ before_create :generate_token
   def generate_token
     self.token = SecureRandom.urlsafe_base64
   end
+
+  
 
 end
