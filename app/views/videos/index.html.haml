@@ -2,5 +2,5 @@
   - if !cat.videos.empty?
     %article.video_category
       %header
-        %h3= link_to cat.name, category_path(cat)
+        %h3= link_to cat.name, category_path(cat.slug)
       = render 'videos', cat: cat
