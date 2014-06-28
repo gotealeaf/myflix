@@ -26,7 +26,7 @@ feature " user follows another user" do
 
     expect(page).not_to have_content(gopal.full_name)
 
-    visit "/users/#{gopal.id}"
+    visit "/users/#{gopal.slug}"
     expect(page).to have_link("Follow")
 
 

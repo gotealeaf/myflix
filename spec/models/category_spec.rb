@@ -57,7 +57,9 @@ describe Category do
 
     it "should return the most recent 6 videos" do
       cat = Category.create(name: "comedy")
-      6.times {Video.create(title: "foo", description: "bar", category: cat)}
+      #6.times {Video.create(title: "foo", description: "bar", category: cat)}
+      6.times { Fabricate(:video, category: cat) }
+      
       monk = Video.create(title: "monk", description: "monk description", category: cat, created_at: 1.day.ago)
       
       expect(cat.recent_videos).to_not include(monk)   

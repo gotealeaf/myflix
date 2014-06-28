@@ -5,6 +5,7 @@ has_secure_password validations: false
 has_many :reviews, -> {order('created_at DESC')}
 has_many :queue_items, -> {order(:position)}  #by default it is in ascending order
 
+
 validates_presence_of :email, :password, :full_name
 validates_uniqueness_of :email
 
@@ -12,8 +13,8 @@ has_many :following_relationships, class_name: "Relationship", foreign_key: :fol
 has_many :leading_relationships, class_name: "Relationship", foreign_key: :leader_id
 
 before_create :generate_token
-
 sluggable_column :full_name
+
 
   def normalize_queue_item_positions
    queue_items.each_with_index do |queue_item, index|

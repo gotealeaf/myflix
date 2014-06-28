@@ -82,12 +82,14 @@ describe UsersController do
 
     context "with authenticated users" do
       it_behaves_like "require_sign_in" do
-        let(:action) {get :show, id: 3}  #id: is not necessary.  This calls the shared example.
+        let(:action) {get :show, id: "slug"}  #id: is not necessary.  This calls the shared example.
       end
       it "sets @user" do
        set_current_user
        alice = Fabricate(:user)
-        get :show, id: alice.id
+        
+        get :show, id: alice.slug
+
         expect(assigns(:user)).to eq(alice)
 
 

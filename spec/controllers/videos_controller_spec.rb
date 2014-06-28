@@ -44,14 +44,14 @@ describe VideosController do
         let(:video) {Fabricate(:video)}
         it 'sets @video variable for a requested video' do
           
-          get :show, id: video.id
+          get :show, id: video.slug
 
           expect(assigns(:video)).to eq video
         end
         
         it " renders show template" do  #essentially testing rails convention and not our code
           
-          get :show, id: video.id
+          get :show, id: video.slug
           
           expect(response).to render_template :show
         end
@@ -59,7 +59,7 @@ describe VideosController do
         it "sets @reviews  variable for the video" do
           review1 = Fabricate(:review, video: video)
           review2 = Fabricate(:review, video: video)
-          get :show, id: video.id
+          get :show, id: video.slug
           expect(assigns(:reviews)).to match_array([review1, review2])
           # assigns(:reviews).should =~ [review1, review2]   <<-- this syntax can be used as well
         end
@@ -69,7 +69,7 @@ describe VideosController do
           review2 = Fabricate(:review, video: video)
           
 
-          get :show, id: video.id
+          get :show, id: video.slug
           expect(assigns(:reviews)).to start_with review2
                   
           
@@ -77,7 +77,7 @@ describe VideosController do
 
         it "sets @review for the review form" do
           
-          get :show, id: video.id
+          get :show, id: video.slug
           expect(assigns(:review)).to be_an_instance_of(Review)
         end
       end #end context

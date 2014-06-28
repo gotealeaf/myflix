@@ -20,5 +20,5 @@ def remove_current_user
 end
 
 def find_and_click_video_on_home_page(video)
-  find("a [href= '/videos/#{video.id}']").click
+  find("a [href= '/videos/#{video.slug}']").click
 end
