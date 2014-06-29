@@ -16,3 +16,6 @@
 
 # Ignore application configuration
 /config/application.yml
+
+#ignore local env file
+/config/local_env.yml
