@@ -10,8 +10,6 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'bcrypt'
 gem 'bootstrap_form'
-gem 'fabrication'
-gem 'faker'
 
 group :development do
   gem 'sqlite3'
@@ -24,11 +22,15 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
+  gem 'fabrication'
+  gem 'faker'
 end
 
 group :test do
   gem 'shoulda-matchers'
   gem 'database_cleaner', '1.2.0'
+  gem 'capybara'
+  gem 'launchy'
 end
 
 group :production do

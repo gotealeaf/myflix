@@ -3,6 +3,7 @@ require "rails_helper"
 describe QueueItem do
   it { should belong_to(:user) }
   it { should belong_to(:video) }
+  it { should validate_numericality_of(:position).only_integer }
 
   describe "QueueItem #video_title" do
     it "returns the title of the associated video" do
@@ -28,6 +29,40 @@ describe QueueItem do
       queue_item = Fabricate(:queue_item, user: user, video: video)
 
       expect(queue_item.rating).to eq(nil)
+    end
+  end
+
+  describe "QueueItem #rating=" do
+    it "changes the rating of the review if the review is present" do
+      video = Fabricate(:video)
+      user = Fabricate(:user)
+      review = Fabricate(:review, user: user, video: video, rating: 1)
+      queue_item = Fabricate(:queue_item, user: user, video: video)
+
+      queue_item.rating = 5
+
+      expect(Review.first.rating).to eq(5)
+    end
+
+    it "clears the rating of the review if the review is present" do
+      video = Fabricate(:video)
+      user = Fabricate(:user)
+      review = Fabricate(:review, user: user, video: video, rating: 1)
+      queue_item = Fabricate(:queue_item, user: user, video: video)
+
+      queue_item.rating = nil
+
+      expect(Review.first.rating).to be_nil
+    end
+
+    it "creates a review with the given rating if the review is not present" do
+      video = Fabricate(:video)
+      user = Fabricate(:user)
+      queue_item = Fabricate(:queue_item, user: user, video: video)
+
+      queue_item.rating = 5
+
+      expect(Review.first.rating).to eq(5)
     end
   end
 
