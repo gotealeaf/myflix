@@ -9,4 +9,8 @@ class Video < ActiveRecord::Base
   def self.search_by_name(name)
     where("name ILIKE ?", "%#{name}%")
   end
+
+  def avg_rating
+    "no ratings yet"
+  end
 end
