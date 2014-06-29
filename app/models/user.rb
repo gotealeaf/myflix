@@ -4,4 +4,6 @@ class User < ActiveRecord::Base
   validates_presence_of :username, :full_name, :email, :password, :password_confirmation
   validates_uniqueness_of :email, :username
 
+  has_many :reviews
+
 end
