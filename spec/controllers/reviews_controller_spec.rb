@@ -3,10 +3,15 @@ require 'rails_helper'
 describe ReviewsController do
   describe "POST create" do
     let(:video) { Fabricate(:video) }
-    context "authenticated users" do
 
-      let(:current_user) { Fabricate(:user) }
-      before { session[:user_id] = current_user.id }
+    it_behaves_like "requires sign in" do
+      let(:action) do
+        post :create, review: Fabricate.attributes_for(:review), video_id: video.id
+      end
+    end
+
+    context "authenticated users" do
+      before { set_current_user }
 
       context "with valid inputs" do
         before do
@@ -51,12 +56,6 @@ describe ReviewsController do
           post :create, review: {rating: 4}, video_id: video.id
           expect(assigns(:reviews)).to match_array([review])
         end
-      end
-    end
-    context "unauthenticated users" do
-      it "redirects to sign in path" do
-        post :create, review: Fabricate.attributes_for(:review), video_id: video.id
-        expect(response).to redirect_to sign_in_path
       end
     end
   end
