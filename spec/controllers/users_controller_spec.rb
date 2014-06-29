@@ -26,7 +26,7 @@ describe UsersController do
         expect(flash[:success]).to eq("Welcome Dito Hartoto!")
       end
       it 'assigns session[:user]' do
-        expect(session[:user]).to eq('dhartoto')
+        expect(session[:username]).to eq('dhartoto')
       end
       it 'redirects to video_path' do
         expect(response).to redirect_to videos_path
