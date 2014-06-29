@@ -15,11 +15,10 @@ feature "User signs in" do
   end 
 
   scenario "from the sign in page" do
-    visit sign_in_path
-    find(".sign_in").fill_in "email", with: "cullenjett@gmail.com"
-    find(".sign_in").fill_in "password", with: "password"
-    find(".sign_in").click_button "Sign In"
+    alice = Fabricate(:user)
 
-    expect(page).to have_content "Cullen Jett"
+    sign_in(alice)
+
+    expect(page).to have_content alice.name
   end 
 end #User signs in
