@@ -7,11 +7,14 @@ class VideosController < ApplicationController
     @genres = Genre.all
   end
 
+  def show
+  end
+
   def new
     @video = Video.new
   end
 
-  def edit
+  def create
     @video = Video.new(video_params)
     # To do: Associate genre
     if @video.save
@@ -23,7 +26,7 @@ class VideosController < ApplicationController
   end
 
   def search
-    @results = Video.search_by_name(params[:name])
+    @results = Video.search_by_name(params[:search_name])
   end
 
   private
