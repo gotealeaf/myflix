@@ -95,6 +95,7 @@ Video.create(
   category: drama)
 
 cullen = User.create(name: "Cullen Jett", email: "cullenjett@gmail.com", password: "password")
+taren = User.create(name: "Taren Cunningham", email: "tarencunningham@live.com", password: "password")
 
 Review.create(
   user: cullen, 
@@ -107,3 +108,5 @@ Review.create(
   video: revolution, 
   rating: 1, 
   content: "I've changed my mind. Turn the power back on!")
+
+Relationship.create(follower_id: cullen.id, leader_id: taren.id)
