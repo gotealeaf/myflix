@@ -29,19 +29,19 @@ describe Video do
       expect(Video.search_by_name('term')).to eq([video_1, video_2])
     end
   end
-  
+
   context '#avg_rating' do
-    before do
-      @user = Fabricate(:user)
-      @video = Fabricate(:video)
+    let(:user) { Fabricate(:user) }
+    let(:video) { Fabricate(:video) }
+
+    it "returns 'no ratings available' when there are no ratings" do
+      expect(video.avg_rating).to eq('no ratings available')
     end
-    it "returns 'no ratings yet' when there are no ratings" do
-      expect(@video.avg_rating).to eq('no ratings yet')
-    end
-    it "returns the average rating for a specific video" do
-      review_1 = Fabricate(:review, user: @user, video: @video)
-      review_2 = Fabricate(:review, user: @user, video: @video)
-      expect(@video.avg_rating).to eq(((review_1.rating+review_2.rating)/2).to_f)
+    it "returns the average rating for the selected video" do
+      review_1 = Fabricate(:review, user: user, video: video)
+      review_2 = Fabricate(:review, user: user, video: video)
+      average = Review.where(video: video).average(:rating).to_s
+      expect(video.avg_rating).to eq(average)
     end
   end
 end
