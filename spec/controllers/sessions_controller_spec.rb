@@ -9,7 +9,7 @@ describe SessionsController do
     end
 
     it "redirects to homepage for authenticated users" do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       get :new
       expect(response).to redirect_to home_path
     end
@@ -59,16 +59,18 @@ describe SessionsController do
 
   describe "GET destroy" do
     before do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       get :destroy
     end
 
     it "sets session to nil" do
       expect(session[:user_id]).to be_nil
     end
+
     it "sets notice message" do
       expect(flash[:notice]).not_to be_blank
     end
+    
     it "redirects to root_path" do
       expect(response).to redirect_to root_path
     end

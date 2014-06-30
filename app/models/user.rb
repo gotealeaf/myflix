@@ -11,4 +11,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def queued_video?(video)
+    queue_items.map(&:video).include?(video)
+  # passes tests, but didn't work on UI because not looking up in specific user's queue_items
+  # QueueItem.exists?(video)
+  end
+
 end
