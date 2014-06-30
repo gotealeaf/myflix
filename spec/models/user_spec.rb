@@ -16,4 +16,19 @@ describe User do
     u2 = User.create(email: "joshleeman@gmail.com", password: "abcdef", full_name: "Josh Leeman")
     expect(User.count).to eq(1)
   end
+
+  describe "#queued_video?" do
+    it "returns true when the user has queued the video" do
+      john = Fabricate(:user)
+      video = Fabricate(:video)
+      queue_item = Fabricate(:queue_item)
+      expect(john.queued_video?(video)).to eq(true)
+    end
+    
+    it "returns false when the user has not queued the video" do
+      john = Fabricate(:user)
+      video = Fabricate(:video)
+      expect(john.queued_video?(video)).to eq(false)
+    end
+  end
 end
