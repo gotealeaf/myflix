@@ -11,6 +11,13 @@ class Video < ActiveRecord::Base
   end
 
   def avg_rating
-    "no ratings yet"
+    !!avg ? avg.to_s : "no ratings available"
   end
+
+  private
+
+  def avg
+    Review.where(video_id: id).average(:rating)
+  end
+
 end
