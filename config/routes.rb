@@ -15,7 +15,7 @@ Myflix::Application.routes.draw do
   resources :users, only: [:create, :show]
   get '/register', to: 'users#new', as: 'register'
 
-  resources :relationships, only: [:destroy]
+  resources :relationships, only: [:create, :destroy]
   get '/people', to: 'relationships#index'
 
   resources :queue_items, only: [:create, :destroy]
