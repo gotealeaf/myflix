@@ -22,4 +22,8 @@ class User < ActiveRecord::Base
   # QueueItem.exists?(video)
   end
 
+  def following?(leader, follower)
+    Relationship.exists?(leader_id: leader.id, follower_id: follower.id)
+  end
+
 end
