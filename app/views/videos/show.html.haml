@@ -6,7 +6,7 @@
       .video_info.col-sm-3
         %header
           %h3= @video.name.titleize
-          %span= "Rating: @review.class.average(:rating)/5.0"
+          %span= "Rating: #{ @video.avg_rating }/5.0"
         %p= @video.description
         .actions
           %button.btn.btn-primary= link_to "Watch Now"
@@ -31,9 +31,9 @@
           = f.submit 'Submit', class: 'btn'
           = link_to 'Cancel', ''
         %header
-          %h3= "User Reviews (#{@review.class.count})"
+          %h3= "User Reviews (#{@reviews.count})"
         %ul
-          - @review.class.all.each do |review|
+          - @reviews.each do |review|
             %article.review
               %li.row
                 .col-sm-2
