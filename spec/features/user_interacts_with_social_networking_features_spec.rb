@@ -2,39 +2,24 @@ require 'rails_helper.rb'
 
 feature "user interacts with social networking features" do
   scenario "user follows another user" do
-    joe = Fabricate(:user)
     bob = Fabricate(:user)
     category = Fabricate(:category)
     video = Fabricate(:video, category: category)
     review = Fabricate(:review, user: bob, video: video, rating: 4)
 
-    sign_in(joe)
+    sign_in
+    click_on_video_on_home_page(video)
 
-    visit_video_via_homepage(video)
-    expect_another_user_review_on_video_page(bob)
+    click_link bob.full_name
+    click_link "Follow"
+    expect(page).to have_content(bob.full_name)
 
-    follow
-    expect_leader_on_people_page(bob)
+    unfollow(bob)
+    expect(page).not_to have_content(bob.full_name)
 
   end
 
-  def visit_video_via_homepage(video)
-    visit home_path
-    find("a[href='/videos/#{video.id}']").click
+  def unfollow(user)
+    find("a[data-method='delete']").click
   end
-
-  def expect_another_user_review_on_video_page(another_user)
-    expect(page).to have_content another_user.full_name
-  end
-
-  def follow
-    click_link 'Follow'
-  end
-
-  def expect_leader_on_people_page(another_user)
-    visit people_path
-    expect(page).to have_content another_user.full_name
-  end
-
-
 end
