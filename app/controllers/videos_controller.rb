@@ -8,6 +8,8 @@ class VideosController < ApplicationController
   end
 
   def show
+    @review = Review.new
+    @reviews = @video.reviews
   end
 
   def new

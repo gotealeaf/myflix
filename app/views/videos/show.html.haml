@@ -6,8 +6,38 @@
       .video_info.col-sm-3
         %header
           %h3= @video.name.titleize
-          %span Rating: 4.5/5.0
+          %span= "Rating: #{ @video.avg_rating }/5.0"
         %p= @video.description
         .actions
           %button.btn.btn-primary= link_to "Watch Now"
           %button.btn.btn-default= link_to "+ My Queue"
+
+%section.reviews.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = form_for [@video, @review] do |f|
+        %fieldset
+          .form-group
+            = f.label 'Rate this Video'
+            .row
+              .col-sm-3
+                = f.select :rating, [['5 Stars', 5], ['4 Stars', 4], ['3 Stars', 3], ['2 Stars', 2], ['1 Star', 1]], {}, {class: 'form-control'}
+          .form-group
+            = f.label 'Write Review'
+            .row
+              .col-sm-8
+                = f.text_area :review, class: 'form-control', rows: 6
+        %fieldset.form-group.actions.clearfix
+          = f.submit 'Submit', class: 'btn'
+          = link_to 'Cancel', ''
+        %header
+          %h3= "User Reviews (#{@reviews.count})"
+        %ul
+          - @reviews.each do |review|
+            %article.review
+              %li.row
+                .col-sm-2
+                  %span= "Rating: #{review.rating}/5"
+                  %p= "by #{ review.user.full_name }"
+                .col-sm-8
+                  %p= review.review

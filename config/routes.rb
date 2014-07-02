@@ -2,6 +2,7 @@ Myflix::Application.routes.draw do
   root to: 'pages#front'
   resources :videos do
     get :search, to: 'videos#search', on: :collection
+    resources :reviews, only: [:create]
   end
 
   resources :genres, except: :index

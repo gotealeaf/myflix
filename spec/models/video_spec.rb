@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe Video do
+  it { should have_many(:reviews).order(created_at: :desc) }
   it { should belong_to(:genre) }
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:description) }
@@ -26,6 +27,21 @@ describe Video do
       video_1 = Video.create(name: 'terminator', description: 'robots and armegaddon')
       video_2 = Video.create(name: 'terminator 2', description: 'more robots and armegaddon')
       expect(Video.search_by_name('term')).to eq([video_1, video_2])
+    end
+  end
+
+  context '#avg_rating' do
+    let(:user) { Fabricate(:user) }
+    let(:video) { Fabricate(:video) }
+
+    it "returns 'no ratings available' when there are no ratings" do
+      expect(video.avg_rating).to eq('no ratings available')
+    end
+    it "returns the average rating for the selected video" do
+      review_1 = Fabricate(:review, user: user, video: video)
+      review_2 = Fabricate(:review, user: user, video: video)
+      average = Review.where(video: video).average(:rating).to_s
+      expect(video.avg_rating).to eq(average)
     end
   end
 end
