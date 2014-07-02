@@ -22,8 +22,14 @@ class User < ActiveRecord::Base
   # QueueItem.exists?(video)
   end
 
-  def following?(leader, follower)
-    Relationship.exists?(leader_id: leader.id, follower_id: follower.id)
+  def follows?(another_user)
+    following_relationships.map(&:leader).include?(another_user)
+    # original idea for this passing in leader/follower instead of another_user
+    # Relationship.exists?(leader_id: leader.id, follower_id: follower.id)
+  end
+
+  def can_follow?(another_user)
+    !(self.follows?(another_user) || self == another_user)
   end
 
 end
