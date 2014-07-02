@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      AppMailer.send_welcome_email(@user).deliver
       session[:user_id] = @user.id
       flash[:notice] = "Welcome, #{@user.full_name}! You have successfully registered."
       redirect_to videos_path
