@@ -14,23 +14,18 @@
               %th(width="15%") Genre
               %th(width="15%") Remove
           %tbody
-            - @queue_videos.each do |video|
+            - @queue_videos.each do |queue|
               %tr
                 %td
-                  %input.form-control(type="text" value="1")
+                  = queue.position
                 %td
-                  = link_to "Futurama"
+                  = link_to queue.video_name.titleize, video_path(queue.video)
                 %td
                   = button_to "Play", nil, class: "btn btn-default"
                 %td
-                  %select.form-group(name="")
-                    %option(value="5") 5 Stars
-                    %option(value="4") 4 Stars
-                    %option(value="3") 3 Stars
-                    %option(value="2") 2 Stars
-                    %option(value="1") 1 Star
+                  = queue.rating
                 %td
-                  = link_to "TV Shows"
+                  = link_to queue.genre_name.titleize, genre_path(queue.video.genre)
                 %td
                   = link_to "", method: :post do
                     %i.glyphicon.glyphicon-remove
