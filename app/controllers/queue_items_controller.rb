@@ -88,7 +88,7 @@ class QueueItemsController < ApplicationController
   
   def update_queue_items
     ActiveRecord::Base.transaction do
-      params[:queue_items].each do |qi_data|
+      params[:items].each do |qi_data|
         qi = QueueItem.find(qi_data['id'])
         qi.update_attributes!(position: qi_data['position']) if qi.user == current_user
       end
