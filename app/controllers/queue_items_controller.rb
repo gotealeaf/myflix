@@ -29,7 +29,7 @@ class QueueItemsController < ApplicationController
     end
     redirect_to my_queue_path
   end
-  
+
   def update
     begin
       update_queue_items
@@ -38,12 +38,6 @@ class QueueItemsController < ApplicationController
     rescue
       flash[:danger] = "Invalid positions for queue items."
     end
-    # @qitems = set_positions(params[:items])
-    # if save_item_positions(@qitems)
-    #   flash[:success] = "Your Queue Items have been updated."
-    # else
-    #   flash[:danger] = "Invalid positions for queue items."
-    # end
     redirect_to my_queue_path
   end
 
@@ -60,32 +54,7 @@ class QueueItemsController < ApplicationController
   def current_user_queue_video?(video)
     current_user.queue_items.map(&:video).include?(@video)
   end
-  
-  # def set_positions(form_item_array)
-  #   objects = []
-  #   form_item_array.each do |i|
-  #     qi = QueueItem.find(i['id'])
-  #     qi.position = i['position']
-  #     objects.push(qi)
-  #   end
-  #   return objects
-  # end
-  #
-  # def save_item_positions(object_array)
-  #   successful = true
-  #   begin
-  #     ActiveRecord::Base.transaction do
-  #       object_array.each do |item|
-  #         item.save! if item.user == current_user
-  #       end
-  #     end
-  #     normalize_item_positions()
-  #   rescue ActiveRecord::RecordInvalid
-  #     successful = false
-  #   end
-  #   return successful
-  # end
-  
+
   def update_queue_items
     ActiveRecord::Base.transaction do
       params[:items].each do |qi_data|
@@ -94,11 +63,5 @@ class QueueItemsController < ApplicationController
       end
     end
   end
-  
-  # def normalize_item_positions
-  #   current_user.queue_items.each_with_index do |item,index|
-  #     item.update_attribute(:position, index + 1)
-  #   end
-  # end
   
 end
