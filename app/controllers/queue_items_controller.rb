@@ -25,14 +25,13 @@ class QueueItemsController < ApplicationController
     if current_user.queue_items.include?(queue_item)
       queue_item.destroy
       current_user.normalize_queue_positions()
-      flash[:success] = "#{video_title} was removed from your queue"
+      flash[:success] = "#{video_title} was removed from your queue"w
     end
     redirect_to my_queue_path
   end
 
   def update_queue
     begin
-      # binding.pry
       update_queue_items
       current_user.normalize_queue_positions
       flash[:success] = "Your Queue Items have been updated."
