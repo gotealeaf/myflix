@@ -13,6 +13,12 @@ class User < ActiveRecord::Base
     generate_token(:auth_token)
     save(validate:false)
   end
+  
+  def normalize_queue_positions
+    queue_items.each_with_index do |item,index|
+      item.update_attribute(:position, index + 1)
+    end
+  end
 
 
   private
