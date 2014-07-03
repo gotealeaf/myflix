@@ -30,8 +30,9 @@ class QueueItemsController < ApplicationController
     redirect_to my_queue_path
   end
 
-  def update
+  def update_queue
     begin
+      # binding.pry
       update_queue_items
       current_user.normalize_queue_positions
       flash[:success] = "Your Queue Items have been updated."
@@ -60,6 +61,14 @@ class QueueItemsController < ApplicationController
       params[:items].each do |qi_data|
         qi = QueueItem.find(qi_data['id'])
         qi.update_attributes!(position: qi_data['position']) if qi.user == current_user
+        if !qi_data['rating'].blank? && current_user == qi.user
+          review = current_user.reviews.where(video:qi.video).first
+          if review
+            review.update_attributes!(rating: qi_data['rating'])
+          else
+            current_user.reviews.create!(video:qi.video,rating:qi_data['rating'])
+          end
+        end
       end
     end
   end

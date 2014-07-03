@@ -3,7 +3,7 @@ class ReviewsController < ApplicationController
   before_filter :find_video
 
   def create
-    @review = @video.reviews.build(review_params.merge!({user: current_user}))
+    @review = @video.reviews.build(review_params.merge!({user: current_user,complete_review:true}))
     if @review.save
       flash[:success] = "Thanks for reviewing this video!"
       redirect_to video_path(@video)

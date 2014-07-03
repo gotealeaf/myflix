@@ -25,12 +25,7 @@
                   %td
                     = button_to "Play", nil, class: "btn btn-default"
                   %td
-                    %select.form-group(name="")
-                      %option(value="5") 5 Stars
-                      %option(value="4") 4 Stars
-                      %option(value="3") 3 Stars
-                      %option(value="2") 2 Stars
-                      %option(value="1") 1 Star
+                    = select_tag "items[][rating]", options_for_select([nil,1,2,3,4,5].map{|i| i.nil? ? ['',''] : [ pluralize(i,'Star'),i]}, qi.rating)
                   %td
                     = link_to qi.category_name, qi.category
                   %td
