@@ -25,7 +25,7 @@ class QueueItemsController < ApplicationController
     if current_user.queue_items.include?(queue_item)
       queue_item.destroy
       current_user.normalize_queue_positions()
-      flash[:success] = "#{video_title} was removed from your queue"w
+      flash[:success] = "#{video_title} was removed from your queue"
     end
     redirect_to my_queue_path
   end
