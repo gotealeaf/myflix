@@ -18,7 +18,7 @@
     .col-sm-10.col-sm-offset-1
       = bootstrap_form_for [@video, Review.new] do |f|
         %fieldset
-          = f.select :rating, options_for_select([1,2,3,4,5].map{|i| [pluralize(i,'Star'),i]}), label: 'Rate this video'
+          = f.select :rating, options_for_video_rating(), label: 'Rate this video'
           = f.text_area :content, label: 'Write Review', rows: 6
         %fieldset.form-group.actions.clearfix
           = f.submit

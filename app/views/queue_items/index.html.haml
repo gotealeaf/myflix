@@ -25,7 +25,7 @@
                   %td
                     = button_to "Play", nil, class: "btn btn-default"
                   %td
-                    = select_tag "items[][rating]", options_for_select([nil,1,2,3,4,5].map{|i| i.nil? ? ['',''] : [ pluralize(i,'Star'),i]}, qi.rating)
+                    = select_tag "items[][rating]", options_for_video_rating(qi.rating), include_blank: true
                   %td
                     = link_to qi.category_name, qi.category
                   %td

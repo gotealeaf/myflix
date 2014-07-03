@@ -4,9 +4,7 @@ class Review < ActiveRecord::Base
 
   validates :rating, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 5  }
   validates_presence_of :video, :user
-  validates_presence_of :content, if: Proc.new { |r| r.complete_review == true }
-
-  attr_accessor :complete_review
+  validates_presence_of :content
 
   default_scope { order("created_at DESC") }
 

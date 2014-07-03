@@ -60,15 +60,7 @@ class QueueItemsController < ApplicationController
     ActiveRecord::Base.transaction do
       params[:items].each do |qi_data|
         qi = QueueItem.find(qi_data['id'])
-        qi.update_attributes!(position: qi_data['position']) if qi.user == current_user
-        if !qi_data['rating'].blank? && current_user == qi.user
-          review = current_user.reviews.where(video:qi.video).first
-          if review
-            review.update_attributes!(rating: qi_data['rating'])
-          else
-            current_user.reviews.create!(video:qi.video,rating:qi_data['rating'])
-          end
-        end
+        qi.update_attributes!(position: qi_data['position'], rating: qi_data['rating']) if qi.user == current_user
       end
     end
   end
