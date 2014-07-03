@@ -1,13 +1,31 @@
-- @categories.each do |category|
-  %header
-    %h3#category-header= link_to category.name, category_path(category)
-    %hr
-  %article.video_category
-    .videos.row
-      - category.recent_videos.each do |video|
-        .video.col-sm-2
-          = link_to video_path(video) do
-            .crop  
-              %img(src="#{video.small_cover_url}" class="img-responsive")
+.container-fluid  
+  - @categories.each do |category|
+    %header
+      %h3.category-header= link_to category.name, category_path(category)
+      %hr
+    %article.video_category
+      .videos.row
+        - category.recent_videos.each do |video|
+          .video.col-md-2.col-sm-4.col-xs-6
+            = link_to video_path(video) do
+              %img.img-responsive(src="#{video.small_cover_url}")
+
+
+
+
+/*** CUSTOM LAYOUT ***\
+
+/ .container-fluid
+/   - @categories.each do |category|
+/     .box  
+/       %header
+/         %h1.category-header
+/           = link_to category.name, category_path(category)
+/       %article.video_category  
+/         .videos.row
+/           - category.recent_videos.each do |video|
+/             .video.col-md-2.col-sm-4.col-xs-6
+/               = link_to video_path(video) do
+/                 %img.img-responsive(src="#{video.small_cover_url}")  
 
 

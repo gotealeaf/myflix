@@ -9,5 +9,7 @@ Current features include:
 * User authentication built from scratch
 * Users can comment and leave reviews on individual videos
 * "My Queue" function so users can store videos in a personal queue
+* Follow other users and see their video reviews and queue
+* Welcome emails to new users
 * More to come...
 

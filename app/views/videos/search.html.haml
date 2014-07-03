@@ -1,16 +1,19 @@
-%section.genre
-  %header.clearfix
-    %h1= "Results for <em>\"#{params[:search_term]}\"</em>".html_safe
-    .genre_sorting
-      Sort by:
-      %select(name="")
-        %option(value="a-z") Title: A - Z
-        %option(value="z-a") Title: Z - A
-        %option(value="rating") Rating
-  %article.video_category
-    .videos.row
-      - @search_results.each do |video|
-        .video.col-sm-2
-          = link_to video_path(video) do
-            .crop  
-              %img(src="#{video.small_cover_url}" class="img-responsive")
+.container-fluid
+  %section.genre
+    %header.clearfix
+      %h1= "Results for <em>\"#{params[:search_term]}\"</em>".html_safe
+      .genre_sorting
+        Sort by:
+        %select(name="")
+          %option(value="a-z") Title: A - Z
+          %option(value="z-a") Title: Z - A
+          %option(value="rating") Rating
+    %hr
+    
+    %article.video_category
+      .videos.row
+        - @search_results.each do |video|
+          .video.col-md-2.col-sm-4.col-xs-6
+            = link_to video_path(video) do
+              %img.img-responsive(src="#{video.small_cover_url}")
+
