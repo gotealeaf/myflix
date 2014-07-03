@@ -10,7 +10,10 @@ section.site_title
     font-size: 18px
     margin-bottom: 20px
 
-section.register, section.sign_in, section.reset_password
+section.register, 
+section.sign_in, 
+section.reset_password, 
+section.forgot_password
   form
     background: #f7f7f7
     padding: 10px 30px 30px 30px
@@ -27,6 +30,8 @@ section.register, section.sign_in, section.reset_password
         margin-right: -30px
         margin-top: -10px
         margin-bottom: 30px
+  p
+    padding: 2px 0
 
 section.register
   form
@@ -36,23 +41,45 @@ section.register
       select#date_month
         margin-right: 25px
 
-section.forgot_password
+// section.forgot_password
+//   background: #f7f7f7
+//   padding: 30px
+//   form
+//     header
+//       h1
+//         font-size: 24px
+//       p
+//         margin-bottom: 20px
+
+// section.confirm_password_reset, 
+section.invalid_token, 
   background: #f7f7f7
   padding: 30px
   form
     header
       h1
         font-size: 24px
+        margin-bottom: 20px
       p
         margin-bottom: 20px
 
-section.confirm_password_reset, section.invalid_token, section.reset_password
-  background: #f7f7f7
-  padding: 30px
-  form
-    header
-      h1
-        font-size: 24px
-        margin-bottom: 20px
-      p
-        margin-bottom: 20px
+section.confirm_password_reset
+  .confirm-box  
+    background: #f7f7f7
+    padding: 10px 30px 30px 30px
+    border: 1px solid #d6d6d6
+
+  header
+    h1
+      color: #eaeaea
+      font-size: 24px
+      margin-bottom: 15px
+      background: #3d3d3d
+      border: 1px solid #6d6d6d
+      padding: 10px
+      margin-left: -30px
+      margin-right: -30px
+      margin-top: -10px
+      margin-bottom: 30px
+  p
+    padding: 2px 0
