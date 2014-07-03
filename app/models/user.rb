@@ -6,4 +6,14 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
 
   has_secure_password validations: false
+
+  def set_queue_position
+    queue_items.count + 1
+  end
+
+  def normalize_position
+    queue_items.each_with_index do |item, index|
+      item.update_attributes(position: index + 1)
+    end 
+  end
 end
