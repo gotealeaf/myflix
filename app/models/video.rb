@@ -1,5 +1,6 @@
 class Video < ActiveRecord::Base
   belongs_to :genre
+  has_many :queue_videos
   has_many :reviews, -> { order(created_at: :desc) }
 
   validates_presence_of :name, :description
