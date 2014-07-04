@@ -1,4 +1,4 @@
 Fabricator(:review) do
   body { Faker::Lorem.words(10).join(" ") }
-  rating { rand(1..5) }
+  rating { rand(1..5).to_f }
 end

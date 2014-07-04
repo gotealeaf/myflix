@@ -33,7 +33,8 @@ class QueueItemsController < ApplicationController
       current_user.normalize_position
     rescue ActiveRecord::RecordInvalid
       flash[:error] = "Invalid input to update queue position."
-    end  
+    end
+
     redirect_to my_queue_path  
   end
 
@@ -43,7 +44,7 @@ class QueueItemsController < ApplicationController
     ActiveRecord::Base.transaction do
       params[:queue_items].each do |data|
         queue_item = QueueItem.find(data[:id])
-        queue_item.update_attributes!(position: data[:position]) if queue_item.user == current_user
+        queue_item.update_attributes!(position: data[:position], rating: data[:rating]) if queue_item.user == current_user
       end
     end
   end

@@ -8,17 +8,27 @@ class QueueItem < ActiveRecord::Base
   delegate :category, to: :video
   delegate :title, to: :video, prefix: :video
 
-  def video_rating
-    video_review = video.reviews.where(user = user)
+  def rating
+    review.rating if review
+  end
 
-    return "not rated" if video_review.empty?
-  
-    video_review.each do |review|
-      return review.rating
+  def rating=(new_rating)
+    if review
+      review.update_attribute(:rating, new_rating)
+    else 
+      Review.new(user_id: user.id, video_id: video.id, rating: new_rating).save(validate: false)   
     end
   end
 
   def category_name
     video.category.name
   end
+
+  private
+
+  def review
+    @review ||= video.reviews.where(user = user).first
+  end
 end
+
+
