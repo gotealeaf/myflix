@@ -10,6 +10,8 @@ describe UsersController do
   end
 
   describe "POST create" do
+    let (:user) { Fabricate(:user) }
+
     context "with valid input data" do
       before do
         post :create, user: Fabricate.attributes_for(:user)
@@ -39,6 +41,26 @@ describe UsersController do
 
       it "sets new @user" do
         expect(assigns(:user)).to be_instance_of(User)
+      end
+    end
+
+    context "email sending" do
+      before do
+        post :create, user: { password: "password", full_name: "Joe Smith", email: "joesmith@gmail.com" }
+      end
+
+      it "sends out an email" do
+        expect(ActionMailer::Base.deliveries).not_to eq(nil)
+      end
+
+      it "sends out to right recipient" do
+        message = ActionMailer::Base.deliveries.last
+        expect(message.to).to eq(["joesmith@gmail.com"])
+      end
+
+      it "sends the correct content" do
+        message = ActionMailer::Base.deliveries.last
+        expect(message.body).to include("Welcome to MyFlix, Joe Smith!")
       end
     end
   end

@@ -162,7 +162,7 @@ Alternate method, note reload required because of local variables in controller 
 
       it "sets flash error message" do
         post :update_queue, queue_items: [{id: queue_item1.id, position: 3.8}, {id: queue_item2.id, position: 5}]
-        expect(flash[:error]).to be_present
+        expect(flash[:danger]).to be_present
       end
 
       it "does not update queue items" do
