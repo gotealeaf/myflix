@@ -4,7 +4,7 @@
       = link_to "MyFLiX", :root
     - if logged_in?
       %span= link_to "Videos"
-      %span= link_to "My Queue"
+      %span= link_to "My Queue", my_queue_path
       %span= link_to "People"
       = form_tag search_videos_path, class: "col-md-5 navbar-form", method: 'get' do
         .form-group
