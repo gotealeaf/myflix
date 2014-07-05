@@ -14,15 +14,15 @@ class QueueVideosController < ApplicationController
   end
 
   def destroy
-    @queue_video.destroy if video_present?
+    @queue_video = QueueVideo.find_by(user: current_user, id: params[:id])
+    @queue_video.destroy if video_present
     redirect_to my_queue_path
   end
 
   private
 
-  def video_present?
-    @queue_video = QueueVideo.find_by(user: current_user, id: params[:id])
-    !!@queue_video
+  def video_present
+    @queue_video.present?
   end
 
   def queue_position
