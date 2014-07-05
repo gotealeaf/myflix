@@ -27,6 +27,6 @@
                 %td
                   = link_to queue.genre_name.titleize, genre_path(queue.video.genre)
                 %td
-                  = link_to "", method: :post do
+                  = link_to queue_video_path(queue), method: :delete do
                     %i.glyphicon.glyphicon-remove
         = button_to "Update Instant Queue", nil, class: "btn btn-default"
