@@ -49,7 +49,7 @@ describe UsersController do
 
       it "sends out an email to user with valid inputs" do
         post :create, user: { email: "joe@gmail.com", password: "password", full_name: "Joe Smith"}
-        expect(ActionMailer::Base.deliveries.last.to).to eq(["joe@gmail.com"])
+        expect(ActionMailer::Base.deliveries.last.to).to eq(["joe@gmail.com"]a)
       end
 
       it "sends email body content including users's name with valid inputs" do

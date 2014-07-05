@@ -7,6 +7,11 @@ describe User do
   it { should have_many(:queue_items).order(:position) }
   it { should have_many(:reviews).order("created_at DESC") }
 
+  it "generates a random token when user is created" do
+    joe = Fabricate(:user)
+    expect(joe.token).to be_present
+  end
+
   it "password must be greater than five characters" do
     u = User.create(email: "joshleeman@gmail.com", password: "abc", full_name: "Josh Leeman")
     expect(User.count).to eq(0)
