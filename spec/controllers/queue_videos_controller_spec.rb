@@ -71,4 +71,38 @@ describe QueueVideosController do
       end
     end
   end
+
+  describe 'DELETE Destroy' do
+    context 'when user is authenticated' do
+
+      let(:current_user) { Fabricate(:user) }
+      let(:video) { Fabricate(:video) }
+      let(:queue_video) { Fabricate(:queue_video, video: video, user: current_user) }
+      before do
+        session[:username] = current_user.username
+      end
+      it 'should redirect to my queue' do
+        delete :destroy, id: queue_video.id
+        expect(response).to redirect_to my_queue_path
+      end
+      it 'should delete selected video from queue' do
+        delete :destroy, id: queue_video.id
+        expect(QueueVideo.count).to eq(0)
+      end
+      it 'should not delete video from queue if not the users queue' do
+        user = Fabricate(:user)
+        queue_video = Fabricate(:queue_video, user: user, video: video)
+        delete :destroy, id: queue_video.id
+        expect(QueueVideo.count).to eq(1)
+      end
+
+    end
+    context 'when user is unauthenticated' do
+      it 'should redirect to sign in page' do
+        queue_video = Fabricate(:queue_video)
+        delete :destroy, id: queue_video.id
+        expect(response).to redirect_to sign_in_path
+      end
+    end
+  end
 end
