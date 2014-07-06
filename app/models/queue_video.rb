@@ -5,10 +5,6 @@ class QueueVideo < ActiveRecord::Base
   delegate :genre, to: :video
   delegate :name, to: :video, prefix: :video
 
-  def name # video_name method
-    name
-  end
-
   def rating
     review = video.reviews.where(user: user).first
     review.rating if !!review
