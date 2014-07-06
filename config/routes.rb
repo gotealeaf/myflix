@@ -3,8 +3,8 @@ Myflix::Application.routes.draw do
 
   get 'ui(/:action)', controller: 'ui'
 
-  resources :videos
+  resources :videos, only: [:show]
 
-  resources :categories
+  resources :categories, only: [:show]
 
 end
