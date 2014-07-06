@@ -35,8 +35,8 @@ describe PasswordResetsController do
         joe = Fabricate(:user, password: 'password')
         joe.update_column(:token, '12345')
         post :create, token: '12345', password: 'new_password'
-        # expect(joe.reload.password).to eq('new_password')
-        expect(joe.reload.authenticate('new_password')).to be_true
+        # note rspec 3.0 changed be_true to be_truthy
+        expect(joe.reload.authenticate('new_password')).to be_truthy
       end
 
       it "sets the flash success message" do
