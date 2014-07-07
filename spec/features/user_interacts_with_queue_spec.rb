@@ -15,16 +15,16 @@ feature "User interacts with the queue" do
 
     visit video_path(monk)
     expect_link_not_to_be_seen("+ My Queue")
-    
+
     add_video_to_queue(south_park)
     add_video_to_queue(futurama)
 
     set_video_position(monk, 3)
     set_video_position(south_park, 1)
     set_video_position(futurama, 2)
-    
+
     update_queue
-    
+
     expect_video_position(south_park, 1)
     expect_video_position(futurama, 2)
     expect_video_position(monk, 3)
@@ -45,7 +45,7 @@ feature "User interacts with the queue" do
 
   def add_video_to_queue(video)
     visit home_path
-    find("a[href='/videos/#{video.id}']").click
+    click_on_video_on_home_page(video)
     click_link "+ My Queue"
   end
 
