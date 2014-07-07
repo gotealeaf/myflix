@@ -15,5 +15,7 @@ Myflix::Application.routes.draw do
   get '/sign_out', to: 'sessions#destroy'
   get '/register', to: 'users#new'
   get '/my_queue', to: 'queue_videos#index'
+  post '/update_queue', to: 'queue_videos#update_queue'
+
   get 'ui(/:action)', controller: 'ui'
 end
