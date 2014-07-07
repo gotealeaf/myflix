@@ -1,6 +1,7 @@
 class QueueVideo < ActiveRecord::Base
   belongs_to :user
   belongs_to :video
+  validates_presence_of :position
 
   delegate :genre, to: :video
   delegate :name, to: :video, prefix: :video
