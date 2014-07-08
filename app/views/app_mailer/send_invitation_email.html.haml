@@ -1,0 +1,7 @@
+!!! 5
+%html(lang="en-US")
+  %body
+    %h3= "Hello, #{@invitation.recipient_name}"
+    %p= "You've been invited to join MyFlix by #{@invitation.inviter.name}"
+    %p= "#{@invitation.inviter.name} says: \"#{@invitation.message}\""
+    %p= link_to "Accept This Invitation", register_with_token_url(@invitation.token)

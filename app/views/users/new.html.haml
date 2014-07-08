@@ -8,6 +8,7 @@
           = f.email_field :email, hide_label: true, placeholder: "Email"
           = f.password_field :password, hide_label: true, placeholder: "Password"
           = f.text_field :name, hide_label: true, placeholder: "What's your name?"
+          = hidden_field_tag :invitation_token, @invitation_token 
           = f.form_group do
             = f.submit "Sign Up", class: "btn btn-success btn-block"
           %p.text-center 

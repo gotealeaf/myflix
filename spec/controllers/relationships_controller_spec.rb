@@ -11,9 +11,7 @@ describe RelationshipsController do
       set_current_user(alice)
       bob = Fabricate(:user)
       relationship = Fabricate(:relationship, follower: alice, leader: bob)
-
       get :index
-
       expect(assigns(:relationships)).to eq([relationship])
     end
   end #GET index
@@ -28,9 +26,7 @@ describe RelationshipsController do
       set_current_user(alice)
       bob = Fabricate(:user)
       relationship = Fabricate(:relationship, follower: alice, leader: bob)
-
       delete :destroy, id: relationship
-
       expect(response).to redirect_to people_path
     end
 
@@ -39,9 +35,7 @@ describe RelationshipsController do
       set_current_user(alice)
       bob = Fabricate(:user)
       relationship = Fabricate(:relationship, follower: alice, leader: bob)
-
       delete :destroy, id: relationship
-
       expect(Relationship.count).to eq(0)
     end
     
@@ -51,9 +45,7 @@ describe RelationshipsController do
       bob = Fabricate(:user)
       condor = Fabricate(:user)
       relationship = Fabricate(:relationship, follower: condor, leader: bob)
-
       delete :destroy, id: relationship
-
       expect(Relationship.count).to eq(1)
     end
   end #DELETE destroy
@@ -67,7 +59,6 @@ describe RelationshipsController do
       alice = Fabricate(:user)
       set_current_user(alice)
       post :create, leader_id: alice.id
-
       expect(response).to redirect_to people_path
     end
 
@@ -75,9 +66,7 @@ describe RelationshipsController do
       alice = Fabricate(:user)
       bob = Fabricate(:user)
       set_current_user(alice)
-
       post :create, leader_id: bob.id
-
       expect(alice.following_relationships.first.leader).to eq(bob)
     end
 
@@ -86,18 +75,14 @@ describe RelationshipsController do
       bob = Fabricate(:user)
       set_current_user(alice)
       Fabricate(:relationship, leader: bob, follower: alice)
-
       post :create, leader_id: bob.id
-
       expect(Relationship.count).to eq(1)
     end
 
     it "does not allow one to follow himself" do
       alice = Fabricate(:user)
       set_current_user(alice)
-
       post :create, leader_id: alice.id
-
       expect(Relationship.count).to eq(0)
     end
   end #POST create

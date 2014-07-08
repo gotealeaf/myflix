@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   # => User.find(Realationship.where(user_id: id).map($:follwer_id))
   has_many :following_relationships, class_name: "Relationship", foreign_key: :follower_id
   has_many :leading_relationships, class_name: "Relationship", foreign_key: :leader_id
+  has_many :invitations, foreign_key: :inviter_id
 
   before_create :generate_token!
 
@@ -28,6 +29,10 @@ class User < ActiveRecord::Base
 
   def can_follow?(another_user)
     !(self.follows?(another_user) || self == another_user)
+  end
+
+  def follow(another_user)
+    following_relationships.create(leader: another_user) if can_follow?(another_user)
   end
 
   def generate_token!

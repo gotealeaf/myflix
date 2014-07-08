@@ -5,11 +5,11 @@ MyFLiX is a Netflix clone built using Ruby 2 and Rails 4. This is the project fo
 
 Current features include:
 
-* Built from the outside in using TDD (via RSpec and Capybara)
+* Built using TDD (via RSpec and Capybara)
 * User authentication built from scratch
 * Users can comment and leave reviews on individual videos
 * "My Queue" function so users can store videos in a personal queue
 * Follow other users and see their video reviews and queue
-* Welcome emails to new users
+* Automated email generation for new users, password resets, and friend invites
 * More to come...
 
