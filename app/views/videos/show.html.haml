@@ -21,7 +21,7 @@
             = f.label 'Rate this Video'
             .row
               .col-sm-3
-                = f.select :rating, [['5 Stars', 5], ['4 Stars', 4], ['3 Stars', 3], ['2 Stars', 2], ['1 Star', 1]], {}, {class: 'form-control'}
+                = f.select :rating, [5,4,3,2,1].map{ |x| [pluralize(x, 'Star'), x] },{} ,{class: 'form-control'}
           .form-group
             = f.label 'Write Review'
             .row
