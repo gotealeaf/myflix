@@ -7,4 +7,9 @@ class User < ActiveRecord::Base
   has_many :reviews
   has_many :queue_videos, -> {order(:position)}
 
+  def normalise_queue_positions
+    queue_videos.each_with_index do |position, index|
+      position.update(position: index + 1)
+    end
+  end
 end
