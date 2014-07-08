@@ -41,7 +41,7 @@ describe QueueVideosController do
         post :create, video_id: video.id
         expect(QueueVideo.count).to eq(1)
       end
-      it 'shoulds associate queue item to current user' do
+      it 'should associate queue item to current user' do
         post :create, video_id: video.id
         expect(QueueVideo.first.user).to eq(current_user)
       end
@@ -50,7 +50,7 @@ describe QueueVideosController do
         expect(QueueVideo.first.video).to eq(video)
       end
       it 'should place the queue video at the bottom of the list' do
-        Fabricate(:queue_video, video: video, user: current_user)
+        Fabricate(:queue_video, video: video, user: current_user, position: 1)
         video_2 = Fabricate(:video)
         post :create, video_id: video_2.id
         video_2_position = QueueVideo.find_by(video_id: video_2.id).position
@@ -95,12 +95,65 @@ describe QueueVideosController do
         delete :destroy, id: queue_video.id
         expect(QueueVideo.count).to eq(1)
       end
-
+      it 'should normalise the position numbers' do
+        queue_video_1 = Fabricate(:queue_video, position: 1, user: current_user, video: video)
+        queue_video_2 = Fabricate(:queue_video, position: 2, user: current_user, video: video)
+        queue_video_3 = Fabricate(:queue_video, position: 3, user: current_user, video: video)
+        delete :destroy, id: queue_video_1.id
+        expect(QueueVideo.find(queue_video_2.id).position).to eq(1)
+      end
     end
     context 'when user is unauthenticated' do
       it 'should redirect to sign in page' do
         queue_video = Fabricate(:queue_video)
         delete :destroy, id: queue_video.id
+        expect(response).to redirect_to sign_in_path
+      end
+    end
+  end
+
+  describe 'POST update_queue' do
+    context 'when user is authenticated' do
+
+      let(:user) { Fabricate(:user) }
+      before do
+        session[:username] = user.username
+        @queue_video_1 = Fabricate(:queue_video, position: 1, user: user)
+        @queue_video_2 = Fabricate(:queue_video, position: 2, user: user)
+      end
+
+      it 'should redirect to my queue page' do
+        post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 2}, {id: @queue_video_2.id, position: 1}]
+        expect(response).to redirect_to(:my_queue)
+      end
+      it 'should update the position of queue videos' do
+        post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 2}, {id: @queue_video_2.id, position: 1}]
+        expect(user.queue_videos).to eq([@queue_video_2, @queue_video_1])
+      end
+      it 'should normalise the position numbers' do
+        post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 3 }]
+        expect(user.queue_videos.map(&:position)).to eq([1,2])
+      end
+
+      context 'with invalid non integer inputs' do
+        it 'should redirect to my queue page' do
+          post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 2.5}, {id: @queue_video_2.id, position: 1}]
+          expect(response).to redirect_to my_queue_path
+        end
+        it 'should flash an error message' do
+          post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 2.5}, {id: @queue_video_2.id, position: 1}]
+          expect(flash[:danger]).to be_present
+        end
+        it 'should not update the position of queue videos' do
+          post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 3}, {id: @queue_video_2.id, position: 2.5}]
+          expect(@queue_video_1.reload.position).to eq(1)
+        end
+      end
+    end
+
+    context 'when user is unauthenticated' do
+      it 'should redirect_to sign in page' do
+        post :update_queue
         expect(response).to redirect_to sign_in_path
       end
     end

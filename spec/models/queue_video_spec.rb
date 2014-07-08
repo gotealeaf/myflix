@@ -3,9 +3,11 @@ require 'rails_helper'
 describe QueueVideo do
   it { should belong_to :user }
   it { should belong_to :video }
+  it { should validate_presence_of :position }
+  it { should validate_numericality_of(:position).only_integer }
 
   describe '#video_name' do
-    it 'returns the name of the associated video' do
+    it 'should return the name of the associated video' do
       video = Fabricate(:video)
       queue_video = Fabricate(:queue_video, video: video)
       expect(queue_video.video_name).to eq(video.name)

@@ -5,6 +5,11 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, :username
 
   has_many :reviews
-  has_many :queue_videos
+  has_many :queue_videos, -> {order(:position)}
 
+  def normalise_queue_positions
+    queue_videos.each_with_index do |position, index|
+      position.update(position: index + 1)
+    end
+  end
 end

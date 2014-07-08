@@ -2,7 +2,6 @@ class QueueVideosController < ApplicationController
   before_action :require_user
 
   def index
-    #@queue_videos = QueueVideo.where(user: current_user)
     @queue_videos = current_user.queue_videos
   end
 
@@ -16,6 +15,17 @@ class QueueVideosController < ApplicationController
   def destroy
     @queue_video = QueueVideo.find_by(user: current_user, id: params[:id])
     @queue_video.destroy if video_present
+    current_user.normalise_queue_positions
+    redirect_to my_queue_path
+  end
+
+  def update_queue
+    begin
+      update_queue_videos
+      current_user.normalise_queue_positions
+    rescue ActiveRecord::RecordInvalid
+      flash[:danger] = "Invalid position inputs"
+    end
     redirect_to my_queue_path
   end
 
@@ -26,11 +36,20 @@ class QueueVideosController < ApplicationController
   end
 
   def queue_position
-    QueueVideo.count + 1
+    QueueVideo.maximum(:position).to_i + 1
   end
 
   def video_in_queue
     QueueVideo.find_by(video_id: params[:video_id])
+  end
+
+  def update_queue_videos
+    QueueVideo.transaction do
+      user_inputs = params[:queue_videos]
+      user_inputs.each do |queue_video|
+        QueueVideo.find(queue_video[:id]).update!(position: queue_video[:position])
+      end
+    end
   end
 
 end
