@@ -9,15 +9,6 @@
 
 %article.video_category
   %header
-    %h3= link_to Category.find(2).name
-  .videos.row
-    - Video.all.each do |video|
-      .video.col-sm-2
-        = link_to "", nil do
-          %img(src="#{video.small_cover_url}")
-
-%article.video_category
-  %header
     %h3= link_to Category.last.name
   .videos.row
     - Video.all.each do |video|
