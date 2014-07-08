@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe User do
   it { should have_many(:reviews) }
+  it { should have_many(:queue_videos).order(:position) }
   it { should have_secure_password }
   it { should validate_presence_of :username }
   it { should validate_presence_of :full_name }
