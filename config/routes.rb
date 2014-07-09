@@ -9,6 +9,7 @@ Myflix::Application.routes.draw do
   end
   resources :categories
   resources :queue_items, only: [:create, :destroy]
+  post 'update_queue', to: 'queue_items#update_queue'
 
   get 'my_queue', to: 'queue_items#index'
 
