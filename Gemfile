@@ -22,6 +22,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'pg'
 end
 
 group :test do
@@ -30,7 +31,6 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
   gem 'rails_12factor'
 end
 
