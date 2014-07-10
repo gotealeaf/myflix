@@ -2,18 +2,21 @@ require "spec_helper"
 
 describe UsersController do
   describe "GET new" do
+    before { get :new }
+
     it "assigns a new User to @user" do
-      get :new
       expect(assigns(:user)).to be_a_new(User) 
+    end
+
+    it "renders the :new template" do
+      expect(response).to render_template :new
     end
   end
 
   describe "POST create" do
     context "with valid input" do
-      before do 
-        post :create, user: Fabricate.attributes_for(:user)
-      end
-      
+      before { post :create, user: Fabricate.attributes_for(:user) }
+          
       it "saves new user to the database" do
         expect(User.count).to eq(1)
       end
@@ -36,10 +39,8 @@ describe UsersController do
     end
 
     context "without valid input" do
-      before do
-        post :create, user: { fullname: nil, email: nil, password: nil }
-      end
-
+      before { post :create, user: { fullname: nil, email: nil, password: nil } }
+    
       it "does not save new user to the database" do
         expect(User.count).to eq(0)
       end

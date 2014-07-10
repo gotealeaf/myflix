@@ -2,16 +2,16 @@ require "spec_helper"
 
 describe VideosController do
   describe "GET show" do
-    before { @video = Fabricate(:video) }
+    let(:video)  { Fabricate(:video) }
 
     context "with authenticated user" do
       before do
         session[:user_id] = Fabricate(:user).id
-        get :show, id: @video.id
+        get :show, id: video.id
       end
 
       it "assigns @video" do
-        expect(assigns(:video)).to eq(@video)
+        expect(assigns(:video)).to eq(video)
       end
       
       it "assigns @review" do
@@ -19,26 +19,22 @@ describe VideosController do
       end
     end
 
-    context "without authenticated user" do
-      it "redirects to login page" do
-        get :show, id: @video.id
-        expect(response).to redirect_to login_path
-      end
+    it_behaves_like "require_login" do
+      let(:action) { get :show, id: video.id }
     end
   end
 
   describe "POST search" do
+    let(:breaking_bad) { Fabricate(:video, title: "Breaking Bad") }
+
     it "assigns @video for authenticated users" do
-      session[:user_id] = Fabricate(:user).id
-      breaking_bad = Fabricate(:video, title: "Breaking Bad")
+      set_current_user
       post :search, search: "break"
       expect(assigns(:videos)).to eq([breaking_bad])
     end
 
-    it "redirects unauthenticated users login page" do
-      breaking_bad = Fabricate(:video, title: "Breaking Bad")
-      post :search, search: "break"
-      expect(response).to redirect_to login_path
+    it_behaves_like "require_login" do
+      let(:action) { post :search, search: "break" }
     end
   end
 end

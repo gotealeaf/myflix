@@ -3,7 +3,7 @@ require "spec_helper"
 describe SessionsController do
   describe "GET new" do
     it "redirects_to home page if user is authenticated" do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       get :new
       expect(response).to redirect_to home_path
     end
@@ -11,6 +11,7 @@ describe SessionsController do
 
   describe "POST create" do
     before { @jon = Fabricate(:user, email: "jon@gmail.com") }
+    
     context "with valid input" do
       before { post :create, email: "jon@gmail.com", password: "password" }
       
@@ -46,7 +47,7 @@ describe SessionsController do
 
   describe "GET destroy" do
     before do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       get :destroy
     end
 

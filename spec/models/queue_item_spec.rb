@@ -15,42 +15,40 @@ describe QueueItem do
   end
 
   describe "#rating" do
+    let (:family_guy) { Fabricate(:video) }
+
     it "returns the rating of the associated review when rating present" do
       sarah = Fabricate(:user)
-      family_guy = Fabricate(:video)
       review = Fabricate(:review, rating: 4, video_id: family_guy.id, user_id: sarah.id)
       queue_item = Fabricate(:queue_item, video: family_guy, user: sarah)
       expect(queue_item.rating).to eq(4)
     end
 
     it "returns nil when there is no rating" do
-      family_guy = Fabricate(:video, title: "Family Guy")
       queue_item = Fabricate(:queue_item, video: family_guy)
       expect(queue_item.rating).to be(nil)
     end
   end
 
   describe "#rating=" do
-    before do
-      @sarah = Fabricate(:user)
-      video = Fabricate(:video)
-      review = Fabricate(:review, rating: 5, video_id: video.id, user_id: @sarah.id)
-      @queue_item = Fabricate(:queue_item, video: video, user: @sarah)
-    end
+    let(:sarah) { Fabricate(:user) }
+    let(:video) { Fabricate(:video) }
+    let(:review) { Fabricate(:review, rating: 5, video_id: video.id, user_id: sarah.id) }
+    let(:queue_item) { Fabricate(:queue_item, video: video, user: sarah) }
 
     it "updates the rating of the existing review" do
-      @queue_item.rating = 3
+      queue_item.rating = 3
       expect(Review.first.rating).to eq(3)
     end
 
     it "clears the rating of the existing review" do
-      @queue_item.rating = nil
+      queue_item.rating = nil
       expect(Review.first.rating).to eq(nil)
     end
 
     it "creates a new review with a rating if no review exists" do
       video2 = Fabricate(:video)
-      queue_item2 = Fabricate(:queue_item, video: video2, user: @sarah)
+      queue_item2 = Fabricate(:queue_item, video: video2, user: sarah)
       queue_item2.rating = 3
       expect(Review.last.rating).to eq(3)
     end
