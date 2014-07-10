@@ -6,7 +6,40 @@ describe Video do
   it { should validate_presence_of :title }
   it { should validate_presence_of :description }
 
-  # More concise above
+  describe "search_by_title" do
+    it "returns an empty array if there is no match" do
+      futurama = Video.create(title: "Futurama", description: "Gotham needs a hero.")
+      back_to_future = Video.create(title: "Back to Future", description: "Gotham needs a hero.")
+      expect(Video.search_by_title("hello")).to eq([])
+    end
+
+    it "returns an array of one video for an exact match" do
+      futurama = Video.create(title: "Futurama", description: "Gotham needs a hero.")
+      back_to_future = Video.create(title: "Back to Future", description: "Gotham needs a hero.")
+      expect(Video.search_by_title("Futurama")).to eq([futurama])
+    end 
+
+    it "returns an array of one video for a partial match" do
+      futurama = Video.create(title: "Futurama", description: "Gotham needs a hero.")
+      back_to_future = Video.create(title: "Back to Future", description: "Gotham needs a hero.")
+      expect(Video.search_by_title("uturama")).to eq([futurama])
+    end
+
+    it "returns an array of all matched ordered by created_at" do
+      futurama = Video.create(title: "Futurama", description: "Gotham needs a hero.", created_at: 1.day.ago)
+      back_to_future = Video.create(title: "Back to Future", description: "Gotham needs a hero.")
+      expect(Video.search_by_title("Futur")).to eq([back_to_future, futurama])
+    end
+
+    it "returns an empty array for a search with an empty string" do
+      futurama = Video.create(title: "Futurama", description: "Gotham needs a hero.", created_at: 1.day.ago)
+      back_to_future = Video.create(title: "Back to Future", description: "Gotham needs a hero.")
+      expect(Video.search_by_title("")).to eq([])
+    end
+  end
+
+end
+  # More concise above using gem "shoulda_matchers"
 
   # it "belongs to category" do
   #   soaps = Category.create(name: "Soaps")
@@ -56,4 +89,3 @@ describe Video do
   #   # Video.last.title.should == "Batman"
   #   # Video.last.title.should eq(video)
   # end
-end

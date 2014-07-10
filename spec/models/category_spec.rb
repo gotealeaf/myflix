@@ -3,7 +3,7 @@ require 'shoulda/matchers'
 
 describe Category do
   it { should have_many :videos }
-
+end
   # Simplify by shoulda_matchers above
 
   # it "has many videos" do
@@ -20,4 +20,3 @@ describe Category do
   #   category.save
   #   expect(Category.last).to eq(category)
   # end
-end
