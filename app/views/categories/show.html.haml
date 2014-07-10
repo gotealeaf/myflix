@@ -1,6 +1,6 @@
 %section.genre
   %header.clearfix
-    %h1= Category.first.name
+    %h1= @category.name
     .genre_sorting
       Sort by:
       %select(name="")
@@ -8,7 +8,7 @@
         %option(value="z-a") Title: Z - A
         %option(value="rating") Rating
   %article.row
-    - Category.first.videos.each do |video|
+    - @category.videos.each do |video|
       .video.col-md-2
-        = link_to "", nil do 
-          %img(src="#{video.small_cover_url}")
+        = link_to image_tag("#{video.small_cover_url}"), video_path(video)
+          
