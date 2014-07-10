@@ -104,4 +104,16 @@ describe User do
       expect(ana.follows? ana).to be_false
     end
   end
+
+  describe "admin?" do
+    it "returns true if the user is an admin" do
+      ana = Fabricate :user, admin: true
+      expect(ana.admin?).to be_true
+    end
+
+    it "returns false if the user is not an admin" do
+      ana = Fabricate :user, admin: false
+      expect(ana.admin?).to be_false
+    end
+  end
 end
