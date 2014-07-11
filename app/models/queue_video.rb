@@ -12,6 +12,10 @@ class QueueVideo < ActiveRecord::Base
     review.rating if !!review
   end
 
+  def rating_present?
+    !!video.reviews.find_by(user: user)
+  end
+
   def genre_name
     genre.name
   end
