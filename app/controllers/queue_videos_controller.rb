@@ -20,11 +20,26 @@ class QueueVideosController < ApplicationController
   end
 
   def update_queue
+    # position input
     begin
       update_queue_videos
       current_user.normalise_queue_positions
     rescue ActiveRecord::RecordInvalid
       flash[:danger] = "Invalid position inputs"
+    end
+    # rating input
+    user_inputs = params[:queue_videos]
+    user_inputs.each do |rating_input|
+      queue_video = QueueVideo.find(rating_input[:id])
+      if queue_video.rating_present?
+        review = queue_video.video.reviews.find_by(user: current_user)
+        review.update_attribute(:rating, rating_input[:rating])
+      else
+        unless rating_input[:rating].blank?
+          review = Review.new(rating: rating_input[:rating].to_i, user:current_user, video: queue_video.video)
+          review.save(validate: false)
+        end
+      end
     end
     redirect_to my_queue_path
   end
