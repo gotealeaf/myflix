@@ -36,4 +36,38 @@ describe QueueVideo do
       expect(queue_video.genre_name).to eq(genre.name)
     end
   end
+
+  describe '#rating=' do
+    context 'when rating by user is present' do
+
+      let(:user) { Fabricate(:user) }
+      let(:video) { Fabricate(:video) }
+      let(:review) { Fabricate(:review, rating: 4, video: video, user: user) }
+      let(:queue_video) { Fabricate(:queue_video, video: video, user: user) }
+
+      it 'should update the rating if a new rating is given' do
+        queue_video.rating = 1
+        expect(Review.first.rating).to eq(1)
+      end
+      it 'should clear the rating if blank is selected' do
+        queue_video.rating = nil
+        expect(Review.first.rating).to eq(nil)
+      end
+    end
+    context 'when rating by user is not present' do
+
+      let(:user) { Fabricate(:user) }
+      let(:video) { Fabricate(:video) }
+      let(:queue_video) { Fabricate(:queue_video, video: video, user: user) }
+
+      it 'should create a new rating by the user' do
+        queue_video.rating = 4
+        expect(Review.first.rating).to eq(4)
+      end
+      it 'should not create a new rating by user' do
+        queue_video.rating = nil
+        expect(Review.first.rating).to eq(nil)
+      end
+    end
+  end
 end
