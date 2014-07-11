@@ -8,15 +8,25 @@ class QueueVideo < ActiveRecord::Base
   delegate :name, to: :video, prefix: :video
 
   def rating
-    review = video.reviews.where(user: user).first
     review.rating if !!review
   end
 
-  def rating_present?
-    !!video.reviews.find_by(user: user)
+  def rating=(select_rating)
+    if review.present?
+      review.update_attribute(:rating, select_rating)
+    else
+      review = Review.new(video: video, user: user, rating: select_rating)
+      review.save(validate: false)
+    end
   end
 
   def genre_name
     genre.name
+  end
+
+  private
+
+  def review
+    @review ||= video.reviews.find_by(user: user)
   end
 end
