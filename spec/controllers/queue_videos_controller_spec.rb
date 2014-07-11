@@ -116,37 +116,71 @@ describe QueueVideosController do
     context 'when user is authenticated' do
 
       let(:user) { Fabricate(:user) }
-      before do
-        session[:username] = user.username
-        @queue_video_1 = Fabricate(:queue_video, position: 1, user: user)
-        @queue_video_2 = Fabricate(:queue_video, position: 2, user: user)
-      end
+      let(:video_1) { Fabricate(:video) }
+      let(:video_2) { Fabricate(:video) }
+      before { session[:username] = user.username }
 
-      it 'should redirect to my queue page' do
-        post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 2}, {id: @queue_video_2.id, position: 1}]
-        expect(response).to redirect_to(:my_queue)
-      end
-      it 'should update the position of queue videos' do
-        post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 2}, {id: @queue_video_2.id, position: 1}]
-        expect(user.queue_videos).to eq([@queue_video_2, @queue_video_1])
-      end
-      it 'should normalise the position numbers' do
-        post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 3 }]
-        expect(user.queue_videos.map(&:position)).to eq([1,2])
-      end
+      context 'if user updates positions' do
 
-      context 'with invalid non integer inputs' do
+        before do
+          @queue_video_1 = Fabricate(:queue_video, position: 1, user: user, video: video_1)
+          @queue_video_2 = Fabricate(:queue_video, position: 2, user: user, video: video_2)
+        end
+
         it 'should redirect to my queue page' do
-          post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 2.5}, {id: @queue_video_2.id, position: 1}]
-          expect(response).to redirect_to my_queue_path
+          post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 2}, {id: @queue_video_2.id, position: 1}]
+          expect(response).to redirect_to(:my_queue)
         end
-        it 'should flash an error message' do
-          post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 2.5}, {id: @queue_video_2.id, position: 1}]
-          expect(flash[:danger]).to be_present
+        it 'should update the position of queue videos' do
+          post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 2}, {id: @queue_video_2.id, position: 1}]
+          expect(user.queue_videos).to eq([@queue_video_2, @queue_video_1])
         end
-        it 'should not update the position of queue videos' do
-          post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 3}, {id: @queue_video_2.id, position: 2.5}]
-          expect(@queue_video_1.reload.position).to eq(1)
+        it 'should normalise the position numbers' do
+          post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 3 }]
+          expect(user.queue_videos.map(&:position)).to eq([1,2])
+        end
+
+        context 'with invalid non integer inputs' do
+          it 'should redirect to my queue page' do
+            post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 2.5}, {id: @queue_video_2.id, position: 1}]
+            expect(response).to redirect_to my_queue_path
+          end
+          it 'should flash an error message' do
+            post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 2.5}, {id: @queue_video_2.id, position: 1}]
+            expect(flash[:danger]).to be_present
+          end
+          it 'should not update the position of queue videos' do
+            post :update_queue, queue_videos: [{id: @queue_video_1.id, position: 3}, {id: @queue_video_2.id, position: 2.5}]
+            expect(@queue_video_1.reload.position).to eq(1)
+          end
+        end
+      end
+
+      context 'if rating is blank' do
+        it 'should create new rating if user selects a rating' do
+          current_user = user
+          video = Fabricate(:video)
+          queue_video = Fabricate(:queue_video, video: video, user: user)
+          post :update_queue, queue_videos: [{id: queue_video.id, position: 1, rating: 4}]
+          expect(QueueVideo.first.rating).to eq(4)
+        end
+        it 'should not create new rating if rating is blank' do
+        current_user = user
+        video = Fabricate(:video)
+        queue_video = Fabricate(:queue_video, video: video, user: user)
+        post :update_queue, queue_videos: [{id: queue_video.id, position: 1, rating: ""}]
+        expect(QueueVideo.first.rating).to be_blank
+        end
+      end
+
+      context 'if rating is not blank' do
+        it 'should update rating' do
+          current_user = user
+          video = Fabricate(:video)
+          review = Fabricate(:review, rating: 1, user: user, video: video)
+          queue_video = Fabricate(:queue_video, video: video, user: user)
+          post :update_queue, queue_videos: [{id: queue_video.id, position: 1, rating: 4}]
+          expect(QueueVideo.first.rating).to eq(4)
         end
       end
     end
