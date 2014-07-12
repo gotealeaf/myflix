@@ -1,0 +1,10 @@
+  def recent_videos
+    @videos_sorted = Category.find([params :id]).videos.sort_by { |video| video.created_at}.reverse
+    if @category.videos.size < 6
+      return @category.videos
+    else
+      return @category.videos.last(6)
+    end
+  end
+
+ videos = [#<Video id: 8, title: "Monk", description: "OCD TV.  This is a show about a clean-cut man who ...", small_url: "/tmp/monk.jpg", large_url: "/tmp/monk_large.jpg", created_at: "2014-07-05 23:33:57", updated_at: "2014-07-05 23:47:19", category_id: 1>, #<Video id: 9, title: "Family Guy", description: "A comedy if you live in an upper-middle class subu...", small_url: "/tmp/family_guy.jpg", large_url: nil, created_at: "2014-07-05 23:33:57", updated_at: "2014-07-05 23:49:23", category_id: 1>, #<Video id: 10, title: "Futurama", description: "How people from the early 2000s viewed the future ...", small_url: "/tmp/futurama.jpg", large_url: nil, created_at: "2014-07-05 23:33:57", updated_at: "2014-07-05 23:50:05", category_id: 1>, #<Video id: 11, title: "South Park", description: "A true, heartwarming story about society's ignoran...", small_url: "/tmp/south_park.jpg", large_url: nil, created_at: "2014-07-05 23:33:57", updated_at: "2014-07-05 23:50:51", category_id: 1>]
