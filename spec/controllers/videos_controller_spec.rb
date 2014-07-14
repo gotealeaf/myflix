@@ -4,11 +4,7 @@ describe VideosController do
   describe 'GET show' do
     context 'when users are authenticated' do
 
-      let(:user) { Fabricate(:user) }
-      let(:video) { Fabricate(:video) }
-      before do
-        session[:username] = user.username
-      end
+      before { set_session_user }
 
       it 'sets the @video variable' do
         get :show, id: video.id
@@ -23,25 +19,21 @@ describe VideosController do
       end
     end
 
-    context 'when users are unauthenticated'
-      it 'redirects unauthenticated user to the sign in page' do
-        video = Fabricate(:video)
-        get :show, id: video.id
-        expect(response).to redirect_to sign_in_path
-      end
+    it_behaves_like 'redirect for unauthenticated user' do
+      let(:action) { get :show, id: video.id }
+    end
   end
 
   describe 'POST search' do
     it 'sets the @results variable for authenticated user' do
-      session[:username] = Fabricate(:user).username
+      set_session_user
       gladiator = Fabricate(:video, name: 'gladiator')
       get :search, search_name: 'diator'
       expect(assigns(:results)).to eq([gladiator])
     end
 
-    it 'redirects aunauthenticated user to the sign in page' do
-      get :search, search_name: 'diator'
-      expect(response).to redirect_to sign_in_path
+    it_behaves_like 'redirect for unauthenticated user' do
+      let(:action) { get :search, search_name: 'diator' }
     end
   end
 end
