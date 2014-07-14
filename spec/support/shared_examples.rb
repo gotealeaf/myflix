@@ -1,3 +1,4 @@
+# queue_videos_controller_spec.rb
 shared_examples 'redirect for authenticated user' do
   it 'should redirect to my_queue page' do
     action
@@ -12,6 +13,7 @@ shared_examples 'redirect for unauthenticated user' do
   end
 end
 
+# sessions_controller_spec.rb
 shared_examples 'redirect to home page' do
   it 'should redirect for authenticated users' do
     action
