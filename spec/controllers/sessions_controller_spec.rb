@@ -4,7 +4,7 @@ describe SessionsController do
 
   describe "GET new" do
     it "redirects to home_path if signed in" do
-      cookies[:auth_token] = Fabricate(:user).auth_token
+      set_current_user
       get :new
       expect(response).to redirect_to home_path
     end
@@ -25,7 +25,7 @@ describe SessionsController do
       end
 
       it "sets auth_token in cookie" do
-        expect(cookies[:auth_token]).to eq(batman.auth_token)
+        expect(session[:auth_token]).to eq(batman.auth_token)
       end
 
       it "redirects to home_path" do
@@ -45,7 +45,7 @@ describe SessionsController do
       end
 
       it "does not put auth token in a cookie" do
-        expect(cookies[:auth_token]).to be_nil
+        expect(session[:auth_token]).to be_nil
       end
 
       it "renders :new if unsuccessful" do
@@ -62,12 +62,12 @@ describe SessionsController do
 
   describe "GET destroy" do
     before do
-      cookies[:auth_token] = Fabricate(:user).auth_token
+      set_current_user
       get :destroy
     end
 
     it "clears the auth_token from the cookie" do
-      expect(cookies[:auth_token]).to be_blank
+      expect(session[:auth_token]).to be_blank
     end
 
     it "redirects to root_path" do

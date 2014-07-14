@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user
-    @current_user ||= User.where(auth_token:cookies[:auth_token]).first
+    @current_user ||= User.where(auth_token:session[:auth_token]).first
   end
   helper_method :current_user
 end

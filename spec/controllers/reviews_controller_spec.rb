@@ -3,17 +3,16 @@ require 'rails_helper'
 describe ReviewsController do
   describe "POST create" do
 
-    it "should redirect to sign_in if user not signed in" do
-      video = Fabricate(:video)
-      post :create, video_id: video, review: { rating: 2, content: 'Testing' }
-      expect(response).to redirect_to(sign_in_path)
+    it_behaves_like "require_sign_in" do
+      video = Fabricate(:video, title: "Superman")
+      let(:action) { post :create, video_id: video, review: { rating: 2, content: 'Testing' } }
     end
 
     context "with valid values" do
       let(:user) { Fabricate(:user) }
       let(:video) { Fabricate(:video) }
       before do
-        cookies[:auth_token] = user.auth_token
+        session[:auth_token] = user.auth_token
         post :create, video_id: video, review: { rating: 2, content: 'Testing' }
       end
       
@@ -30,7 +29,7 @@ describe ReviewsController do
         expect(flash[:success]).not_to be_blank
       end
       it "should redirect to the video page if successful" do
-        expect(response).to redirect_to video_path(Video.first)
+        expect(response).to redirect_to video_path(video)
       end
     end
 
@@ -38,7 +37,7 @@ describe ReviewsController do
       let(:user) { Fabricate(:user) }
       let(:video) { Fabricate(:video) }
       before do
-        cookies[:auth_token] = user.auth_token
+        session[:auth_token] = user.auth_token
         post :create, video_id: video, review: { rating: nil, content: 'Testing' }
       end
       it "should NOT create a review with incomplete values" do

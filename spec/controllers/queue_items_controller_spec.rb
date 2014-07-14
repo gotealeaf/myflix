@@ -3,13 +3,12 @@ require 'rails_helper'
 describe QueueItemsController do
 
   context "signed in users" do
+    
+    before { set_current_user }
+    let(:user) { current_user }
+    let(:video) { Fabricate(:video) }
 
     describe "GET index" do
-      let(:user) { Fabricate(:user) }
-      let(:video) { Fabricate(:video) }
-      before do
-        cookies[:auth_token] = user.auth_token
-      end
 
       it "should assign the @queue_items variable for the signed in user" do
         qitem = Fabricate(:queue_item, video: video, user: user)
@@ -17,15 +16,11 @@ describe QueueItemsController do
         get :index
         expect(assigns(:queue_items)).to match_array([qitem,qitem2])
       end
+      
     end
 
     describe "POST create" do
-      let(:user) { Fabricate(:user) }
-      let(:video) { Fabricate(:video) }
-      before do
-        cookies[:auth_token] = user.auth_token
-      end
-
+      
       it "should create a queue item from valid values" do
         post :create, video_id: video.id
         expect(QueueItem.count).to eq(1)
@@ -66,11 +61,6 @@ describe QueueItemsController do
     end
 
     describe "DELETE destroy" do
-      let(:user) { Fabricate(:user) }
-      let(:video) { Fabricate(:video) }
-      before do
-        cookies[:auth_token] = user.auth_token
-      end
 
       it "should remove the queue item from the user's queue" do
         qitem = Fabricate(:queue_item, user: user, video: video)
@@ -103,11 +93,6 @@ describe QueueItemsController do
     end
     
     describe "PUT update" do
-      let(:user) { Fabricate(:user) }
-      
-      before do
-        cookies[:auth_token] = user.auth_token
-      end
       
       describe "update positions" do
         let(:video) { Fabricate(:video) }

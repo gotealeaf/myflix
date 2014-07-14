@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   def create
     user = User.where(email:params[:email]).first
     if user && user.authenticate(params[:password])
-      cookies[:auth_token] = user.auth_token
+      session[:auth_token] = user.auth_token
       flash[:success] = 'Signed in successfully.'
       redirect_to home_path
     else
@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
 
   def destroy
     current_user.new_auth_token if current_user
-    cookies.delete(:auth_token)
+    reset_session
     flash[:info] = 'Signed out, see you again soon.'
     redirect_to root_path
   end
