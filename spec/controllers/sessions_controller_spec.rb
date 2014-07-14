@@ -6,28 +6,33 @@ describe SessionsController do
       get :new
       expect(response).to render_template(:new)
     end
-    it 'should redirect to home page for authenticated users' do
-      session[:username] = Fabricate(:user).username
-      get :new
-      expect(response).to redirect_to home_path
+
+    context 'for authenticated user' do
+      before { set_session_user }
+
+      it_behaves_like 'redirect to home page' do
+        let(:action) { get :new }
+      end
     end
   end
 
   describe 'POST create' do
     context 'if authentication passes' do
-      before do
-        @user = Fabricate(:user)
-        post :create, email: @user.email, password: @user.password
-      end
+      let(:action) { post :create, email: user.email, password: user.password }
+
       it 'assigns username to session[:username]' do
-        expect(session[:username]).to eq(@user.username)
+        action
+        expect(session[:username]).to eq(user.username)
       end
       it 'flashes a welcome message' do
-        expect(flash[:success]).to eq("Welcome #{ @user.username }")
+        action
+        expect(flash[:success]).to eq("Welcome #{ user.username }")
       end
       it 'redirects to the home path' do
+        action
         expect(response).to redirect_to home_path
       end
+      it_behaves_like 'redirect to home page'
     end
 
     context 'if authentication fails' do
@@ -46,7 +51,7 @@ describe SessionsController do
   describe 'GET destroy' do
     context 'when user logs out' do
       before do
-        session[:username] = Fabricate(:user).username
+        set_session_user
         get :destroy
       end
       it 'should assign nil to session[:username]' do
