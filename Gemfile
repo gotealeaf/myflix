@@ -31,6 +31,7 @@ group :test do
   gem 'pry-rescue'
   gem 'pry-stack_explorer'
   gem 'shoulda-matchers'
+  gem 'capybara'
 end
 
 group :production do
