@@ -8,20 +8,16 @@ describe QueueVideo do
 
   describe '#video_name' do
     it 'should return the name of the associated video' do
-      video = Fabricate(:video)
       queue_video = Fabricate(:queue_video, video: video)
       expect(queue_video.video_name).to eq(video.name)
     end
   end
   describe '#rating' do
     it 'should return nil if the user has not reviewed the video' do
-      video = Fabricate(:video)
       queue_video = Fabricate(:queue_video, video: video)
       expect(queue_video.rating).to eq(nil)
     end
     it 'should return the associated rating given by the user' do
-      video = Fabricate(:video)
-      user = Fabricate(:user)
       review = Fabricate(:review, video: video, user: user, rating: 5)
       queue_video = Fabricate(:queue_video, video: video, user: user)
       expect(queue_video.rating).to eq(5)
@@ -30,7 +26,6 @@ describe QueueVideo do
 
   describe '#genre_name' do
     it 'should return the genre name of the associated video' do
-      genre = Fabricate(:genre)
       video = Fabricate(:video, genre: genre)
       queue_video = Fabricate(:queue_video, video: video)
       expect(queue_video.genre_name).to eq(genre.name)
@@ -39,9 +34,6 @@ describe QueueVideo do
 
   describe '#rating=' do
     context 'when rating by user is present' do
-
-      let(:user) { Fabricate(:user) }
-      let(:video) { Fabricate(:video) }
       let(:review) { Fabricate(:review, rating: 4, video: video, user: user) }
       let(:queue_video) { Fabricate(:queue_video, video: video, user: user) }
 
@@ -55,9 +47,6 @@ describe QueueVideo do
       end
     end
     context 'when rating by user is not present' do
-
-      let(:user) { Fabricate(:user) }
-      let(:video) { Fabricate(:video) }
       let(:queue_video) { Fabricate(:queue_video, video: video, user: user) }
 
       it 'should create a new rating by the user' do
