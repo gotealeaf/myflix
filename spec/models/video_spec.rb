@@ -26,7 +26,7 @@ describe Video do
     it 'should return an array of video objects if there are multiple matches' do
       video_1 = Video.create(name: 'terminator', description: 'robots and armegaddon')
       video_2 = Video.create(name: 'terminator 2', description: 'more robots and armegaddon')
-      expect(Video.search_by_name('term')).to eq([video_1, video_2])
+      expect(Video.search_by_name('term')).to match_array([video_1, video_2])
     end
   end
 
