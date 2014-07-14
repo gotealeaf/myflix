@@ -11,3 +11,10 @@ shared_examples 'redirect for unauthenticated user' do
     expect(response).to redirect_to sign_in_path
   end
 end
+
+shared_examples 'redirect to home page' do
+  it 'should redirect for authenticated users' do
+    action
+    expect(response).to redirect_to home_path
+  end
+end
