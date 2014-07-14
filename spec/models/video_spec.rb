@@ -31,9 +31,6 @@ describe Video do
   end
 
   context '#avg_rating' do
-    let(:user) { Fabricate(:user) }
-    let(:video) { Fabricate(:video) }
-
     it "returns 'no ratings available' when there are no ratings" do
       expect(video.avg_rating).to eq('no ratings available')
     end
