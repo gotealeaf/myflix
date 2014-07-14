@@ -19,7 +19,7 @@
                 %tr
                   %td
                     = hidden_field_tag "items[][id]", qi.id
-                    = text_field_tag "items[][position]", qi.position
+                    = text_field_tag "items[][position]", qi.position, data: { video_id: qi.video.id }
                   %td
                     = link_to qi.video_title, qi.video
                   %td

@@ -5,5 +5,5 @@
     .videos.row
       - cat.recent_videos.each do |video|
         .video.col-sm-2
-          = link_to video do
-            %img(src="#{video.small_cover_url}")
+          = link_to video, :id => video.id do
+            %img{:src => video.small_cover_url}

@@ -15,6 +15,21 @@ describe User do
       expect(user.auth_token.nil?).to eq(false)
     end
   end
+  
+  describe '#queued_video?(video)' do
+    it ' should return true if already in user queue' do
+      user = Fabricate(:user)
+      video = Fabricate(:video)
+      Fabricate(:queue_item, user: user, video: video)
+      expect(user.queued_video?(video)).to eq(true)
+    end
+    
+    it ' should return false  if not in user queue' do
+      user = Fabricate(:user)
+      video = Fabricate(:video)
+      expect(user.queued_video?(video)).to eq(false)
+    end
+  end
 
 
 end

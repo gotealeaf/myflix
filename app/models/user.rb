@@ -19,6 +19,10 @@ class User < ActiveRecord::Base
       item.update_attribute(:position, index + 1)
     end
   end
+  
+  def queued_video?(video)
+    queue_items.where(video:video).exists? ? true : false
+  end
 
 
   private
