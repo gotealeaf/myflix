@@ -20,3 +20,11 @@ shared_examples 'redirect to home page' do
     expect(response).to redirect_to home_path
   end
 end
+
+# users_controller_spec.rb
+shared_examples 'new User object' do
+  it 'should create a new @user object' do
+    action
+    expect(assigns(:user)).to be_a_new(User)
+  end
+end
