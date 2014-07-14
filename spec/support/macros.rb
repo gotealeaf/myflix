@@ -9,3 +9,7 @@ end
 def video
   @video ||= Fabricate(:video)
 end
+
+def genre
+  @genre ||= Fabricate(:genre, name: 'action')
+end
