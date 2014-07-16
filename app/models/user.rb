@@ -12,4 +12,8 @@ class User < ActiveRecord::Base
       position.update(position: index + 1)
     end
   end
+
+  def video_in_queue?(video)
+    queue_videos.find_by(video: video).present?
+  end
 end
