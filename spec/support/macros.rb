@@ -22,3 +22,9 @@ def sign_in(usr=nil)
   fill_in 'password', with: user_password
   click_button 'Sign in'
 end
+
+def my_queue_feature_set_up
+  @video1 = video(genre)
+  @video2 = Fabricate(:video, genre: genre)
+  @video3 = Fabricate(:video, genre: genre)
+end
