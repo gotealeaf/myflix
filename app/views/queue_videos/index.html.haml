@@ -19,7 +19,7 @@
                 %tr
                   %td
                     = hidden_field_tag 'queue_videos[][id]', queue.id
-                    = text_field_tag 'queue_videos[][position]', queue.position
+                    = text_field_tag 'queue_videos[][position]', queue.position, data: { video_id: queue.video.id }
                   %td
                     = link_to queue.video_name.titleize, video_path(queue.video)
                   %td
