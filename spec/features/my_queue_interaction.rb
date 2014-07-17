@@ -1,7 +1,12 @@
 require 'rails_helper'
 
 feature "My Queue" do
-  background { my_queue_feature_set_up }
+  before do
+    @genre = Fabricate(:genre)
+    @video1 = Fabricate(:video, genre: @genre)
+    @video2 = Fabricate(:video, genre: @genre)
+    @video3 = Fabricate(:video, genre: @genre)
+  end
 
   scenario 'user adds a video to queue' do
     sign_in(user)
@@ -42,13 +47,9 @@ feature "My Queue" do
     visit(video_path(@video3))
     click_on('+ My Queue')
     visit(my_queue_path)
-    find("input[data-video-id='#{@video1.id}']").set(5)
-    find("input[data-video-id='#{@video2.id}']").set(6)
-    find("input[data-video-id='#{@video3.id}']").set(4)
+    user_reorders_positions
     click_button('Update Instant Queue')
-    expect(find("input[data-video-id='#{@video.id}']").value).to eq("2")
-    expect(find("input[data-video-id='#{@video2.id}']").value).to eq("3")
-    expect(find("input[data-video-id='#{@video3.id}']").value).to eq("1")
+    expect_positions_to_be_reordered_and_normalised
   end
 
   scenario 'user deletes video from queue' do
@@ -60,7 +61,27 @@ feature "My Queue" do
     visit(video_path(@video3))
     click_on('+ My Queue')
     visit(my_queue_path)
+    user_deletes_first_video_in_queue
+    expect_position_of_remaining_two_videos_to_be_normalised
+  end
+
+  def user_reorders_positions
+    find("input[data-video-id='#{@video1.id}']").set(5)
+    find("input[data-video-id='#{@video2.id}']").set(6)
+    find("input[data-video-id='#{@video3.id}']").set(4)
+  end
+
+  def expect_positions_to_be_reordered_and_normalised
+    expect(find("input[data-video-id='#{@video1.id}']").value).to eq("2")
+    expect(find("input[data-video-id='#{@video2.id}']").value).to eq("3")
+    expect(find("input[data-video-id='#{@video3.id}']").value).to eq("1")
+  end
+
+  def user_deletes_first_video_in_queue
     find("a[href='#{queue_video_path(@video1.queue_videos.first.id)}']").click
+  end
+
+  def expect_position_of_remaining_two_videos_to_be_normalised
     expect(find("input[data-video-id='#{@video2.id}']").value).to eq("1")
     expect(find("input[data-video-id='#{@video3.id}']").value).to eq("2")
   end
