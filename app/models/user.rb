@@ -16,4 +16,8 @@ class User < ActiveRecord::Base
       item.update_attributes(position: index + 1)
     end 
   end
+
+  def video_in_queue?(video)
+    queue_items.ids.include?(video.id)
+  end
 end

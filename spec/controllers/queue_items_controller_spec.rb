@@ -1,5 +1,4 @@
 require "spec_helper"
-require "pry"
 
 describe QueueItemsController do
   describe "GET index" do
