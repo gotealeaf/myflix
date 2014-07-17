@@ -14,17 +14,11 @@ def genre
   @genre ||= Fabricate(:genre, name: 'action')
 end
 
-def sign_in(usr=nil)
+def user_signs_in(usr=nil)
   user_email = usr ? usr.email : nil
   user_password = usr ? usr.password : nil
   visit sign_in_path
   fill_in 'email', with: user_email
   fill_in 'password', with: user_password
   click_button 'Sign in'
-end
-
-def my_queue_feature_set_up
-  @video1 = video(genre)
-  @video2 = Fabricate(:video, genre: genre)
-  @video3 = Fabricate(:video, genre: genre)
 end
