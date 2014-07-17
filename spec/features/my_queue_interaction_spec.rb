@@ -9,14 +9,14 @@ feature "My Queue" do
   end
 
   scenario 'user adds a video to queue' do
-    sign_in(user)
+    user_signs_in(user)
     click_on(@video1.id)
     click_on('+ My Queue')
     expect(page).to have_content(@video1.name.titleize)
   end
 
   scenario 'user follow video link in queue to show page' do
-    sign_in(user)
+    user_signs_in(user)
     click_on(@video1.id)
     click_on('+ My Queue')
     find_link(@video1.name.titleize).click
@@ -25,7 +25,7 @@ feature "My Queue" do
   end
 
   scenario 'user adds multiple videos to queue' do
-    sign_in(user)
+    user_signs_in(user)
     visit(video_path(@video1))
     click_on('+ My Queue')
     visit(video_path(@video2))
@@ -39,7 +39,7 @@ feature "My Queue" do
   end
 
   scenario 'user reorders video in queue' do
-    sign_in(user)
+    user_signs_in(user)
     visit(video_path(@video1))
     click_on('+ My Queue')
     visit(video_path(@video2))
@@ -53,7 +53,7 @@ feature "My Queue" do
   end
 
   scenario 'user deletes video from queue' do
-    sign_in(user)
+    user_signs_in(user)
     visit(video_path(@video1))
     click_on('+ My Queue')
     visit(video_path(@video2))
