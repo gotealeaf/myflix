@@ -47,7 +47,7 @@ class QueueVideosController < ApplicationController
     QueueVideo.transaction do
       user_inputs = params[:queue_videos]
       user_inputs.each do |queue_video|
-        QueueVideo.find(queue_video[:id]).update!(position: queue_video[:position])
+        QueueVideo.find(queue_video[:id]).update_attributes!(position: queue_video[:position], rating: queue_video[:rating])
       end
     end
   end

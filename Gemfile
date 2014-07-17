@@ -31,6 +31,8 @@ group :test do
   gem 'pry-rescue'
   gem 'pry-stack_explorer'
   gem 'shoulda-matchers'
+  gem 'capybara'
+  gem 'launchy', '~> 2.4.2'
 end
 
 group :production do

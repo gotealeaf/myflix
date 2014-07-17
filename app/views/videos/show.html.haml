@@ -10,7 +10,8 @@
         %p= @video.description
         .actions
           %button.btn.btn-primary= link_to "Watch Now"
-          = link_to "+ My Queue", queue_videos_path(video_id: @video.id), method: :post, class: "btn btn-default"
+          = link_to "+ My Queue", queue_videos_path(video_id: @video.id),
+              method: :post, class: "btn btn-default" unless current_user.video_in_queue?(@video)
 
 %section.reviews.container
   .row
@@ -21,7 +22,7 @@
             = f.label 'Rate this Video'
             .row
               .col-sm-3
-                = f.select :rating, [['5 Stars', 5], ['4 Stars', 4], ['3 Stars', 3], ['2 Stars', 2], ['1 Star', 1]], {}, {class: 'form-control'}
+                = f.select :rating, review_options,{} ,{class: 'form-control'}
           .form-group
             = f.label 'Write Review'
             .row

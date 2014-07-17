@@ -20,5 +20,4 @@ class Video < ActiveRecord::Base
   def avg
     Review.where(video_id: id).average(:rating)
   end
-
 end
