@@ -1,0 +1,9 @@
+- @categories.each do |category|
+  %article.video_category
+    %header
+      %h3= link_to "#{category.name}", category_path(category)
+    .videos.row
+      - category.videos.each do |vid|
+        .video.col-sm-2 
+          = link_to video_path(vid), nil  do
+            %img(src="#{vid.small_cover_url}")

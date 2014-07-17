@@ -1,0 +1,15 @@
+%section.genre
+  %header.clearfix
+    %h1 
+      = @category.name
+    .genre_sorting
+      Sort by:
+      %select(name="")
+        %option(value="a-z") Title: A - Z
+        %option(value="z-a") Title: Z - A
+        %option(value="rating") Rating
+  %article.row
+    - @category.videos.each do |vid|
+      .video.col-md-2
+        = link_to video_path(vid), nil  do 
+          %img(src="#{vid.small_cover_url}")
