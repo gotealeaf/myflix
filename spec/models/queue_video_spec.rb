@@ -28,7 +28,7 @@ describe QueueVideo do
     it 'should return the genre name of the associated video' do
       video = Fabricate(:video, genre: genre)
       queue_video = Fabricate(:queue_video, video: video)
-      expect(queue_video.genre_name).to eq(genre.name)
+      expect(queue_video.genre_name).to eq(genre.name.titleize)
     end
   end
 
