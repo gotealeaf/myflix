@@ -1,0 +1,36 @@
+%section.user.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %article
+        %header
+          = image_tag "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(@user.email.downcase)}?s=40"
+          %h2= "#{ @user.full_name }'s video collections ( #{ @user.count_queue_videos } ) "
+          %button.btn.btn-default Follow
+        %table.table
+          %thead
+            %tr
+              %th(width="30%") Video Title
+              %th(width="15%") Genre
+          %tbody
+            - @user.queue_videos.each do |queue_video|
+              %tr
+                %td
+                  = link_to queue_video.video_name.titleize, video_path(queue_video.video)
+                %td
+                  = link_to queue_video.genre_name, genre_path(queue_video.genre)
+
+%section.user_reviews.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %header
+        %h3= "#{ @user.full_name.titleize }'s Reviews ( #{ @user.count_reviews } )"
+      %ul
+        - @user.reviews.each do |review|
+          %article.review
+            %li.row
+              .col-sm-2
+                %p
+                  = link_to "\"#{ review.video.name.titleize }\"", video_path(review.video)
+                %col= "Rating: #{ review.rating } / 5"
+              .col-sm-8
+                %p= review.review
