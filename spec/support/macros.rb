@@ -6,6 +6,10 @@ def set_session_user
   session[:username] = user.username
 end
 
+def clear_session_user
+  session[:username] = nil
+end
+
 def video(genre=nil)
   @video ||= Fabricate(:video, genre: genre)
 end
