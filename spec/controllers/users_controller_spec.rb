@@ -50,4 +50,17 @@ describe UsersController do
       it_behaves_like 'new User object'
     end
   end
+
+  describe 'GET show' do
+    context 'when user is authenticated' do
+      it 'assigns the @user variable' do
+        set_session_user
+        get :show, id: user.id
+        expect(assigns(:user)).to eq (user)
+      end
+    end
+    it_behaves_like 'redirect for unauthenticated user' do
+      let(:action) { get :show, id: 1}
+    end
+  end
 end
