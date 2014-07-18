@@ -48,3 +48,5 @@ gem "sentry-raven"
 gem 'paratrooper'
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+gem 'figaro'
