@@ -38,6 +38,6 @@
             %li.row
               .col-sm-2
                 %span Rating: #{review.rating.to_i.to_s} / 5
-                %p= "by #{link_to review.creator.fullname}".html_safe
+                %p by #{ link_to review.creator.fullname, user_path(review.creator) }
               .col-sm-8
                 %p= review.body
