@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe User do
-  it { should have_many(:reviews) }
+  it { should have_many(:reviews).order(created_at: :desc) }
   it { should have_many(:queue_videos).order(:position) }
   it { should have_secure_password }
   it { should validate_presence_of :username }
@@ -22,6 +22,30 @@ describe User do
       other_user = Fabricate(:user)
       Fabricate(:queue_video, video: video, user: other_user)
       expect(user.video_in_queue?(video)).to be false
+    end
+  end
+
+  context '#count_queue_videos' do
+    it 'returns 0 if there are no videos in the users queue' do
+      expect(user.count_queue_videos).to eq(0)
+    end
+    it 'returns the total number of videos in a users queue' do
+      queue_video1 = Fabricate(:queue_video, user: user, video_id: 1)
+      queue_video2 = Fabricate(:queue_video, user: user, video_id: 2)
+      expect(user.count_queue_videos).to eq(2)
+    end
+  end
+
+  context '#count_reviews' do
+    it 'returns 0 if user has not posted any reviews' do
+      expect(user.count_reviews).to eq(0)
+    end
+    it 'returns the total number of reviews that user has posted' do
+      video1 = Fabricate(:video)
+      video2 = Fabricate(:video)
+      Fabricate(:review, user: user, video: video1)
+      Fabricate(:review, user: user, video: video2)
+      expect(user.count_reviews).to eq(2)
     end
   end
 end

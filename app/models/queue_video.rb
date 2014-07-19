@@ -21,7 +21,7 @@ class QueueVideo < ActiveRecord::Base
   end
 
   def genre_name
-    genre.name
+    genre.name.titleize
   end
 
   private
