@@ -16,6 +16,17 @@ describe Video do
     expect(monk.category).to eq(dramas)
   end
 
+  it "validates title" do
+    monk = Video.create(description: "a good show")
+    expect(monk.errors.full_messages).to include("Title can't be blank")
+  end
+
+  it "validates description" do
+    monk = Video.create(title: "a good show")
+    expect(monk.errors.full_messages).to include("Description can't be blank")
+  end
+
+
   #it "belongs to a category" do
   #  should belong_to(:category)
   #end
