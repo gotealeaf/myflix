@@ -8,15 +8,8 @@ describe Category do
   end
 
   it "has many videos" do
-    comedies = Category.create(name: 'Comedy')
-    south_park  = Video.create(title: "South Park", description: "Funny show", category: comedies)
-    futurama  = Video.create(title: "Futurama", description: "Another Funny show", category: comedies)
-    expect(comedies.videos).to eq([futurama, south_park])
+   should have_many(:videos) 
   end
-
-  #it "has many videos" do
-  # should have_many(:videos) 
-  #end
 
 end
 
