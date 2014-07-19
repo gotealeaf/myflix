@@ -10,8 +10,14 @@ describe Video do
     #Video.first.should eq(video)
   end
 
-  it "belongs to a category" do
-    should belong_to(:category)
+  it "belongs to category" do
+    dramas = Category.create(name: "Dramas")
+    monk = Video.create(title: "Monk", description: "He's OCD", category: dramas)
+    expect(monk.category).to eq(dramas)
   end
+
+  #it "belongs to a category" do
+  #  should belong_to(:category)
+  #end
 
 end
