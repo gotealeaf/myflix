@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-ruby '2.1.1'
 
 gem 'bootstrap-sass'
 gem 'coffee-rails'
@@ -8,9 +7,9 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
+gem 'pg'
 
 group :development do
-  gem 'sqlite3'
   gem 'pry'
   gem 'pry-nav'
   gem 'thin'
@@ -19,7 +18,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '2.99'
+  gem 'rspec-rails', '~> 3.0.0'
 end
 
 group :test do
@@ -27,7 +26,5 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
   gem 'rails_12factor'
 end
-
