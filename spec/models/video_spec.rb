@@ -16,14 +16,14 @@ describe Video do
     expect(monk.category).to eq(dramas)
   end
 
-  it "validates title" do
-    monk = Video.create(description: "a good show")
-    expect(monk.errors.full_messages).to include("Title can't be blank")
+  it "does not save video without a title" do
+    video = Video.create(description: "a good show")
+    expect(Video.count).to eq(0)
   end
 
-  it "validates description" do
-    monk = Video.create(title: "a good show")
-    expect(monk.errors.full_messages).to include("Description can't be blank")
+  it "does not save video without a description" do
+    monk = Video.create(title: "Monk")
+    expect(Video.count).to eq(0)
   end
 
 
