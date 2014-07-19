@@ -19,11 +19,12 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '2.99'
+  gem 'rspec-rails', '3.0.0'
 end
 
 group :test do
   gem 'database_cleaner', '1.2.0'
+  gem 'shoulda-matchers'
 end
 
 group :production do
