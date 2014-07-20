@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-5.times do |i|
+5000.times do |i|
   Video.create!(title:"##{i} Family Guy", description: "American adult animated sitcom created by Seth MacFarlane for the Fox Broadcasting Company.", large_cover_image_url: "http://upload.wikimedia.org/wikipedia/en/a/aa/Family_Guy_Logo.svg" , small_cover_image_url: "/tmp/family_guy.jpg", category_id: 6 )
 
   Video.create!(title:"##{i} Futurama", description: "The series follows the adventures of a late-20th-century New York City pizza delivery boy, Philip J. Fry, who, after being unwittingly cryogenically frozen for one thousand years, finds employment at Planet Express, an interplanetary delivery company in the retro-futuristic 31st century.", large_cover_image_url: "http://upload.wikimedia.org/wikipedia/en/d/de/Futurama_title_screen.jpg" , small_cover_image_url: "/tmp/futurama.jpg", category_id: 6 )

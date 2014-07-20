@@ -1,10 +1,16 @@
 Rails.application.routes.draw do
 
-  get '/', to: "categories#index"
+  root to: "videos#index"
 
   get 'ui(/:action)', controller: 'ui'
-
-  resources :videos, excep: [:index]
+  get '/signin', to: 'sessions#new'
+  post '/signin', to: 'sessions#create'
+  get '/signout', to: 'sessions#destroy'
+  resources :videos do
+    collection do
+      get 'search', to: 'videos#search'
+    end
+  end
   resources :categories, only: [:index, :show]
-
+  resources :users
 end

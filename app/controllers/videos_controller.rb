@@ -1,6 +1,10 @@
 class VideosController < ApplicationController
   before_action :set_video, only: [:show, :edit, :update]
 
+  def index
+    @categories = Category.all
+  end
+
   def show
   end
 
@@ -12,8 +16,11 @@ class VideosController < ApplicationController
     @video = Video.new(video_params)
   end
 
-  private
+  def search
+    @videos = Video.search(params[:search]).paginate(:page => params[:page])
+  end
 
+  private
   def set_video
     @video = Video.find(params[:id])
   end

@@ -8,6 +8,11 @@ gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'pg'
+gem "pg_search"
+gem 'will_paginate', '~> 3.0'
+gem 'will_paginate-bootstrap'
+gem 'bootstrap_form'
+gem 'bcrypt', '~> 3.1.7'
 
 group :development do
   gem 'pry'

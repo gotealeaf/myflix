@@ -1,11 +1,23 @@
 class Video < ActiveRecord::Base
+  include PgSearch
+
   belongs_to :category
 
   validates_presence_of :title, :description, :large_cover_image_url, :small_cover_image_url, :category_id
 
+  pg_search_scope :search,
+                  :against => [:title, :description],
+                  :using => {
+                    :tsearch => {
+                      :prefix => true, :dictionary => "english", :any_word => true
+                    },
+                    :trigram => {
+                      :threshold => 0.5,
+                      :only => [:title]
+                    },
+                    :dmetaphone => {
+                      :any_word => true
+                    }
+                  }
 
-  def self.search_by_title(search_item)
-    return [] if search_item.blank?
-    where("title LIKE ?", "%#{search_item}%").order("created_at DESC")
-  end
 end

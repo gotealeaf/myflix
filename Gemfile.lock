@@ -28,6 +28,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
+    bcrypt (3.1.7)
     better_errors (1.1.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -35,6 +36,7 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.2.0.0)
       sass (~> 3.2)
+    bootstrap_form (2.1.1)
     builder (3.2.2)
     coderay (1.1.0)
     coffee-rails (4.0.1)
@@ -72,6 +74,10 @@ GEM
     minitest (5.4.0)
     multi_json (1.10.1)
     pg (0.17.1)
+    pg_search (0.7.6)
+      activerecord (>= 3.1)
+      activesupport (>= 3.1)
+      arel
     polyglot (0.3.5)
     pry (0.9.12.6)
       coderay (~> 1.0)
@@ -152,19 +158,25 @@ GEM
     uglifier (2.5.3)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    will_paginate (3.0.7)
+    will_paginate-bootstrap (1.0.1)
+      will_paginate (>= 3.0.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt (~> 3.1.7)
   better_errors
   binding_of_caller
   bootstrap-sass
+  bootstrap_form
   coffee-rails
   database_cleaner (= 1.2.0)
   haml-rails
   jquery-rails
   pg
+  pg_search
   pry
   pry-nav
   rails (= 4.1.1)
@@ -174,3 +186,5 @@ DEPENDENCIES
   shoulda-matchers (= 2.6.0)
   thin
   uglifier
+  will_paginate (~> 3.0)
+  will_paginate-bootstrap
