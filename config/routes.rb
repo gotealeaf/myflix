@@ -6,7 +6,9 @@ Myflix::Application.routes.draw do
   end
 
   resources :genres, except: :index
-  resources :users, except: [:new, :index, :destroy]
+  resources :users, except: [:new, :index, :destroy] do
+    resources :followings, only: [:create, :destroy]
+  end
   resources :queue_videos, only: [:create, :destroy]
 
   get '/home', to: 'videos#index'
@@ -15,6 +17,7 @@ Myflix::Application.routes.draw do
   get '/sign_out', to: 'sessions#destroy'
   get '/register', to: 'users#new'
   get '/my_queue', to: 'queue_videos#index'
+  get '/people', to: 'followings#index'
   post '/update_queue', to: 'queue_videos#update_queue'
 
   get 'ui(/:action)', controller: 'ui'
