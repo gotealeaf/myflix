@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find_by(username: session[:username])
+    @user = User.find(params[:id])
   end
 
 private
