@@ -5,7 +5,7 @@
     - if logged_in?
       %span= link_to "Videos"
       %span= link_to "My Queue", my_queue_path
-      %span= link_to "People"
+      %span= link_to "People", people_path
       = form_tag search_videos_path, class: "col-md-5 navbar-form", method: 'get' do
         .form-group
           = text_field_tag('search_name', 'Search for videos here', class: 'form-control')
