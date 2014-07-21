@@ -9,13 +9,16 @@
         %th(width="20%") Followers
         %th(width="30%") Unfollow
     %tbody
-      - 5.times do
-        %tr
-          %td
-            %img(src="http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest('knwang@gmail.com'.downcase)}?s=40")
-            = link_to "Kevin Wang"
-          %td.extra-padding 20
-          %td.extra-padding 30
-          %td.extra-padding
-            = link_to "", method: :post do
-              %i.glyphicon.glyphicon-remove
+      - if @followings
+        - @followings.each do |following|
+          %tr
+            %td
+              %img(src="http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(following.email.downcase)}?s=40")
+              = link_to following.full_name, user_path(following.followee_id)
+            %td.extra-padding
+              = following.count_queue_videos
+            %td.extra-padding
+              = following.count_followers
+            %td.extra-padding
+              = link_to following_path(following.followee_id), method: :delete do
+                %i.glyphicon.glyphicon-remove
