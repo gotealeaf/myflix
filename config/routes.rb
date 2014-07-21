@@ -6,10 +6,9 @@ Myflix::Application.routes.draw do
   end
 
   resources :genres, except: :index
-  resources :users, except: [:new, :index, :destroy] do
-    resources :followings, only: [:create, :destroy]
-  end
+  resources :users, except: [:new, :index, :destroy]
   resources :queue_videos, only: [:create, :destroy]
+  resources :followings, only: [:create, :destroy]
 
   get '/home', to: 'videos#index'
   get '/sign_in', to: 'sessions#new'
