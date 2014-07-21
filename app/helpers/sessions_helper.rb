@@ -12,4 +12,10 @@ module SessionsHelper
     !!current_user
   end
 
+  def signed_in_user
+    unless signed_in?
+      flash[:warning] = "You must sign in"
+      redirect_to root_path
+    end
+  end
 end
