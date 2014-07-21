@@ -1,6 +1,6 @@
-require "rails_helper"
+require "spec_helper"
 
-RSpec.describe Video, :type => :model do
+describe Video do
 
   it { should belong_to(:category)}
   it { should validate_presence_of(:title)}
@@ -9,7 +9,7 @@ RSpec.describe Video, :type => :model do
   it { should validate_presence_of(:small_cover_image_url)}
   it { should validate_presence_of(:category_id)}
 
-  # 
+  #
   # describe "search" do
   #   let(:test1) { Video.create(title: "test1_case", description: "testing1", large_cover_image_url: "url_str", small_cover_image_url: "url_str", category_id: 1, created_at: 1.day.ago )}
   #   let(:test2) { Video.create(title: "test2_case", description: "testing2", large_cover_image_url: "url_str", small_cover_image_url: "url_str", category_id: 1 )}
