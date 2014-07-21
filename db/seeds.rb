@@ -18,3 +18,6 @@ Video.create(title: "Futurama", description: "From the creator of the Simpsons."
 Video.create(title: "South Park", description: "An irreverent cartoon comedy starring 4 boys.", small_cover_url: "/tmp/south_park.jpg", large_cover_url: "/tmp/south_park.jpg", category: comedy)
 Video.create(title: "Monk", description: "A dective with OCD.", small_cover_url: "/tmp/monk.jpg", large_cover_url: "/tmp/monk_large.jpg", category: comedy)
 
+jamie = User.create(fullname: "Jamie Bobber", email: "jb@jb.net", password: "password")
+johnny = User.create(fullname: "Johnny Nooler", email: "jn@jn.net", password: "password")
+maria = User.create(fullname: "Maria Mendez", email: "mm@mm.net", password: "password", followed_users:[jamie, johnny])

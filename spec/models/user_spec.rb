@@ -1,12 +1,18 @@
 require "spec_helper"
+require "pry"
 
 describe User do
   it { should have_many(:reviews).order(created_at: :desc) }
   it { should have_many(:queue_items).order(:position) }
+  it { should have_many(:followings) }
+  it { should have_many(:followed_users) }
+  it { should have_many(:inverse_followings) }
+  it { should have_many(:followers) }
   it { should validate_presence_of(:fullname) }
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:password) }
   it { should validate_uniqueness_of (:email) }
+
 
   describe "in_video_queue?(video)" do
     let(:jim) { Fabricate(:user) }
@@ -19,6 +25,25 @@ describe User do
     
     it "returns false if video is not in user queue" do
       expect(jim.video_in_queue?(video)).to be_false
+    end
+  end
+
+  describe "can_follow?(another_user)" do
+    let(:jim) { Fabricate(:user) }
+    let(:jose) { Fabricate(:user) }
+    let(:nigel) { Fabricate(:user) }
+    let(:following) { Fabricate(:following, user_id: jim.id, followed_user_id: jose.id) }
+
+    it "returns true if current user does not already follow selected user and selected user is not the current user" do
+      expect(jim.can_follow?(nigel)).to be_true
+    end
+
+    it "returns false if current user already follows selected user" do
+      expect(jim.can_follow?(jose)).to be_false
+    end
+
+    it "returns false if current user is selected user" do
+      expect(jim.can_follow?(jim)).to be_false
     end
   end
 end
