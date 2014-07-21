@@ -5,7 +5,7 @@
         %header
           = image_tag "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(@user.email.downcase)}?s=40"
           %h2= "#{ @user.full_name }'s video collections ( #{ @user.count_queue_videos } ) "
-          = link_to 'Follow', followings_path(@user.id), method: :post, class: 'btn btn-default'
+          = link_to 'Follow', followings_path(user_id: @user.id), method: :post, class: 'btn btn-default'
         %table.table
           %thead
             %tr
