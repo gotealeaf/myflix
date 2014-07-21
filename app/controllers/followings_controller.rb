@@ -7,11 +7,18 @@ class FollowingsController < ApplicationController
 
   def create
     @following = current_user.followings.find_by(followee_id: params[:user_id])
-    if @following
-      flash[:error] = "You are already following #{ @following.user.full_name }"
-    else
+    unless current_user.id == params[:user_id].to_i || @following
       @following = Following.create(user: current_user, followee_id: params[:user_id] )
       flash[:success] = "You are now following #{ @following.user.full_name }"
+    end
+    redirect_to people_path
+  end
+
+  def destroy
+    following = current_user.followings.find_by(followee_id: params[:id])
+    if following
+      following.delete
+      flash[:success] = "You are no longer following #{ following.full_name }"
     end
     redirect_to people_path
   end
