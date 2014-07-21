@@ -1,0 +1,2 @@
+Fabricator(:following) do
+end
