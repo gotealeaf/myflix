@@ -14,8 +14,7 @@ class UsersController < ApplicationController
       AppMailer.send_welcome_email(@user).deliver
       create_invitation_relationships @user, params
       
-      Stripe.api_key = ENV['STRIPE_SECRET_KEY']
-      Stripe::Charge.create(
+      StripeWrapper::Charge.create(
         :amount      => 999,
         :currency    => "usd",
         :card        => params[:stripeToken],
