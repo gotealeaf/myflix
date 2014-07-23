@@ -1,7 +1,6 @@
 %article.video_category
   .videos.row
     - @videos.each do |video|
-    # may need .video.span2 instead (from video lesson)
       .video.col-sm-2
         = link_to "", video, nil do
           %img(src="#{video.cover_image_url}")
