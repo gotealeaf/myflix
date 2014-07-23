@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe VideosController do
 
-  context "with autheticated user" do
+  context "authenticated user" do
     let(:cat){ Fabricate(:category) }
     before { session[:user_id] = Fabricate(:user).id }
 
@@ -78,7 +78,7 @@ describe VideosController do
             post :create, video: Fabricate.attributes_for(:video)
           }.to change(Video, :count).by(1)
         end
-        it "redirect to root path" do
+        it "redirect to root_path" do
           post :create, video: Fabricate.attributes_for(:video)
           expect(response).to redirect_to root_path
         end
@@ -98,40 +98,41 @@ describe VideosController do
     end
   end
 
-  context "without autheticated user" do
+  context "unauthenticated user" do
     let(:video) { Fabricate(:video) }
 
     describe "GET index" do
-      it "redirect to root_path" do
+      it "redirect to signin_path" do
         get :index
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to signin_path
       end
     end
+
     describe "GET show" do
-      it "redirect to root_path" do
+      it "redirect to signin_path" do
         get :show, id: video
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to signin_path
       end
     end
 
     describe "GET search" do
-      it "redirect to root_path" do
+      it "redirect to signin_path" do
         get :search, search: "monk"
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to signin_path
       end
     end
 
     describe "GET new" do
-      it "redirect to root_path" do
+      it "redirect to signin_path" do
         get :new
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to signin_path
       end
     end
 
     describe "POST create" do
-      it "redirect to root_path" do
+      it "redirect to signin_path" do
         post :create, video: Fabricate.attributes_for(:video)
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to signin_path
       end
     end
   end

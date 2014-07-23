@@ -1,6 +1,7 @@
 class VideosController < ApplicationController
   before_action :set_video, only: [:show, :edit, :update]
   before_action :signed_in_user
+
   def index
     @categories = Category.all
   end
