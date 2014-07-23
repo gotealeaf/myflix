@@ -1,6 +1,10 @@
 class VideosController < ApplicationController
-    def index
-      # this will be routed to /home/index.html.haml
-      @videos = Video.all
-    end
+
+  def index
+    @videos = Video.all
+  end
+
+  def show
+
+  end
 end
