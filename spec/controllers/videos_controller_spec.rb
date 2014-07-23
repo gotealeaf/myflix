@@ -21,7 +21,7 @@ describe VideosController do
       let(:video) {Fabricate(:video)}
       before { get :show, id: video.id }
 
-      it "assgins @video" do
+      it "assigns @video" do
         expect(assigns(:video)).to eq(video)
       end
       it "render template :show" do
@@ -61,7 +61,7 @@ describe VideosController do
     describe "GET new" do
       before { get :new }
 
-      it "assgins @video" do
+      it "assigns @video" do
         expect(assigns(:video)).to be_new_record
         expect(assigns(:video)).to be_instance_of(Video)
       end
@@ -99,6 +99,40 @@ describe VideosController do
   end
 
   context "without autheticated user" do
-    
+    let(:video) { Fabricate(:video) }
+
+    describe "GET index" do
+      it "redirect to root_path" do
+        get :index
+        expect(response).to redirect_to root_path
+      end
+    end
+    describe "GET show" do
+      it "redirect to root_path" do
+        get :show, id: video
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    describe "GET search" do
+      it "redirect to root_path" do
+        get :search, search: "monk"
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    describe "GET new" do
+      it "redirect to root_path" do
+        get :new
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    describe "POST create" do
+      it "redirect to root_path" do
+        post :create, video: Fabricate.attributes_for(:video)
+        expect(response).to redirect_to root_path
+      end
+    end
   end
 end
