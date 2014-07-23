@@ -4,7 +4,6 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rubygems'
 require 'rspec/rails'
 require 'shoulda/matchers'
-require 'factory_girl_rails'
 
 # require_relative '../spec/factories/category.rb'
 # require_relative '../spec/factories/video.rb'
@@ -64,5 +63,4 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/v/3-0/docs
   config.infer_spec_type_from_file_location!
-  config.include FactoryGirl::Syntax::Methods
 end

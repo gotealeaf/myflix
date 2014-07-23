@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe CategoriesController do
-  let(:action) { FactoryGirl.create(:category)}
+  let(:action) { Fabricate(:category) }
   describe "GET show" do
     it "assigns @category" do
       get :show, id: action.id
@@ -12,5 +12,4 @@ describe CategoriesController do
       expect(response).to render_template :show
     end
   end
-
 end

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :destroy]
-  before_action :signed_in_user, only: [:edit, :update]
+  before_action :set_user, only: [:show, :edit,:update, :destroy]
+  # before_action :signed_in_user, only: [:edit, :update]
 
   def show
   end
@@ -21,11 +21,15 @@ class UsersController < ApplicationController
   end
 
   def edit
-
   end
 
   def update
-
+    if @user.update(user_params)
+      flash[:success] = "You've updated"
+      redirect_to @user
+    else
+      render :edit
+    end
   end
 
   private

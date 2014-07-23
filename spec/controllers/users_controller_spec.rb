@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe UsersController do
   describe "GET show" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { Fabricate(:user) }
     it "assigns @user" do
       get :show, id: user.id
       expect(assigns(:user)).to eq(user)
@@ -31,24 +31,27 @@ describe UsersController do
     context "valid attributes" do
       it "create a new user record" do
         expect {
-          post :create, user: FactoryGirl.attributes_for(:user)
+          post :create, user: Fabricate.attributes_for(:user)
         }.to change(User, :count).by(1)
       end
       it "redirect to root path" do
-        post :create, user: FactoryGirl.attributes_for(:user)
+        post :create, user: Fabricate.attributes_for(:user)
         expect(response).to redirect_to root_path
       end
     end
 
     context "invalid attributes" do
+      before do
+        Fabricate(:user, email:"example@example.com")
+      end
       it "dont create a new user record" do
         expect {
-          post :create, user: FactoryGirl.attributes_for(:invalid_user)
+          post :create, user: Fabricate.attributes_for(:user, email: "example@example.com")
         }.not_to change(User, :count)
       end
 
       it "render template :new" do
-        post :create, user: FactoryGirl.attributes_for(:invalid_user)
+        post :create, user: Fabricate.attributes_for(:user, email: "example@example.com")
         expect(response).to render_template :new
       end
     end
@@ -59,18 +62,22 @@ describe UsersController do
   end
 
   describe "PUT update" do
-    before :each do
-      @user = FactoryGirl.create(:user)
+    before do
+      @user = Fabricate.create(:user, email: "Lawrence@example.com", full_name:"KK Smith")
     end
 
     context "valid attributes" do
-      before :each do
-        put :update,{ id: @user, user: FactoryGirl.attributes_for(:user, email: "example@example.com", full_name: "user") }
-        @user.reload
+      it "locate requested @user" do
+        put :edit, id: @user
+        expect(assigns(:user)).to eq(@user)
       end
 
-      it { expect(@user.email).to eq("example@example.com") }
-      it { expect(@user.full_name).to  eq("user")}
+      it "change @user' attributes" do
+        put :update, id: @user.id, user: Fabricate.attributes_for(:user, email: "marisa@becker.com", full_name: "Brianne Mraz")
+        @user.reload
+
+        expect(@user.email).to eq("marisa@becker.com")
+      end
     end
 
   end
