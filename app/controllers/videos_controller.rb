@@ -2,6 +2,7 @@ class VideosController < ApplicationController
   before_action :set_video, only: [:show, :edit, :update]
   before_action :signed_in_user
 
+
   def index
     @categories = Category.all
   end
@@ -15,7 +16,6 @@ class VideosController < ApplicationController
 
   def create
     @video = Video.new(video_params)
-
     if @video.save
       flash[:success] = "A new video have been created."
       redirect_to root_path
@@ -29,7 +29,6 @@ class VideosController < ApplicationController
   end
 
   private
-
     def set_video
       @video = Video.find(params[:id])
     end
@@ -37,5 +36,4 @@ class VideosController < ApplicationController
     def video_params
       params.require(:video).permit(:title, :description, :large_cover_image_url, :small_cover_image_url, :category_id )
     end
-
 end

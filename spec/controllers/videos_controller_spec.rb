@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe VideosController do
-
   context "authenticated user" do
     let(:cat){ Fabricate(:category) }
     before { session[:user_id] = Fabricate(:user).id }
@@ -12,6 +11,7 @@ describe VideosController do
       it "assigns @categories" do
         expect(assigns(:categories)).to eq([cat])
       end
+
       it "renders template :index" do
         expect(response).to render_template :index
       end
@@ -24,6 +24,7 @@ describe VideosController do
       it "assigns @video" do
         expect(assigns(:video)).to eq(video)
       end
+
       it "render template :show" do
         expect(response).to render_template :show
       end
@@ -40,6 +41,7 @@ describe VideosController do
         it "assigns @videos" do
           expect(assigns(:videos)).to include(strain)
         end
+
         it "render template :search" do
           expect(response). to render_template :search
         end
@@ -51,6 +53,7 @@ describe VideosController do
         it "assigns @videos as empty" do
           expect(assigns(:videos)).to eq([])
         end
+
         it "render template :search" do
           expect(response). to render_template :search
         end
@@ -65,19 +68,20 @@ describe VideosController do
         expect(assigns(:video)).to be_new_record
         expect(assigns(:video)).to be_instance_of(Video)
       end
+
       it "render template :new" do
         expect(response).to render_template :new
       end
     end
 
     describe "POST create" do
-
       context "when input is valid" do
         it "create a video record" do
           expect{
             post :create, video: Fabricate.attributes_for(:video)
           }.to change(Video, :count).by(1)
         end
+
         it "redirect to root_path" do
           post :create, video: Fabricate.attributes_for(:video)
           expect(response).to redirect_to root_path
@@ -90,6 +94,7 @@ describe VideosController do
             post :create, video: Fabricate.attributes_for(:video, category_id: nil)
           }.not_to change(Video, :count)
         end
+
         it 'render a template :new' do
           post :create, video: Fabricate.attributes_for(:video, category_id: nil)
           expect(response).to render_template :new

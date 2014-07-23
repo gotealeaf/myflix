@@ -14,7 +14,7 @@ module SessionsHelper
 
   def signed_in_user
     unless signed_in?
-      flash[:warning] = "You must sign in"
+      flash[:danger] = "You must sign in"
       redirect_to signin_path
     end
   end

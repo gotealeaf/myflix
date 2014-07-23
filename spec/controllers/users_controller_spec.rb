@@ -37,6 +37,7 @@ describe UsersController do
           post :create, user: Fabricate.attributes_for(:user)
         }.to change(User, :count).by(1)
       end
+
       it "redirect to root path" do
         post :create, user: Fabricate.attributes_for(:user)
         expect(response).to redirect_to root_path
@@ -52,7 +53,7 @@ describe UsersController do
         }.not_to change(User, :count)
       end
 
-      before {post :create, user: Fabricate.attributes_for(:user, email: "example@example.com")}
+      before { post :create, user: Fabricate.attributes_for(:user, email: "example@example.com") }
 
       it "render template :new" do
         expect(response).to render_template :new
@@ -66,13 +67,11 @@ describe UsersController do
   end
 
   describe "GET edit" do
-    
+
   end
 
   describe "PUT update" do
-    before do
-      @user = Fabricate.create(:user, email: "Lawrence@example.com", full_name:"KK Smith")
-    end
+    before { @user = Fabricate.create(:user, email: "Lawrence@example.com", full_name:"KK Smith") }
 
     context "valid attributes" do
       it "locate requested @user" do
@@ -83,10 +82,7 @@ describe UsersController do
       it "change @user' attributes" do
         put :update, id: @user.id, user: Fabricate.attributes_for(:user, email: "marisa@becker.com", full_name: "Brianne Mraz")
         @user.reload
-
         expect(@user.email).to eq("marisa@becker.com")
       end
     end
-
-  end
 end
