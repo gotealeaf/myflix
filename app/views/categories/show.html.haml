@@ -1,0 +1,9 @@
+%section.genre
+  %header.clearfix
+    %h1 
+      = @category.name
+  .videos.row
+    - @category.videos.each do |video|
+      %div{:style => "height: 200px; display: inline"}
+        = link_to video, nil do
+          %img(src="/tmp/#{video.small_cover_url}")
