@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 
   has_secure_password validations: false
 
-  def set_queue_position
+  def next_available_queue_position
     queue_items.count + 1
   end
 

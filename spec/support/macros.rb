@@ -1,6 +1,5 @@
 def set_current_user
-  maria = Fabricate(:user)
-  session[:user_id] = maria.id
+  session[:user_id] = Fabricate(:user)
 end
 
 def current_user

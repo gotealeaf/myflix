@@ -17,4 +17,14 @@ Myflix::Application.configure do
   config.i18n.fallbacks = true
 
   config.active_support.deprecation = :notify
+
+  ActionMailer::Base.smtp_settings = {
+  :address        => "smtp.gmail.com",
+  :port           => 587,
+  :domain         => "domain.com",
+  :user_name      => ENV["gmail_username"]
+  :password       => ENV["password"]
+  :authentication => :plain
+  }
+
 end
