@@ -4,6 +4,7 @@ class QueueVideo < ActiveRecord::Base
   validates :position, numericality: { only_integer: true }
   validates_presence_of :position
 
+  delegate :genre, to: :video
   delegate :name, to: :video, prefix: :video
 
   def rating
@@ -20,7 +21,7 @@ class QueueVideo < ActiveRecord::Base
   end
 
   def genre_name
-    video.genre.name
+    genre.name.titleize
   end
 
   private
