@@ -11,6 +11,7 @@ class UsersController < ApplicationController
     if @user.save
       flash[:success] = "Welcome #{@user.full_name}!"
       session[:username] = @user.username
+      MyflixMailer.welcome_email(current_user).deliver
       redirect_to videos_path
     else
       render :new
