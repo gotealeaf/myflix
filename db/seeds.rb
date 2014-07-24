@@ -6,6 +6,15 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+Genre.create(name: 'action',
+             slug: 'action')
+
+Genre.create(name: 'sciFi',
+             slug: 'scifi')
+
+Genre.create(name: 'comedy',
+             slug: 'comedy')
+
 Video.create(name: 'gladiator',
              genre: 'action',
              slug: 'gladiator',
@@ -78,12 +87,3 @@ Video.create(name: 'avatar',
              large_cover_url: 'avatar_lrg.jpg',
              small_cover_url: 'avatar_sml.jpg',
              description: "avatar is the story of an ex-Marine who finds himself thrust into hostilities on an alien planet filled with exotic life forms. As an Avatar, a human mind in an alien body, he finds himself torn between two worlds, in a desperate fight for his own survival and that of the indigenous people.")
-
-Genre.create(name: 'action',
-             slug: 'action')
-
-Genre.create(name: 'sciFi',
-             slug: 'scifi')
-
-Genre.create(name: 'comedy',
-             slug: 'comedy')
