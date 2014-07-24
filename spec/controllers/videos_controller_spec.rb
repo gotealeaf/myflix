@@ -19,12 +19,17 @@ describe VideosController do
 
     describe "GET show" do
       let(:video) {Fabricate(:video)}
+      let(:review1) { Fabricate(:review, video: video) }
+      let(:review2) { Fabricate(:review, video: video) }
       before { get :show, id: video.id }
 
       it "assigns @video" do
         expect(assigns(:video)).to eq(video)
       end
 
+      it "assigns @reviews" do
+        expect(assigns(:reviews)).to match_array([review1, review2])
+      end
       it "render template :show" do
         expect(response).to render_template :show
       end

@@ -15,10 +15,10 @@
 %section.reviews.container
   .row
     .col-sm-10.col-sm-offset-1
-      = bootstrap_form_for [@video, @review] do |f|
-        = f.collection_select :video, :rating, 
-        = f.text_area :content, label: "Write Review", rows: 6
-        = f.submit "Submit"
+      -# = bootstrap_form_for [@video, @review] do |f|
+      -#   = f.collection_select :video, :rating,
+      -#   = f.text_area :content, label: "Write Review", rows: 6
+      -#   = f.submit "Submit"
 
 
       %header
@@ -26,5 +26,5 @@
           User Reviews
           = "(#{@video.total_reviews})"
       %ul
-        - @video.reviews.each do |review|
+        - @reviews.each do |review|
           = render review
