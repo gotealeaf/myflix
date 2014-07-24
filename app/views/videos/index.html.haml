@@ -6,4 +6,4 @@
       - genre.recent_videos.each do |video|
         .video.col-sm-2
           = link_to video_path(video), { id: video.id } do
-            = image_tag "/assets/#{video.small_cover_url}", class: 'img-thumbnail'
+            = image_tag video.small_cover_url, class: 'img-thumbnail'
