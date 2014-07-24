@@ -13,6 +13,7 @@ gem 'pg'
 gem 'bcrypt-ruby', '3.1.2'
 gem 'fabrication'
 gem 'faker'
+gem 'mail'
 
 group :development do
   gem 'thin'
@@ -38,5 +39,4 @@ end
 
 group :production do
   gem 'rails_12factor'
-  gem 'mail'
 end
