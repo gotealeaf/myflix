@@ -2,7 +2,7 @@ class Video < ActiveRecord::Base
   include PgSearch
 
   belongs_to :category
-  has_many :reviews
+  has_many :reviews, -> { order('created_at DESC') }
 
   validates_presence_of :title, :description,
                         :large_cover_image_url,
@@ -36,6 +36,6 @@ class Video < ActiveRecord::Base
     def cal_rating
       overall = reviews.inject(0) {|sum, review| sum + review.rating.to_f }/total_reviews
 
-      return overall.round(1).to_s + "/5"
+      return overall.round(1).to_s + "/5.0"
     end
 end

@@ -9,7 +9,7 @@ describe CategoriesController do
       expect(assigns(:category)).to eq (action)
     end
 
-    it "render show tmplate" do
+    it "renders show tmplate" do
       get :show, id: action.id
       expect(response).to render_template :show
     end

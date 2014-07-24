@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     collection do
       get 'search', to: 'videos#search'
     end
-    resources :reviews, only: [:new, :create]
+    resources :reviews, only: [:create]
   end
   resources :categories, only: [:index, :show]
   resources :users

@@ -30,7 +30,12 @@ describe VideosController do
       it "assigns @reviews" do
         expect(assigns(:reviews)).to match_array([review1, review2])
       end
-      it "render template :show" do
+
+      it "assigns @review" do
+        expect(assigns(:review)).to be_new_record
+      end
+
+      it "renders template :show" do
         expect(response).to render_template :show
       end
     end
@@ -47,7 +52,7 @@ describe VideosController do
           expect(assigns(:videos)).to include(strain)
         end
 
-        it "render template :search" do
+        it "renders template :search" do
           expect(response). to render_template :search
         end
       end
@@ -59,7 +64,7 @@ describe VideosController do
           expect(assigns(:videos)).to eq([])
         end
 
-        it "render template :search" do
+        it "renders template :search" do
           expect(response). to render_template :search
         end
       end
@@ -74,14 +79,14 @@ describe VideosController do
         expect(assigns(:video)).to be_instance_of(Video)
       end
 
-      it "render template :new" do
+      it "renders template :new" do
         expect(response).to render_template :new
       end
     end
 
     describe "POST create" do
       context "when input is valid" do
-        it "create a video record" do
+        it "creates a video record" do
           expect{
             post :create, video: Fabricate.attributes_for(:video)
           }.to change(Video, :count).by(1)
@@ -100,7 +105,7 @@ describe VideosController do
           }.not_to change(Video, :count)
         end
 
-        it 'render a template :new' do
+        it 'renders a template :new' do
           post :create, video: Fabricate.attributes_for(:video, category_id: nil)
           expect(response).to render_template :new
         end

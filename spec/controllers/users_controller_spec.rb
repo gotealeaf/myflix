@@ -10,7 +10,7 @@ describe UsersController do
       expect(assigns(:user)).to eq(user)
     end
 
-    it "render template :show" do
+    it "renders template :show" do
       get :show, id: user
       expect(response).to render_template :show
     end
@@ -23,7 +23,7 @@ describe UsersController do
       expect(assigns(:user)).to be_instance_of(User)
     end
 
-    it "render template :new" do
+    it "renders template :new" do
       get :new
       expect(response).to render_template :new
     end
@@ -32,13 +32,13 @@ describe UsersController do
 
   describe "POST create" do
     context "valid attributes" do
-      it "create a new user record" do
+      it "creates a new user record" do
         expect {
           post :create, user: Fabricate.attributes_for(:user)
         }.to change(User, :count).by(1)
       end
 
-      it "redirect to root path" do
+      it "redirects to root path" do
         post :create, user: Fabricate.attributes_for(:user)
         expect(response).to redirect_to root_path
       end
@@ -55,7 +55,7 @@ describe UsersController do
 
       before { post :create, user: Fabricate.attributes_for(:user, email: "example@example.com") }
 
-      it "render template :new" do
+      it "renders template :new" do
         expect(response).to render_template :new
       end
 
