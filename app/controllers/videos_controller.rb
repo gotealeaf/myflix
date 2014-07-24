@@ -5,6 +5,6 @@ class VideosController < ApplicationController
   end
 
   def show
-
+    @video = Video.first
   end
 end

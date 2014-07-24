@@ -1,9 +1,9 @@
 Myflix::Application.routes.draw do
   get 'ui(/:action)', controller: 'ui'
 
-  # have to set this up so there is only one videos#index
-  # default home page
-  get '/home' => 'videos#index', :as => :video
-  # resources :videos, :path => 'home'
- resources :videos
+  # decided on this as most syntactically correct version
+  get '/home' => 'videos#index', :as => :videos
+  # this may change as development changes
+  get '/video' => 'videos#show'
+  # resources :videos, only: [:show, :index]
 end
