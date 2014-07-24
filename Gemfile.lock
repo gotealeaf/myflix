@@ -175,12 +175,8 @@ DEPENDENCIES
   bootstrap_form
   coffee-rails
   database_cleaner (= 1.2.0)
-<<<<<<< HEAD
   fabrication
   faker
-=======
-  factory_girl_rails
->>>>>>> fb59e9e41e3518be60b91532c366501824f17f62
   haml-rails
   jquery-rails
   pg

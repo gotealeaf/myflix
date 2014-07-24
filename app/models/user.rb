@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
-  has_secure_password validation: false
 
+  has_many :reviews
+
+  has_secure_password validation: false
   validates_presence_of :email, :full_name
   validates_presence_of :password, :password_confirmation, on: :create
   validates_length_of :password, :password_confirmation,
