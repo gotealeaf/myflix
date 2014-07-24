@@ -199,6 +199,7 @@ DEPENDENCIES
   jquery-rails
   launchy (~> 2.4.2)
   letter_opener
+  mail
   pg
   pry
   pry-nav
