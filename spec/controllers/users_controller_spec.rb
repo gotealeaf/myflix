@@ -36,6 +36,22 @@ describe UsersController do
       it "puts the user in the session" do
         expect(session[:user_id]).to eq(User.first.id)
       end
+
+      context "sending email" do
+        it "sends out the email" do
+          expect(ActionMailer::Base.deliveries).to_not be_empty
+        end
+
+        it "sends email the correct recipient" do
+          message = ActionMailer::Base.deliveries.last
+          expect(message.to).to eq([User.first.email])
+        end
+
+        it "sends email with the correct message" do
+           message = ActionMailer::Base.deliveries.last
+           expect(message.body).to include(User.first.fullname)
+        end
+      end
     end
 
     context "without valid input" do
