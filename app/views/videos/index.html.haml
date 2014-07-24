@@ -1,7 +1,14 @@
 %article.video_category
   .videos.row
-    - @videos.each do |video|
-      .video.col-sm-2
-        = link_to video, nil do
-          %img(src="/tmp/#{video.small_cover_url}")
+    - cats = @videos.map(&:category).uniq.sort
+    - cats.each do |cat|
+      %div{:style => "align: left"}
+        %h1
+          = cat
+        - cat_videos = @videos.select{|v| v.category == cat} 
+        - cat_videos.each do |video|
+          %div{:style => "height: 200px; display: inline"}
+            -#.video.col-sm-2
+            = link_to video, nil do
+              %img(src="/tmp/#{video.small_cover_url}")
 
