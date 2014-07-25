@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   get '/signin', to: 'sessions#new'
   post '/signin', to: 'sessions#create'
   get '/signout', to: 'sessions#destroy'
+
+  get '/my_queue', to: "queue_items#index"
+
   resources :videos do
     collection do
       get 'search', to: 'videos#search'
@@ -14,4 +17,6 @@ Rails.application.routes.draw do
   end
   resources :categories, only: [:index, :show]
   resources :users
+
+  resources :queue_items, only: [:create]
 end
