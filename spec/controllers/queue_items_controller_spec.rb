@@ -5,7 +5,7 @@ describe QueueItemsController do
   let(:user) { Fabricate(:user) }
   let(:video1) { Fabricate(:video) }
   let(:video2) { Fabricate(:video) }
-  describe "GET show" do
+  describe "GET index" do
     context "with authenticated user" do
 
       let(:item1) { Fabricate(:queue_item, creator: user) }
