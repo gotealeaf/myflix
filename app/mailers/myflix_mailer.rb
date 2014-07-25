@@ -3,6 +3,6 @@ class MyflixMailer < ActionMailer::Base
 
   def welcome_email(user)
     @user = user
-    mail to: user.full_name, subject: 'Welcome to MyFlix!'
+    mail to: user.email, subject: 'Welcome to MyFlix!'
   end
 end
