@@ -17,4 +17,5 @@ class QueueItem < ActiveRecord::Base
   def rating
     video.rating
   end
+
 end
