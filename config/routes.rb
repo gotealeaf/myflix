@@ -18,5 +18,5 @@ Rails.application.routes.draw do
   resources :categories, only: [:index, :show]
   resources :users
 
-  resources :queue_items, only: [:create]
+  resources :queue_items, only: [:create, :destroy]
 end
