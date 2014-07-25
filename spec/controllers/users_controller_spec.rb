@@ -14,19 +14,37 @@ describe UsersController do
 
   describe 'POST create' do
     context 'if validation passes' do
-
-      before { post :create, user: Fabricate.attributes_for(:user) }
-
       it 'creates a new user' do
+        post :create, user: Fabricate.attributes_for(:user)
         expect(User.all.count).to eq(1)
       end
+      it 'delivers a welcome email' do
+        post :create, user: Fabricate.attributes_for(:user)
+        expect(ActionMailer::Base.deliveries).to_not be_empty
+      end
+      it 'delivers to the correct recipient' do
+        post :create, user: { username:'test_user', full_name: 'test_user',
+                              email: 'user@example.com', password: 'password',
+                              password_confirmation: 'password' }
+        expect(ActionMailer::Base.deliveries.last.to).to eq(['user@example.com'])
+      end
+      it 'has the correct content' do
+        post :create, user: { username:'test_user', full_name: 'test_user',
+                              email: 'user@example.com', password: 'password',
+                              password_confirmation: 'password' }
+        expect(ActionMailer::Base.deliveries.last.body).to include('Welcome to MyFlix')
+      end
+
       it 'Flash a welcome message' do
+        post :create, user: Fabricate.attributes_for(:user)
         expect(flash[:success].blank?).to eq(false)
       end
       it 'assigns session[:user]' do
+        post :create, user: Fabricate.attributes_for(:user)
         expect(session[:username].blank?).to eq(false)
       end
       it 'redirects to video_path' do
+        post :create, user: Fabricate.attributes_for(:user)
         expect(response).to redirect_to videos_path
       end
     end
