@@ -20,7 +20,7 @@ Myflix::Application.routes.draw do
 
   get 'forgot_password', to: 'password_resets#new'
   post'forgot_password', to: 'password_resets#create'
-  get 'confirm_password_reset', to: 'pages_controller#confirm_password_reset'
+  get 'confirm_password_reset', to: 'pages#confirm_password_reset'
 
   post 'update_queue', to: 'queue_videos#update_queue'
 
