@@ -28,5 +28,6 @@ def click_on_video_on_home_page video
 end
 
 def sign_out
+  click_link "dlabel"
   click_link "Sign out"  
 end

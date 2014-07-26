@@ -21,7 +21,7 @@ describe UsersController do
   
   describe "POST create" do
     context "with valid input" do
-      
+      before { StripeWrapper::Charge.stub(:create) }
       after { ActionMailer::Base.deliveries.clear }
       
       it "creates the user" do

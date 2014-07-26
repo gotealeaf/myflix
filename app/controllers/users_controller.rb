@@ -54,6 +54,7 @@ class UsersController < ApplicationController
 
   def new_with_invitation_token    
     invitation = Invitation.find_by_token(params[:token])
+    #binding.pry
     if invitation
       @user = User.new(email: invitation.recipient_email)
       @invitation_token = invitation.token
