@@ -85,4 +85,5 @@ describe UsersController do
         expect(@user.email).to eq("marisa@becker.com")
       end
     end
+  end
 end

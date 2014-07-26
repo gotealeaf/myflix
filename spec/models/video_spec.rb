@@ -8,10 +8,10 @@ describe Video do
   it { should validate_presence_of(:large_cover_image_url) }
   it { should validate_presence_of(:small_cover_image_url) }
   it { should validate_presence_of(:category_id) }
-  it { shoudl has_many(:reviews).order("created_at DESC")}
+  it { should have_many(:reviews).order("created_at DESC")}
 
   describe "search" do
-    let(:test1) { Fabricate(:video, created_at: 100.days.ago) }
+    let(:test1) { Fabricate(:video, title: "monk", created_at: 100.days.ago) }
     let(:test2) { Fabricate(:video, title: "monkket") }
 
     it "should return empty array if no match" do
@@ -19,7 +19,7 @@ describe Video do
     end
 
     it "should return a array of a obj if a perfect match" do
-      expect(Video.search("Monk")).to eq([test1])
+      expect(Video.search("monk")).to eq([test1])
     end
 
     it "should return a array of a obj if a partial match" do

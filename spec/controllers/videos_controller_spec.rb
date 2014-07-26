@@ -31,10 +31,6 @@ describe VideosController do
         expect(assigns(:reviews)).to match_array([review1, review2])
       end
 
-      it "assigns @review" do
-        expect(assigns(:review)).to be_new_record
-      end
-
       it "renders template :show" do
         expect(response).to render_template :show
       end
