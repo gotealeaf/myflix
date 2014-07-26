@@ -19,4 +19,5 @@ Rails.application.routes.draw do
   resources :users
 
   resources :queue_items, only: [:create, :destroy]
+  post "update_queue", to: "queue_items#update_queue"
 end

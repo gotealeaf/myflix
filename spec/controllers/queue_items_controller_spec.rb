@@ -2,16 +2,16 @@ require 'spec_helper'
 
 
 describe QueueItemsController do
-  let(:user) { Fabricate(:user) }
+  let(:current_user) { Fabricate(:user) }
   let(:video1) { Fabricate(:video) }
   let(:video2) { Fabricate(:video) }
   describe "GET index" do
     context "with authenticated user" do
 
-      let(:item1) { Fabricate(:queue_item, creator: user) }
-      let(:item2) { Fabricate(:queue_item, creator: user) }
+      let(:item1) { Fabricate(:queue_item, ranking: 1, creator: current_user) }
+      let(:item2) { Fabricate(:queue_item, ranking: 2, creator: current_user) }
       before do
-        session[:user_id] = user.id
+        session[:user_id] = current_user.id
         get :index
       end
 
@@ -33,7 +33,7 @@ describe QueueItemsController do
 
   describe "POST create" do
     context "with authenticated user" do
-      before { session[:user_id] = user.id }
+      before { session[:user_id] = current_user.id }
       context "with valid input" do
         before do
           post :create, video_id: video1.id
@@ -44,7 +44,7 @@ describe QueueItemsController do
           expect(QueueItem.count).to eq(2)
         end
         it "assoicates with user" do
-          expect(QueueItem.first.creator).to eq(user)
+          expect(QueueItem.first.creator).to eq(current_user)
         end
         it "assoicates with video" do
           expect(QueueItem.first.video).to eq(video1)
@@ -72,32 +72,102 @@ describe QueueItemsController do
     end
   end
 
-  describe "DELETE destroy" do
-    context "with anuthenticated user" do
-      let(:user) { Fabricate(:user) }
-      let(:another_user) { Fabricate(:user) }
-      before {  session[:user_id] = user.id }
-      let(:queue_item1) { Fabricate(:queue_item, user_id: user.id) }
-      before { delete :destroy, id: queue_item1.id }
+  describe "POST update" do
+    context "with authenticated user" do
+      let(:queue_item1) { Fabricate(:queue_item, ranking: 1, creator: current_user) }
+      let(:queue_item2) { Fabricate(:queue_item, ranking: 2, creator: current_user) }
+      before { session[:user_id] = current_user.id }
 
-      it "redirects to my_queue_path" do
-        expect(response).to redirect_to my_queue_path
+      context "with valid input" do
+        before do
+          post :update_queue, queue_items: [{ id: queue_item1.id, ranking: 3 },
+             { id: queue_item2, ranking: 2 }]
+        end
+
+        it "reset the ranking numbers" do
+          expect(current_user.queue_items).to eq([queue_item2, queue_item1])
+        end
+
+        it "reset the order square" do
+          expect(current_user.queue_items.map(&:ranking)).to eq([1,2])
+        end
+        it "redirects to my_queue_path" do
+          expect(response).to redirect_to my_queue_path
+        end
       end
 
-      it "deletes the queue item" do
-        expect(QueueItem.count).to eq(0)
-      end
 
-      it "does not delete non-current user's queue item" do
-        queue_item2 = Fabricate(:queue_item, user_id: another_user.id)
+      context "with invalid input" do
+        before do
+          post :update_queue, queue_items: [{ id: queue_item1.id, ranking: 3.4 }, { id: queue_item2, ranking: 1 }]
+        end
+        it "does not change the ranking numbers" do
+          expect(queue_item2.reload.ranking).to eq(2)
+        end
 
-        delete :destroy, id: queue_item2.id
-        expect(QueueItem.count).to eq(1)
+        it "redirects to my_queue_path" do
+          expect(response).to redirect_to my_queue_path
+        end
+
+        it "sets flash meassage" do
+          expect(flash[:warning]).not_to be_blank
+        end
       end
     end
 
     context "with unanthenticated user" do
-      let(:queue_item) { Fabricate(:queue_item) }
+      it "redirects to signin_path" do
+        post :update_queue, queue_items: [{ id: 1, ranking: 1 }]
+        expect(response).to redirect_to signin_path
+      end
+    end
+
+    context "when queue item do not belongs to current_user" do
+      let(:another_user) { Fabricate(:user) }
+      let(:queue_item1) { Fabricate(:queue_item, ranking: 1, creator: another_user) }
+      let(:queue_item2) { Fabricate(:queue_item, ranking: 2, creator: another_user) }
+      before do
+        session[:user_id] = current_user.id
+        post :update_queue, queue_items: [{ id: queue_item1.id, ranking: 3 },
+           { id: queue_item2, ranking: 2 }]
+      end
+      it "does not change the ranking" do
+        expect(another_user.queue_items).to eq([queue_item1, queue_item2])
+      end
+
+    end
+  end
+
+  describe "DELETE destroy" do
+    context "with anuthenticated user" do
+      before { session[:user_id] = current_user.id }
+      let!(:another_user) { Fabricate(:user) }
+      let!(:queue_item1) { Fabricate(:queue_item, ranking: 1, user_id: current_user.id) }
+      let!(:queue_item2) { Fabricate(:queue_item, ranking: 2, user_id: current_user.id) }
+      let!(:another_user_item) { Fabricate(:queue_item, ranking: 1, user_id: another_user.id) }
+      it "redirects to my_queue_path" do
+        delete :destroy, id: queue_item1.id
+        expect(response).to redirect_to my_queue_path
+      end
+
+      it "deletes the queue item" do
+        delete :destroy, id: queue_item1.id
+        expect(QueueItem.count).to eq(2)
+      end
+
+      it "does not delete non-current user's queue item" do
+        delete :destroy, id: another_user_item.id
+        expect(QueueItem.count).to eq(3)
+      end
+
+      it "reset the order" do
+        delete :destroy, id: queue_item1.id
+        expect(queue_item2.reload.ranking).to eq(1)
+      end
+    end
+
+    context "with unanthenticated user" do
+      let(:queue_item) { Fabricate(:queue_item, ranking: 1) }
       before { delete :destroy, id: queue_item.id }
 
       it "redirects to signin_path" do

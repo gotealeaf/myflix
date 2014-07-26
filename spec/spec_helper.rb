@@ -4,7 +4,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rubygems'
 require 'rspec/rails'
 require 'shoulda/matchers'
-
+require 'pry'
 # require_relative '../spec/factories/category.rb'
 # require_relative '../spec/factories/video.rb'
 

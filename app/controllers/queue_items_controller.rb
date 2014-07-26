@@ -11,28 +11,54 @@ class QueueItemsController < ApplicationController
     redirect_to my_queue_path
   end
 
+  def update_queue
+    begin
+      update_item
+      reset_order_ranking
+    rescue ActiveRecord::RecordInvalid
+      flash[:warning] = "Invalid number for ranking."
+      redirect_to my_queue_path and return
+    end
+
+    redirect_to my_queue_path
+  end
+
   def destroy
-    queue_item = QueueItem.find(params[:id])
-    queue_item.destroy if exist?(queue_item)
+    item = QueueItem.find(params[:id])
+    item.destroy if item.creator == current_user
+    reset_order_ranking
     redirect_to my_queue_path
   end
 
   private
+
     def queue_video(video)
-      unless has?(video)
-        current_user.queue_items.create(video: video, ranking: new_item_position)
+      unless has_video?(video)
+        current_user.queue_items.create(video: video, ranking: new_position)
       end
     end
 
-    def exist?(queue_item)
-      current_user.queue_items.include?(queue_item)
+    def update_item
+      ActiveRecord::Base.transaction do
+        params[:queue_items].each do |item_data|
+          item = QueueItem.find(item_data[:id])
+          item.update!(ranking: item_data[:ranking]) if item.creator == current_user
+        end
+      end
     end
 
-    def has?(video)
+    def reset_order_ranking
+      items = current_user.queue_items
+      for i in (0...(items.count))
+        items[i].update(ranking: i + 1 )
+      end
+    end
+
+    def has_video?(video)
       current_user.queue_items.map(&:video).include?(video)
     end
 
-    def new_item_position
+    def new_position
       current_user.queue_items.count + 1
     end
 end

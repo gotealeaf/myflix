@@ -4,6 +4,7 @@ describe QueueItem do
 
   it { should belong_to(:creator) }
   it { should belong_to(:video) }
+  it { should validate_numericality_of(:ranking).only_integer }
 
   let(:category) { Fabricate(:category) }
   let(:video) { Fabricate(:video, category: category) }
