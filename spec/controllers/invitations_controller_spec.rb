@@ -1,6 +1,6 @@
-require 'spec_hepler'
+require 'spec_helper'
 
-describe InvitationController do
+describe InvitationsController do
   describe "GET new" do
     it "sets @invitation to a new invitation" do
       set_current_user
@@ -20,8 +20,8 @@ describe InvitationController do
 
     context "with valid input" do
       it "creates an invitation" do
-        set_current_user
-        post :create,
+        #set_current_user
+        #post :create,
       end
       it "sends an email to the recipient"
       it "redirects to the invitation new page"

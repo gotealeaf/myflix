@@ -21,7 +21,7 @@ group :development do
 end
 
 group :test, :development do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '2.14.1'
   gem 'fabrication'
   gem 'faker'
   gem 'pry'
@@ -32,8 +32,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'capybara'
   gem 'launchy'
-  #gem 'capybara-email', github: 'dockyard/capybara-email'
-  gem 'capybara-email'
+  gem 'capybara-email', github: 'dockyard/capybara-email'
+  #gem 'capybara-email'
 end
 
 group :production do
