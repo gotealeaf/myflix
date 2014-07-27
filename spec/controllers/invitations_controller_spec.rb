@@ -7,6 +7,8 @@ describe InvitationController do
       expect(assigns(:invitation)).to be_new_record
       expect(assigns(:invitation)).to be_instance_of Invitation
     end
-    it_behaves_like "requires sign in"
+    it_behaves_like "requires sign in" do
+      let(:action) { get :new }
+    end
   end
 end
