@@ -12,7 +12,6 @@ class PasswordResetsController < ApplicationController
 
   def create
     @user = User.find(session[:id])
-    binding.pry
     @user.password = params[:password]
     @user.password_confirmation = params[:password_confirmation]
     if @user.save
