@@ -9,7 +9,7 @@ describe ForgotPasswordsController do
       end
       it "shows an error message" do
         post :create, email: ''
-        expect(flash[:error]).to eq("Email cannot be blank.")
+        expect(flash[:danger]).to eq("Email cannot be blank.")
       end
     end
     context "with existing email" do
@@ -31,7 +31,7 @@ describe ForgotPasswordsController do
       end
       it "shows an error message" do
         post :create, email: 'foo@example.com'
-        expect(flash[:error]).to eq("There is no user with that email in the system.")
+        expect(flash[:danger]).to eq("There is no user with that email in the system.")
       end
     end
   end
