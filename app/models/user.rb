@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_secure_password validations: false
   validates :password, on: :create, length: { minimum: 8 }, confirmation: true
+  validates :password_confirmation, presence: true
   validates_presence_of :username, :full_name, :email, :password, :password_confirmation
   validates_uniqueness_of :email, :username
 
@@ -8,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :queue_videos, -> { order(:position) }
   has_many :followings
   has_many :followees, through: :followings
+  has_one :password_reset
 
 
   def normalise_queue_positions
