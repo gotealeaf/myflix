@@ -15,14 +15,18 @@ Myflix::Application.routes.draw do
   post 'sign_in', to: 'sessions#create'
   get 'sign_out', to: 'sessions#destroy'
   get 'register', to: 'users#new'
-  get 'my_queue', to: 'queue_videos#index'
   get 'people', to: 'followings#index'
+  get 'my_queue', to: 'queue_videos#index'
+  post 'update_queue', to: 'queue_videos#update_queue'
 
-  get 'forgot_password', to: 'password_resets#new'
-  post'forgot_password', to: 'password_resets#create'
+  get 'forgot_password', to: 'forgot_passwords#new'
+  post 'forgot_password', to: 'forgot_passwords#create'
   get 'confirm_password_reset', to: 'pages#confirm_password_reset'
 
-  post 'update_queue', to: 'queue_videos#update_queue'
+  get 'password_resets/:id', to: 'password_resets#show', as: 'password_reset'
+  get 'reset_password', to: 'password_resets#new'
+  post 'reset_password', to: 'password_resets#create'
+
 
   get 'ui(/:action)', controller: 'ui'
 end
