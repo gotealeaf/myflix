@@ -34,6 +34,7 @@ group :test do
   gem 'pry-stack_explorer'
   gem 'shoulda-matchers'
   gem 'capybara'
+  gem 'capybara-email'
   gem 'launchy', '~> 2.4.2'
 end
 
