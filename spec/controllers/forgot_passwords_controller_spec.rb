@@ -1,14 +1,8 @@
 require 'rails_helper'
 
 describe ForgotPasswordsController do
-  describe 'GET new' do
-    it 'should render the new template' do
-      get :new
-      expect(response).to render_template(:new)
-    end
-  end
-
   describe 'POST create' do
+    # add blank
     context 'email is valid' do
       it 'should redirect to the confirm password reset page' do
         user = Fabricate(:user, email: 'user@example.com')
@@ -56,10 +50,25 @@ describe ForgotPasswordsController do
         expect(mail.body).to include(token)
       end
     end
-
+    context 'input is blank' do
+      it 'redirects to forgot password page' do
+        user = Fabricate(:user, email: 'user@example.com')
+        post :create, email: ''
+        expect(response).to redirect_to forgot_password_path
+      end
+    end
     context 'email is not valid' do
-      it 'should flash message if email is not valid'
-      it 'should redirect to forgot password page'
+      it 'should flash message if email is not valid' do
+        user = Fabricate(:user, email: 'user@example.com')
+        post :create, email: 'other@example.com'
+        expect(flash[:danger]).to eq('Email invalid')
+      end
+
+      it 'should redirect to forgot password page' do
+        user = Fabricate(:user, email: 'user@example.com')
+        post :create, email: 'other@example.com'
+        expect(response).to redirect_to forgot_password_path
+      end
     end
   end
 end
