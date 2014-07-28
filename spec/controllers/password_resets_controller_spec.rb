@@ -2,15 +2,24 @@ require 'rails_helper'
 
 describe PasswordResetsController do
   describe 'GET show' do
-    it 'assigns @user variable' do
-      password_reset = Fabricate(:password_reset, user: user)
-      get :show, id: password_reset.token
-      expect(assigns(:user)).to eq(user)
+    context 'when token is valid' do
+      it 'assigns @user variable' do
+        password_reset = Fabricate(:password_reset, user: user)
+        get :show, id: password_reset.token
+        expect(assigns(:user)).to eq(user)
+      end
+      it 'redirects to reset password page' do
+        password_reset = Fabricate(:password_reset, user: user)
+        get :show, id: password_reset.token
+        expect(response).to redirect_to reset_password_path
+      end
     end
-    it 'redirects to reset password page' do
-      password_reset = Fabricate(:password_reset, user: user)
-      get :show, id: password_reset.token
-      expect(response).to redirect_to reset_password_path
+
+    context 'when token is invalid' do
+      it 'redirects to the invalid token page' do
+        get :show, id: SecureRandom.urlsafe_base64
+        expect(response).to redirect_to invalid_token_path
+      end
     end
   end
 
