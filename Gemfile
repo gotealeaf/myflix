@@ -10,6 +10,8 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'bootstrap_form'
 gem 'bcrypt-ruby', '=3.1.0'
+gem 'sidekiq'
+gem 'unicorn'
 
 group :development do
   gem 'sqlite3'
