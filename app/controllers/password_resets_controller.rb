@@ -1,9 +1,14 @@
 class PasswordResetsController < ApplicationController
 
   def show
-    @user = PasswordReset.find_by(token: params[:id]).user
-    session[:id] = @user.id
-    redirect_to reset_password_path
+    @password_reset = PasswordReset.find_by(token: params[:id])
+    if @password_reset
+      @user = @password_reset.user
+      session[:id] = @user.id
+      redirect_to reset_password_path
+    else
+      redirect_to invalid_token_path
+    end
   end
 
   def new
