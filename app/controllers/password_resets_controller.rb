@@ -7,21 +7,26 @@ class PasswordResetsController < ApplicationController
   end
 
   def new
-    @user = User.find(session[:id])
   end
 
   def create
     @user = User.find(session[:id])
-    @user.password = params[:password]
-    @user.password_confirmation = params[:password_confirmation]
-    if @user.save
+    if password_confirmation_match && @user.update_attributes(password: params[:password],
+                            password_confirmation: params[:password_confirmation])
       session[:id] = nil
       @user.password_reset.delete
-      flash[:success] = "You password has been reset!"
+      flash[:success] = "Your password has been reset!"
       redirect_to sign_in_path
     else
-      flash[:danger] = @user.errors.full_messages.first
+      flash[:danger] = "Password or confirmation is not valid please try again."
       redirect_to reset_password_path
     end
   end
+
+  private
+
+  def password_confirmation_match
+    params[:password] == params[:password_confirmation]
+  end
+
 end
