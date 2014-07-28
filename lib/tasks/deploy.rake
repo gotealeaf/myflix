@@ -12,7 +12,7 @@
    task :production do
      deployment = Paratrooper::Deploy.new("limitless-scrubland-2896") do |deploy|
        deploy.tag              = 'production',
-       deploy.match_tag        = 'staging',
+       deploy.match_tag        = 'staging'
      end
 
      deployment.deploy
