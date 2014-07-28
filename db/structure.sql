@@ -69,7 +69,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: categories; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE categories (
@@ -98,7 +98,7 @@ ALTER SEQUENCE categories_id_seq OWNED BY categories.id;
 
 
 --
--- Name: queue_items; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: queue_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE queue_items (
@@ -131,7 +131,7 @@ ALTER SEQUENCE queue_items_id_seq OWNED BY queue_items.id;
 
 
 --
--- Name: reviews; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: reviews; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE reviews (
@@ -165,7 +165,7 @@ ALTER SEQUENCE reviews_id_seq OWNED BY reviews.id;
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE schema_migrations (
@@ -174,7 +174,7 @@ CREATE TABLE schema_migrations (
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE users (
@@ -183,8 +183,7 @@ CREATE TABLE users (
     full_name character varying(255),
     password_digest character varying(255),
     created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    review_id integer
+    updated_at timestamp without time zone
 );
 
 
@@ -208,7 +207,7 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
--- Name: videos; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: videos; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE videos (
@@ -219,8 +218,7 @@ CREATE TABLE videos (
     small_cover_image_url character varying(255),
     category_id integer,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    review_id integer
+    updated_at timestamp without time zone
 );
 
 
@@ -279,7 +277,7 @@ ALTER TABLE ONLY videos ALTER COLUMN id SET DEFAULT nextval('videos_id_seq'::reg
 
 
 --
--- Name: categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY categories
@@ -287,7 +285,7 @@ ALTER TABLE ONLY categories
 
 
 --
--- Name: queue_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: queue_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY queue_items
@@ -295,7 +293,7 @@ ALTER TABLE ONLY queue_items
 
 
 --
--- Name: reviews_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: reviews_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY reviews
@@ -303,7 +301,7 @@ ALTER TABLE ONLY reviews
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY users
@@ -311,7 +309,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: videos_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: videos_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY videos
@@ -319,7 +317,7 @@ ALTER TABLE ONLY videos
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace:
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
@@ -347,12 +345,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140720104154');
 
 INSERT INTO schema_migrations (version) VALUES ('20140724074123');
 
-INSERT INTO schema_migrations (version) VALUES ('20140724075745');
-
-INSERT INTO schema_migrations (version) VALUES ('20140724075902');
-
 INSERT INTO schema_migrations (version) VALUES ('20140725072025');
 
-CREATE OR REPLACE FUNCTION pg_search_dmetaphone(text) RETURNS text LANGUAGE SQL IMMUTABLE STRICT AS $function$
-  SELECT array_to_string(ARRAY(SELECT dmetaphone(unnest(regexp_split_to_array($1, E'\\s+')))), ' ')
-$function$;
