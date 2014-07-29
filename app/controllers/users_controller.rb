@@ -9,19 +9,26 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save
-      AppMailer.send_welcome_email(@user).deliver
-      create_invitation_relationships @user, params
-      
-      StripeWrapper::Charge.create(
+    if @user.valid?
+
+      charge = StripeWrapper::Charge.create(
         :amount      => 999,
         :currency    => "usd",
         :card        => params[:stripeToken],
         :description => "Sign up charge for #{ @user.email }"
       )
 
-      flash[:notice] = "You have succesfully created your account"
-      redirect_to sign_in_path
+      if charge.successful?
+        @user.save
+        create_invitation_relationships @user, params
+        AppMailer.send_welcome_email(@user).deliver
+        flash[:notice] = "You have succesfully created your account"
+        redirect_to sign_in_path
+      else
+        flash[:error] = charge.error_message
+        render :new
+      end
+
     else
       flash[:error] = "User couldn't be created. #{@user.errors.full_messages.first}"
       render :new

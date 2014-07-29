@@ -41,8 +41,6 @@ feature "User interaction with invitations" do
     select "7 - July", from: "date_month"
     select "2015", from: "date_year"
     click_button "Sign Up"   
-    #open_email('paq10@paq.com')
-    #current_email.should have_content "Welcome to Myflix"      
   end
 
   def friend_signs_in
