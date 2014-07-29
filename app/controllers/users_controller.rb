@@ -9,9 +9,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
     if @user.save
-      binding.pry
       AppMailer.send_welcome_email(@user).deliver
       create_invitation_relationships @user, params
       
@@ -53,7 +51,7 @@ class UsersController < ApplicationController
     user = User.find_by_token(params[:token])
   end
 
-  def new_with_invitation_token    
+  def new_with_invitation_token  
     invitation = Invitation.find_by_token(params[:token])
     if invitation
       @user = User.new(email: invitation.recipient_email)
