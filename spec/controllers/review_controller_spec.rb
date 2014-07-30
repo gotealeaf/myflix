@@ -5,7 +5,7 @@ describe ReviewsController do
     it "sets @video" do
       session[:user_id] = Fabricate(:user).id
       video = Fabricate(:video)
-      post :create, id: video.id, review: Fabricate.attributes_for(:review)
+      post :create, video_id: video.id, review: Fabricate.attributes_for(:review)
       expect(assigns(:video)).to eq(video)
     end
 

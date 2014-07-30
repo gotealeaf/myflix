@@ -4,7 +4,14 @@ class ReviewsController < ApplicationController
   def create
     @video = Video.find(params[:video_id])
     @review = @video.reviews.build(params.require(:review).permit(:body))
+    @review.user = current_user
 
+    if @review.save
+      flash[:notice] = "Your review was created."
+      redirect_to video_path(@video)
+    else
+      render 'videos/show'
+    end
   end
 
   private
