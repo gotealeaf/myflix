@@ -1,14 +1,14 @@
 class VideosController < ApplicationController
 
   def index
-    if params[:search_term]
-      @videos = Video.find(:all, :conditions => ['title LIKE ?', "%#{params[:search_term]}%".order('created_at DESC')])
-    else
-      @videos = Video.find(:all)
-    end
+    @categories = Category.all
   end
 
   def show
-    @video = Video.first
+    @video = Video.find(params[:id])
+  end
+
+  def search
+    @results = Video.search_by_title(params[:search_term])
   end
 end

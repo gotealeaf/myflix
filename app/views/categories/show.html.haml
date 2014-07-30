@@ -1,6 +1,6 @@
 %section.genre
   %header.clearfix
-    %h1 Comedies
+    %h1= @category.name
     .genre_sorting
       Sort by:
       %select(name="")
@@ -10,5 +10,5 @@
   %article.row
     - @category.videos.each do |video|
       .video.col-md-2
-        = link_to videos_path(video), nil do
+        = link_to video_path(video), nil do
           %img(src="#{video.small_cover_url}")
