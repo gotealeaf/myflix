@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   end
 
   def create
+    binding.pry
     @user = User.new(user_params)
     if @user.valid?
 
@@ -22,7 +23,7 @@ class UsersController < ApplicationController
         @user.save
         create_invitation_relationships @user, params
         AppMailer.send_welcome_email(@user).deliver
-        flash[:notice] = "You have succesfully created your account"
+        flash[:notice] = "You have succesfully created your account."
         redirect_to sign_in_path
       else
         flash[:error] = charge.error_message
@@ -30,7 +31,7 @@ class UsersController < ApplicationController
       end
 
     else
-      flash[:error] = "User couldn't be created. #{@user.errors.full_messages.first}"
+      flash[:error] = "User couldn't be created. . Please check the following errors. #{@user.errors.full_messages.first}"
       render :new
     end
   end

@@ -25,7 +25,7 @@ describe StripeWrapper do
       it "makes a card declined charge", :vcr do
         token = Stripe::Token.create(
           :card => {
-            :number => "400000000000002",
+            :number => "4000000000000002",
             :exp_month => 7,
             :exp_year => 2017,
             :cvc => "314"
@@ -44,7 +44,7 @@ describe StripeWrapper do
       it "returns the error message for declined charges", :vcr do
         token = Stripe::Token.create(
           :card => {
-            :number => "400000000000002",
+            :number => "4000000000000002",
             :exp_month => 7,
             :exp_year => 2017,
             :cvc => "314"

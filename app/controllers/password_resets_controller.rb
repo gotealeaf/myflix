@@ -2,11 +2,6 @@ class PasswordResetsController < ApplicationController
   def show
     @user = User.find_by_token(params[:id])
     redirect_to expired_token_path unless @user
-    # if !@user
-    #   redirect_to expired_token_path
-    # elsif has_reset_password_url_passed? @user
-    #   redirect_to expired_token_path
-    # end
   end
 
   def create
@@ -24,8 +19,4 @@ class PasswordResetsController < ApplicationController
       redirect_to expired_token_path
     end    
   end
-
-  # def has_reset_password_url_passed? user
-  #   @user.reset_password_email_sent_at.to_i + 1.day.to_i >= Time.now.to_i
-  # end
 end

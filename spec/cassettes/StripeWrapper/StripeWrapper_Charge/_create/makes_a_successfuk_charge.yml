@@ -31,19 +31,19 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 22 Jul 2014 17:07:03 GMT
+      - Wed, 30 Jul 2014 11:02:50 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
       - '596'
-      Access-Control-Max-Age:
-      - '300'
-      Access-Control-Allow-Credentials:
-      - 'true'
       Cache-Control:
       - no-cache, no-store
       Access-Control-Allow-Methods:
       - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Max-Age:
+      - '300'
       Stripe-Version:
       - '2014-06-17'
       Strict-Transport-Security:
@@ -52,14 +52,14 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_14J6jD4PSbBPalmqDScGEt45",
+          "id": "tok_14Lur84PSbBPalmqJCetoRgU",
           "livemode": false,
-          "created": 1406048823,
+          "created": 1406718170,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_14J6jD4PSbBPalmqEC576tv7",
+            "id": "card_14Lur84PSbBPalmqdZEgsN4Y",
             "object": "card",
             "last4": "4242",
             "brand": "Visa",
@@ -79,13 +79,13 @@ http_interactions:
           }
         }
     http_version: 
-  recorded_at: Tue, 22 Jul 2014 17:07:03 GMT
+  recorded_at: Wed, 30 Jul 2014 11:02:50 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/charges
     body:
       encoding: US-ASCII
-      string: amount=999&currency=usd&card=tok_14J6jD4PSbBPalmqDScGEt45&description=a%20valid%20charge
+      string: amount=999&currency=usd&card=tok_14Lur84PSbBPalmqJCetoRgU&description=a%20valid%20charge
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -111,37 +111,37 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 22 Jul 2014 17:07:06 GMT
+      - Wed, 30 Jul 2014 11:02:52 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
       - '1210'
-      Access-Control-Allow-Methods:
-      - GET, POST, HEAD, OPTIONS, DELETE
-      Stripe-Version:
-      - '2014-06-17'
       Cache-Control:
       - no-cache, no-store
-      Access-Control-Max-Age:
-      - '300'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
       Access-Control-Allow-Credentials:
       - 'true'
+      Access-Control-Max-Age:
+      - '300'
+      Stripe-Version:
+      - '2014-06-17'
       Strict-Transport-Security:
       - max-age=31556926; includeSubDomains
     body:
       encoding: UTF-8
       string: |
         {
-          "id": "ch_14J6jG4PSbBPalmqGZzn1PyN",
+          "id": "ch_14Lur94PSbBPalmqebi36vMv",
           "object": "charge",
-          "created": 1406048826,
+          "created": 1406718171,
           "livemode": false,
           "paid": true,
           "amount": 999,
           "currency": "usd",
           "refunded": false,
           "card": {
-            "id": "card_14J6jD4PSbBPalmqEC576tv7",
+            "id": "card_14Lur84PSbBPalmqdZEgsN4Y",
             "object": "card",
             "last4": "4242",
             "brand": "Visa",
@@ -167,10 +167,10 @@ http_interactions:
             "object": "list",
             "total_count": 0,
             "has_more": false,
-            "url": "/v1/charges/ch_14J6jG4PSbBPalmqGZzn1PyN/refunds",
+            "url": "/v1/charges/ch_14Lur94PSbBPalmqebi36vMv/refunds",
             "data": []
           },
-          "balance_transaction": "txn_14J6jG4PSbBPalmqDzBe7xcI",
+          "balance_transaction": "txn_14LurA4PSbBPalmqdyMBux8N",
           "failure_message": null,
           "failure_code": null,
           "amount_refunded": 0,
@@ -183,5 +183,5 @@ http_interactions:
           "receipt_email": null
         }
     http_version: 
-  recorded_at: Tue, 22 Jul 2014 17:07:06 GMT
+  recorded_at: Wed, 30 Jul 2014 11:02:52 GMT
 recorded_with: VCR 2.9.2
