@@ -34,7 +34,6 @@ describe UsersController do
                               password_confirmation: 'password' }
         expect(ActionMailer::Base.deliveries.last.body).to include('Welcome to MyFlix')
       end
-
       it 'Flash a welcome message' do
         post :create, user: Fabricate.attributes_for(:user)
         expect(flash[:success].blank?).to eq(false)
@@ -46,6 +45,22 @@ describe UsersController do
       it 'redirects to video_path' do
         post :create, user: Fabricate.attributes_for(:user)
         expect(response).to redirect_to videos_path
+      end
+      context 'if user was invited to register' do
+        it 'should create a new following for new user to inviter if invited' do
+          inviter = Fabricate(:user)
+          new_user = Fabricate.attributes_for(:user)
+          post :create, user: new_user, inviter_id: inviter.id
+          new_user_follows = User.find_by(username: new_user[:username]).followings.first.followee_id
+          expect(new_user_follows).to eq(inviter.id)
+        end
+        it 'should create a new following for inviter to new user if invited' do
+          inviter = Fabricate(:user)
+          new_user = Fabricate.attributes_for(:user)
+          post :create, user: new_user, inviter_id: inviter.id
+          inviter_follows = User.find_by(username: inviter.username).followings.first.followee.username
+          expect(inviter_follows).to eq(new_user[:username])
+        end
       end
     end
 
@@ -80,5 +95,9 @@ describe UsersController do
     it_behaves_like 'redirect for unauthenticated user' do
       let(:action) { get :show, id: 1}
     end
+  end
+
+  describe 'GET invited' do
+
   end
 end
