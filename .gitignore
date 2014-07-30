@@ -15,4 +15,4 @@
 /tmp
 
 # Ignore RubyMine generated files
-/.idea
+# /.idea
