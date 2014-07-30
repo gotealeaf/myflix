@@ -14,5 +14,6 @@
 /log/*.log
 /tmp
 
-# Ignore RubyMine generated files
-# /.idea
+# Ignore only specific RubyMine files for team collaborfation
+/.idea/workspace.xml
+/.idea/tasks.xml
