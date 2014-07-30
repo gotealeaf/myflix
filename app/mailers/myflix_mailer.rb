@@ -11,4 +11,12 @@ class MyflixMailer < ActionMailer::Base
     @token = password_reset.token
     mail to: @user.email, subject: 'MyFlix password reset'
   end
+
+  def invite_friend(inviter, invite_input)
+    @inviter = inviter
+    @friend_name = invite_input[:friend_name]
+    @friend_email = invite_input[:friend_email]
+    @message = invite_input[:message]
+    mail to: @friend_email, from: inviter.email, subject: "#{ inviter.full_name } would like to see you on MyFlix!"
+  end
 end
