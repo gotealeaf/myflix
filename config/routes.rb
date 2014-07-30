@@ -17,6 +17,8 @@ Myflix::Application.routes.draw do
     member do
       post 'highlight', to: 'videos#highlight'
     end
+
+    resources :reviews, only: [:create]
   end
 
   resources :categories, only: [:show]

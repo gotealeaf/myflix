@@ -6,7 +6,6 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    binding.pry
     if @user.save
       flash[:notice] = "You are registered."
       redirect_to sign_in_path

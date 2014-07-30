@@ -40,6 +40,8 @@ GEM
       sass (~> 3.2)
     bootstrap_form (2.1.1)
     builder (3.2.2)
+    celluloid (0.15.2)
+      timers (~> 1.1.0)
     coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -55,6 +57,20 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.0)
     execjs (2.0.2)
+    fabrication (2.11.3)
+    faker (1.4.2)
+      i18n (~> 0.5)
+    ffi (1.9.3)
+    formatador (0.2.5)
+    guard (2.6.1)
+      formatador (>= 0.2.4)
+      listen (~> 2.7)
+      lumberjack (~> 1.0)
+      pry (>= 0.9.12)
+      thor (>= 0.18.1)
+    guard-rspec (4.3.1)
+      guard (~> 2.1)
+      rspec (>= 2.14, < 4.0)
     haml (4.0.5)
       tilt
     haml-rails (0.5.3)
@@ -68,6 +84,11 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.1)
+    listen (2.7.9)
+      celluloid (>= 0.15.2)
+      rb-fsevent (>= 0.9.3)
+      rb-inotify (>= 0.9)
+    lumberjack (1.0.9)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -107,6 +128,13 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.3.2)
+    rb-fsevent (0.9.4)
+    rb-inotify (0.9.5)
+      ffi (>= 0.5.0)
+    rspec (2.99.0)
+      rspec-core (~> 2.99.0)
+      rspec-expectations (~> 2.99.0)
+      rspec-mocks (~> 2.99.0)
     rspec-collection_matchers (1.0.0)
       rspec-expectations (>= 2.99.0.beta1)
     rspec-core (2.99.0)
@@ -148,6 +176,7 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
+    timers (1.1.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -168,6 +197,10 @@ DEPENDENCIES
   bootstrap_form
   coffee-rails
   database_cleaner (= 1.2.0)
+  fabrication
+  faker
+  guard
+  guard-rspec
   haml-rails
   jquery-rails
   pg

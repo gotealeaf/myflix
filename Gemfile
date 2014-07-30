@@ -10,6 +10,8 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'bcrypt-ruby'
 gem 'bootstrap_form'
+gem 'fabrication'
+gem 'faker'
 
 group :development do
   gem 'sqlite3'
@@ -18,6 +20,8 @@ group :development do
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
+  gem 'guard'
+  gem 'guard-rspec', require: false
 end
 
 group :development, :test do
