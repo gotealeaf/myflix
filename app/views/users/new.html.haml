@@ -8,13 +8,14 @@
           .form-group
             .col-sm-6= f.text_field :username
           .form-group
-            .col-sm-6= f.text_field :full_name, label: "Full Name"
+            .col-sm-6= f.text_field :full_name, label: "Full Name", value: @friend_name
           .form-group
-            .col-sm-6= f.text_field :email, label: 'Email Address'
+            .col-sm-6= f.text_field :email, label: 'Email Address', value: @friend_email
           .form-group
             .col-sm-6= f.password_field :password
-          .form-group  
+          .form-group
             .col-sm-6= f.password_field :password_confirmation, label: 'Password Confirmation'
+            = hidden_field_tag :inviter_id, @inviter_id
         %fieldset.credit_card
         %fieldset.actions.control-group
           .controls
