@@ -29,9 +29,9 @@ describe InvitesController do
       end
       context 'when inputs are valid' do
         before { set_session_user }
-        it 'assigns @user' do
+        it 'assigns @token' do
           post :create, invite: [{ message: 'some message', friend_name: 'Nelle', friend_email: 'nelle@example.com' }]
-          expect(assigns(:inviter)).to eq(user)
+          expect(assigns(:token)).to eq(user.user_tokens.first)
         end
         it 'assigns @invite' do
           user_inputs = { "message" => 'some message', "friend_name" => 'Nelle', "friend_email" => 'nelle@example.com' }
