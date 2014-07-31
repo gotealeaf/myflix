@@ -2,18 +2,15 @@ require 'spec_helper'
 
 
 describe QueueItemsController do
-  let(:current_user) { Fabricate(:user) }
   let(:video1) { Fabricate(:video) }
   let(:video2) { Fabricate(:video) }
   describe "GET index" do
     context "with authenticated user" do
-
+      before { set_current_user }
       let(:item1) { Fabricate(:queue_item, ranking: 1, creator: current_user) }
       let(:item2) { Fabricate(:queue_item, ranking: 2, creator: current_user) }
-      before do
-        session[:user_id] = current_user.id
-        get :index
-      end
+
+      before { get :index}
 
       it "assigns @queue_items" do
         expect(assigns(:queue_items)).to match_array([item1, item2])
@@ -33,7 +30,7 @@ describe QueueItemsController do
 
   describe "POST create" do
     context "with authenticated user" do
-      before { session[:user_id] = current_user.id }
+      before { set_current_user }
       context "with valid input" do
         before do
           post :create, video_id: video1.id
@@ -74,9 +71,10 @@ describe QueueItemsController do
 
   describe "POST update" do
     context "with authenticated user" do
-      let(:queue_item1) { Fabricate(:queue_item, ranking: 1, creator: current_user) }
-      let(:queue_item2) { Fabricate(:queue_item, ranking: 2, creator: current_user) }
-      before { session[:user_id] = current_user.id }
+      let(:video) { Fabricate(:video) }
+      let(:queue_item1) { Fabricate(:queue_item, ranking: 1, creator: current_user, video: video) }
+      let(:queue_item2) { Fabricate(:queue_item, ranking: 2, creator: current_user, video: video) }
+      before { set_current_user }
 
       context "with valid input" do
         before do
@@ -127,7 +125,7 @@ describe QueueItemsController do
       let(:queue_item1) { Fabricate(:queue_item, ranking: 1, creator: another_user) }
       let(:queue_item2) { Fabricate(:queue_item, ranking: 2, creator: another_user) }
       before do
-        session[:user_id] = current_user.id
+        set_current_user
         post :update_queue, queue_items: [{ id: queue_item1.id, ranking: 3 },
            { id: queue_item2, ranking: 2 }]
       end
@@ -140,7 +138,7 @@ describe QueueItemsController do
 
   describe "DELETE destroy" do
     context "with anuthenticated user" do
-      before { session[:user_id] = current_user.id }
+      before { set_current_user }
       let!(:another_user) { Fabricate(:user) }
       let!(:queue_item1) { Fabricate(:queue_item, ranking: 1, user_id: current_user.id) }
       let!(:queue_item2) { Fabricate(:queue_item, ranking: 2, user_id: current_user.id) }

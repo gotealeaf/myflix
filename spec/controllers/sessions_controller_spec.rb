@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SessionsController do
 
   context "already authenticated user" do
-    before { session[:user_id] = Fabricate(:user).id }
+    before { set_current_user }
 
     describe "GET new" do
       it "redirects to root_path" do
@@ -41,11 +41,11 @@ describe SessionsController do
     describe "POST create" do
 
       context "valid email and password" do
-        let(:user) { Fabricate(:user) }
-        before { post :create, email: user.email , password: user.password }
+        let(:current_user) { Fabricate(:user) }
+        before { post :create, email: current_user.email , password: current_user.password }
 
         it "assigns session[:user_id]" do
-          expect(session[:user_id]).to eq(user.id)
+          expect(session[:user_id]).to eq(current_user.id)
         end
         it "redirects to home page" do
           expect(response).to redirect_to root_path
@@ -57,8 +57,8 @@ describe SessionsController do
       end
 
       context "invalid email or password" do
-        let(:user) { Fabricate(:user) }
-        before { post :create, email: user.email , password: user.password + "abc" }
+        let(:current_user) { Fabricate(:user) }
+        before { post :create, email: current_user.email , password: current_user.password + "abc" }
 
         it "do not assigns session[:user_id]" do
           expect(session[:user_id]).to be_nil

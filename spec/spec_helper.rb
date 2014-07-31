@@ -5,6 +5,7 @@ require 'rubygems'
 require 'rspec/rails'
 require 'shoulda/matchers'
 require 'pry'
+require 'capybara/rails'
 # require_relative '../spec/factories/category.rb'
 # require_relative '../spec/factories/video.rb'
 

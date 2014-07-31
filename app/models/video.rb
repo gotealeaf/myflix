@@ -27,15 +27,16 @@ class Video < ActiveRecord::Base
     reviews.count
   end
 
-  def rating
+  def display_overall_rating
     return "N/A" if reviews.empty?
-    cal_rating
+    cal_average_rating.to_s + "/5.0"
+  end
+
+  def rating
   end
 
   private
-    def cal_rating
-      overall = reviews.inject(0) {|sum, review| sum + review.rating.to_f }/total_reviews
-
-      return overall.round(1).to_s + "/5.0"
+    def cal_average_rating
+      reviews.average(:rating).round(1)
     end
 end
