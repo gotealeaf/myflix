@@ -5,12 +5,18 @@ class ForgotPasswordsController < ApplicationController
   def create
     @user = User.find_by(email: params[:email])
     if @user
-      user_token = UserToken.create(token: SecureRandom.urlsafe_base64, user: @user)
+      user_token = generate_token(@user)
       MyflixMailer.password_reset_email(user_token).deliver
       redirect_to confirm_password_reset_path
     else
       flash[:danger] = params[:email].blank? ? "Email can't be blank": "Email invalid"
       redirect_to forgot_password_path
     end
+  end
+
+  private
+
+  def generate_token(user)
+    UserToken.create(token: SecureRandom.urlsafe_base64, user: user)
   end
 end
