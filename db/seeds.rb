@@ -21,9 +21,19 @@ Video.create(title: 'Family Guy', description: 'A classic ghost story', small_co
 Video.create(title: 'Hitman', description: 'A film about the future', small_cover_url: '/tmp/family_guy.jpg', large_cover_url: '/tmp/monk_large.jpg', category: dramas)
 
 tim = User.create(username: "Tim Watson", password: "password", email: "tim@example.com")
+lalaine = User.create(username: "Lalaine", password: "password", email: "lalaine@example.com")
+bob = User.create(username: "Bobby", password: "password", email: "bob@example.com")
+frank = User.create(username: "Franky", password: "password", email: "frank@example.com")
 
 Review.create(user: tim, video: monk, rating: 3, content: "This is a very lame movie!")
 Review.create(user: tim, video: monk, rating: 1, content: "This is a very very lame movie!")
+Review.create(user: lalaine, video: monk, rating: 1, content: "This is a very very lame movie!")
+Review.create(user: bob, video: monk, rating: 1, content: "This is a very very lame movie!")
+Review.create(user: frank, video: monk, rating: 1, content: "This is a very very lame movie!")
 
 QueueItem.create(user: tim, video: monk, position: 2)
 QueueItem.create(user: tim, video: star_wars, position: 1)
+
+Relationship.create(leader: lalaine, follower: tim)
+Relationship.create(leader: bob, follower: tim)
+Relationship.create(leader: frank, follower: tim)
