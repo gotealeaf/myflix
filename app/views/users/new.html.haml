@@ -15,7 +15,7 @@
             .col-sm-6= f.password_field :password
           .form-group
             .col-sm-6= f.password_field :password_confirmation, label: 'Password Confirmation'
-            = hidden_field_tag :inviter_id, @inviter_id
+            = hidden_field_tag :token, @token
         %fieldset.credit_card
         %fieldset.actions.control-group
           .controls
