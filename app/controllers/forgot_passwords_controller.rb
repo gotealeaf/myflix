@@ -1,5 +1,6 @@
 class ForgotPasswordsController < ApplicationController
-
+  include Tokenable
+  
   def new; end
 
   def create
@@ -12,11 +13,5 @@ class ForgotPasswordsController < ApplicationController
       flash[:danger] = params[:email].blank? ? "Email can't be blank": "Email invalid"
       redirect_to forgot_password_path
     end
-  end
-
-  private
-
-  def generate_token(user)
-    UserToken.create(token: SecureRandom.urlsafe_base64, user: user)
   end
 end

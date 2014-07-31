@@ -1,5 +1,6 @@
 class InvitesController < ApplicationController
-
+  include Tokenable
+  
   before_action :require_user
 
   def create
@@ -24,9 +25,5 @@ class InvitesController < ApplicationController
 
   def invalid_email?
     !(params[:invite].first[:friend_email] =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i)
-  end
-
-  def generate_token(user)
-    UserToken.create(token: SecureRandom.urlsafe_base64, user: user)
   end
 end
