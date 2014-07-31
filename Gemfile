@@ -9,8 +9,7 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'pg'
 gem "pg_search"
-gem 'will_paginate', '~> 3.0'
-gem 'will_paginate-bootstrap'
+gem 'kaminari'
 gem 'bootstrap_form'
 gem 'bcrypt', '~> 3.1.7'
 
@@ -26,6 +25,7 @@ group :development, :test do
   gem 'rspec-rails', '2.99'
   gem 'fabrication'
   gem 'faker'
+  gem 'capybara'
 end
 
 group :test do
