@@ -6,10 +6,13 @@ class User < ActiveRecord::Base
   has_many :inverse_followings, class_name: "Following", foreign_key: "followed_user_id"
   has_many :followers, through: :inverse_followings, source: :user
   
-  validates_presence_of :fullname, :email, :password
+  validates_presence_of :fullname, :email
   validates_uniqueness_of :email
+  validates :password, length: { minimum: 5 }, presence: true
 
   has_secure_password validations: false
+
+  after_create :generate_password_reset_token
 
   def next_available_queue_position
     queue_items.count + 1
@@ -28,4 +31,11 @@ class User < ActiveRecord::Base
   def can_follow?(another_user)
    !(self.followed_users.include?(another_user) || self == another_user)
   end
+
+  def generate_password_reset_token
+    self.update(password_reset_token: SecureRandom.urlsafe_base64) 
+  end
 end
+
+
+

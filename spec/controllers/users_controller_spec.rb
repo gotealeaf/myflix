@@ -38,23 +38,23 @@ describe UsersController do
       end
 
       context "sending email" do
-        it "sends out the email" do
+        after { ActionMailer::Base.deliveries.clear }
+
+        it "sends out welcome email" do
           expect(ActionMailer::Base.deliveries).to_not be_empty
         end
 
-        it "sends email the correct recipient" do
-          message = ActionMailer::Base.deliveries.last
-          expect(message.to).to eq([User.first.email])
+        it "sends email to the correct recipient" do
+          expect(ActionMailer::Base.deliveries.last.to).to eq([User.first.email])
         end
 
         it "sends email with the correct message" do
-           message = ActionMailer::Base.deliveries.last
-           expect(message.body).to include(User.first.fullname)
+          expect(ActionMailer::Base.deliveries.last.body).to include(User.first.fullname)
         end
       end
     end
 
-    context "without valid input" do
+    context "with invalid input" do
       before { post :create, user: { fullname: nil, email: nil, password: nil } }
     
       it "does not save new user to the database" do
@@ -63,6 +63,12 @@ describe UsersController do
 
       it "renders the :new template" do
         expect(response).to render_template  :new
+      end
+
+      context "sending email" do
+        it "does not send out welcome email" do
+          expect(ActionMailer::Base.deliveries).to be_empty
+        end
       end
     end  
   end
@@ -89,7 +95,6 @@ describe UsersController do
       let(:action) { get :show, id: jimbo.id }
     end
   end
-
 end
 
 

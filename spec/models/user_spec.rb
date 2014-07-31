@@ -33,6 +33,7 @@ describe User do
     let(:jose) { Fabricate(:user) }
     let(:nigel) { Fabricate(:user) }
     let(:following) { Fabricate(:following, user_id: jim.id, followed_user_id: jose.id) }
+    before { jim.followings = [following] }
 
     it "returns true if current user does not already follow selected user and selected user is not the current user" do
       expect(jim.can_follow?(nigel)).to be_true
@@ -46,4 +47,17 @@ describe User do
       expect(jim.can_follow?(jim)).to be_false
     end
   end
+
+  describe "generate_password_reset_token" do
+    it "sets the password reset token" do
+      bob = Fabricate(:user)
+      bob.generate_password_reset_token
+      expect(bob.password_reset_token).to_not be_empty
+    end
+  end
 end
+
+
+
+
+

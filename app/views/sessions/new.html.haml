@@ -8,5 +8,6 @@
         .col-xs-4
           = f.email_field :email, label: "Email Address"
           = f.password_field :password
-      %fieldset.form-group.action
-        %input(type="submit" value="Sign in" class="btn btn-default")
+          %fieldset.form-group.action
+            %input(type="submit" value="Sign in" class="btn btn-default")
+            = link_to "Forgot Password", forgot_password_path, class: "btn btn-default"
