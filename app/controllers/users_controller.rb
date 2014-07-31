@@ -13,6 +13,7 @@ class UsersController < ApplicationController
       session[:username] = @user.username
       MyflixMailer.welcome_email(current_user).deliver
       follow_inviter_if_invited
+      delete_token_if_invited
       redirect_to videos_path
     else
       render :new
@@ -34,6 +35,13 @@ class UsersController < ApplicationController
       inviter = UserToken.find_by(token: params[:token]).user
       Following.create(user: @user, followee: inviter)
       Following.create(user: inviter, followee: @user)
+    end
+  end
+
+  def delete_token_if_invited
+    unless params[:token].blank?
+      user_token = UserToken.find_by(token: params[:token])
+      user_token.delete
     end
   end
 end
