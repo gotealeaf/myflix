@@ -17,12 +17,12 @@ describe ForgotPasswordsController do
       it 'should create a new password reset token' do
         user = Fabricate(:user, email: 'user@example.com')
         post :create, email: user.email
-        expect(PasswordReset.first).to_not be_blank
+        expect(UserToken.first).to_not be_blank
       end
       it 'should associate the token with the user' do
         user = Fabricate(:user, email: 'user@example.com')
         post :create, email: user.email
-        expect(PasswordReset.first.user).to eq(user)
+        expect(UserToken.first.user).to eq(user)
       end
       it 'should deliver an email to user' do
         user = Fabricate(:user, email: 'user@example.com')
@@ -45,7 +45,7 @@ describe ForgotPasswordsController do
       it 'should contain a link with the reset token' do
         user = Fabricate(:user, email: 'user@example.com')
         post :create, email: user.email
-        token = PasswordReset.first.token
+        token = UserToken.first.token
         mail = ActionMailer::Base.deliveries.last
         expect(mail.body).to include(token)
       end

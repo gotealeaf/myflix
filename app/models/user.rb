@@ -9,8 +9,7 @@ class User < ActiveRecord::Base
   has_many :queue_videos, -> { order(:position) }
   has_many :followings
   has_many :followees, through: :followings
-  has_one :password_reset
-
+  has_many :user_tokens
 
   def normalise_queue_positions
     queue_videos.each_with_index do |position, index|
