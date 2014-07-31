@@ -47,6 +47,11 @@ describe UsersController do
         expect(response).to redirect_to videos_path
       end
       context 'if user was invited to register' do
+        it 'should delete the token after registration' do
+          user_token = Fabricate(:user_token)
+          post :create, user: Fabricate.attributes_for(:user), token: user_token.token
+          expect(UserToken.count).to eq(0)
+        end
         it 'should create a new following for new user to inviter if invited' do
           inviter = Fabricate(:user)
           user_token = Fabricate(:user_token, user: inviter)
