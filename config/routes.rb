@@ -26,6 +26,9 @@ Myflix::Application.routes.draw do
   get 'password_resets/:id', to: 'password_resets#show', as: 'password_reset'
   post 'reset_password', to: 'password_resets#create'
 
+  get 'invite', to: 'invites#new'
+  post 'invite', to: 'invites#create'
+  get 'invited_registration', to: 'invited_registrations#new'
 
   get 'ui(/:action)', controller: 'ui'
 end

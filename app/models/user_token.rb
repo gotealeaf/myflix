@@ -1,4 +1,4 @@
-class PasswordReset < ActiveRecord::Base
+class UserToken < ActiveRecord::Base
   belongs_to :user
 
   def to_param

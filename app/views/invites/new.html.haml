@@ -1,0 +1,25 @@
+%section.invite.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = form_for invite_path, html: {class: 'invite'} do
+        %header
+          %h1 Invite a friend to join MyFlix!
+        %fieldset
+          .form-group
+            = label_tag :friend_name, "Friend's Name"
+            .row
+              .col-sm-4
+                = text_field_tag "invite[][friend_name]", nil, class: 'form-control'
+          .form-group
+            = label_tag :friend_email, "Friend's Email Address"
+            .row
+              .col-sm-4
+                = text_field_tag "invite[][friend_email]", nil, class: 'form-control'
+          .form-group
+            = label_tag :message, "Invitation Message"
+            .row
+              .col-sm-6
+                = text_area_tag "invite[][message]", 'Please join this really cool site!',
+                  rows: 6, class: 'form-control'
+        %fieldset.form-group.action
+          = submit_tag 'Send Invitation', class: 'btn btn-default'

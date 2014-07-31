@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-describe PasswordReset do
+describe UserToken do
   it { should belong_to(:user) }
 end
