@@ -4,8 +4,8 @@
   %body
     %section.content.clearfix
       %p= "Hi #{ @friend_name },"
-      %p= "#{ @inviter.full_name } would like to see you on MyFlix"
+      %p= "#{ @token.user.full_name } would like to see you on MyFlix"
       %p= "Sign up easily with this link:"
-      = link_to 'Join', invited_registration_url(friend_name: @friend_name, friend_email: @friend_email, inviter_id: @inviter.id)
+      = link_to 'Join', invited_registration_url(friend_name: @friend_name, friend_email: @friend_email, token: @token.token)
     %footer
       &copy 2013 MyFLiX
