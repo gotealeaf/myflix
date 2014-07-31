@@ -49,17 +49,17 @@ describe UsersController do
       context 'if user was invited to register' do
         it 'should create a new following for new user to inviter if invited' do
           inviter = Fabricate(:user)
-          new_user = Fabricate.attributes_for(:user)
-          post :create, user: new_user, inviter_id: inviter.id
-          new_user_follows = User.find_by(username: new_user[:username]).followings.first.followee_id
-          expect(new_user_follows).to eq(inviter.id)
+          user_token = Fabricate(:user_token, user: inviter)
+          post :create, user: Fabricate.attributes_for(:user), token: user_token.token
+          new_user = User.where.not(id: inviter.id).first
+          expect(new_user.followings.first.followee).to eq(inviter)
         end
         it 'should create a new following for inviter to new user if invited' do
           inviter = Fabricate(:user)
-          new_user = Fabricate.attributes_for(:user)
-          post :create, user: new_user, inviter_id: inviter.id
-          inviter_follows = User.find_by(username: inviter.username).followings.first.followee.username
-          expect(inviter_follows).to eq(new_user[:username])
+          user_token = Fabricate(:user_token, user: inviter)
+          post :create, user: Fabricate.attributes_for(:user), token: user_token.token
+          new_user = User.where.not(id: inviter.id).first
+          expect(inviter.followings.first.followee).to eq(new_user)
         end
       end
     end
