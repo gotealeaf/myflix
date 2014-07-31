@@ -30,9 +30,10 @@ class UsersController < ApplicationController
   end
 
   def follow_inviter_if_invited
-    unless params[:inviter_id].blank?
-      Following.create(user_id: @user.id, followee_id: params[:inviter_id])
-      Following.create(user_id: params[:inviter_id], followee_id: @user.id)
+    unless params[:token].blank?
+      inviter = UserToken.find_by(token: params[:token]).user
+      Following.create(user: @user, followee: inviter)
+      Following.create(user: inviter, followee: @user)
     end
   end
 end
