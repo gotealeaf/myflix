@@ -9,4 +9,9 @@ class User < ActiveRecord::Base
   validates_length_of :password, :password_confirmation,
                       minimum: 5, on: :create, too_short: 'please enter at least 6 characters'
   validates :email, uniqueness: true #format
+
+  def queued?(video)
+    queue_items.map(&:video).include?(video)
+  end
+
 end

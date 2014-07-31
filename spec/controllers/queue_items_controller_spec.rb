@@ -64,7 +64,7 @@ describe QueueItemsController do
       end
     end
 
-    context "with unauthenticated user" do
+    csontext "with unauthenticated user" do
       it "redirects to signin_path" do
         post :create,  video_id: video1.id
         expect(response).to redirect_to signin_path
