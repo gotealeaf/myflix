@@ -8,10 +8,12 @@ describe User do
   it { should have_many(:followed_users) }
   it { should have_many(:inverse_followings) }
   it { should have_many(:followers) }
+  it { should have_many(:invites) }
   it { should validate_presence_of(:fullname) }
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:password) }
   it { should validate_uniqueness_of (:email) }
+
 
 
   describe "in_video_queue?(video)" do

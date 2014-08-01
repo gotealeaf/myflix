@@ -5,7 +5,7 @@
         %header.actions
           %h1 Register
         %fieldset
-          = f.email_field :email, label: "Email Address"
+          = f.email_field :email, label: "Email Address", value: @email
           = f.password_field :password
           = f.text_field :fullname, label: "Full Name"
         %fieldset.actions.control-group.col-sm-offset-2

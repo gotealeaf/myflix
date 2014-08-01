@@ -1,0 +1,10 @@
+!!! 5
+%html(lang="en-US")
+  %body
+    %p #{@invite.friend_name},
+    %p #{@invite.user.fullname} has invited you to join MyFlix!
+    - if @invite.message
+      %p Here is their message:
+      %p #{@invite.message}
+    Just click on the link below to begin registration.
+    = link_to "Join MyFlix", register_url(email: @invite.friend_email)

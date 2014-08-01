@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @email = params[:email] if params[:email]
   end
 
   def create

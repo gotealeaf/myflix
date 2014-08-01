@@ -21,7 +21,7 @@ describe ReviewsController do
           expect(Review.first.creator).to eq(current_user)
         end
 
-        it "sends notice" do
+        it "sends the notice" do
           expect(flash[:notice]).to_not be_blank
         end 
 

@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :followed_users, through: :followings
   has_many :inverse_followings, class_name: "Following", foreign_key: "followed_user_id"
   has_many :followers, through: :inverse_followings, source: :user
+  has_many :invites
   
   validates_presence_of :fullname, :email
   validates_uniqueness_of :email

@@ -11,6 +11,15 @@ describe UsersController do
     it "renders the :new template" do
       expect(response).to render_template :new
     end
+
+    it "assigns the @email variable if email parameter is present" do
+      get :new, email: "jim@hotmail.com"
+      expect(assigns(:email)).to eq("jim@hotmail.com")
+    end
+
+    it "does not assign @email variable if email parameter is not preset" do
+      expect(assigns(:email)).to be_nil
+    end
   end
 
   describe "POST create" do
