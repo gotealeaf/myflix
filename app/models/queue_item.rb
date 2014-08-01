@@ -16,8 +16,25 @@ class QueueItem < ActiveRecord::Base
     category.name
   end
 
-  def rating
-    video.rating
+  def display_rating
+    video.display_rating
   end
 
+  def rating
+    review.rating if review
+  end
+
+  def rating=(new_rating)
+    if review
+      review.update_columns(rating: new_rating)
+    else
+      review = video.reviews.new(creator: creator, rating: new_rating)
+      review.save(validate: false)
+    end
+  end
+
+  private
+    def review
+      @review ||= video.reviews.find_by_user_id(creator.id)
+    end
 end

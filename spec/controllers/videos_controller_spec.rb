@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe VideosController do
   context "authenticated user" do
-    let(:cat){ Fabricate(:category) }
-    before { session[:user_id] = Fabricate(:user).id }
+    before { set_current_user }
 
     describe "GET index" do
+      let(:cat) { Fabricate(:category) }
       before { get :index }
 
       it "assigns @categories" do

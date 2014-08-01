@@ -9,8 +9,7 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'pg'
 gem "pg_search"
-gem 'will_paginate', '~> 3.0'
-gem 'will_paginate-bootstrap'
+gem 'kaminari'
 gem 'bootstrap_form'
 gem 'bcrypt', '~> 3.1.7'
 

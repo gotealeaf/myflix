@@ -7,14 +7,14 @@ class QueueItemsController < ApplicationController
 
   def create
     video = Video.find(params[:video_id])
-    queue_video(video)
+    queue_video(video.id)
     redirect_to my_queue_path
   end
 
   def update_queue
     begin
       update_item
-      reset_order_ranking
+      current_user.reset_order_ranking
     rescue ActiveRecord::RecordInvalid
       flash[:warning] = "Invalid number for ranking."
       redirect_to my_queue_path and return
@@ -26,12 +26,11 @@ class QueueItemsController < ApplicationController
   def destroy
     item = QueueItem.find(params[:id])
     item.destroy if item.creator == current_user
-    reset_order_ranking
+    current_user.reset_order_ranking
     redirect_to my_queue_path
   end
 
   private
-
     def queue_video(video)
       unless current_user.queued?(video)
         current_user.queue_items.create(video: video, ranking: new_position)
@@ -42,11 +41,10 @@ class QueueItemsController < ApplicationController
       ActiveRecord::Base.transaction do
         params[:queue_items].each do |item_data|
           item = QueueItem.find(item_data[:id])
-          item.update!(ranking: item_data[:ranking]) if item.creator == current_user
+          item.update!(ranking: item_data[:ranking], rating: item_data[:rating]) if item.creator == current_user
         end
       end
     end
-
     def reset_order_ranking
       items = current_user.queue_items
       for i in (0...(items.count))

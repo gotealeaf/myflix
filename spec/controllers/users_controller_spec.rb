@@ -3,15 +3,15 @@ require 'spec_helper'
 describe UsersController do
 
   describe "GET show" do
-    let(:user) { Fabricate(:user) }
+    before { set_current_user }
 
     it "assigns @user" do
-      get :show, id: user
-      expect(assigns(:user)).to eq(user)
+      get :show, id: current_user
+      expect(assigns(:user)).to eq(current_user)
     end
 
     it "renders template :show" do
-      get :show, id: user
+      get :show, id: current_user
       expect(response).to render_template :show
     end
   end
@@ -66,23 +66,20 @@ describe UsersController do
     end
   end
 
-  describe "GET edit" do
-
-  end
 
   describe "PUT update" do
-    before { @user = Fabricate.create(:user, email: "Lawrence@example.com", full_name:"KK Smith") }
+    let(:user) { Fabricate(:user, email: "Lawrence@example.com", full_name:"KK Smith") }
 
     context "valid attributes" do
       it "locate requested @user" do
-        put :edit, id: @user
-        expect(assigns(:user)).to eq(@user)
+        put :edit, id: user
+        expect(assigns(:user)).to eq(user)
       end
 
       it "change @user' attributes" do
-        put :update, id: @user.id, user: Fabricate.attributes_for(:user, email: "marisa@becker.com", full_name: "Brianne Mraz")
-        @user.reload
-        expect(@user.email).to eq("marisa@becker.com")
+        put :update, id: user.id, user: Fabricate.attributes_for(:user, email: "marisa@becker.com", full_name: "Brianne Mraz")
+        user.reload
+        expect(user.email).to eq("marisa@becker.com")
       end
     end
   end
