@@ -33,7 +33,7 @@ class QueueItemsController < ApplicationController
   private
 
     def queue_video(video)
-      unless has_video?(video)
+      unless current_user.queued?(video)
         current_user.queue_items.create(video: video, ranking: new_position)
       end
     end
@@ -52,10 +52,6 @@ class QueueItemsController < ApplicationController
       for i in (0...(items.count))
         items[i].update(ranking: i + 1 )
       end
-    end
-
-    def has_video?(video)
-      current_user.queue_items.map(&:video).include?(video)
     end
 
     def new_position
