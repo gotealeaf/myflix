@@ -17,10 +17,10 @@ describe User do
 
     it "returns true when user queued the video" do
       Fabricate(:queue_item, creator: user, video: video)
-      user.queued?(video).should be true
+      user.queued?(video.id).should be true
     end
     it "returns false when user has not queued the video" do
-      user.queued?(video).should be false
+      user.queued?(video.id).should be false
     end
   end
 end

@@ -112,13 +112,6 @@ describe VideosController do
   context "unauthenticated user" do
     let(:video) { Fabricate(:video) }
 
-    describe "GET index" do
-      it "redirect to signin_path" do
-        get :index
-        expect(response).to redirect_to signin_path
-      end
-    end
-
     describe "GET show" do
       it "redirect to signin_path" do
         get :show, id: video

@@ -69,7 +69,7 @@ describe UsersController do
 
   describe "PUT update" do
     let(:user) { Fabricate(:user, email: "Lawrence@example.com", full_name:"KK Smith") }
-
+    before { session[:user_id] = user.id }
     context "valid attributes" do
       it "locate requested @user" do
         put :edit, id: user

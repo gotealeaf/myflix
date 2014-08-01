@@ -9,7 +9,7 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'pg'
 gem "pg_search"
-gem 'kaminari'
+#gem 'kaminari'
 gem 'bootstrap_form'
 gem 'bcrypt', '~> 3.1.7'
 

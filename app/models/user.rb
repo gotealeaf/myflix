@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
                       minimum: 5, on: :create, too_short: 'please enter at least 6 characters'
   validates :email, uniqueness: true #format
 
-  def queued?(video)
-    queue_items.map(&:video).include?(video)
+  def queued?(video_id)
+    queue_items.map(&:video_id).include?(video_id)
   end
 end
