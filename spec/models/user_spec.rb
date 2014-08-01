@@ -9,6 +9,7 @@ describe User do
   it { should validate_presence_of(:password_confirmation)}
   it { should ensure_length_of(:password_confirmation)}
   it { should have_secure_password }
+  it { should have_many(:reviews).order("created_at DESC")}
   it { should have_many(:queue_items).order("ranking") }
 
   describe "#queued?(video)" do
