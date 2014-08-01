@@ -3,4 +3,13 @@ class Relationship < ActiveRecord::Base
   belongs_to :followed, class_name: 'User'
 
   validates_presence_of :follower_id, :followed_id
+  validates :follower_id, uniqueness: { scope: :followed_id }
+  validate :cant_follow_yourself
+
+  private
+
+    def cant_follow_yourself
+      return if follower_id != followed_id
+      errors[:base] << "You cannot follow yourself."
+    end
 end

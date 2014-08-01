@@ -6,7 +6,7 @@
           %img(src="#{user_avatar_src(@user.email)}")
           %h2
             = video_collection_header(@user)
-          %button.btn.btn-default Follow
+          = link_to "Follow", relationships_path(@user), method: :post, class:"btn btn-default", id: "follow-link"
         %table.table
           %thead
             %tr
@@ -26,6 +26,6 @@
       %header
         %h3
           = reviews_header(@user)
-      %ul      
+      %ul
         - @reviews.each do |review|
           = render review

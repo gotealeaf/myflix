@@ -33,6 +33,11 @@ class UsersController < ApplicationController
     end
   end
 
+
+  def following
+    @followed_users = current_user.followed_users
+  end
+
   private
 
     def set_user
