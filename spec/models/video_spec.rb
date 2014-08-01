@@ -7,7 +7,7 @@ describe Video do
   it { should validate_presence_of(:description) }
   it { should validate_presence_of(:large_cover_image_url) }
   it { should validate_presence_of(:small_cover_image_url) }
-  it { should validate_presence_of(:category_id) }
+  it { should validate_presence_of(:category) }
   it { should have_many(:reviews).order("created_at DESC")}
 
   describe "search" do

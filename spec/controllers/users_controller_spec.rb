@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe UsersController do
-
+  let(:current_user) { Fabricate(:user) }
   describe "GET show" do
-    before { set_current_user }
+    before { session[:user_id] = current_user.id }
 
     it "assigns @user" do
       get :show, id: current_user

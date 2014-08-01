@@ -2,9 +2,9 @@ require "spec_helper"
 
 feature "Interaction with my queue" do
   let!(:cat) { Fabricate(:category) }
-  let!(:video1) { Fabricate(:video, category_id: cat.id) }
-  let!(:video2) { Fabricate(:video, category_id: cat.id) }
-  let!(:video3) { Fabricate(:video, category_id: cat.id) }
+  let!(:video1) { Fabricate(:video, category: cat) }
+  let!(:video2) { Fabricate(:video, category: cat) }
+  let!(:video3) { Fabricate(:video, category: cat) }
 
   scenario "add and reorder queue items" do
     sign_in

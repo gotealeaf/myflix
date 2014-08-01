@@ -97,12 +97,12 @@ describe VideosController do
       context "when input is invalid" do
         it 'do not create a video record' do
           expect{
-            post :create, video: Fabricate.attributes_for(:video, category_id: nil)
+            post :create, video: Fabricate.attributes_for(:video, category: nil)
           }.not_to change(Video, :count)
         end
 
         it 'renders a template :new' do
-          post :create, video: Fabricate.attributes_for(:video, category_id: nil)
+          post :create, video: Fabricate.attributes_for(:video, category: nil)
           expect(response).to render_template :new
         end
       end

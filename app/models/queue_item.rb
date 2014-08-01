@@ -1,9 +1,11 @@
 class QueueItem < ActiveRecord::Base
+
   belongs_to :creator, class_name: User, foreign_key: :user_id
   belongs_to :video
 
   validates :ranking, numericality: { only_integer: true }
-
+  validates_presence_of  :creator, :video
+  
   def video_title
     video.title
   end

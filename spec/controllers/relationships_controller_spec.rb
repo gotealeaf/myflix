@@ -14,7 +14,7 @@ describe RelationshipsController,:type => :controller do
           post :create, id: another_user.id
         end
         it "creates a relationship" do
-          expect(current_user.following?(another_user.id)).to be true
+          expect(current_user.following?(another_user)).to be true
         end
 
         it "assoicates with current_user" do
@@ -68,7 +68,7 @@ describe RelationshipsController,:type => :controller do
       end
 
       it "delete the relationship" do
-        expect(current_user.following?(another_user.id)).to be false
+        expect(current_user.following?(another_user)).to be false
       end
 
       it "set flash message" do

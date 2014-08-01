@@ -32,12 +32,12 @@ class User < ActiveRecord::Base
     end
   end
 
-  def queued?(video_id)
-    queue_items.map(&:video_id).include?(video_id)
+  def queued?(video)
+    queue_items.map(&:video).include?(video)
   end
 
-  def following?(another_user_id)
-    relationships.map(&:followed_id).include?(another_user_id)
+  def following?(another_user)
+    relationships.map(&:followed).include?(another_user)
   end
 
 2end

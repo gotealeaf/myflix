@@ -12,20 +12,20 @@ describe Category do
 
     context "less than 6"do
       before do
-        5.times { Fabricate(:video, category_id: cat.id) }
+        5.times { Fabricate(:video, category: cat) }
       end
       it { should == 5 }
     end
     context "only 6" do
       before do
-        6.times { Fabricate(:video, category_id: cat.id) }
+        6.times { Fabricate(:video, category: cat) }
       end
       it { should == 6 }
     end
 
     context "more than 6" do
       before do
-        10.times { Fabricate(:video, category_id: cat.id) }
+        10.times { Fabricate(:video, category: cat) }
       end
       it { should == 6 }
     end
@@ -33,8 +33,8 @@ describe Category do
     context "return order" do
       let(:subject) { cat.recent_videos.first.title}
       before do
-        10.times { Fabricate(:video, category_id: cat.id, created_at: 1000.days.ago) }
-        first = Fabricate(:video, title: "lastest",category_id: cat.id)
+        10.times { Fabricate(:video, category: cat, created_at: 1000.days.ago) }
+        first = Fabricate(:video, title: "lastest",category: cat)
       end
       it{ should == "lastest" }
     end

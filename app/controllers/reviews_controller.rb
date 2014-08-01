@@ -1,9 +1,10 @@
 class ReviewsController < ApplicationController
   before_action :signed_in_user
+
   def create
     @video = Video.find(params[:video_id])
-    @review = @video.reviews.build(review_params)
-    @review.creator = current_user
+    @review = current_user.reviews.new(review_params)
+    @review.video = @video
     if @review.save
       flash[:success] = "New review has been created."
       redirect_to @video
@@ -12,9 +13,9 @@ class ReviewsController < ApplicationController
       render 'videos/show'
     end
   end
-  private
 
+  private
     def review_params
-      params.require(:review).permit(:rating, :content, :video_id, :user_id)
+      params.require(:review).permit(:rating, :content, :video)
     end
 end

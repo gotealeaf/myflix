@@ -7,7 +7,7 @@ class QueueItemsController < ApplicationController
 
   def create
     video = Video.find(params[:id])
-    queue(video.id)
+    queue(video)
     redirect_to my_queue_path
   end
 
@@ -31,9 +31,9 @@ class QueueItemsController < ApplicationController
   end
 
   private
-    def queue(video_id)
-      unless current_user.queued?(video_id)
-        current_user.queue_items.create(video_id: video_id, ranking: new_position)
+    def queue(video)
+      unless current_user.queued?(video)
+        current_user.queue_items.create(video: video, ranking: new_position)
       end
     end
 
