@@ -36,7 +36,8 @@ class User < ActiveRecord::Base
     queue_items.map(&:video_id).include?(video_id)
   end
 
-  def follow(another_user)
-    relationships.create(followed: another_user)
+  def following?(another_user_id)
+    relationships.map(&:followed_id).include?(another_user_id)
   end
-end
+
+2end

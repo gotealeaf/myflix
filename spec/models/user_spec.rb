@@ -17,6 +17,7 @@ describe User do
   it { should have_many(:followers) }
 
   let(:current_user) { Fabricate(:user) }
+  let(:another_user) { Fabricate(:user) }
 
   describe "#queued?(video)" do
     let(:video) { Fabricate(:video) }
@@ -30,20 +31,15 @@ describe User do
     end
   end
 
-  describe "#follow(another_user)" do
-    it "create a relationship" do
-      another_user = Fabricate(:user)
-      current_user.follow(another_user)
-      expect(current_user.followed_users.count).to eq(1)
+  describe "#following?(another_user_id)" do
+    it "return true if user is following another_user" do
+      current_user.follow(another_user.id)
+      expect(current_user.following?(another_user.id)).to be true
+    end
+
+    it "return false if user is not following another_user" do
+      expect(current_user.following?(another_user.id)).to be false
     end
   end
 
-
-  describe "#following?(another_user)" do
-
-  end
-
-  describe "#unfollow(another_user)" do
-
-  end
 end

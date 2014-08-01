@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe QueueItemsController do
   let(:video1) { Fabricate(:video) }
   let(:video2) { Fabricate(:video) }
