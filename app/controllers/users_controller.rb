@@ -1,3 +1,4 @@
+
 class UsersController < ApplicationController
 
   before_action :require_user, except: [:new, :create]
@@ -11,7 +12,7 @@ class UsersController < ApplicationController
     if @user.save
       flash[:success] = "Welcome #{@user.full_name}!"
       session[:username] = @user.username
-      MyflixMailer.welcome_email(current_user).deliver
+      MyflixMailer.delay.welcome_email(current_user.id)
       follow_inviter_if_invited
       delete_token_if_invited
       redirect_to videos_path

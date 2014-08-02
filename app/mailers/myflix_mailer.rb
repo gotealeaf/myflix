@@ -1,22 +1,25 @@
 class MyflixMailer < ActionMailer::Base
   default from: 'admin@myflix.com'
 
-  def welcome_email(user)
-    @user = user
-    mail to: user.email, subject: 'Welcome to MyFlix!'
+  def welcome_email(user_id)
+    @user = User.find(user_id)
+    mail to: @user.email, subject: 'Welcome to MyFlix!'
   end
 
-  def password_reset_email(user_token)
-    @user = user_token.user
+  def password_reset_email(token_id)
+    user_token = UserToken.find(token_id)
     @token = user_token.token
+    @user = user_token.user
     mail to: @user.email, subject: 'MyFlix password reset'
   end
 
-  def invite_friend(token, invite_input)
-    @friend_name = invite_input[:friend_name]
-    @friend_email = invite_input[:friend_email]
-    @token = token
-    @message = invite_input[:message]
-    mail to: @friend_email, from: token.user.email, subject: "#{ token.user.full_name } would like to see you on MyFlix!"
+  def invite_friend(token_id, friend_name, friend_email, msg)
+    user_token = UserToken.find(token_id)
+    @inviter = user_token.user
+    @friend_name = friend_name
+    @friend_email = friend_email
+    @token = user_token.token
+    @message = msg
+    mail to: @friend_email, from: @inviter.email, subject: "#{ @inviter.full_name } would like to see you on MyFlix!"
   end
 end
