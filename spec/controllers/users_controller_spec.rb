@@ -1,8 +1,12 @@
 require 'spec_helper'
 
 describe UsersController do
+
   let(:current_user) { Fabricate(:user) }
+  let(:another_user) { Fabricate(:user) }
+
   describe "GET show" do
+
     before { session[:user_id] = current_user.id }
 
     it "assigns @user" do
@@ -17,6 +21,7 @@ describe UsersController do
   end
 
   describe "GET new" do
+
     it "assigns @user" do
       get :new
       expect(assigns(:user)).to be_new_record
@@ -31,7 +36,9 @@ describe UsersController do
 
 
   describe "POST create" do
+
     context "valid attributes" do
+
       it "creates a new user record" do
         expect {
           post :create, user: Fabricate.attributes_for(:user)
@@ -45,6 +52,7 @@ describe UsersController do
     end
 
     context "invalid attributes" do
+
       before { Fabricate(:user, email:"example@example.com") }
 
       it "dont create a new user record" do
@@ -68,8 +76,10 @@ describe UsersController do
 
 
   describe "PUT update" do
+
     let(:user) { Fabricate(:user, email: "Lawrence@example.com", full_name:"KK Smith") }
     before { session[:user_id] = user.id }
+
     context "valid attributes" do
       it "locate requested @user" do
         put :edit, id: user
@@ -81,6 +91,23 @@ describe UsersController do
         user.reload
         expect(user.email).to eq("marisa@becker.com")
       end
+    end
+  end
+
+  describe "GET following" do
+
+    before do
+      session[:user_id] = current_user.id
+      Fabricate(:relationship, follower: current_user, followed: another_user)
+      get :following
+    end
+
+    it "assigns @followed_users" do
+      expect(assigns(:followed_users)).to eq([another_user])
+    end
+
+    it "renders template :following" do
+      expect(response).to render_template :following
     end
   end
 end

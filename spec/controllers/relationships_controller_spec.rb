@@ -24,8 +24,8 @@ describe RelationshipsController,:type => :controller do
         it "set flash message" do
           expect(flash[:success]).not_to be_blank
         end
-        it "redirects to following_people_path" do
-          expect(response).to redirect_to following_people_path
+        it "redirects to user" do
+          expect(response).to redirect_to user_path(another_user)
         end
       end
 
@@ -43,7 +43,7 @@ describe RelationshipsController,:type => :controller do
         end
 
         it "redirects to following_people_path" do
-          expect(response).to redirect_to following_people_path
+          expect(response).to redirect_to user_path(current_user)
         end
 
       end

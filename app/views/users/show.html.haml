@@ -6,7 +6,7 @@
           %img(src="#{user_avatar_src(@user.email)}")
           %h2
             = video_collection_header(@user)
-          = link_to "Follow", relationships_path(id: @user.id), method: :post, class:"btn btn-default", id: "follow-link" unless current_user == @user || current_user.following?(@user.id)
+          = link_to "Follow", relationships_path(id: @user.id), method: :post, class:"btn btn-default", id: "follow-link" unless current_user.cant_follow(@user)
         %table.table
           %thead
             %tr

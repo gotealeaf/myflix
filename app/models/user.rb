@@ -40,4 +40,7 @@ class User < ActiveRecord::Base
     relationships.map(&:followed).include?(another_user)
   end
 
-2end
+  def cant_follow(user)
+    self == user || self.following?(user)
+  end
+end

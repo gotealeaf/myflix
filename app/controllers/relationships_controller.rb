@@ -11,7 +11,7 @@ class RelationshipsController < ApplicationController
       flash[:warning] = "Unable to follow #{user.full_name}"
     end
 
-    redirect_to following_people_path
+    redirect_to user
   end
 
   def destroy
