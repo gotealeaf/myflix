@@ -131,6 +131,36 @@ ALTER SEQUENCE queue_items_id_seq OWNED BY queue_items.id;
 
 
 --
+-- Name: relationships; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE relationships (
+    id integer NOT NULL,
+    follower_id integer,
+    followed_id integer
+);
+
+
+--
+-- Name: relationships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE relationships_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: relationships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE relationships_id_seq OWNED BY relationships.id;
+
+
+--
 -- Name: reviews; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -259,6 +289,13 @@ ALTER TABLE ONLY queue_items ALTER COLUMN id SET DEFAULT nextval('queue_items_id
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY relationships ALTER COLUMN id SET DEFAULT nextval('relationships_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY reviews ALTER COLUMN id SET DEFAULT nextval('reviews_id_seq'::regclass);
 
 
@@ -290,6 +327,14 @@ ALTER TABLE ONLY categories
 
 ALTER TABLE ONLY queue_items
     ADD CONSTRAINT queue_items_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: relationships_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY relationships
+    ADD CONSTRAINT relationships_pkey PRIMARY KEY (id);
 
 
 --
@@ -346,4 +391,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140720104154');
 INSERT INTO schema_migrations (version) VALUES ('20140724074123');
 
 INSERT INTO schema_migrations (version) VALUES ('20140725072025');
+
+INSERT INTO schema_migrations (version) VALUES ('20140801073431');
 

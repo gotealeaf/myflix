@@ -7,7 +7,7 @@ class Video < ActiveRecord::Base
   validates_presence_of :title, :description,
                         :large_cover_image_url,
                         :small_cover_image_url,
-                        :category_id
+                        :category
 
   pg_search_scope :search,
                   :against => [:title, :description],

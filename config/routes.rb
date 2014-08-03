@@ -20,4 +20,8 @@ Rails.application.routes.draw do
 
   resources :queue_items, only: [:create, :destroy]
   post "update_queue", to: "queue_items#update_queue"
+
+  resources :relationships, only: [:show, :create, :destroy]
+
+  get "following_people", to: "users#following"
 end

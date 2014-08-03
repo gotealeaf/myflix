@@ -6,8 +6,8 @@ class QueueItemsController < ApplicationController
   end
 
   def create
-    video = Video.find(params[:video_id])
-    queue_video(video.id)
+    video = Video.find(params[:id])
+    queue(video)
     redirect_to my_queue_path
   end
 
@@ -31,7 +31,7 @@ class QueueItemsController < ApplicationController
   end
 
   private
-    def queue_video(video)
+    def queue(video)
       unless current_user.queued?(video)
         current_user.queue_items.create(video: video, ranking: new_position)
       end
@@ -43,12 +43,6 @@ class QueueItemsController < ApplicationController
           item = QueueItem.find(item_data[:id])
           item.update!(ranking: item_data[:ranking], rating: item_data[:rating]) if item.creator == current_user
         end
-      end
-    end
-    def reset_order_ranking
-      items = current_user.queue_items
-      for i in (0...(items.count))
-        items[i].update(ranking: i + 1 )
       end
     end
 

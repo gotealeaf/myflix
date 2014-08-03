@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit,:update, :destroy]
-  # before_action :signed_in_user, only: [:edit, :update]
+  before_action :signed_in_user, only: [:edit, :update]
 
   def show
+    @reviews = @user.reviews
   end
 
   def new
@@ -30,6 +31,11 @@ class UsersController < ApplicationController
     else
       render :edit
     end
+  end
+
+
+  def following
+    @followed_users = current_user.followed_users
   end
 
   private

@@ -25,7 +25,7 @@ class VideosController < ApplicationController
   end
 
   def search
-    @videos = Video.search(params[:search]).paginate(:page => params[:page])
+    @videos = Video.search(params[:search])
   end
 
   private
