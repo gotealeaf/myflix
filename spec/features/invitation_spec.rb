@@ -10,7 +10,6 @@ feature 'User invites a friend to MyFlix' do
     fill_in 'invite__friend_email', with: 'nelle@example.com'
     click_on 'Send Invitation'
     expect(page).to have_content("Nelle has been invited to join NetFlix. Thanks!!")
-
     open_email('nelle@example.com')
     current_email.click_link 'Join'
     expect(page).to have_content('Register')

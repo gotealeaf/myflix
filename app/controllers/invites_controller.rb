@@ -1,6 +1,6 @@
 class InvitesController < ApplicationController
   include Tokenable
-  
+
   before_action :require_user
 
   def create
@@ -10,8 +10,11 @@ class InvitesController < ApplicationController
     else
       flash[:success] = "#{ params[:invite].first[:friend_name] } has been invited to join NetFlix. Thanks!!"
       @token = generate_token(current_user)
-      @invite = params[:invite].first
-      MyflixMailer.invite_friend(@token, @invite).deliver
+      invite_inputs = params[:invite].first
+      @friend_name = invite_inputs[:friend_name]
+      @friend_email = invite_inputs[:friend_email]
+      @msg = invite_inputs[:message]
+      MyflixMailer.delay.invite_friend(@token.id, @friend_name, @friend_email, @msg)
       redirect_to home_path
     end
   end

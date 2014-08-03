@@ -33,11 +33,22 @@ describe InvitesController do
           post :create, invite: [{ message: 'some message', friend_name: 'Nelle', friend_email: 'nelle@example.com' }]
           expect(assigns(:token)).to eq(user.user_tokens.first)
         end
-        it 'assigns @invite' do
+        it 'assigns @friend_name' do
           user_inputs = { "message" => 'some message', "friend_name" => 'Nelle', "friend_email" => 'nelle@example.com' }
           post :create, invite: [user_inputs]
-          expect(assigns(:invite)).to eq(user_inputs)
+          expect(assigns(:friend_name)).to eq('Nelle')
         end
+        it 'assigns @friend_email' do
+          user_inputs = { "message" => 'some message', "friend_name" => 'Nelle', "friend_email" => 'nelle@example.com' }
+          post :create, invite: [user_inputs]
+          expect(assigns(:friend_email)).to eq('nelle@example.com')
+        end
+        it 'assigns @msg' do
+          user_inputs = { "message" => 'some message', "friend_name" => 'Nelle', "friend_email" => 'nelle@example.com' }
+          post :create, invite: [user_inputs]
+          expect(assigns(:msg)).to eq('some message')
+        end
+
         it 'delivers email to @friend_email' do
           post :create, invite: [{ message: 'some message', friend_name: 'Nelle', friend_email: 'nelle@example.com' }]
           expect(ActionMailer::Base.deliveries.last.to).to eq(['nelle@example.com'])
