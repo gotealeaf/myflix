@@ -8,6 +8,10 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
+gem 'bcrypt-ruby'
+gem 'bootstrap_form'
+gem 'fabrication'
+gem 'faker'
 
 group :development do
   gem 'sqlite3'
@@ -16,6 +20,8 @@ group :development do
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
+  gem 'guard'
+  gem 'guard-rspec', require: false
 end
 
 group :development, :test do
@@ -24,10 +30,13 @@ end
 
 group :test do
   gem 'database_cleaner', '1.2.0'
+  gem 'shoulda-matchers'
 end
 
 group :production do
   gem 'pg'
   gem 'rails_12factor'
 end
+
+
 
