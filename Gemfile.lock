@@ -234,6 +234,6 @@ DEPENDENCIES
   sass-rails
   shoulda-matchers
   sidekiq
-  sinatra
+  sinatra (>= 1.3.0)
   thin
   uglifier
