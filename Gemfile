@@ -15,7 +15,9 @@ gem 'fabrication'
 gem 'faker'
 gem 'mail'
 gem 'sidekiq'
-gem 'sinatra', require: false
+gem 'sinatra', '>= 1.3.0', :require => nil
+gem 'unicorn'
+
 
 group :development do
   gem 'thin'

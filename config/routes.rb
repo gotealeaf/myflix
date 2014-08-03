@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Myflix::Application.routes.draw do
   root to: 'pages#front'
   resources :videos do
@@ -30,5 +32,7 @@ Myflix::Application.routes.draw do
   post 'invite', to: 'invites#create'
   get 'invited_registration', to: 'invited_registrations#new'
 
+  mount Sidekiq::Web => '/sidekiq'
+  
   get 'ui(/:action)', controller: 'ui'
 end
