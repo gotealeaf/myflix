@@ -45,4 +45,46 @@ describe Video do
 
   end
 
+  describe "average_review" do
+    it "returns N/A if no reviews found" do
+      video = Fabricate(:video)
+      expect(video.average_review).to eq("N/A")
+    end
+    
+    it "returns number equal to only rating if one review found" do
+      video = Fabricate(:video)
+      review = Fabricate(:review)
+      video.reviews << review
+      sum = 0
+      video.reviews.each { |review| sum += review.rating}
+      average = sum / video.reviews.count
+      expect(video.average_review).to eq(average) 
+    end
+
+    it "returns number equal to average of multiple ratings if multiple reviews found" do
+      video = Fabricate(:video)
+      review1 = Fabricate(:review)
+      review2 = Fabricate(:review)
+      video.reviews << review1 << review2
+      sum = 0
+      video.reviews.each { |review| sum += review.rating}
+      average = sum / video.reviews.count
+      expect(video.average_review).to eq(average) 
+    end
+  end
+
+  describe "order_by_created_at" do
+    it "returns an array ordered by created_at if multiple reviews found" do
+      video = Fabricate(:video)
+      review1 = Fabricate(:review)
+      review2 = Fabricate(:review)
+      video.reviews << review1 << review2
+      sum = 0
+      video.reviews.each { |review| sum += review.rating}
+      average = sum / video.reviews.count
+      expect(video.reviews.order_by_created_at).to eq([review2, review1])
+    end
+
+  end
+
 end
