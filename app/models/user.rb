@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include Sluggable
+  sluggable_column :full_name
 
   has_many :reviews, -> { order("created_at DESC")}
   has_many :queue_items, -> { order("ranking") }

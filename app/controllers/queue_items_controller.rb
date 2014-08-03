@@ -6,7 +6,7 @@ class QueueItemsController < ApplicationController
   end
 
   def create
-    video = Video.find(params[:id])
+  video = Video.find(params[:id])
     queue(video)
     redirect_to my_queue_path
   end

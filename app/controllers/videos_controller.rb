@@ -30,7 +30,7 @@ class VideosController < ApplicationController
 
   private
     def set_video
-      @video = Video.find(params[:id])
+      @video = Video.find_by_token(params[:id])
     end
 
     def video_params

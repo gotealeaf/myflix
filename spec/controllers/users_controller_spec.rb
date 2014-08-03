@@ -38,7 +38,8 @@ describe UsersController do
   describe "POST create" do
 
     context "valid attributes" do
-
+      after { ActionMailer::Base.deliveries.clear }
+      before { post :create, user: Fabricate.attributes_for(:user) }
       it "creates a new user record" do
         expect {
           post :create, user: Fabricate.attributes_for(:user)
@@ -49,6 +50,15 @@ describe UsersController do
         post :create, user: Fabricate.attributes_for(:user)
         expect(response).to redirect_to root_path
       end
+
+      it "sends out a email" do
+        expect(ActionMailer::Base.deliveries).not_to be_empty
+      end
+
+      it "sends to to right user" do
+        expect(ActionMailer::Base.deliveries.last.to).to eq([User.last.email])
+      end
+
     end
 
     context "invalid attributes" do
@@ -59,6 +69,10 @@ describe UsersController do
         expect {
           post :create, user: Fabricate.attributes_for(:user, email: "example@example.com")
         }.not_to change(User, :count)
+      end
+
+      it "dont send out email" do
+        expect(ActionMailer::Base.deliveries).to be_empty
       end
 
       before { post :create, user: Fabricate.attributes_for(:user, email: "example@example.com") }

@@ -17,6 +17,7 @@ class UsersController < ApplicationController
       UserMailer.welcome_email(@user).deliver
 
       flash[:success] = "Welcome!"
+      session[:user_id] = @user.id
       redirect_to root_path
     else
       render :new
@@ -43,7 +44,7 @@ class UsersController < ApplicationController
   private
 
     def set_user
-      @user = User.find(params[:id])
+      @user = User.find_by_slug(params[:id])
     end
 
     def user_params

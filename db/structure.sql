@@ -213,7 +213,8 @@ CREATE TABLE users (
     full_name character varying(255),
     password_digest character varying(255),
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    slug character varying(255)
 );
 
 
@@ -248,7 +249,8 @@ CREATE TABLE videos (
     small_cover_image_url character varying(255),
     category_id integer,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    token character varying(255)
 );
 
 
@@ -393,4 +395,10 @@ INSERT INTO schema_migrations (version) VALUES ('20140724074123');
 INSERT INTO schema_migrations (version) VALUES ('20140725072025');
 
 INSERT INTO schema_migrations (version) VALUES ('20140801073431');
+
+INSERT INTO schema_migrations (version) VALUES ('20140803124020');
+
+INSERT INTO schema_migrations (version) VALUES ('20140803125244');
+
+INSERT INTO schema_migrations (version) VALUES ('20140803125252');
 
