@@ -13,12 +13,16 @@ gem "pg_search"
 gem 'bootstrap_form'
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'roadie'
+gem 'roadie-rails'
+
 group :development do
   gem 'pry'
   gem 'pry-nav'
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
+  gem "letter_opener"
 end
 
 group :development, :test do
