@@ -9,12 +9,14 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'pg'
 gem "pg_search"
-#gem 'kaminari'
 gem 'bootstrap_form'
 gem 'bcrypt', '~> 3.1.7'
+gem "figaro"
 
 gem 'roadie'
 gem 'roadie-rails'
+#gem 'kaminari'
+
 
 group :development do
   gem 'pry'
