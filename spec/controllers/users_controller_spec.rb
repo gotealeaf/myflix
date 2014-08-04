@@ -101,7 +101,7 @@ describe UsersController do
       end
 
       it "change @user' attributes" do
-        put :update, id: user.id, user: Fabricate.attributes_for(:user, email: "marisa@becker.com", full_name: "Brianne Mraz")
+        put :update, id: user.slug, user: Fabricate.attributes_for(:user, email: "marisa@becker.com", full_name: "Brianne Mraz")
         user.reload
         expect(user.email).to eq("marisa@becker.com")
       end

@@ -4,4 +4,5 @@ Fabricator(:video) do
   large_cover_image_url { Faker::Lorem.word }
   small_cover_image_url { Faker::Lorem.word }
   category { Category.create(name: Faker::Name.name) }
+  token {}
 end

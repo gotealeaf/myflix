@@ -2,7 +2,7 @@ class ReviewsController < ApplicationController
   before_action :signed_in_user
 
   def create
-    @video = Video.find_by_token(params[:video_id])
+    @video = Video.find_by(token: params[:video_id])
     @review = current_user.reviews.new(review_params)
     @review.video = @video
     if @review.save

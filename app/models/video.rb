@@ -1,7 +1,7 @@
 class Video < ActiveRecord::Base
   include PgSearch
 
-  before_create :generate_token
+  before_create :generate_token!
 
   belongs_to :category
   has_many :reviews, -> { order('created_at DESC') }
@@ -39,18 +39,12 @@ class Video < ActiveRecord::Base
     cal_average_rating.to_s + "/5.0"
   end
 
-  def rating
-    cal_average_rating
-  end
-
-
-
   private
     def cal_average_rating
       reviews.average(:rating).round(1)
     end
 
-    def generate_token
+    def generate_token!
       self.token = SecureRandom.urlsafe_base64
     end
 end

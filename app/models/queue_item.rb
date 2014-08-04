@@ -5,7 +5,7 @@ class QueueItem < ActiveRecord::Base
 
   validates :ranking, numericality: { only_integer: true }
   validates_presence_of  :creator, :video
-  
+
   def video_title
     video.title
   end
@@ -35,8 +35,7 @@ class QueueItem < ActiveRecord::Base
     end
   end
 
-  private
-    def review
-      @review ||= video.reviews.find_by_user_id(creator.id)
-    end
+  def review
+    @review ||= video.reviews.find_by_user_id(user_id)
+  end
 end

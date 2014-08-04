@@ -21,7 +21,7 @@ describe VideosController do
       let(:video) {Fabricate(:video)}
       let(:review1) { Fabricate(:review, video: video) }
       let(:review2) { Fabricate(:review, video: video) }
-      before { get :show, id: video.id }
+      before { get :show, id: video.token }
 
       it "assigns @video" do
         expect(assigns(:video)).to eq(video)

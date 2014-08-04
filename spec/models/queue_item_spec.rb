@@ -8,9 +8,10 @@ describe QueueItem do
   it { should validate_presence_of(:video) }
   it { should validate_numericality_of(:ranking).only_integer }
 
-  let(:category) { Fabricate(:category) }
-  let(:video) { Fabricate(:video, category: category) }
-  let(:queue_item) { Fabricate(:queue_item, video: video, creator: Fabricate(:user)) }
+  let(:current_user) { Fabricate(:user) }
+  let(:cat) { Fabricate(:category) }
+  let(:video) { Fabricate(:video, category: cat) }
+  let(:queue_item) { Fabricate(:queue_item, video: video, creator: current_user) }
 
   describe "#video_title" do
     it "returns the title of assoicated video" do
@@ -20,19 +21,20 @@ describe QueueItem do
 
   describe "category" do
     it "return the assoicated category object" do
-      expect(queue_item.category).to eq(category)
+      expect(queue_item.category).to eq(cat)
     end
   end
 
   describe "category_name" do
     it "return the name of category name" do
-      expect(queue_item.category_name).to eq(category.name)
+      expect(queue_item.category_name).to eq(cat.name)
     end
   end
 
   describe "rating" do
     it "return the rating of assoicated video" do
-      expect(queue_item.rating).to eq(video.rating)
+      review = Fabricate(:review, creator: current_user, video: video) 
+      expect(queue_item.rating).to eq(review.rating)
     end
   end
 

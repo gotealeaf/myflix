@@ -15,9 +15,8 @@ class User < ActiveRecord::Base
 
   has_secure_password validation: false
 
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(?:\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email, presence: true,
-                    format: { with: VALID_EMAIL_REGEX },
+                    format: { with: /@/ },
                     uniqueness: { case_sensitive: false }
 
   validates :full_name, presence: true
@@ -45,4 +44,5 @@ class User < ActiveRecord::Base
   def cant_follow(user)
     self == user || self.following?(user)
   end
+
 end

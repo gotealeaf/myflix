@@ -38,8 +38,6 @@ describe QueueItemsController do
 
   describe "POST create" do
 
-    before {  }
-
     context "with authenticated user" do
       let(:video3) { Fabricate(:video) }
       before do

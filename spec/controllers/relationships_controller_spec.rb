@@ -64,7 +64,7 @@ describe RelationshipsController,:type => :controller do
       before do
         session[:user_id] = current_user.id
         Fabricate(:relationship, follower: current_user, followed: another_user)
-        delete :destroy, id: another_user.id
+        delete :destroy, id: another_user.slug
       end
 
       it "delete the relationship" do

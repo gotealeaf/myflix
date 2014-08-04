@@ -15,7 +15,7 @@ class RelationshipsController < ApplicationController
   end
 
   def destroy
-    user = User.find_by_slug(params[:id])
+    user = User.find_by(slug: params[:id])
     @relationship = current_user.relationships.find_by_followed_id(user.id)
     @relationship.destroy
     flash[:success] = "You have unfollow #{user.full_name}"

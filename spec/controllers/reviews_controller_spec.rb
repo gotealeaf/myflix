@@ -8,12 +8,14 @@ describe ReviewsController do
 
     context "authenticated user" do
 
-      before { session[:user_id] = current_user.id }
+      before do
+        session[:user_id] = current_user.id
+      end
 
       context "valid inputs" do
 
         before do
-          post :create, review: Fabricate.attributes_for(:review), video_id: video.id
+          post :create, review: Fabricate.attributes_for(:review), video_id: video.token
         end
 
         it "creates a review" do
@@ -37,7 +39,7 @@ describe ReviewsController do
 
         before do
           session[:user_id] = current_user.id
-          post :create, review: { rating: 4 }, video_id: video.id
+          post :create, review: { rating: 4 }, video_id: video.token
         end
 
         it "does not create a review" do
