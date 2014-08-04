@@ -15,4 +15,19 @@ class Video < ActiveRecord::Base
   	where("title LIKE ?", "%#{title}%").order("created_at DESC")
   end
 
+  def rating
+    if reviews.count > 0
+      sum_ratings = 0
+      count_ratings = 0
+
+      reviews.each do |review|
+        sum_ratings += review.rating.to_f
+        count_ratings += 1.to_f
+      end
+
+      (sum_ratings / count_ratings).round(1)
+    else
+      nil
+    end
+  end
 end

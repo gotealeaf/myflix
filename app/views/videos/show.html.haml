@@ -6,7 +6,8 @@
       .video_info.col-sm-3
         %header
           %h3= @video.title
-          %span Rating: 4.5/5.0
+          %span Rating:
+          = @video.rating
         %p= @video.description
         .actions
           %a.btn.btn-primary(href="#{@video.video_url}") Watch now
@@ -20,7 +21,7 @@
           .form-group
             %label Rate this video
             .row
-              .col-sm-3
+              .col-sm-3 
                 = f.select :rating, options_for_video_reviews, class: "form-control"
           .form-group
             %label Write Review

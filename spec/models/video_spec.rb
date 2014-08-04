@@ -42,7 +42,30 @@ describe Video do
       
       expect(Video.search_by_title("")).to eq([])   
     end
+  end
 
+  describe "rating" do
+    it "returns the video's average rating from all its reviews" do
+      the_godfather = Fabricate :video
+      review1 = Fabricate :review, rating: 3, video: the_godfather
+      review2 = Fabricate :review, rating: 4, video: the_godfather
+
+      expect(the_godfather.rating).to eq(3.5)
+    end
+
+    it "returns nil when the video has no review" do
+      the_godfather = Fabricate :video
+      expect(the_godfather.rating).to eq(nil)
+    end
+
+    it "returns only one decimal" do
+      the_godfather = Fabricate :video
+      review1 = Fabricate :review, rating: 3, video: the_godfather
+      review2 = Fabricate :review, rating: 4, video: the_godfather
+      review3 = Fabricate :review, rating: 1, video: the_godfather
+
+      expect(the_godfather.rating).to eq(2.7)
+    end
   end
 end
 

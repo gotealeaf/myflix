@@ -8,7 +8,6 @@ class UsersController < ApplicationController
   end
 
   def create
-    binding.pry
     @user = User.new(user_params)
     if @user.valid?
 
@@ -81,7 +80,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :full_name, :password_confirmation)
+    params.require(:user).permit(:email, :password, :password_confirmation, :full_name)
   end
 
   def set_reset_password_email_at user
