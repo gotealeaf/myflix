@@ -18,6 +18,7 @@ gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'unicorn'
 gem "sentry-raven", :git => "https://github.com/getsentry/raven-ruby.git"
+gem 'paratrooper'
 
 
 group :development do
