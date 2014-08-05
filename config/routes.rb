@@ -7,8 +7,6 @@ Rails.application.routes.draw do
   post '/signin', to: 'sessions#create'
   get '/signout', to: 'sessions#destroy'
 
-  get '/my_queue', to: "queue_items#index"
-
   resources :videos do
     collection do
       get 'search', to: 'videos#search'
@@ -19,9 +17,15 @@ Rails.application.routes.draw do
   resources :users
 
   resources :queue_items, only: [:create, :destroy]
+  get '/my_queue', to: "queue_items#index"
   post "update_queue", to: "queue_items#update_queue"
 
   resources :relationships, only: [:show, :create, :destroy]
-
   get "following_people", to: "users#following"
+
+  get '/forgot_password', to: "forgot_password#new"
+  post '/forgot_password', to: "forgot_password#create"
+
+  get '/password_reset', to: "password_reset#show"
+  post '/password_reset', to: "password_reset#create"
 end
