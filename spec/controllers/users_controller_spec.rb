@@ -11,15 +11,6 @@ describe UsersController do
     it "renders the :new template" do
       expect(response).to render_template :new
     end
-
-    it "assigns the @email variable if email parameter is present" do
-      get :new, email: "jim@hotmail.com"
-      expect(assigns(:email)).to eq("jim@hotmail.com")
-    end
-
-    it "does not assign @email variable if email parameter is not preset" do
-      expect(assigns(:email)).to be_nil
-    end
   end
 
   describe "POST create" do
@@ -61,10 +52,34 @@ describe UsersController do
           expect(ActionMailer::Base.deliveries.last.body).to include(User.first.fullname)
         end
       end
+
+      context "registration from an invite" do
+        let(:john)  { Fabricate(:user) }
+        let(:invite) { Fabricate(:invite, user: john) }
+
+        before do
+          post :create, user: Fabricate.attributes_for(:user), invite_token: invite.token
+          @sally = User.find(3)
+        end
+
+        it "creates a following where the user follows the inviter" do   
+          expect(john.followers).to eq([@sally])
+        end
+
+        it "creates a following the inviter follows the user" do
+          expect(@sally.followers).to eq([john])
+        end
+
+        it "expires the invite after acceptance" do
+          get :new_with_invite_token, token: invite.token
+          expect(response).to redirect_to expired_token_path
+        end
+      end
     end
 
     context "with invalid input" do
-      before { post :create, user: { fullname: nil, email: nil, password: nil } }
+      after { ActionMailer::Base.deliveries.clear }
+      before { post :create, user: { fullname: nil, email: nil, password: nil }}
     
       it "does not save new user to the database" do
         expect(User.count).to eq(0)
@@ -102,6 +117,32 @@ describe UsersController do
 
     it_behaves_like "require_login" do
       let(:action) { get :show, id: jimbo.id }
+    end
+  end
+
+  describe "GET new_with_invite_token" do
+    let(:invite) { Fabricate(:invite, token: "12345") }
+    before { get :new_with_invite_token, token: invite.token }
+
+    it "assigns @user with invitee's email" do
+      expect(assigns(:user).email).to eq(invite.friend_email)
+    end
+
+    it "assigns a new User to @user" do
+      expect(assigns(:user)).to be_a_new(User) 
+    end
+
+    it "assigns the @invite_token variable" do
+      expect(assigns(:invite_token)).to eq(invite.token)
+    end 
+
+    it "renders the :new template" do
+      expect(response).to render_template :new
+    end
+
+    it "redirects to expired token path if invite doesn't exist" do
+      get :new_with_invite_token, token: "abcd"
+      expect(response).to redirect_to expired_token_path
     end
   end
 end

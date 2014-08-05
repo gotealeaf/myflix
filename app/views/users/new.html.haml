@@ -5,9 +5,10 @@
         %header.actions
           %h1 Register
         %fieldset
-          = f.email_field :email, label: "Email Address", value: @email
+          = f.email_field :email, label: "Email Address"
           = f.password_field :password
           = f.text_field :fullname, label: "Full Name"
+          = hidden_field_tag :invite_token, @invite_token
         %fieldset.actions.control-group.col-sm-offset-2
           .controls
             %input(type="submit" value="Sign Up" class="btn btn-default")

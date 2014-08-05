@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include Tokenable
+
   has_many :reviews, -> { order(created_at: :desc) }
   has_many :queue_items, -> { order(:position) } 
   has_many :followings
@@ -12,8 +14,6 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 5 }, presence: true
 
   has_secure_password validations: false
-
-  after_create :generate_password_reset_token
 
   def next_available_queue_position
     queue_items.count + 1
@@ -33,8 +33,10 @@ class User < ActiveRecord::Base
    !(self.followed_users.include?(another_user) || self == another_user)
   end
 
-  def generate_password_reset_token
-    self.update(password_reset_token: SecureRandom.urlsafe_base64) 
+
+  def follow_and_be_followed_by(other_user)
+    Following.create(followed_user_id: other_user.id, user_id: self.id)
+    Following.create(followed_user_id: self.id, user_id: other_user.id)
   end
 end
 

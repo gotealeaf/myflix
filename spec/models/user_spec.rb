@@ -50,11 +50,25 @@ describe User do
     end
   end
 
-  describe "generate_password_reset_token" do
-    it "sets the password reset token" do
-      bob = Fabricate(:user)
-      bob.generate_password_reset_token
-      expect(bob.password_reset_token).to_not be_empty
+  it_behaves_like "generate_token" do
+    let(:instance) { Fabricate(:user) }
+  end
+
+  describe "follow_and_be_followed_by(other_user)" do
+    let(:jim) { Fabricate(:user) }
+    let(:mary) { Fabricate(:user) }
+    before { jim.follow_and_be_followed_by(mary) }
+
+    it "makes the user follow another user" do
+      expect(jim.followers).to eq([mary])
+    end
+
+    it "makes the other user follow the user" do
+      expect(mary.followers).to eq([jim])
+    end
+
+    it "does not follow itself" do
+      expect(jim.followers).to_not eq([jim])
     end
   end
 end

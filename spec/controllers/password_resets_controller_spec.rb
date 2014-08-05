@@ -51,9 +51,10 @@ describe PasswordResetsController do
 
   describe "GET edit" do
     let(:jack) { Fabricate(:user) }
+    before { set_current_user}
 
     context "with valid password reset token" do
-      before { get :edit, id: jack.password_reset_token }
+      before { get :edit, id: jack.token }
 
       it "assigns the @user variable" do
         expect(assigns(:user)).to eq(jack)
@@ -73,10 +74,10 @@ describe PasswordResetsController do
   end
 
   describe "PATCH update" do
-    let(:erica) { Fabricate(:user, password_reset_token: "12345") }
+    let(:erica) { Fabricate(:user, token: "12345") }
 
     context "with valid password" do
-      before { patch :update, id: erica.password_reset_token, user: { password: "catsrule" } }
+      before { patch :update, id: erica.token, user: { password: "catsrule" } }
 
       it "redirects to the login page" do
         expect(response).to redirect_to login_path
@@ -91,13 +92,13 @@ describe PasswordResetsController do
       end
 
       it "regenerates the reset password token" do
-        expect(erica.reload.password_reset_token).to_not eq("12345")
+        expect(erica.reload.token).to_not eq("12345")
       end
     end
 
     context "with invalid password" do
       it "renders the :edit template" do
-        patch :update, id: erica.password_reset_token, user: { password: "cats" }
+        patch :update, id: erica.token, user: { password: "cats" }
         expect(response).to render_template :edit
       end
     end

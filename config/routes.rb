@@ -19,6 +19,7 @@ Myflix::Application.routes.draw do
 
   resources :users, only: [:create, :show]
   get "/register", to: "users#new"
+  get "/register/:token", to: "users#new_with_invite_token", as: "register_with_token"
   
   resources :queue_items, only: [:create, :destroy]
   get "/my_queue", to: "queue_items#index"

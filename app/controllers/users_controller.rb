@@ -3,13 +3,17 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    @email = params[:email] if params[:email]
   end
 
   def create
     @user = User.new(user_params)
-
+    invite = Invite.find_by(token: params[:invite_token])
+    
     if @user.save
+      if invite
+        @user.follow_and_be_followed_by(invite.user)
+        invite.generate_token
+      end
       AppMailer.welcome_email(@user).deliver
       session[:user_id] = @user.id
       flash[:notice] = "You are now registered!"
@@ -21,6 +25,18 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+  end
+
+  def new_with_invite_token
+    invite = Invite.find_by(token: params[:token])
+
+    if invite
+      @user = User.new(email: invite.friend_email)
+      @invite_token = invite.token
+      render :new
+    else
+      redirect_to expired_token_path
+    end
   end
 
   private
