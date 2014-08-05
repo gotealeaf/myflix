@@ -38,8 +38,8 @@ describe UsersController do
   describe "POST create" do
 
     context "valid attributes" do
-      after { ActionMailer::Base.deliveries.clear }
       before { post :create, user: Fabricate.attributes_for(:user) }
+      after { ActionMailer::Base.deliveries.clear }
       it "creates a new user record" do
         expect {
           post :create, user: Fabricate.attributes_for(:user)
