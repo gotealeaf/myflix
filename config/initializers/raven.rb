@@ -1,4 +1,4 @@
-require 'raven/sidekiq'
+require 'raven'
 
 Raven.configure do |config|
   config.dsn = ENV['SENTRY_DSN']
