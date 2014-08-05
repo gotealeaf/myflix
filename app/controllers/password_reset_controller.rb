@@ -11,7 +11,6 @@ class PasswordResetController < ApplicationController
 
   def create
     user = User.find_by_token(params[:token])
-    binding.pry
     if user
       user.update(password: params[:password], password_confirmation: params[:password_confirmation])
       flash[:success] = "Password reset."
