@@ -16,6 +16,8 @@ Myflix::Application.configure do
 
   config.i18n.fallbacks = true
 
+  config.action_dispatch.show_exceptions = false
+
   config.active_support.deprecation = :notify
 
   config.action_mailer.delivery_method = :smtp
