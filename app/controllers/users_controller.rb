@@ -14,7 +14,7 @@ class UsersController < ApplicationController
         @user.follow_and_be_followed_by(invite.user)
         invite.generate_token
       end
-      AppMailer.welcome_email(@user).deliver
+      AppMailer.delay.welcome_email(@user)
       session[:user_id] = @user.id
       flash[:notice] = "You are now registered!"
       redirect_to home_path

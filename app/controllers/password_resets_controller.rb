@@ -1,7 +1,7 @@
 class PasswordResetsController < ApplicationController
   def create
     user = User.find_by(email: params[:email])
-    AppMailer.reset_password(user).deliver if user
+    AppMailer.delay.reset_password(user) if user
 
     if params[:email].blank?
       flash[:error] = "Email cannot be blank."
