@@ -6,7 +6,7 @@
 
   = f.password_field :password_confirmation, label: "Confirm Password"
   = f.text_field :full_name
-  - if @invitation
-    = f.hidden_field :token, value: @invitation.token
+  - if @invitation_token
+    = hidden_field_tag :invitation_token, @invitation_token
   = f.form_group do
     = f.submit 'Sign Up'

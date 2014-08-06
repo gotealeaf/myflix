@@ -13,10 +13,10 @@ Rails.application.routes.draw do
     end
     resources :reviews, only: [:create]
   end
-  resources :categories, only: [:index, :show]
-  resources :users
-  get '/new_user_with_token', to: "users#new"
-
+  resources :categories, only: [:index, :show, :edit]
+  resources :users, only: [:show, :create]
+  get '/register', to: "users#new"
+  get '/register/:token', to: "users#new_with_invite", as: "register_with_token"
 
   resources :queue_items, only: [:create, :destroy]
   get '/my_queue', to: "queue_items#index"
@@ -30,6 +30,7 @@ Rails.application.routes.draw do
 
   get '/password_reset', to: "password_reset#show"
   post '/password_reset', to: "password_reset#create"
+  get '/invalid_token', to: "passwor_reset#invalid_token"
 
   resources :invitations, only: [:new, :create]
 end

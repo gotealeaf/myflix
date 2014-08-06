@@ -8,5 +8,5 @@
 
     %p
       click
-      = link_to "here", new_user_with_token_url(id: @invitation.token)
+      = link_to "here", register_with_token_url(@invitation.token)
       to join Myflix.

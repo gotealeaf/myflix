@@ -8,7 +8,6 @@ describe InvitationsController do
      session[:user_id] = current_user.id
      get :new
      expect(assigns(:invitation)).to be_new_record
-
      expect(assigns(:invitation)).to be_instance_of(Invitation)
     end
 
@@ -49,8 +48,9 @@ describe InvitationsController do
     end
 
     context "with invalid input" do
-      before { post :create, invitation: Fabricate.attributes_for(:invitation, recipient_email: "", inviter_id: current_user.id )}
 
+      before { post :create, invitation: Fabricate.attributes_for(:invitation, recipient_email: "", inviter_id: current_user.id )}
+      after { ActionMailer::Base.deliveries.clear }
 
       it "dont create a new invitation record" do
         expect {

@@ -7,11 +7,17 @@ class UsersController < ApplicationController
   end
 
   def new
-    if params[:id]
-      @invitation = Invitation.find_by_token(params[:id])
-      @user = User.new(full_name: @invitation.recipient_name, email: @invitation.recipient_email)
+    @user = User.new
+  end
+
+  def new_with_invite
+    invitation = Invitation.find_by_token(params[:token])
+    if invitation
+      @invitation_token = invitation.token
+      @user = User.new(full_name: invitation.recipient_name, email: invitation.recipient_email)
+      render :new
     else
-      @user = User.new
+      redirect_to invalid_token_path
     end
   end
 
@@ -19,8 +25,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       UserMailer.welcome_email(@user).deliver
-      if params[:user][:token]
-        inviter = Invitation.find_by_token(params[:user][:token]).inviter
+
+      if params[:invitation_token]
+        inviter = Invitation.find_by_token(params[:invitation_token]).inviter
         @user.follow(inviter)
         inviter.follow(@user)
       end

@@ -9,12 +9,11 @@ class InvitationsController < ApplicationController
   def create
     unless User.find_by_email(params[:recipient_name])
 
-      @invitation = Invitation.new(invitation_params)
-      @invitation.inviter_id = current_user.id
+      @invitation = Invitation.new(invitation_params.merge!(inviter_id: current_user.id))
 
       if @invitation.save
-        InvitationMailer.invitation_email(@invitation).deliver
-        flash[:success] = "Invition has been send out."
+        UserMailer.invitation_email(@invitation).deliver
+        flash[:success] = "You have invited #{@invitation.recipient_name}."
         redirect_to new_invitation_path
       else
         render :new
