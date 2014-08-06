@@ -37,6 +37,14 @@ describe User do
     end
   end
 
+  describe "#follow(another_user)" do
+
+    it "follow another_user" do
+      current_user.follow(another_user)
+      expect(current_user.followed_users.last).to eq(another_user)
+    end
+  end
+
   describe "#following?(another_user_id)" do
     it "return true if user is following another_user" do
       Fabricate(:relationship, follower: current_user, followed: another_user)

@@ -8,7 +8,7 @@ feature "following user" do
   let!(:review1) { Fabricate(:review, creator: another_user, video: video1) }
 
   scenario "user can follow and unfollow another user" do
-    sign_in(current_user)
+    signin(current_user)
     click_on_video_on_home_page(video1)
 
     click_link "#{another_user.full_name}"
@@ -22,6 +22,8 @@ feature "following user" do
 
     visit following_people_path
     expect(page).not_to have_content(another_user.full_name)
+
+    clear_emails
 
   end
 

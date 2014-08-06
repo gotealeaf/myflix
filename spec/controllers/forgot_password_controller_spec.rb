@@ -36,6 +36,7 @@ describe ForgotPasswordController do
     context "with non-existing email input" do
 
       before { post :create, email: 'abc@example.com' }
+      after { ActionMailer::Base.deliveries.clear }
 
       it "does not send out a email" do
         expect(ActionMailer::Base.deliveries).to be_empty

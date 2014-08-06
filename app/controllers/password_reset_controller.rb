@@ -5,7 +5,7 @@ class PasswordResetController < ApplicationController
     if user
       @token = user.token
     else
-      render :invalid_token
+      redirect_to invalid_token_path
     end
   end
 
@@ -16,7 +16,7 @@ class PasswordResetController < ApplicationController
       flash[:success] = "Password reset."
       redirect_to signin_path
     else
-      render :invalid_token
+      redirect_to invalid_token_path
     end
   end
 

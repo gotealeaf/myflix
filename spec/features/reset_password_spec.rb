@@ -2,6 +2,7 @@ require 'spec_helper'
 
 feature 'Reset Password' do
   let(:current_user) { Fabricate(:user) }
+
   scenario 'forgot password content' do
     visit signin_path
     click_link 'forgot password?'

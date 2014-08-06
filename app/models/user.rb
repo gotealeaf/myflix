@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   end
 
   def follow(another_user)
-    relationships.create(followed: another_user)
+    relationships.create(followed: another_user) unless cant_follow(another_user)
   end
 
   def queued?(video)

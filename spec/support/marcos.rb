@@ -9,13 +9,17 @@ def get_current_user
 end
 
 
-def sign_in(a_user=nil)
+def signin(a_user=nil)
   user = a_user || Fabricate(:user)
   visit signin_path
   fill_in "Email Address", with: user.email
   fill_in "Password", with: user.password
 
   click_button "Sign In"
+end
+
+def signout
+  visit signout_path
 end
 
 def click_on_video_on_home_page(video)

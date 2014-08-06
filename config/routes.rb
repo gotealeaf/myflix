@@ -30,7 +30,8 @@ Rails.application.routes.draw do
 
   get '/password_reset', to: "password_reset#show"
   post '/password_reset', to: "password_reset#create"
-  get '/invalid_token', to: "passwor_reset#invalid_token"
+
+  get '/invalid_token', to: "pages#invalid_token"
 
   resources :invitations, only: [:new, :create]
 end

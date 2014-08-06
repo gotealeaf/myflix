@@ -103,6 +103,10 @@ describe UsersController do
         it "inviter follow recipient" do
           expect(User.last.following?(current_user)).to be true
         end
+
+        it "expires the token with @use.save" do
+          expect(Invitation.first.token).to eq nil
+        end
       end
     end
 
