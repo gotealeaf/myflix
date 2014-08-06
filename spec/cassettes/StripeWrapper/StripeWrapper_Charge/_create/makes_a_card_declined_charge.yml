@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.stripe.com/v1/tokens
     body:
       encoding: US-ASCII
-      string: card[number]=4242424242424242&card[exp_month]=8&card[exp_year]=2018&card[cvc]=314
+      string: card[number]=4000000000000002&card[exp_month]=8&card[exp_year]=2018&card[cvc]=314
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -31,19 +31,19 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 06 Aug 2014 20:48:29 GMT
+      - Wed, 06 Aug 2014 20:48:37 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
       - '596'
-      Access-Control-Max-Age:
-      - '300'
-      Access-Control-Allow-Credentials:
-      - 'true'
       Cache-Control:
       - no-cache, no-store
       Access-Control-Allow-Methods:
       - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Max-Age:
+      - '300'
       Stripe-Version:
       - '2014-08-04'
       Strict-Transport-Security:
@@ -52,21 +52,21 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_14ObKj4YbhcI9p1Lmf1e8wpS",
+          "id": "tok_14ObKr4YbhcI9p1LkpOaxqG2",
           "livemode": false,
-          "created": 1407358109,
+          "created": 1407358117,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_14ObKj4YbhcI9p1LX4EHm2Jh",
+            "id": "card_14ObKr4YbhcI9p1LTAgMAXqz",
             "object": "card",
-            "last4": "4242",
+            "last4": "0002",
             "brand": "Visa",
             "funding": "credit",
             "exp_month": 8,
             "exp_year": 2018,
-            "fingerprint": "3l8TgH8lYqPNQOz1",
+            "fingerprint": "D4I86wObZmsVFaED",
             "country": "US",
             "name": null,
             "address_line1": null,
@@ -79,13 +79,13 @@ http_interactions:
           }
         }
     http_version: 
-  recorded_at: Wed, 06 Aug 2014 20:48:29 GMT
+  recorded_at: Wed, 06 Aug 2014 20:48:36 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/charges
     body:
       encoding: US-ASCII
-      string: amount=999&currency=usd&card=tok_14ObKj4YbhcI9p1Lmf1e8wpS&description=a%20valid%20charge
+      string: amount=999&currency=usd&card=tok_14ObKr4YbhcI9p1LkpOaxqG2&description=an%20invalid%20charge
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -102,28 +102,28 @@ http_interactions:
         jamescoemansair.westell.com 13.2.0 Darwin Kernel Version 13.2.0: Thu Apr 17
         23:03:13 PDT 2014; root:xnu-2422.100.13~1/RELEASE_X86_64 x86_64"}'
       Content-Length:
-      - '88'
+      - '91'
   response:
     status:
-      code: 200
-      message: OK
+      code: 402
+      message: Payment Required
     headers:
       Server:
       - nginx
       Date:
-      - Wed, 06 Aug 2014 20:48:33 GMT
+      - Wed, 06 Aug 2014 20:48:38 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
-      - '1210'
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Methods:
-      - GET, POST, HEAD, OPTIONS, DELETE
-      Cache-Control:
-      - no-cache, no-store
+      - '162'
       Access-Control-Max-Age:
       - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
       Stripe-Version:
       - '2014-08-04'
       Strict-Transport-Security:
@@ -132,56 +132,13 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "ch_14ObKn4YbhcI9p1L1AENGGU7",
-          "object": "charge",
-          "created": 1407358113,
-          "livemode": false,
-          "paid": true,
-          "amount": 999,
-          "currency": "usd",
-          "refunded": false,
-          "card": {
-            "id": "card_14ObKj4YbhcI9p1LX4EHm2Jh",
-            "object": "card",
-            "last4": "4242",
-            "brand": "Visa",
-            "funding": "credit",
-            "exp_month": 8,
-            "exp_year": 2018,
-            "fingerprint": "3l8TgH8lYqPNQOz1",
-            "country": "US",
-            "name": null,
-            "address_line1": null,
-            "address_line2": null,
-            "address_city": null,
-            "address_state": null,
-            "address_zip": null,
-            "address_country": null,
-            "cvc_check": "pass",
-            "address_line1_check": null,
-            "address_zip_check": null,
-            "customer": null
-          },
-          "captured": true,
-          "refunds": {
-            "object": "list",
-            "total_count": 0,
-            "has_more": false,
-            "url": "/v1/charges/ch_14ObKn4YbhcI9p1L1AENGGU7/refunds",
-            "data": []
-          },
-          "balance_transaction": "txn_14ObKn4YbhcI9p1L2wBlKwSM",
-          "failure_message": null,
-          "failure_code": null,
-          "amount_refunded": 0,
-          "customer": null,
-          "invoice": null,
-          "description": "a valid charge",
-          "dispute": null,
-          "metadata": {},
-          "statement_description": null,
-          "receipt_email": null
+          "error": {
+            "message": "Your card was declined.",
+            "type": "card_error",
+            "code": "card_declined",
+            "charge": "ch_14ObKs4YbhcI9p1LdMYgJGjN"
+          }
         }
     http_version: 
-  recorded_at: Wed, 06 Aug 2014 20:48:33 GMT
+  recorded_at: Wed, 06 Aug 2014 20:48:38 GMT
 recorded_with: VCR 2.9.2
