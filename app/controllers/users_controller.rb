@@ -15,7 +15,6 @@ class UsersController < ApplicationController
 
     if @user.save
       UserMailer.welcome_email(@user).deliver
-
       flash[:success] = "Welcome!"
       session[:user_id] = @user.id
       redirect_to root_path
@@ -36,10 +35,10 @@ class UsersController < ApplicationController
     end
   end
 
-
   def following
     @followed_users = current_user.followed_users
   end
+
 
   private
 
