@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+gem 'unicorn'
 gem 'bootstrap-sass'
 gem 'coffee-rails'
 gem 'rails', '4.1.1'
