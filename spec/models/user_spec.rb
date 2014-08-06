@@ -15,6 +15,7 @@ describe User do
   it { should have_many(:followed_users) }
   it { should have_many(:reverse_relationships) }
   it { should have_many(:followers) }
+  it { should have_many(:invitations)}
 
   let(:current_user) { Fabricate(:user) }
   let(:another_user) { Fabricate(:user) }
@@ -46,5 +47,4 @@ describe User do
       expect(current_user.following?(another_user)).to be false
     end
   end
-
 end

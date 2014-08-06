@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
                                   class_name: "Relationship",
                                   dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
+  has_many :invitations, foreign_key: "inviter_id"
+
 
   has_secure_password validation: false
 
@@ -33,6 +35,10 @@ class User < ActiveRecord::Base
     for i in (0...(items.count))
       items[i].update(ranking: i + 1 )
     end
+  end
+
+  def follow(another_user)
+    relationships.create(followed: another_user)
   end
 
   def queued?(video)

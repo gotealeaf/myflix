@@ -1,0 +1,12 @@
+!!! 5
+%html
+  %body
+    %h1
+      = "#{@invitation.inviter.full_name} invited you to join Myflix!"
+    %p
+      = @invitation.message
+
+    %p
+      click
+      = link_to "here", new_user_with_token_url(id: @invitation.token)
+      to join Myflix.

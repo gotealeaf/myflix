@@ -7,16 +7,26 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
+    if params[:id]
+      @invitation = Invitation.find_by_token(params[:id])
+      @user = User.new(full_name: @invitation.recipient_name, email: @invitation.recipient_email)
+    else
+      @user = User.new
+    end
   end
 
   def create
     @user = User.new(user_params)
-
     if @user.save
       UserMailer.welcome_email(@user).deliver
+      if params[:user][:token]
+        inviter = Invitation.find_by_token(params[:user][:token]).inviter
+        @user.follow(inviter)
+        inviter.follow(@user)
+      end
       flash[:success] = "Welcome!"
       session[:user_id] = @user.id
+
       redirect_to root_path
     else
       render :new

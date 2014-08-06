@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 feature "following user" do
-  let(:current_user) { Fabricate(:user) }
-  let(:another_user) { Fabricate(:user) }
+  let!(:current_user) { Fabricate(:user) }
+  let!(:another_user) { Fabricate(:user) }
   let!(:cat) { Fabricate(:category) }
   let!(:video1) { Fabricate(:video, category: cat) }
   let!(:review1) { Fabricate(:review, creator: another_user, video: video1) }
@@ -12,7 +12,7 @@ feature "following user" do
     click_on_video_on_home_page(video1)
 
     click_link "#{another_user.full_name}"
-    page.should have_content(another_user.full_name)
+    expect(page).to have_content(another_user.full_name)
 
     click_link "Follow"
     expect(page).to have_content(another_user.full_name)

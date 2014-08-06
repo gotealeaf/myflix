@@ -10,6 +10,7 @@ describe Video do
   it { should validate_presence_of(:category) }
   it { should have_many(:reviews).order("created_at DESC")}
 
+
   describe "search" do
     let(:test1) { Fabricate(:video, title: "monk", created_at: 100.days.ago) }
     let(:test2) { Fabricate(:video, title: "monkket") }
