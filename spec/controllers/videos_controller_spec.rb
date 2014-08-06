@@ -49,7 +49,7 @@ describe VideosController do
         end
 
         it "renders template :search" do
-          expect(response). to render_template :search
+          expect(response).to render_template :search
         end
       end
 
@@ -61,7 +61,7 @@ describe VideosController do
         end
 
         it "renders template :search" do
-          expect(response). to render_template :search
+          expect(response).to render_template :search
         end
       end
     end

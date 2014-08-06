@@ -214,7 +214,8 @@ CREATE TABLE users (
     password_digest character varying(255),
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    slug character varying(255)
+    slug character varying(255),
+    token character varying(255)
 );
 
 
@@ -399,4 +400,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140801073431');
 INSERT INTO schema_migrations (version) VALUES ('20140803124020');
 
 INSERT INTO schema_migrations (version) VALUES ('20140803125252');
+
+INSERT INTO schema_migrations (version) VALUES ('20140805093403');
 

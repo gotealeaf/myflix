@@ -5,9 +5,10 @@ class ForgotPasswordController < ApplicationController
     if @user
       UserMailer.send_password_reset(@user).deliver
       render :confirm_password_reset
-    elsif params[:email].blank?
-      flash[:warning] = "Email cannot be blank."
+    else
+      flash[:warning] = params[:email].blank? ? "Email cannot be blank.": "Invalid email address."
       redirect_to forgot_password_path
     end
+
   end
 end

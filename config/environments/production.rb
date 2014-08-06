@@ -91,5 +91,7 @@ Rails.application.configure do
     :domain         => 'jccf-myflix.herokuapp.com',
     :authentication => :plain,
   }
+  config.action_mailer.default_url_options = { host: "http://jccf-myflix.herokuapp.com/" }
+
 
 end

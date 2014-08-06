@@ -20,6 +20,11 @@ describe User do
   let(:another_user) { Fabricate(:user) }
   let(:video) { Fabricate(:video) }
 
+  it "generate token before save" do
+    expect(current_user.token).to be_present
+  end
+
+
   describe "#queued?(video)" do
 
     it "returns true when user queued the video" do
