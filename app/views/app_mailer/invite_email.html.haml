@@ -3,7 +3,6 @@
   %body
     %p #{@invite.friend_name},
     %p #{@invite.user.fullname} has invited you to join MyFlix!
-    %p Here is their message:
-    %p #{@invite.message}
+    = @invite.message
     Just click on the link below to begin registration.
     = link_to "Accept Invitation", register_with_token_url(@invite.token)
