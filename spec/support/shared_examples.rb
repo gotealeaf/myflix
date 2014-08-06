@@ -16,7 +16,7 @@ end
 
 
 shared_examples "tokenable" do
-  it "generates a random token when the user is created" do
+  it "generates a random token" do
     alice = Fabricate(:user)
     expect(object.token).to be_present
   end
