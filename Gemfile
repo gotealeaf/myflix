@@ -13,6 +13,9 @@ gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'fabrication'
 gem 'faker'
 gem 'sidekiq'
+gem 'unicorn'
+gem 'foreman'
+gem 'sentry-raven'
 
 group :development do
   gem 'sqlite3'
