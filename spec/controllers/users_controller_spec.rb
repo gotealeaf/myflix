@@ -9,14 +9,17 @@ describe UsersController do
   end
 
   describe "POST create" do
-    context "with valid input" do
+    context "with valid personal info and valid card" do
+      let(:charge) { double(:charge, successful?: true) }
       before do
-        post :create, user: Fabricate.attributes_for(:user)
+        StripeWrapper::Charge.should_receive(:create).and_return(charge)
       end
       it "creates the user" do
+        post :create, user: Fabricate.attributes_for(:user)
         expect(User.count).to eq(1)
       end
       it "redirects to the sign in page" do
+        post :create, user: Fabricate.attributes_for(:user)
         expect(response).to redirect_to sign_in_path
       end
 
@@ -42,23 +45,57 @@ describe UsersController do
       end
     end
     
-    context "with invalid input" do
-      before do
-        post :create, user: { password: "password", full_name: "Jim Brown" }
+    context "valid personal info and declined card" do
+      it "does not create a new user record" do
+        charge = double(:charge, successful?: false, error_message: "Your card was declined.")
+        StripeWrapper::Charge.should_receive(:create).and_return(charge)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: '1231241'
+        expect(User.count).to eq(0)
       end
+
+      it "renders the new template" do
+        charge = double(:charge, successful?: false, error_message: "Your card was declined.")
+        StripeWrapper::Charge.should_receive(:create).and_return(charge)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: '1231241'
+        expect(response).to render_template :new
+      end
+
+      it "sets the flash danger message" do
+        charge = double(:charge, successful?: false, error_message: "Your card was declined.")
+        StripeWrapper::Charge.should_receive(:create).and_return(charge)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: '1231241'
+        expect(flash[:danger]).to be_present
+      end
+    end
+    
+    context "with invalid personal info" do
       it "does not create the user" do
+        post :create, user: { email: "george@example.com" }
         expect(User.count).to eq(0)
       end
       it "renders the :new template" do
+        post :create, user: { email: "george@example.com" }
         expect(response).to render_template :new
       end
-      it "sets @user" do
-        expect(assigns(:user)).to be_instance_of(User)
+      it "does not charge the card" do
+        StripeWrapper::Charge.should_not_receive(:create)
+        post :create, user: { email: "george@example.com" }
+      end
+      it "does not send out email with invalid inputs" do
+        post :create, user: { email: "angus@example.com" }
+        expect(ActionMailer::Base.deliveries).to be_empty
       end
     end
 
     context "sending emails" do
-      after { ActionMailer::Base.deliveries.clear }
+      let(:charge) { double(:charge, successful?: true) }
+      before do
+        StripeWrapper::Charge.should_receive(:create).and_return(charge)
+      end
+      after do
+        ActionMailer::Base.deliveries.clear
+      end
+
       it "sends out email to the user with valid inputs" do
         post :create, user: { email: "angus@example.com", password: "password", full_name: "Angus MacDoogan" }
         expect(ActionMailer::Base.deliveries.last.to).to eq(['angus@example.com'])
@@ -66,10 +103,6 @@ describe UsersController do
       it "sends out email with the user's name with valid inputs" do
         post :create, user: { email: "angus@example.com", password: "password", full_name: "Angus MacDoogan" }
         expect(ActionMailer::Base.deliveries.last.body).to include("Angus MacDoogan")
-      end
-      it "does not send out email with invalid inputs" do
-        post :create, user: { email: "angus@example.com" }
-        expect(ActionMailer::Base.deliveries).to be_empty
       end
     end
   end
