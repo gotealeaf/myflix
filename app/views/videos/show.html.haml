@@ -1,0 +1,38 @@
+%article.video
+  .container
+    .row
+      .video_large_cover.col-sm-7.col-sm-offset-1
+        %img(src="#{@video.large_cover_image_url}")
+      .video_info.col-sm-3
+        %header
+          %h3= @video.title
+          %span
+            Rating:
+            = @video.rating
+        %p= @video.description
+        .actions
+          %a.btn.btn-primary(href="") Watch Now
+          %a.btn.btn-default(href="") + My Queue
+
+%section.reviews.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = bootstrap_form_for [@video, Review.new] do |f|
+        .row
+          .col-sm-3
+            = f.select :rating, options_for_select([5,4,3,2,1].map {|n| pluralize(n, "Star")}), label: "Rate this video"
+        .row
+          .col-sm-8
+            = f.text_area :content, label: "Write Review", rows: 6
+        = f.form_group do
+          = f.submit "Submit", class: "btn"
+          = link_to "Cancel", @video
+
+
+      %header
+        %h3
+          User Reviews
+          = "(#{@video.total_reviews})"
+      %ul
+        - @reviews.each do |review|
+          = render review
