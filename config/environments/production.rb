@@ -1,3 +1,5 @@
+require 'raven'
+
 Myflix::Application.configure do
 
   config.cache_classes = true
@@ -34,4 +36,8 @@ Myflix::Application.configure do
   :domain         => 'myflix-rottenapple-production.herokuapp.com',
   :authentication => :plain,
   }
+
+  Raven.configure do |config|
+    config.dsn = ENV['SENTRY_DSN']
+  end
 end
