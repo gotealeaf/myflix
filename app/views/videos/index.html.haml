@@ -1,6 +1,6 @@
 %article.video_category
   .videos.row
-    - catties = Category.all.sort{|a,b| b.name <=> a.name}
+    - catties = @categories.sort{|a,b| b.name <=> a.name}
     - catties.each do |catty|
       %div{:style => "align: left"}
         %h1
