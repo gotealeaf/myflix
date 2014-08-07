@@ -8,6 +8,14 @@ describe Admin::VideosController do
         get :new
         expect(response).to redirect_to home_path
       end
+
+      it 'assigns @video when user is admin' do
+        set_session_user
+        user.update(admin: true)
+        get :new
+        expect(assigns(:video)).to be_instance_of(Video)
+        expect(assigns(:video)).to be_new_record
+      end
     end
     it_behaves_like 'redirect for unauthenticated user' do
       let(:action) { get :new }
