@@ -19,8 +19,6 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin
-    unless current_user.admin?
-      redirect_to home_path
-    end
+    redirect_to home_path unless current_user.admin?
   end
 end
