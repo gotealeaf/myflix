@@ -21,10 +21,9 @@ describe User do
   let(:another_user) { Fabricate(:user) }
   let(:video) { Fabricate(:video) }
 
-  it "generate token before save" do
-    expect(current_user.token).to be_present
+  it_behaves_like "tokenify" do
+    let(:object) { current_user }
   end
-
 
   describe "#queued?(video)" do
 

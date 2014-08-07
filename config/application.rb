@@ -22,6 +22,6 @@ module Myflix
     config.active_record.schema_format = :sql
 
     # loading file in lib
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths << "#{Rails.root}/lib"
   end
 end

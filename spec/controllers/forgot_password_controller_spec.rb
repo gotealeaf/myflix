@@ -3,8 +3,11 @@ require 'spec_helper'
 describe ForgotPasswordController do
 
   let(:current_user) { Fabricate(:user) }
+
   describe "POST create" do
+
     context "with blank input" do
+
       before { post :create, email: '' }
 
       it "redirects to the forgot_password_path" do
@@ -50,6 +53,5 @@ describe ForgotPasswordController do
         expect(flash[:warning]).not_to be_blank
       end
     end
-
   end
 end

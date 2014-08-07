@@ -35,9 +35,9 @@ describe UsersController do
   end
 
   describe "GET new_with_invite" do
+    let(:invitation) { Fabricate(:invitation) }
 
     context "valid token" do
-      let(:invitation) { Fabricate(:invitation) }
       before { get :new_with_invite, token: invitation.token }
 
       it "assigns @user with recipient email" do
@@ -53,11 +53,10 @@ describe UsersController do
       end
     end
 
-    it "redirects to invalid toke path for invalid token" do
-      get :new_with_invite, token: SecureRandom.urlsafe_base64
-      expect(response).to redirect_to invalid_token_path
-    end
 
+    it_behaves_like "invalid token expired" do
+      let(:action) { get :new_with_invite, token: "123123" }
+    end
   end
 
 

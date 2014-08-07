@@ -17,9 +17,6 @@ describe InvitationsController do
   end
 
   describe "POST create" do
-    it_behaves_like "requires sign in" do
-      let(:action) { post :create }
-    end
 
     before { session[:user_id] = current_user.id }
 
@@ -72,5 +69,8 @@ describe InvitationsController do
       end
     end
 
+    it_behaves_like "requires sign in" do
+      let(:action) { get :create, invitation: Fabricate.attributes_for(:invitation) }
+    end
   end
 end
