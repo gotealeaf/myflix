@@ -1,0 +1,19 @@
+- unless signed_in?
+  %section.site_title
+    %h1
+      Unlimited Movies for Only 9.99 a Month.
+      = link_to "Sign Up Now!", new_user_path
+    %p.sign_up
+    %p.sign_in
+      Have an account? Please
+      = link_to "Sign In", signin_path
+- else
+  - @categories.each do |cat|
+    %article.video_category
+      %header
+        %h3= link_to cat.name, cat
+      .videos.row
+        - cat.recent_videos.each do |video|
+          .video.col-sm-2
+            = link_to video do
+              %img(src="#{video.small_cover_image_url}")
