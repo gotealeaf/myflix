@@ -15,15 +15,15 @@ describe User do
   it { should have_many(:followed_users) }
   it { should have_many(:reverse_relationships) }
   it { should have_many(:followers) }
+  it { should have_many(:invitations)}
 
   let(:current_user) { Fabricate(:user) }
   let(:another_user) { Fabricate(:user) }
   let(:video) { Fabricate(:video) }
 
-  it "generate token before save" do
-    expect(current_user.token).to be_present
+  it_behaves_like "tokenify" do
+    let(:object) { current_user }
   end
-
 
   describe "#queued?(video)" do
 
@@ -33,6 +33,14 @@ describe User do
     end
     it "returns false when user has not queued the video" do
       current_user.queued?(video).should be false
+    end
+  end
+
+  describe "#follow(another_user)" do
+
+    it "follow another_user" do
+      current_user.follow(another_user)
+      expect(current_user.followed_users.last).to eq(another_user)
     end
   end
 
@@ -46,5 +54,4 @@ describe User do
       expect(current_user.following?(another_user)).to be false
     end
   end
-
 end

@@ -15,9 +15,8 @@ describe PasswordResetController do
       expect(assigns(:token)).to eq(current_user.token)
     end
 
-    it "redirects to expired token page if invalid token" do
-      get :show, id: "1231224"
-      expect(response).to render_template :invalid_token
+    it_behaves_like "invalid token expired" do
+      let(:action) { get :show, id: "123123" }
     end
   end
 
@@ -44,13 +43,8 @@ describe PasswordResetController do
       end
     end
 
-    context "with invalid token" do
-      before { post :create, token: "000000000", password: "00000000", password_confirmation: "00000000" }
-
-      it "render :invalid_token template" do
-        expect(response).to render_template :invalid_token
-      end
+    it_behaves_like "invalid token expired" do
+      let(:action) { get :show, id: "123123" }
     end
   end
-
 end

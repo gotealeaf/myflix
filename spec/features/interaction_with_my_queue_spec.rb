@@ -7,7 +7,7 @@ feature "Interaction with my queue" do
   let!(:video3) { Fabricate(:video, category: cat) }
 
   scenario "add and reorder queue items" do
-    sign_in
+    signin
     add_video_to_queue(video1)
     add_video_to_queue(video2)
     add_video_to_queue(video3)
@@ -20,6 +20,8 @@ feature "Interaction with my queue" do
     expect_video_ranking(video1, 3)
     expect_video_ranking(video2, 1)
     expect_video_ranking(video3, 2)
+    clear_emails
+
   end
 
   def add_video_to_queue(video)

@@ -22,6 +22,6 @@
 
           %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
             %li
-              = link_to "Account", edit_user_path(@current_user)
+              = link_to "Account", "edit_user_path(@current_user)"
               = link_to "Plan and Billing", ''
               = link_to "Sign Out", signout_path
