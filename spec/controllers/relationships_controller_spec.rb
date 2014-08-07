@@ -48,13 +48,10 @@ describe RelationshipsController,:type => :controller do
 
       end
     end
-    context "with unauthenticated user" do
-      it "redirects to signin_path" do
-        post :create, followed_id: 1, follower_id: 2
-        expect(response).to redirect_to signin_path
-      end
-    end
 
+    it_behaves_like "requires sign in" do
+        let(:action) { post :create, followed_id: 1, follower_id: 2 }
+    end
   end
 
   describe "DELETE destory" do
@@ -79,11 +76,9 @@ describe RelationshipsController,:type => :controller do
         expect(response).to redirect_to following_people_path
       end
     end
-    context "with unauthenticated user" do
-      it "redirects to signin_path" do
-        delete :destroy, id: 1
-        expect(response).to redirect_to signin_path
-      end
+
+    it_behaves_like "requires sign in" do  
+      let(:action) { delete :destroy, id: 1 }
     end
   end
 end

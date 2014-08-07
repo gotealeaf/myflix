@@ -1,8 +1,7 @@
 class User < ActiveRecord::Base
   include Sluggable
+  include Tokenify
   sluggable_column :full_name
-
-  before_save :generate_token!
 
   has_many :reviews, -> { order("created_at DESC")}
   has_many :queue_items, -> { order("ranking") }
@@ -52,11 +51,5 @@ class User < ActiveRecord::Base
   def cant_follow(user)
     self == user || self.following?(user)
   end
-
-  private
-
-    def generate_token!
-      self.token = SecureRandom.urlsafe_base64
-    end
 
 end

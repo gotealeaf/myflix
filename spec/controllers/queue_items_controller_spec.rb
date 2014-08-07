@@ -72,12 +72,8 @@ describe QueueItemsController do
       end
     end
 
-    context "with unauthenticated user" do
-
-      it "redirects to signin_path" do
-        post :create,  video: video1
-        expect(response).to redirect_to signin_path
-      end
+    it_behaves_like "requires sign in" do
+      let(:action) { post :create, id: Fabricate(:video).id }
     end
   end
 
@@ -127,14 +123,6 @@ describe QueueItemsController do
       end
     end
 
-    context "with unanthenticated user" do
-
-      it "redirects to signin_path" do
-        post :update_queue, queue_items: [{ id: 1, ranking: 1 }]
-        expect(response).to redirect_to signin_path
-      end
-    end
-
     context "when queue item do not belongs to current_user" do
 
       before do
@@ -145,6 +133,10 @@ describe QueueItemsController do
       it "does not change the ranking" do
         expect(another_user.queue_items).to eq([another_queue_item1, another_queue_item2])
       end
+    end
+
+    it_behaves_like "requires sign in" do
+      let(:action) { post :update_queue, queue_items: [{ id: queue_item1.id, ranking: 3 }, { id: queue_item2, ranking: 2 }] }
     end
   end
 
@@ -176,13 +168,8 @@ describe QueueItemsController do
       end
     end
 
-    context "with unanthenticated user" do
-
-      before { delete :destroy, id: queue_item1.id }
-
-      it "redirects to signin_path" do
-        expect(response).to redirect_to signin_path
-      end
+    it_behaves_like "requires sign in" do
+      let(:action) { delete :destroy, id: queue_item1.id }
     end
   end
 end

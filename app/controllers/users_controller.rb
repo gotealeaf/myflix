@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :signed_in_user, only: [:edit, :update]
 
   def show
-    @reviews = @user.reviews
+    @reviews = @user.reviews if @user
   end
 
   def new
