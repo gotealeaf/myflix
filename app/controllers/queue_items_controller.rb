@@ -25,6 +25,7 @@ class QueueItemsController < ApplicationController
 
   def destroy
     item = QueueItem.find(params[:id])
+    redirect_to my_queue_path if item.nil? #avoid doubt-click causing ActiveRecord::RecordNotFound error
     item.destroy if item.creator == current_user
     current_user.reset_order_ranking
     redirect_to my_queue_path

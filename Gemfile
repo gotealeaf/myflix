@@ -1,4 +1,7 @@
 source 'https://rubygems.org'
+ruby "2.1.2"
+
+
 gem 'unicorn'
 gem 'bootstrap-sass'
 gem 'coffee-rails'
@@ -12,7 +15,7 @@ gem "pg_search"
 gem 'bootstrap_form'
 gem 'bcrypt', '~> 3.1.7'
 gem "figaro"
-
+gem "titleize"
 gem 'roadie'
 gem 'roadie-rails'
 #gem 'kaminari'

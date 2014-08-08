@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root to: "videos#index"
+  root to: "pages#welcome"
 
   get 'ui(/:action)', controller: 'ui'
   get '/signin', to: 'sessions#new'
@@ -8,15 +8,15 @@ Rails.application.routes.draw do
   get '/signout', to: 'sessions#destroy'
 
   resources :videos do
-    collection do
-      get 'search', to: 'videos#search'
-    end
     resources :reviews, only: [:create]
   end
   resources :categories, only: [:index, :show, :edit]
   resources :users, only: [:show, :create]
   get '/register', to: "users#new"
   get '/register/:token', to: "users#new_with_invite", as: "register_with_token"
+
+  get 'search', to: 'search#index'
+
 
   resources :queue_items, only: [:create, :destroy]
   get '/my_queue', to: "queue_items#index"
