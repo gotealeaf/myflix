@@ -4,7 +4,7 @@ class VideosController < ApplicationController
   before_action :require_user
 
   def index
-    @genres = Genre.all
+    genres = Genre.all
   end
 
   def show
