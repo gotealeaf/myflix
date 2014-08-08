@@ -3,7 +3,8 @@
     %h1.col-md-2
       = link_to "MyFLiX", :root
     - if logged_in?
-      %span= link_to "Videos"
+      - if current_user.admin?
+        %span= link_to "Videos", new_admin_video_path
       %span= link_to "My Queue", my_queue_path
       %span= link_to "People", people_path
       = form_tag search_videos_path, class: "col-md-5 navbar-form", method: 'get' do

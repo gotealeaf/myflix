@@ -28,4 +28,8 @@ class User < ActiveRecord::Base
   def count_reviews
     reviews.present? ? reviews.count : 0
   end
+
+  def admin?
+    admin == true
+  end
 end

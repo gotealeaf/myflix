@@ -7,6 +7,10 @@ Myflix::Application.routes.draw do
     resources :reviews, only: [:create]
   end
 
+  namespace :admin do
+    resources :videos, only: [:new, :create, :destroy]
+  end
+
   resources :genres, except: :index
   resources :users, except: [:new, :index, :destroy]
   resources :queue_videos, only: [:create, :destroy]
@@ -33,6 +37,6 @@ Myflix::Application.routes.draw do
   get 'invited_registration', to: 'invited_registrations#new'
 
   mount Sidekiq::Web => '/sidekiq'
-  
+
   get 'ui(/:action)', controller: 'ui'
 end
