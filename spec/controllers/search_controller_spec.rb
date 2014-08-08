@@ -4,7 +4,7 @@ describe SearchController do
 
   describe "GET index" do
 
-    let!(:video) { Fabricate(:video, title: "Guardians Of The Galaxy") }
+    let!(:video) { Fabricate(:video, title: "Guardians of the Galaxy") }
     before { 100.times { Fabricate(:video) } }
 
     context "exact match" do

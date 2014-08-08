@@ -3,7 +3,7 @@ class SearchController < ApplicationController
   def index
     keyword = params[:search].strip
 
-    if video = find_jump_target keyword
+    if jump = find_jump_target(keyword)
       redirect_to jump
     else
       @results = Video.search(keyword)
