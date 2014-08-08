@@ -10,6 +10,11 @@ describe Video do
   it { should validate_presence_of(:category) }
   it { should have_many(:reviews).order("created_at DESC")}
 
+  it_behaves_like "tokenify" do
+    let(:object) { Fabricate(:video) }
+  end
+
+
   describe "search" do
     let(:test1) { Fabricate(:video, title: "monk", created_at: 100.days.ago) }
     let(:test2) { Fabricate(:video, title: "monkket") }
@@ -32,9 +37,5 @@ describe Video do
     it "should return empty array if input is empty str" do
       expect(Video.search("")).to eq([])
     end
-  end
-
-  describe "rating" do
-
   end
 end

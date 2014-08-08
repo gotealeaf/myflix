@@ -1,8 +1,7 @@
 class User < ActiveRecord::Base
   include Sluggable
+  include Tokenify
   sluggable_column :full_name
-
-  before_save :generate_token!
 
   has_many :reviews, -> { order("created_at DESC")}
   has_many :queue_items, -> { order("ranking") }
@@ -14,6 +13,8 @@ class User < ActiveRecord::Base
                                   class_name: "Relationship",
                                   dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
+  has_many :invitations, foreign_key: "inviter_id"
+
 
   has_secure_password validation: false
 
@@ -35,6 +36,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def follow(another_user)
+    relationships.create(followed: another_user) unless cant_follow(another_user)
+  end
+
   def queued?(video)
     queue_items.map(&:video).include?(video)
   end
@@ -46,11 +51,5 @@ class User < ActiveRecord::Base
   def cant_follow(user)
     self == user || self.following?(user)
   end
-
-  private
-
-    def generate_token!
-      self.token = SecureRandom.urlsafe_base64
-    end
 
 end

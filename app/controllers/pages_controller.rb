@@ -1,0 +1,4 @@
+class PagesController < ApplicationCOntroller
+
+
+end

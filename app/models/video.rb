@@ -1,7 +1,6 @@
 class Video < ActiveRecord::Base
   include PgSearch
-
-  before_create :generate_token!
+  include Tokenify
 
   belongs_to :category
   has_many :reviews, -> { order('created_at DESC') }
@@ -44,7 +43,4 @@ class Video < ActiveRecord::Base
       reviews.average(:rating).round(1)
     end
 
-    def generate_token!
-      self.token = SecureRandom.urlsafe_base64
-    end
 end

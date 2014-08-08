@@ -3,8 +3,11 @@ require 'spec_helper'
 describe ForgotPasswordController do
 
   let(:current_user) { Fabricate(:user) }
+
   describe "POST create" do
+
     context "with blank input" do
+
       before { post :create, email: '' }
 
       it "redirects to the forgot_password_path" do
@@ -36,6 +39,7 @@ describe ForgotPasswordController do
     context "with non-existing email input" do
 
       before { post :create, email: 'abc@example.com' }
+      after { ActionMailer::Base.deliveries.clear }
 
       it "does not send out a email" do
         expect(ActionMailer::Base.deliveries).to be_empty
@@ -49,6 +53,5 @@ describe ForgotPasswordController do
         expect(flash[:warning]).not_to be_blank
       end
     end
-
   end
 end
