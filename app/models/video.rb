@@ -9,7 +9,7 @@ class Video < ActiveRecord::Base
                         :large_cover_image_url,
                         :small_cover_image_url,
                         :category
-
+  validates_uniqueness_of :title
   pg_search_scope :search,
                   :against => [:title, :description],
                   :using => {
