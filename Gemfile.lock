@@ -106,6 +106,7 @@ GEM
     mini_portile (0.6.0)
     minitest (5.4.0)
     multi_json (1.10.1)
+    newrelic_rpm (3.9.1.236)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     pg (0.17.1)
@@ -240,6 +241,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   letter_opener
+  newrelic_rpm
   pg
   pg_search
   pry
