@@ -17,6 +17,20 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+
+
+  config.expect_with :rspec do |c|
+    # Disable the `expect` sytax...
+    #c.syntax = :should
+
+    # ...or disable the `should` syntax...
+    c.syntax = :expect
+
+    # ...or explicitly enable both
+    #c.syntax = [:should, :expect]
+  end
+
+
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
