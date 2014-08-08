@@ -16,16 +16,14 @@ class VideosController < ApplicationController
 
   def create
     @video = Video.new(video_params)
+
     if @video.save
       flash[:success] = "A new video have been created."
       redirect_to root_path
     else
       render :new
     end
-  end
 
-  def search
-    @videos = Video.search(params[:search])
   end
 
   private

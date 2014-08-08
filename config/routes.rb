@@ -8,13 +8,13 @@ Rails.application.routes.draw do
   get '/signout', to: 'sessions#destroy'
 
   resources :videos do
-    collection do
-      get 'search', to: 'videos#search'
-    end
     resources :reviews, only: [:create]
   end
   resources :categories, only: [:index, :show]
   resources :users
+
+  get 'search', to: 'search#index'
+
 
   resources :queue_items, only: [:create, :destroy]
   get '/my_queue', to: "queue_items#index"

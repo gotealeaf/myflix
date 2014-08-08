@@ -37,35 +37,7 @@ describe VideosController do
     end
 
 
-    describe "GET search" do
-      let(:strain) { Fabricate(:video, title:"strain") }
-      before { 100.times { Fabricate(:video) } }
-
-      context "match input" do
-        before { get :search, search: "strain" }
-
-        it "assigns @videos" do
-          expect(assigns(:videos)).to include(strain)
-        end
-
-        it "renders template :search" do
-          expect(response).to render_template :search
-        end
-      end
-
-      context "unmatch input" do
-        before { get :search, search: "safd" }
-
-        it "assigns @videos as empty" do
-          expect(assigns(:videos)).to eq([])
-        end
-
-        it "renders template :search" do
-          expect(response).to render_template :search
-        end
-      end
-    end
-
+  
 
     describe "GET new" do
       before { get :new }

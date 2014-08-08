@@ -8,9 +8,9 @@
       %li= link_to "People", following_people_path
 
 
-    = form_tag search_videos_path, method: 'get', class: 'col-md-5 navbar-form' do
+    = form_tag "/search", method: 'get', class: 'col-md-5 navbar-form' do
       .form-group
-        = text_field_tag 'search', params[:search], placeholder: "Search for videos here", class:'form-control'
+        = text_field_tag 'search',nil, placeholder: "Search for videos here", class:'form-control'
       %button.btn.btn-default(type="submit") Search
     #user_links.pull-right
       %ul
@@ -22,6 +22,6 @@
 
           %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
             %li
-              = link_to "Account", edit_user_path(@current_user)
+              = link_to "Account", "#"
               = link_to "Plan and Billing", ''
               = link_to "Sign Out", signout_path
