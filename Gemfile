@@ -19,6 +19,8 @@ gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'unicorn'
 gem "sentry-raven"
 gem 'paratrooper'
+gem 'carrierwave'
+gem 'mini_magick'
 
 
 group :development do

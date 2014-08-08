@@ -48,6 +48,11 @@ GEM
     capybara-email (2.4.0)
       capybara (~> 2.4)
       mail
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     coderay (1.1.0)
@@ -100,6 +105,8 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.2)
     mime-types (1.25.1)
+    mini_magick (3.8.0)
+      subexec (~> 0.2.1)
     mini_portile (0.6.0)
     minitest (5.3.4)
     multi_json (1.10.1)
@@ -205,6 +212,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    subexec (0.2.3)
     thin (1.5.0)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -240,6 +248,7 @@ DEPENDENCIES
   bootstrap_form
   capybara
   capybara-email
+  carrierwave
   coffee-rails
   database_cleaner (= 1.2.0)
   fabrication
@@ -249,6 +258,7 @@ DEPENDENCIES
   launchy (~> 2.4.2)
   letter_opener
   mail
+  mini_magick
   paratrooper
   pg
   pry
