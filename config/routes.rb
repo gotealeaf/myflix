@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root to: "videos#index"
+  root to: "pages#welcome"
 
   get 'ui(/:action)', controller: 'ui'
   get '/signin', to: 'sessions#new'

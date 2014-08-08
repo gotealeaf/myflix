@@ -1,5 +1,5 @@
 
-def set_current_user
+def set_current_user()
   current_user = Fabricate(:user)
   session[:user_id] = current_user.id
 end
