@@ -18,3 +18,5 @@
 /config/application.yml
 
 /config/newrelic.yml
+
+/config/initializers/raven.rb
