@@ -17,6 +17,8 @@ gem 'roadie'
 gem 'roadie-rails'
 #gem 'kaminari'
 
+gem 'sidekiq'
+
 
 group :development do
   gem 'pry'
