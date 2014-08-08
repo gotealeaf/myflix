@@ -1,4 +1,4 @@
-class PagesController < ApplicationCOntroller
+class PagesController < ApplicationController
 
 
 end
