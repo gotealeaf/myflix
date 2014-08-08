@@ -1,5 +1,12 @@
 require 'spec_helper'
 
 describe Video do
-  pending "add some examples to (or delete) #{__FILE__}"
+  
+  it "saves itself" do
+    video = Video.new(title: "Bullwinkle", description: "Moose Story")
+    video.save
+#    Video.first.should == video
+    expect(Video.first).to eql(video)
+
+  end 
 end
