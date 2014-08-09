@@ -28,3 +28,11 @@ shared_examples 'new User object' do
     expect(assigns(:user)).to be_a_new(User)
   end
 end
+
+shared_examples 'requires admin' do
+  it 'should redirect to home page if user is not admin' do
+    set_session_user
+    action
+    expect(response).to redirect_to home_path
+  end
+end
