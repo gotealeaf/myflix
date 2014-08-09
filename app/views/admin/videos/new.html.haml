@@ -9,30 +9,31 @@
             %li.active
               %a(href="") Add a New Video
           %br
-          %fieldset
-            .form-group
-              %label.control-label.col-sm-3 Title
-              .col-sm-3
-                %input.form-control(type="text")
-            .form-group
-              %label.control-label.col-sm-3 Category
-              .col-sm-6
-                %select.form-control
-            .form-group
-              %label.control-label.col-sm-3 Description
-              .col-sm-6
-                %textarea.form-control(rows="8")
-            .form-group
-              %label.control-label.col-sm-3 Large Cover
-              .col-sm-6
-                %col.btn.btn-file
-                  %input.form-control(type="file")
-            .form-group
-              %label.control-label.col-sm-3 Small Cover
-              .col-sm-6
-                %col.btn.btn-file
-                  %input.form-control(type="file")
+          = form_for [:admin, @video] do |f|
+            %fieldset
+              .form-group
+                = f.label 'Title', class: 'control-label col-sm-3'
+                .col-sm-3
+                  = f.text_field :name, class: 'form-control'
+              .form-group
+                = f.label 'Category', class: 'control-label col-sm-3'
+                .col-sm-6
+                  = f.select :name, genre_options, { include_blank: 'Select Category' }, { class: 'form-control' }
+              .form-group
+                = f.label :description, class: 'control-label col-sm-3'
+                .col-sm-6
+                  = f.text_area :description, class: 'form-control', rows: 8
+              .form-group
+                = f.label 'Large Cover', class: 'control-label col-sm-3'
+                .col-sm-6
+                  %col.btn.btn-file
+                    = f.file_field :large_cover, class: 'form-control'
+              .form-group
+                = f.label 'Small Cover', class: 'control-label col-sm-3'
+                .col-sm-6
+                  %col.btn.btn-file
+                    = f.file_field :small_cover, class: 'form-control'
 
-          %fieldset.actions.form-group
-            .col-sm-6.col-md-offset-3
-              %input(type="submit" value="Add Video" class="btn btn-default")
+            %fieldset.actions.form-group
+              .col-sm-6.col-md-offset-3
+                = f.submit 'Add Video', class: 'btn btn-default'
