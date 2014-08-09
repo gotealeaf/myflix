@@ -8,10 +8,9 @@ class Admin::VideosController < ApplicationController
 
   def create
     @video = Video.new(video_params)
-    # To do: Associate genre
     if @video.save
       flash[:notice] = "#{video.name} has been added successfully!"
-      redirect_to home_path
+      redirect_to new_admin_video_path
     else
       render :new
     end
