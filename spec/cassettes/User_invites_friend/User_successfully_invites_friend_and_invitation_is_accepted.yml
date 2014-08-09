@@ -1,0 +1,107 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/charges
+    body:
+      encoding: US-ASCII
+      string: amount=999&currency=usd&card=tok_14Oypk4YbhcI9p1LIOhL1Wi3&description=Sign%20Up%20Charge%20for%20john%40example.com
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.15.0
+      Authorization:
+      - Bearer sk_test_4XEDZACDjx28MH3mRygFsCNw
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.15.0","lang":"ruby","lang_version":"2.1.1 p76 (2014-02-24)","platform":"x86_64-darwin13.0","publisher":"stripe","uname":"Darwin
+        jamescoemansair.westell.com 13.2.0 Darwin Kernel Version 13.2.0: Thu Apr 17
+        23:03:13 PDT 2014; root:xnu-2422.100.13~1/RELEASE_X86_64 x86_64"}'
+      Content-Length:
+      - '115'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 07 Aug 2014 21:54:05 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '1231'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Max-Age:
+      - '300'
+      Stripe-Version:
+      - '2014-08-04'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "ch_14Oypl4YbhcI9p1Lz2gqitfl",
+          "object": "charge",
+          "created": 1407448445,
+          "livemode": false,
+          "paid": true,
+          "amount": 999,
+          "currency": "usd",
+          "refunded": false,
+          "card": {
+            "id": "card_14Oypk4YbhcI9p1L8QeA3ahf",
+            "object": "card",
+            "last4": "4242",
+            "brand": "Visa",
+            "funding": "credit",
+            "exp_month": 7,
+            "exp_year": 2015,
+            "fingerprint": "3l8TgH8lYqPNQOz1",
+            "country": "US",
+            "name": null,
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null,
+            "cvc_check": "pass",
+            "address_line1_check": null,
+            "address_zip_check": null,
+            "customer": null
+          },
+          "captured": true,
+          "refunds": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/charges/ch_14Oypl4YbhcI9p1Lz2gqitfl/refunds",
+            "data": []
+          },
+          "balance_transaction": "txn_14Oypl4YbhcI9p1L2UstbRei",
+          "failure_message": null,
+          "failure_code": null,
+          "amount_refunded": 0,
+          "customer": null,
+          "invoice": null,
+          "description": "Sign Up Charge for john@example.com",
+          "dispute": null,
+          "metadata": {},
+          "statement_description": null,
+          "receipt_email": null
+        }
+    http_version: 
+  recorded_at: Thu, 07 Aug 2014 21:54:06 GMT
+recorded_with: VCR 2.9.2
