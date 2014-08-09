@@ -1,0 +1,12 @@
+%article.review
+  %li.row
+    .col-sm-2
+      %span
+        Rating:
+        = "#{review.rating} / 5"
+      %p
+        by
+        = link_to review.creator.full_name, user_path(review.creator)
+    .col-sm-8
+      %p
+        = review.content

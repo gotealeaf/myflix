@@ -1,0 +1,31 @@
+%section.user.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %article
+        %header
+          %img(src="#{user_avatar_src(@user.email)}")
+          %h2
+            = video_collection_header(@user)
+          = link_to "Follow", relationships_path(id: @user.id), method: :post, class:"btn btn-default", id: "follow-link" unless current_user.cant_follow(@user)
+        %table.table
+          %thead
+            %tr
+              %th(width="30%") Video Title
+              %th(width="15%") Genre
+          %tbody
+            - @user.queue_items.each do |item|
+              %tr
+                %td
+                  = link_to item.video_title, video_path(item.video)
+                %td
+                  = link_to item.category_name, category_path(item.category)
+
+%section.user_reviews.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %header
+        %h3
+          = reviews_header(@user)
+      %ul
+        - @reviews.each do |review|
+          = render review

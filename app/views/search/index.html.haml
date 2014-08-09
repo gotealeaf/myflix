@@ -1,0 +1,10 @@
+- @results.each do |result|
+  %ul
+    %li
+      = link_to result do
+        %img(src="#{result.small_cover_image_url}")
+    %li
+      = result.title
+    %li
+      = result.description
+  %br

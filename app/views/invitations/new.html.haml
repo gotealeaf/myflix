@@ -1,0 +1,11 @@
+%section.invite.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = bootstrap_form_for(@invitation,layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-4") do |f|
+        %header
+          %h1 Invite a friend to join MyFlix!
+        = f.text_field :recipient_name, label: "Friend's Name"
+        = f.email_field :recipient_email, lable: "Friend's Email Address"
+        = f.text_area :message, label: "Invitation Message", value: "Please join this really cool site!",  rows: 6
+        = f.form_group do
+          = f.submit "Send Invitation", class:"btn btn-default"
