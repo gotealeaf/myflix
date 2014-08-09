@@ -1,5 +1,5 @@
 Fabricator(:video) do
-  title { Faker::Lorem.word }
+  title { Faker::Lorem.characters(10) }
   description { Faker::Lorem.characters(20) }
   large_cover_image_url { Faker::Lorem.word }
   small_cover_image_url { Faker::Lorem.word }
