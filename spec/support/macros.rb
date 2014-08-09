@@ -10,7 +10,12 @@ def clear_session_user
   session[:username] = nil
 end
 
-def video(genre=nil)
+def set_session_admin
+  set_session_user
+  user.update(admin: true)
+end
+
+def video
   @video ||= Fabricate(:video, genre: genre)
 end
 
