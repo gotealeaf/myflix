@@ -3,7 +3,7 @@ class Video < ActiveRecord::Base
   has_many :queue_videos
   has_many :reviews, -> { order(created_at: :desc) }
 
-  validates_presence_of :name, :description
+  validates_presence_of :name, :description, :genre_id
   validates :name, uniqueness: true
   validates :description, presence: true
 
