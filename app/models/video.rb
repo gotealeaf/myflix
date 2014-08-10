@@ -7,6 +7,9 @@ class Video < ActiveRecord::Base
   validates :name, uniqueness: true
   validates :description, presence: true
 
+  mount_uploader :large_cover, LargeCoverUploader
+  mount_uploader :small_cover, SmallCoverUploader
+
   def self.search_by_name(name)
     where("name ILIKE ?", "%#{name}%")
   end
