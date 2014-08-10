@@ -83,7 +83,7 @@ describe QueueVideosController do
         expect(QueueVideo.find(queue_video_2.id).position).to eq(1)
       end
     end
-    
+
     it_behaves_like 'redirect for unauthenticated user' do
       let(:queue_video) { Fabricate(:queue_video) }
       let(:action) { delete :destroy, id: queue_video.id }
