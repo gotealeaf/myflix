@@ -2,38 +2,37 @@
   .container
     .row
       .col-md-10.col-md-offset-1
-        %form.form-horizontal
+        = form_for [:admin, @video], html: { class: 'form-horizontal' } do |f|
           %ul.nav.nav-tabs
             %li
               %a(href="/ui/admin_views_payments") Recent Payments
             %li.active
               %a(href="") Add a New Video
           %br
-          = form_for [:admin, @video] do |f|
-            %fieldset
-              .form-group
-                = f.label 'Title', class: 'control-label col-sm-3'
-                .col-sm-3
-                  = f.text_field :name, class: 'form-control'
-              .form-group
-                = f.label 'Category', class: 'control-label col-sm-3'
-                .col-sm-6
-                  = f.select :name, genre_options, { include_blank: 'Select Category' }, { class: 'form-control' }
-              .form-group
-                = f.label :description, class: 'control-label col-sm-3'
-                .col-sm-6
-                  = f.text_area :description, class: 'form-control', rows: 8
-              .form-group
-                = f.label 'Large Cover', class: 'control-label col-sm-3'
-                .col-sm-6
-                  %col.btn.btn-file
-                    = f.file_field :large_cover, class: 'form-control'
-              .form-group
-                = f.label 'Small Cover', class: 'control-label col-sm-3'
-                .col-sm-6
-                  %col.btn.btn-file
-                    = f.file_field :small_cover, class: 'form-control'
+          %fieldset
+            .form-group
+              = f.label 'Title', class: 'control-label col-sm-3'
+              .col-sm-3
+                = f.text_field :name, class: 'form-control'
+            .form-group
+              = f.label 'Category', class: 'control-label col-sm-3'
+              .col-sm-6
+                = f.select :genre_id, genre_options, { include_blank: 'Select Category' }, { class: 'form-control' }
+            .form-group
+              = f.label :description, class: 'control-label col-sm-3'
+              .col-sm-6
+                = f.text_area :description, class: 'form-control', rows: 8
+            .form-group
+              = f.label 'Large Cover', class: 'control-label col-sm-3'
+              .col-sm-6
+                %col.btn.btn-file
+                  = f.file_field :large_cover, class: 'form-control'
+            .form-group
+              = f.label 'Small Cover', class: 'control-label col-sm-3'
+              .col-sm-6
+                %col.btn.btn-file
+                  = f.file_field :small_cover, class: 'form-control'
 
-            %fieldset.actions.form-group
-              .col-sm-6.col-md-offset-3
-                = f.submit 'Add Video', class: 'btn btn-default'
+          %fieldset.actions.form-group
+            .col-sm-6.col-md-offset-3
+              = f.submit 'Add Video', class: 'btn btn-default'
