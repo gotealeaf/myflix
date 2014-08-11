@@ -7,6 +7,7 @@ describe Video do
   it { should validate_presence_of(:description) }
 
 =begin
+
   it "saves itself" do
     video = Video.new(title: "Bullwinkle", description: "Moose Story")
     video.save
