@@ -2,6 +2,11 @@ require 'spec_helper'
 
 describe Video do
   
+  it { should belong_to(:category) }
+  it { should validate_presence_of(:title) }
+  it { should validate_presence_of(:description) }
+
+=begin
   it "saves itself" do
     video = Video.new(title: "Bullwinkle", description: "Moose Story")
     video.save
@@ -26,6 +31,7 @@ describe Video do
     video.save
     expect(Video.count).to eq(0)
   end 
+=end
 
 
 end
