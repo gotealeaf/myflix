@@ -9,7 +9,7 @@
           %span= "Rating: #{ @video.avg_rating }/5.0"
         %p= @video.description
         .actions
-          %button.btn.btn-primary= link_to "Watch Now"
+          %button.btn.btn-primary= link_to "Watch Now", @video.video_url
           = link_to "+ My Queue", queue_videos_path(video_id: @video.id),
               method: :post, class: "btn btn-default" unless current_user.video_in_queue?(@video)
 
