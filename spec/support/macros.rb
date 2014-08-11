@@ -31,3 +31,7 @@ def user_signs_in(usr=nil)
   fill_in 'password', with: user_password
   click_button 'Sign in'
 end
+
+def user_signs_out
+  click_on 'Sign out'
+end
