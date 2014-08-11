@@ -17,6 +17,5 @@
             = f.password_field :password_confirmation, label: 'Password Confirmation'
             = hidden_field_tag :token, @token
         %fieldset.credit_card
-        %fieldset.actions.control-group
-          .controls
-            = f.submit 'Sign Up', class: 'btn btn-default'
+          .form-group
+            %script(src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="#{ Rails.application.secrets.stripe_pub_key }" data-name="Myflix Sign Up Charge" data-description="$9.99/m for unlimted access!" data-amount="999")
