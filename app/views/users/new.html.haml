@@ -1,20 +1,20 @@
 %section.register.container
   .row
     .col-sm-10.col-sm-offset-1
-      = bootstrap_form_for @user, html: {class: 'form-horizontal'} do |f|
+      = bootstrap_form_for @user, layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-6' do |f|
         %header
           %h1 Register
         %fieldset
           .form-group
-            .col-sm-6= f.text_field :username
+            = f.text_field :username
           .form-group
-            .col-sm-6= f.text_field :full_name, label: "Full Name", value: @friend_name
+            = f.text_field :full_name, label: "Full Name", value: @friend_name
           .form-group
-            .col-sm-6= f.text_field :email, label: 'Email Address', value: @friend_email
+            = f.text_field :email, label: 'Email Address', value: @friend_email
           .form-group
-            .col-sm-6= f.password_field :password
+            = f.password_field :password
           .form-group
-            .col-sm-6= f.password_field :password_confirmation, label: 'Password Confirmation'
+            = f.password_field :password_confirmation, label: 'Password Confirmation'
             = hidden_field_tag :token, @token
         %fieldset.credit_card
         %fieldset.actions.control-group
