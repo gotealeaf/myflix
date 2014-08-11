@@ -15,8 +15,17 @@ describe Video do
   end 
 
 
+  it "requires a title" do
+    video = Video.new(description: "Moose Story")
+    video.save
+    expect(Video.count).to eq(0)
+  end 
 
-
+  it "requires a description" do
+    video = Video.new(title: "Bullwinkle")
+    video.save
+    expect(Video.count).to eq(0)
+  end 
 
 
 end
