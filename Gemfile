@@ -22,6 +22,7 @@ gem 'paratrooper'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
+gem 'stripe', git: 'https://github.com/stripe/stripe-ruby'
 
 
 group :development do
