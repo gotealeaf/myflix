@@ -32,6 +32,11 @@
               .col-sm-6
                 %col.btn.btn-file
                   = f.file_field :small_cover, class: 'form-control'
+            .form-group
+              = f.label 'Video URL', class: 'control-label col-sm-3'
+              .col-sm-6
+                %col.btn.btn-file
+                  = f.text_field :video_url, class: 'form-control'
 
           %fieldset.actions.form-group
             .col-sm-6.col-md-offset-3
