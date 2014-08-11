@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
   before_filter :require_user
-  
+
   def create
      @video = Video.find(params[:video_id])
      review = @video.reviews.build(review_params.merge!(user: current_user))
@@ -15,6 +15,6 @@ class ReviewsController < ApplicationController
 
   private
    def review_params
-    params.permit(:content, :user, :rating, :video_id)
+    params.require(:review).permit(:content, :rating)
   end
 end
