@@ -5,7 +5,7 @@
       %div{:style => "align: left"}
         %h1
           = link_to catty.name, catty
-        - cat_videos = @videos.select{|v| v.category_id == catty.id} 
+        - cat_videos = catty.recent_videos
         - cat_videos.each do |video|
           %div{:style => "height: 200px; display: inline"}
             -#.video.col-sm-2
