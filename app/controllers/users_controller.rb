@@ -10,14 +10,7 @@ class UsersController < ApplicationController
   def create
     @user = User.create(user_params)
     if @user.save
-      Stripe.api_key = Rails.env.development? ? Rails.application.secrets.stripe_sec_key : ENV['STRIPE_SECRET_KEY']
-      token = params[:stripeToken]
-      Stripe::Charge.create(
-        :amount => 999,
-        :currency => "aud",
-        :card => token,
-        :description => "Sign up charge for #{ @user.email }"
-      )
+      charge_customer
       flash[:success] = "Welcome #{@user.full_name}!"
       session[:username] = @user.username
       MyflixMailer.delay.welcome_email(current_user.id)
@@ -52,5 +45,16 @@ class UsersController < ApplicationController
       user_token = UserToken.find_by(token: params[:token])
       user_token.delete
     end
+  end
+
+  def charge_customer
+    Stripe.api_key = Rails.env.development? ? Rails.application.secrets.stripe_sec_key : ENV['STRIPE_SECRET_KEY']
+    token = params[:stripeToken]
+    Stripe::Charge.create(
+      :amount => 999,
+      :currency => "aud",
+      :card => token,
+      :description => "Sign up charge for #{ @user.email }"
+    )
   end
 end
