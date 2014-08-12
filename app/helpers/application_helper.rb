@@ -9,7 +9,7 @@ module ApplicationHelper
   end
 
   def set_stripe_pub_key
-    if Rails.env.development?
+    if Rails.env.development? || Rails.env.test?
       Rails.application.secrets.stripe_pub_key
     else
       ENV[STRIPE_PUBLISHABLE_KEY]
