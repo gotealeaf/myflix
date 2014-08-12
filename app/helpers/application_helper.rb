@@ -7,4 +7,12 @@ module ApplicationHelper
   def genre_options
     options_for_select(Genre.all.map { |x| [x.name.titleize, x.id] })
   end
+
+  def set_stripe_pub_key
+    if Rails.env.development?
+      Rails.application.secrets.stripe_pub_key
+    else
+      ENV[STRIPE_PUBLISHABLE_KEY]
+    end
+  end
 end
