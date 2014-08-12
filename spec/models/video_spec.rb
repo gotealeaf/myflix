@@ -6,8 +6,31 @@ describe Video do
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:description) }
 
+  describe "find recent videos do" do
+
+    it "searches and finds no videos when none exist" do
+      found_videos = Video.recent_videos
+      expect(found_videos.count).to eq(0)
+    end 
+
+    it "searches and finds six videos in order when a lot of videos" do
+      moose = Video.create(title: "Bullwinkle", description: "Moose movie")
+      rage = Video.create(title: "Raging Bull", description: "Boxing movie")
+      squirrel = Video.create(title: "Rocky", description: "not Rambo")
+      hocky = Video.create(title: "Hocky", description: "not Rambo")
+      docky = Video.create(title: "Docky", description: "not Rambo")
+      socky = Video.create(title: "Socky", description: "not Rambo")
+      locky = Video.create(title: "rLcky", description: "not Rambo")
+
+      found_videos = Video.recent_videos
+      expect(found_videos).to eq([locky,socky,docky,hocky, squirrel,rage])
+
+    end 
+  end
+
 
   describe "search_by_title" do 
+
     it "searches and finds no videos when none match" do
       moose = Video.create(title: "Bullwinkle", description: "Moose movie")
       found_videos = Video.search_by_title("Periwinkle")
