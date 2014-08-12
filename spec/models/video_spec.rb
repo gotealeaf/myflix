@@ -6,33 +6,35 @@ describe Video do
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:description) }
 
-=begin
 
-  it "saves itself" do
-    video = Video.new(title: "Bullwinkle", description: "Moose Story")
-    video.save
-    expect(Video.first).to eq(video)
-  end 
+  describe "search_by_title" do 
+    it "searches and finds no videos when none match" do
+      moose = Video.create(title: "Bullwinkle", description: "Moose movie")
+      found_videos = Video.search_by_title("Periwinkle")
+      expect(found_videos.count).to eq(0)
+    end 
 
-  it "knows its category" do
-    cartoon = Category.create(name: "Cartoon")
-    winkle = Video.create(title: "Bullwinkle", description: "Moose Story", category: cartoon)
-    expect(Video.first.category).to eq(Category.first)
-  end 
+    it "searches and finds one video when one matches" do
+      moose = Video.create(title: "Bullwinkle", description: "Moose movie")
+      found_videos = Video.search_by_title("Bull")
+      expect(found_videos).to eq([moose])
+    end 
 
+    it "finds partial matches returned by created at" do
+      moose = Video.create(title: "Bullwinkle", description: "Moose movie")
+      rage = Video.create(title: "Raging Bull", description: "Boxing movie")
+      squirrel = Video.create(title: "Rocky", description: "not Rambo")
+      found_videos = Video.search_by_title("Bull")
+      expect(found_videos).to eq([moose, rage])
+    end 
 
-  it "requires a title" do
-    video = Video.new(description: "Moose Story")
-    video.save
-    expect(Video.count).to eq(0)
-  end 
+    it "searches and returns and empty array when the search term is empty" do
+      moose = Video.create(title: "Bullwinkle", description: "Moose movie")
+      found_videos = Video.search_by_title("")
+      expect(found_videos).to eq([])
+    end
 
-  it "requires a description" do
-    video = Video.new(title: "Bullwinkle")
-    video.save
-    expect(Video.count).to eq(0)
-  end 
-=end
+  end
 
 
 end
