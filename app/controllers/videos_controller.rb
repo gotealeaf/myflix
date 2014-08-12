@@ -11,4 +11,9 @@ class VideosController < ApplicationController
   def show
     @video = Video.find_by_id(params[:id])
   end
+
+  def search
+    @categories = Category.all
+    @videos = Video.search_by_title(params[:search_term])
+  end
 end

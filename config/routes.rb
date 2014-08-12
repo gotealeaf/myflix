@@ -6,6 +6,13 @@ Myflix::Application.routes.draw do
   get 'home', to: 'videos#index'
 
 #limit routes to those actions supported by controller
-  resources :videos, only: [:index, :show]
+  resources :videos, only: [:index, :show] do
+    collection do
+      get 'search', to: 'videos#search'
+    end
+  end
+
+
+
   resources :categories, only: :show
 end
