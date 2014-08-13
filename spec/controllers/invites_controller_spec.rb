@@ -15,6 +15,7 @@ describe InvitesController do
         set_current_user
         post :create, invite: { friend_name: "Bob Johnson", friend_email: "bob@test.com", user: current_user }
       end
+      after { ActionMailer::Base.deliveries.clear }
         
       it "redirects to the home page" do
         expect(response).to redirect_to home_path

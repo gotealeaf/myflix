@@ -38,6 +38,7 @@ describe PasswordResetsController do
     context "with invalid email" do
       let(:holly) { Fabricate(:user) }
       before { post :create, email: "other_user@email.com" }
+      after { ActionMailer::Base.deliveries.clear }
 
       it "does not find a user with entered email" do
         expect(assigns(:user)).to be_nil

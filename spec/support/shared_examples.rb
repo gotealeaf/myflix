@@ -12,3 +12,17 @@ shared_examples "generate_token" do
     expect(instance.token).to_not be_nil
   end
 end
+
+shared_examples "requires admin" do
+  before { current_user.update_column(:admin, false) }
+
+  it "redirects to the home page" do
+    action
+    expect(response).to redirect_to home_path
+  end
+
+  it "sets the error notice" do
+    action
+    expect(flash[:error]).to_not be_blank 
+  end
+end
