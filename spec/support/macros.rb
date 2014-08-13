@@ -2,6 +2,11 @@ def user
   @user ||= Fabricate(:user)
 end
 
+def stripe_token
+  Stripe.api_key = Rails.application.secrets.stripe_sec_key
+  @token = Stripe::Token.create(card:{ number: "4242424242424242", exp_month: 12, exp_year: 2016, cvc: 123 } )
+end
+
 def set_session_user
   session[:username] = user.username
 end

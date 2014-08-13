@@ -15,54 +15,54 @@ describe UsersController do
   describe 'POST create' do
     context 'if validation passes' do
       it 'creates a new user' do
-        post :create, user: Fabricate.attributes_for(:user)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: stripe_token.id
         expect(User.all.count).to eq(1)
       end
       it 'delivers a welcome email' do
-        post :create, user: Fabricate.attributes_for(:user)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: stripe_token.id
         expect(ActionMailer::Base.deliveries).to_not be_empty
       end
       it 'delivers to the correct recipient' do
         post :create, user: { username:'test_user', full_name: 'test_user',
                               email: 'user@example.com', password: 'password',
-                              password_confirmation: 'password' }
+                              password_confirmation: 'password' }, stripeToken: stripe_token.id
         expect(ActionMailer::Base.deliveries.last.to).to eq(['user@example.com'])
       end
       it 'has the correct content' do
         post :create, user: { username:'test_user', full_name: 'test_user',
                               email: 'user@example.com', password: 'password',
-                              password_confirmation: 'password' }
+                              password_confirmation: 'password' }, stripeToken: stripe_token.id
         expect(ActionMailer::Base.deliveries.last.body).to include('Welcome to MyFlix')
       end
       it 'Flash a welcome message' do
-        post :create, user: Fabricate.attributes_for(:user)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: stripe_token.id
         expect(flash[:success].blank?).to eq(false)
       end
       it 'assigns session[:user]' do
-        post :create, user: Fabricate.attributes_for(:user)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: stripe_token.id
         expect(session[:username].blank?).to eq(false)
       end
       it 'redirects to video_path' do
-        post :create, user: Fabricate.attributes_for(:user)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: stripe_token.id
         expect(response).to redirect_to videos_path
       end
       context 'if user was invited to register' do
         it 'should delete the token after registration' do
           user_token = Fabricate(:user_token)
-          post :create, user: Fabricate.attributes_for(:user), token: user_token.token
+          post :create, user: Fabricate.attributes_for(:user), token: user_token.token, stripeToken: stripe_token.id
           expect(UserToken.count).to eq(0)
         end
         it 'should create a new following for new user to inviter if invited' do
           inviter = Fabricate(:user)
           user_token = Fabricate(:user_token, user: inviter)
-          post :create, user: Fabricate.attributes_for(:user), token: user_token.token
+          post :create, user: Fabricate.attributes_for(:user), token: user_token.token, stripeToken: stripe_token.id
           new_user = User.where.not(id: inviter.id).first
           expect(new_user.followings.first.followee).to eq(inviter)
         end
         it 'should create a new following for inviter to new user if invited' do
           inviter = Fabricate(:user)
           user_token = Fabricate(:user_token, user: inviter)
-          post :create, user: Fabricate.attributes_for(:user), token: user_token.token
+          post :create, user: Fabricate.attributes_for(:user), token: user_token.token, stripeToken: stripe_token.id
           new_user = User.where.not(id: inviter.id).first
           expect(inviter.followings.first.followee).to eq(new_user)
         end
