@@ -4,7 +4,8 @@
       = bootstrap_form_for(@user, html: {class: "form-horizonal"}) do |f|
         %header
           %h1 Register
-        = f.email_field :email, label: "Email Address"
-        = f.password_field :password
-        = f.text_field :full_name
+        %fieldset
+          = f.email_field :email, label: "Email Address"
+          = f.password_field :password
+          = f.text_field :full_name
         = f.submit "Sign Up", class: "btn btn-default"
