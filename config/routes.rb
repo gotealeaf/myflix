@@ -1,5 +1,8 @@
 Myflix::Application.routes.draw do
   get 'ui(/:action)', controller: 'ui'
+  root 'pages#front'
+  get 'register', to: 'users#new'
+  get 'sign_in', to: 'users#sign_in'
 
 #  The following two routes are alternates that send the user home  
 #  get 'home', controller: 'videos', action: 'index'
@@ -12,7 +15,10 @@ Myflix::Application.routes.draw do
     end
   end
 
-
-
+  resources :users, only: [:new, :create] do
+    collection do
+      post 'start_session', to: 'users#start_session'
+    end
+  end
   resources :categories, only: :show
 end
