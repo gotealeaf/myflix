@@ -80,9 +80,14 @@ Video.create(
   small_cover_url: '/tmp/stargate.jpg', 
   large_cover_url: '/tmp/image_place_holder.jpg',
   category: series_scify)
-Video.create(
+ stargate = Video.create(
   title: 'Stargate',
   description: 'Stargate is an adventure military science fiction franchise, initially conceived by Roland Emmerich and Dean Devlin. The first film in the franchise was simply titled Stargate.',
   small_cover_url: '/tmp/stargate.jpg', 
   large_cover_url: '/tmp/image_place_holder.jpg',
   category: series_scify)
+
+aj = User.create(full_name: "AJ Jones", password: "password", email: "aj@example.com")
+
+Review.create(user: aj, video: stargate, rating: 5, content: "Wow, what a show.")
+Review.create(user: aj, video: stargate, rating: 2, content: "It's really just ok. Don't waste your time.")

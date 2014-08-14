@@ -21,6 +21,8 @@ describe SessionsController do
       end
 
       it "puts the signed in user in the session" do
+        abby = Fabricate(:user)
+        post :create, email: abby.email, password: abby.password
         expect(session[:user_id]).to eq(abby.id)
       end
 
@@ -38,7 +40,7 @@ describe SessionsController do
       abby = Fabricate(:user)
       post :create, email: abby.email, password: abby.password + 'aldkjalkda'
     end
-      it "doesn't put the user in the session" do
+      it "does not put the user in the session" do
         expect(session[:user_id]).to be_nil
       end
       it "redicts user to the sign in page" do
