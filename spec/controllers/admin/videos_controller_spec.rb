@@ -12,6 +12,10 @@ describe Admin::VideosController do
     it_behaves_like "requires admin" do
       let(:action) { get :new }
     end
+
+    it_behaves_like "require_login" do
+      let(:action) { get :new }
+    end
   end
 
   describe "POST create" do
@@ -20,8 +24,8 @@ describe Admin::VideosController do
     context "with valid input" do
       before { post :create, video: Fabricate.attributes_for(:video) }
       
-      it "redirects to home page" do
-        expect(response).to redirect_to home_path
+      it "redirects to new video path" do
+        expect(response).to redirect_to new_admin_video_path
       end
 
       it "creates a new video" do
@@ -34,7 +38,7 @@ describe Admin::VideosController do
     end
 
     context "with invalid input" do
-      before { post :create, video: { title: "Marry Poppins" } }
+      before { post :create, video: { title: "Mary Poppins" } }
 
       it "renders the new template" do
         expect(response).to render_template :new
@@ -46,7 +50,3 @@ describe Admin::VideosController do
     end
   end
 end
-
-
-
-
