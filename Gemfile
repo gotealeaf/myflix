@@ -38,7 +38,6 @@ group :development, :test do
 end
 
 group :test do
-  gem 'database_cleaner', '1.2.0'
   gem 'pry-rescue'
   gem 'pry-stack_explorer'
   gem 'shoulda-matchers'
@@ -47,6 +46,8 @@ group :test do
   gem 'launchy', '~> 2.4.2'
   gem 'vcr'
   gem 'webmock'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 
 group :production do
