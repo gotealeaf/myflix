@@ -2,7 +2,6 @@ jQuery(function($) {
   $('#new_user').submit(function(event) {
     var $form = $(this);
     $form.find('.btn-default').prop('disabled', true);
-
     Stripe.card.createToken({
       number: $('#card_number').val(),
       cvc: $('#card_cvc').val(),
@@ -16,7 +15,6 @@ jQuery(function($) {
 
 function stripeResponseHandler(status, response) {
   var $form = $('#new_user');
-
   if (response.error) {
     $form.find('.payment-errors').text(response.error.message);
     $form.find('.btn-default').prop('disabled', false);
