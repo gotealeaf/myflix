@@ -1,0 +1,5 @@
+small_cover_url.string 
+large_cover_url.string  
+title.string
+desctiption.text 
+
