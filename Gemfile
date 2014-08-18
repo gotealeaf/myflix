@@ -8,14 +8,15 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
+gem 'mysql2', '~> 0.3.16'
 
 group :development do
   gem 'sqlite3'
   gem 'pry'
   gem 'pry-nav'
   gem 'thin'
-  gem "better_errors"
   gem "binding_of_caller"
+  gem 'shoulda', '~> 3.5.0'
 end
 
 group :development, :test do
@@ -27,7 +28,7 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
+  gem 'pg', '~> 0.17.1'
   gem 'rails_12factor'
 end
 
