@@ -48,21 +48,13 @@ class UsersController < ApplicationController
   end
 
   def charge_customer
-    Stripe.api_key = set_stripe_sec_key
     token = params[:stripeToken]
-    Stripe::Charge.create(
-      :amount => 999,
-      :currency => "aud",
-      :card => token,
-      :description => "Sign up charge for #{ @user.email }"
-    )
+    charge = StripeWrapper::Charge.create(
+        amount: 999,
+        card: token,
+        description: "Sign up charge for #{ @user.email }"
+      )
   end
 
-  def set_stripe_sec_key
-    if Rails.env.development? || Rails.env.test?
-      Rails.application.secrets.stripe_sec_key
-    else
-      ENV['STRIPE_SECRET_KEY']
-    end
-  end
+
 end
