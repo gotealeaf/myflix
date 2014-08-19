@@ -13,10 +13,11 @@ describe UsersController do
   end
 
   describe 'POST create' do
-    context 'if validation passes' do
+    context 'if validation passes for personal info and credit card' do
 
+      let(:charge) { double('charge', successful?: true) }
       before do
-        allow(StripeWrapper::Charge).to receive(:create)
+        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
       end
 
       it 'creates a new user' do
@@ -73,13 +74,37 @@ describe UsersController do
         end
       end
     end
+    context 'if personal info valid but credit card invalid' do
+      let(:charge) { double('charge', successful?: false, error_message: 'Your card was declined') }
 
+      before do
+        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
+      end
+
+      it 'does not create a new user' do
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: '12345'
+        expect(User.count).to eq(0)
+      end
+      it 'renders the new template' do
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: '12345'
+        expect(response).to render_template(:new)
+      end
+      it 'flashes an error message' do
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: '12345'
+        expect(flash[:danger]).to eq("Your card was declined")
+      end
+    end
     context 'if validation fails' do
       let(:action) { post :create, user: { username: 'test_user' } }
 
       it 'does not create a user' do
         action
         expect(User.count).to eq(0)
+      end
+
+      it 'does not charge the users credit card' do
+        expect(StripeWrapper).not_to receive(:create)
+        post :create, user: { email: 'test@example.com' }
       end
 
       it 'renders new template' do
@@ -105,9 +130,5 @@ describe UsersController do
     it_behaves_like 'redirect for unauthenticated user' do
       let(:action) { get :show, id: 1}
     end
-  end
-
-  describe 'GET invited' do
-
   end
 end
