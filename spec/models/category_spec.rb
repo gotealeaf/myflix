@@ -3,6 +3,8 @@ require 'spec_helper'
 describe Category do
   context "relationships" do 
     it {should have_many(:videos)}
+    it { should_not allow_value(nil).for(:name) }
+    it {should allow_value("Batman").for(:name) }
   end 
    
   describe "Category validations" do 
