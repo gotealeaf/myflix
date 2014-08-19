@@ -9,6 +9,7 @@ require 'sidekiq/testing'
 require 'vcr'
 
 Sidekiq::Testing.inline!
+Capybara.javascript_driver = :webkit
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
