@@ -8,15 +8,25 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.create(user_params)
-    if @user.save
-      charge_customer
-      flash[:success] = "Welcome #{@user.full_name}!"
-      session[:username] = @user.username
-      MyflixMailer.delay.welcome_email(current_user.id)
-      follow_inviter_if_invited
-      delete_token_if_invited
-      redirect_to videos_path
+    @user = User.new(user_params)
+    if @user.valid?
+      charge = StripeWrapper::Charge.create(
+          amount: 999,
+          card: params[:stripeToken],
+          description: "Sign up charge for #{ @user.email }"
+        )
+      if charge.successful?
+        @user.save
+        flash[:success] = "Welcome #{@user.full_name}!"
+        session[:username] = @user.username
+        MyflixMailer.delay.welcome_email(current_user.id)
+        follow_inviter_if_invited
+        delete_token_if_invited
+        redirect_to videos_path
+      else
+        flash[:danger] = charge.error_message
+        render :new
+      end
     else
       render :new
     end
@@ -29,7 +39,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:full_name, :username, :email, :password, :password_confirmation)
+    params.require(:user).permit!
   end
 
   def follow_inviter_if_invited
@@ -46,15 +56,4 @@ class UsersController < ApplicationController
       user_token.delete
     end
   end
-
-  def charge_customer
-    token = params[:stripeToken]
-    charge = StripeWrapper::Charge.create(
-        amount: 999,
-        card: token,
-        description: "Sign up charge for #{ @user.email }"
-      )
-  end
-
-
 end
