@@ -17,6 +17,10 @@ class UiController < ApplicationController
   def home
   end
 
+  def video
+    binding.pry
+  end
+
   private
 
   def set_up_videos
