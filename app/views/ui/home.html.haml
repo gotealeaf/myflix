@@ -2,10 +2,10 @@
   %header
     %h3= link_to "TV Commedies"
   .videos.row
-    - 6.times do
+    - @videos.each do |video|
       .video.col-sm-2
         = link_to "", nil do
-          %img(src="/tmp/#{['futurama', 'south_park', 'family_guy'].sample}.jpg")
+          %img(src="#{video.url}")
 
 %article.video_category
   %header
