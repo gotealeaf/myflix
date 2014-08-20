@@ -43,6 +43,10 @@ describe Admin::VideosController do
       it "renders the new template" do
         expect(response).to render_template :new
       end
+
+      it "sets the error notice" do
+        expect(flash[:error]).to_not be_empty
+      end
     end
 
     it_behaves_like "requires admin" do

@@ -11,10 +11,10 @@
           %br
           %fieldset
             = f.text_field :title, control_col: "col-sm-3"
-            = f.select :category_id, options_for_select(Category.all.map {|category| [category.name, category.id]})
+            = f.select :category_id, options_for_select(Category.all.collect { |category| [category.name, category.id] }), include_blank: true
             = f.text_area :description, rows: 8
-            = f.file_field :large_cover, class: "btn btn-file"
-            = f.file_field :small_cover_url, class: "btn btn-file"
+            = f.file_field :large_cover, type: "file", class: "form-control"
+            = f.file_field :small_cover, type: "file", class: "form-control"
             = f.text_field :video_url, class: "span3", label: "Video URL"
             
             %fieldset.actions.form-group

@@ -9,6 +9,7 @@ class Admin::VideosController < AdminsController
       flash[:notice] = "Success! Video created."
       redirect_to new_admin_video_path
     else
+      flash[:error] = "Please fix the problems below."
       render :new
     end 
   end
@@ -16,6 +17,6 @@ class Admin::VideosController < AdminsController
   private
 
   def video_params
-    params.require(:video).permit(:title, :description, :category, :large_cover, :small_cover, :video_url)
+    params.require(:video).permit(:title, :description, :category_id, :large_cover, :small_cover, :video_url,)
   end
 end

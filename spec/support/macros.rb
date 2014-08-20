@@ -14,7 +14,8 @@ def clear_current_user
   session[:user_id] = nil
 end
 
-def sign_in(user)
+def sign_in(user=nil)
+  user = user || Fabricate(:user)
   visit login_path
   fill_in "Email Address", with: user.email
   fill_in "Password", with: user.password
