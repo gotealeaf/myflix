@@ -13,14 +13,4 @@ class Video < ActiveRecord::Base
   def self.search_by_name(name)
     where("name ILIKE ?", "%#{name}%")
   end
-
-  def avg_rating
-    !!avg ? avg.to_s : "no ratings available"
-  end
-
-  private
-
-  def avg
-    Review.where(video_id: id).average(:rating)
-  end
 end

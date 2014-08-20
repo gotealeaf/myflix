@@ -38,13 +38,17 @@ group :development, :test do
 end
 
 group :test do
-  gem 'database_cleaner', '1.2.0'
   gem 'pry-rescue'
   gem 'pry-stack_explorer'
   gem 'shoulda-matchers'
   gem 'capybara'
   gem 'capybara-email'
   gem 'launchy', '~> 2.4.2'
+  gem 'vcr'
+  gem 'webmock'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
+  gem 'capybara-webkit'
 end
 
 group :production do

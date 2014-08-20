@@ -8,15 +8,25 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.create(user_params)
-    if @user.save
-      charge_customer
-      flash[:success] = "Welcome #{@user.full_name}!"
-      session[:username] = @user.username
-      MyflixMailer.delay.welcome_email(current_user.id)
-      follow_inviter_if_invited
-      delete_token_if_invited
-      redirect_to videos_path
+    @user = User.new(user_params)
+    if @user.valid?
+      charge = StripeWrapper::Charge.create(
+          amount: 999,
+          card: params[:stripeToken],
+          description: "Sign up charge for #{ @user.email }"
+        )
+      if charge.successful?
+        @user.save
+        flash[:success] = "Welcome #{@user.full_name}!"
+        session[:username] = @user.username
+        MyflixMailer.delay.welcome_email(current_user.id)
+        follow_inviter_if_invited
+        delete_token_if_invited
+        redirect_to videos_path
+      else
+        flash[:danger] = charge.error_message
+        render :new
+      end
     else
       render :new
     end
@@ -29,7 +39,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:full_name, :username, :email, :password, :password_confirmation)
+    params.require(:user).permit!
   end
 
   def follow_inviter_if_invited
@@ -44,25 +54,6 @@ class UsersController < ApplicationController
     unless params[:token].blank?
       user_token = UserToken.find_by(token: params[:token])
       user_token.delete
-    end
-  end
-
-  def charge_customer
-    Stripe.api_key = set_stripe_sec_key
-    token = params[:stripeToken]
-    Stripe::Charge.create(
-      :amount => 999,
-      :currency => "aud",
-      :card => token,
-      :description => "Sign up charge for #{ @user.email }"
-    )
-  end
-
-  def set_stripe_sec_key
-    if Rails.env.development? || Rails.env.test?
-      Rails.application.secrets.stripe_sec_key
-    else
-      ENV['STRIPE_SECRET_KEY']
     end
   end
 end
