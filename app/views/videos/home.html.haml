@@ -1,7 +1,4 @@
 %article.video_category
   %header
     %h3= link_to "TV Commedies"
-  .videos.row
-    - @videos.each do |video|
-      .video.col-sm-2
-        = link_to(image_tag(video.url), video_path(video))
+    = render 'shared/display_videos', videos: @videos

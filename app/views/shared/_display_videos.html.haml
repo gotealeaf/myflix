@@ -1,0 +1,4 @@
+.videos.row
+  - videos.each do |video|
+    .video.col-sm-2
+      = link_to(image_tag(video.url), video_path(video))

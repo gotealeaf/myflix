@@ -9,6 +9,10 @@ class VideosController < ApplicationController
     render :video
   end
 
+  def search
+    search_term = params[:video][:search_term]
+    @results = Video.search_by_title(search_term)
+  end
 
   private
 
