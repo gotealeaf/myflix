@@ -9,7 +9,7 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
-gem 'bcrypt-ruby'
+gem 'bcrypt'
 gem 'fabrication'
 gem 'faker'
 

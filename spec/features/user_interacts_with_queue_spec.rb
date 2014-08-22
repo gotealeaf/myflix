@@ -7,7 +7,8 @@ feature "User interacts with the queue" do
     monk = Fabricate(:video, title: "Monk", category: comedies)
     south_park = Fabricate(:video, title: "South Park", category: comedies)
     futurama = Fabricate(:video, title: "Futurama", category: comedies)
-    
+
+
     sign_in 
 
     add_video_to_queue(monk)
