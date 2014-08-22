@@ -39,7 +39,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit!
+    params.require(:user).permit(:username, :full_name, :email, :password, :password_confirmation)
   end
 
   def follow_inviter_if_invited
