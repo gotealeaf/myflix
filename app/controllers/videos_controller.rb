@@ -1,5 +1,5 @@
 class VideosController < ApplicationController
-  before_action :setup_videos, only: [:home]
+  before_action :setup_categories, only: [:home]
   before_action :set_video, only: [:show]
 
   def home
@@ -16,8 +16,8 @@ class VideosController < ApplicationController
 
   private
 
-  def setup_videos
-    @videos = Video.all
+  def setup_categories
+    @categories = Category.all
   end
 
   def set_video
