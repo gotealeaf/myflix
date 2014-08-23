@@ -27,5 +27,5 @@ Myflix::Application.configure do
     :password             => ENV['gmail_password'],
     :authentication       => 'plain',
     :enable_starttls_auto => true }
-  }
+  
 end
