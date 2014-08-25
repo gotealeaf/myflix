@@ -4,7 +4,7 @@
   - if current_user 
     %ul.col-md-4.clearfix
       %li= link_to "Videos", home_path
-      %li= link_to "My Queue"
+      %li= link_to "My Queue", my_queue_path
       %li= link_to "People"
     = form_tag search_videos_path, class: "navbar-form col-md-5" do
       .form-group
