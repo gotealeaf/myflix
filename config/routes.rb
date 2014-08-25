@@ -11,13 +11,19 @@ get 'sign_out', to: "sessions#destroy"
 get 'my_queue', to: 'queue_items#index'
 post 'update_queue', to: 'queue_items#update_queue'
 get 'people', to: 'relationships#index'
+get 'forgot_password', to: 'forgot_passwords#new'
+get 'forgot_password_confirmation', to: 'forgot_passwords#confirm'
+get 'expired_token', to: 'password_resets#expired_token'
 
+resources :forgot_passwords, only: [:create]
 resources :relationships, only: [:destroy, :create]
 resources :queue_items, only: [:create, :destroy]
 resources :sessions, only: [:create]
 resources :users, only: [:create, :show]
 resources :categories, only: [:show]
-resources :videos, only: [:show] do
+resources :password_resets, only: [:show, :create]
+
+  resources :videos, only: [:show] do
     collection do
       post :search, to: "videos#search"
     end
