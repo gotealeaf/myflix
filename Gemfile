@@ -19,7 +19,9 @@ gem 'sentry-raven'
 gem 'paratrooper'
 gem 'mini_magick'
 gem 'carrierwave'
-gem "fog"
+gem 'fog'
+gem 'stripe'
+gem 'figaro'
 
 group :development do
   gem 'sqlite3'

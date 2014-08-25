@@ -34,7 +34,7 @@ Myflix::Application.routes.draw do
   get "confirm_password_reset", controller: "password_resets"
   get "expired_token", controller: "password_resets"
 
-  resources :invites, only:[:create]
+  resources :invites, only: [:create]
   get "/invite", to: "invites#new"
 
   namespace :admin do
