@@ -1,8 +1,12 @@
 class VideosController < ApplicationController
-  before_action :setup_categories, only: [:home]
+  before_action :setup_categories, only: [:home, :index]
   before_action :set_video, only: [:show]
+  before_filter :require_user
 
   def home
+  end
+
+  def index
   end
 
   def show
