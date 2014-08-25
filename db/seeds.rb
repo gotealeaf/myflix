@@ -29,17 +29,14 @@ video3 = Video.create!(title: 'Futurama',
                         the Fox Broadcasting Company.',
                       url: '/tmp/futurama.jpg', category: comedy)
 
-video4 = Video.create!(title: 'Orange is the New Black', 
+video4 = Video.create!(title: 'Monk2', 
                       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque quis molestiae placeat harum, voluptas, ipsam animi repudiandae a sapiente ipsa iusto reprehenderit asperiores quisquam magni reiciendis qui mollitia necessitatibus itaque.',
-                      url: '/tmp/orange_is_the_new_black.jpeg', category: television)
+                      url: '/tmp/monk.jpg', category: television)
 
-video5 = Video.create!(title: 'Hemlock Grove', 
+video5 = Video.create!(title: 'Family Guy2', 
                       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non veritatis eum nulla magni labore hic cumque, ipsum asperiores, dolorem eos quis quasi nemo est, laborum fuga doloribus mollitia ea! Ullam.',
-                      url: '/tmp/hemlock_grove.jpeg', category: television)
+                      url: '/tmp/family_guy.jpg', category: television)
 
-video6 = Video.create!(title: 'House of Cards', 
+video6 = Video.create!(title: 'Futurama2', 
                       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non veritatis eum nulla magni labore hic cumque, ipsum asperiores, dolorem eos quis quasi nemo est, laborum fuga doloribus mollitia ea! Ullam.',
-                      url: '/tmp/house_of_cards.jpeg', category: television)
-video5 = Video.create!(title: 'The Killing', 
-                      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non veritatis eum nulla magni labore hic cumque, ipsum asperiores, dolorem eos quis quasi nemo est, laborum fuga doloribus mollitia ea! Ullam.',
-                      url: '/tmp/the_killing.jpeg', category: television)
+                      url: '/tmp/futurama.jpg', category: television)
