@@ -1,14 +1,11 @@
-%article.video_category
-  .videos.row
-    - catties = @categories.sort{|a,b| b.name <=> a.name}
-    - catties.each do |catty|
-      %div{:style => "align: left"}
-        %h1
-          = link_to catty.name, catty
-        - cat_videos = catty.recent_videos
-        - cat_videos.each do |video|
-          %div{:style => "height: 200px; display: inline"}
-            -#.video.col-sm-2
-            = link_to video, nil do
-              %img(src="/tmp/#{video.small_cover_url}")
+- @categories.each do |category|
+  %article.video_category
+    %header
+      %h3
+        = link_to category.name, category
+    .videos.row
+      - category.recent_videos.each do |video|
+        .video.col-sm-2
+          = link_to video, nil do
+            %img(src="#{video.small_cover_url}")
 
