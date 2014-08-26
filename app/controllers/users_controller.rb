@@ -9,25 +9,13 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.valid?
-      charge = StripeWrapper::Charge.create(
-          amount: 999,
-          card: params[:stripeToken],
-          description: "Sign up charge for #{ @user.email }"
-        )
-      if charge.successful?
-        @user.save
-        flash[:success] = "Welcome #{@user.full_name}!"
-        session[:username] = @user.username
-        MyflixMailer.delay.welcome_email(current_user.id)
-        follow_inviter_if_invited
-        delete_token_if_invited
-        redirect_to videos_path
-      else
-        flash[:danger] = charge.error_message
-        render :new
-      end
+    user_signup = UserSignup.new(@user).sign_up(params[:stripeToken], params[:token])
+    if user_signup.successful?
+      flash[:success] = "Welcome #{@user.full_name}!"
+      session[:username] = @user.username
+      redirect_to videos_path
     else
+      flash[:danger] = user_signup.error_message
       render :new
     end
   end
@@ -40,20 +28,5 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:username, :full_name, :email, :password, :password_confirmation)
-  end
-
-  def follow_inviter_if_invited
-    unless params[:token].blank?
-      inviter = UserToken.find_by(token: params[:token]).user
-      Following.create(user: @user, followee: inviter)
-      Following.create(user: inviter, followee: @user)
-    end
-  end
-
-  def delete_token_if_invited
-    unless params[:token].blank?
-      user_token = UserToken.find_by(token: params[:token])
-      user_token.delete
-    end
   end
 end
