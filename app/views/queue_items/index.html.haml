@@ -25,7 +25,7 @@
                 %td= queue_item.rating
                   
                 %td 
-                  = link_to queue_item.category_name
+                  = link_to queue_item.category_name, queue_item.category
                 %td
                   = link_to "", method: :post do
                     %i.glyphicon.glyphicon-remove

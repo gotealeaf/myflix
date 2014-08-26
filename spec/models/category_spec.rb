@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe Category do
   it { should have_many(:videos)}
+  it { should validate_presence_of(:name)}
 
   describe "#recent_videos" do
     it "returns the videos in the reverse chronical order by created at" do
