@@ -33,16 +33,4 @@ describe Video do
       expect(Video.search_by_name('term')).to match_array([video_1, video_2])
     end
   end
-
-  context '#avg_rating' do
-    it "returns 'no ratings available' when there are no ratings" do
-      expect(video.avg_rating).to eq('no ratings available')
-    end
-    it "returns the average rating for the selected video" do
-      review_1 = Fabricate(:review, user: user, video: video)
-      review_2 = Fabricate(:review, user: user, video: video)
-      average = Review.where(video: video).average(:rating).to_s
-      expect(video.avg_rating).to eq(average)
-    end
-  end
 end
