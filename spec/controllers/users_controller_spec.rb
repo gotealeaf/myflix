@@ -15,31 +15,12 @@ describe UsersController do
   describe 'POST create' do
     context 'if validation passes for personal info and credit card' do
 
-      let(:charge) { double('charge', successful?: true) }
+      let(:user_signup) { double('user_signup', successful?: true) }
+
       before do
-        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
+        allow_any_instance_of(UserSignup).to receive(:sign_up) { user_signup }
       end
 
-      it 'creates a new user' do
-        post :create, user: Fabricate.attributes_for(:user)
-        expect(User.all.count).to eq(1)
-      end
-      it 'delivers a welcome email' do
-        post :create, user: Fabricate.attributes_for(:user)
-        expect(ActionMailer::Base.deliveries).to_not be_empty
-      end
-      it 'delivers to the correct recipient' do
-        post :create, user: { username:'test_user', full_name: 'test_user',
-                              email: 'user@example.com', password: 'password',
-                              password_confirmation: 'password' }
-        expect(ActionMailer::Base.deliveries.last.to).to eq(['user@example.com'])
-      end
-      it 'has the correct content' do
-        post :create, user: { username:'test_user', full_name: 'test_user',
-                              email: 'user@example.com', password: 'password',
-                              password_confirmation: 'password' }
-        expect(ActionMailer::Base.deliveries.last.body).to include('Welcome to MyFlix')
-      end
       it 'Flash a welcome message' do
         post :create, user: Fabricate.attributes_for(:user)
         expect(flash[:success].blank?).to eq(false)
@@ -52,39 +33,16 @@ describe UsersController do
         post :create, user: Fabricate.attributes_for(:user)
         expect(response).to redirect_to videos_path
       end
-      context 'if user was invited to register' do
-        it 'should delete the token after registration' do
-          user_token = Fabricate(:user_token)
-          post :create, user: Fabricate.attributes_for(:user), token: user_token.token
-          expect(UserToken.count).to eq(0)
-        end
-        it 'should create a new following for new user to inviter if invited' do
-          inviter = Fabricate(:user)
-          user_token = Fabricate(:user_token, user: inviter)
-          post :create, user: Fabricate.attributes_for(:user), token: user_token.token
-          new_user = User.where.not(id: inviter.id).first
-          expect(new_user.followings.first.followee).to eq(inviter)
-        end
-        it 'should create a new following for inviter to new user if invited' do
-          inviter = Fabricate(:user)
-          user_token = Fabricate(:user_token, user: inviter)
-          post :create, user: Fabricate.attributes_for(:user), token: user_token.token
-          new_user = User.where.not(id: inviter.id).first
-          expect(inviter.followings.first.followee).to eq(new_user)
-        end
-      end
+
     end
     context 'if personal info valid but credit card invalid' do
-      let(:charge) { double('charge', successful?: false, error_message: 'Your card was declined') }
+
+      let(:user_signup) { double('user_signup', successful?: false, error_message: 'Your card was declined') }
 
       before do
-        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
+        allow_any_instance_of(UserSignup).to receive(:sign_up) { user_signup }
       end
 
-      it 'does not create a new user' do
-        post :create, user: Fabricate.attributes_for(:user), stripeToken: '12345'
-        expect(User.count).to eq(0)
-      end
       it 'renders the new template' do
         post :create, user: Fabricate.attributes_for(:user), stripeToken: '12345'
         expect(response).to render_template(:new)
@@ -94,18 +52,10 @@ describe UsersController do
         expect(flash[:danger]).to eq("Your card was declined")
       end
     end
+
     context 'if validation fails' do
+
       let(:action) { post :create, user: { username: 'test_user' } }
-
-      it 'does not create a user' do
-        action
-        expect(User.count).to eq(0)
-      end
-
-      it 'does not charge the users credit card' do
-        expect(StripeWrapper).not_to receive(:create)
-        post :create, user: { email: 'test@example.com' }
-      end
 
       it 'renders new template' do
         action
