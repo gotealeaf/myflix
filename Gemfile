@@ -32,6 +32,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'capybara', '~> 2.4.1'
   gem 'launchy'
+  gem 'capybara-email'
 end
 
 group :production do

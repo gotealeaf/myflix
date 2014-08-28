@@ -21,15 +21,20 @@ def normalize_queue_item_positions
     queue_items.map(&:video).include?(video)
   end
 
-  def follows?(another_user)
-    following_relationships.map(&:leader).include?(another_user)
+  def follow(another_user)
+    following_relationships.create(leader: another_user) if can_follow?(another_user)
   end
 
   def can_follow?(another_user)
     !(self.follows?(another_user) || self == another_user)
   end
 
+  def follows?(another_user)
+    following_relationships.map(&:leader).include?(another_user)
+  end
+
   def generate_token
     self.token = SecureRandom.urlsafe_base64
   end
+
 end
