@@ -5,10 +5,10 @@ describe UserSignup do
   describe '#sign_up' do
     context 'if personal info and credit card are valid' do
 
-      let(:charge) { double('charge', successful?: true) }
+      let(:customer) { double('customer', successful?: true) }
 
       before do
-        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
+        allow(StripeWrapper::Customer).to receive(:create).and_return(customer)
       end
 
       it 'creates a new user' do
@@ -35,10 +35,10 @@ describe UserSignup do
 
       context 'if user was invited to register' do
 
-        let(:charge) { double('charge', successful?: true) }
+        let(:customer) { double('customer', successful?: true) }
 
         before do
-          allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
+          allow(StripeWrapper::Customer).to receive(:create).and_return(customer)
         end
 
         it 'should delete the token after registration' do
@@ -64,10 +64,10 @@ describe UserSignup do
 
     context 'if personal info valid but credit card invalid' do
 
-      let(:charge) { double('charge', successful?: false, error_message: 'Check error') }
+      let(:customer) { double('charge', successful?: false, error_message: 'Check error') }
 
       before do
-        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
+        allow(StripeWrapper::Customer).to receive(:create).and_return(customer)
       end
 
       it 'does not create a new user' do

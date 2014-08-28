@@ -19,8 +19,8 @@ http_interactions:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"1.15.0","lang":"ruby","lang_version":"2.1.1 p76 (2014-02-24)","platform":"x86_64-darwin13.0","publisher":"stripe","uname":"Darwin
-        andhika 13.3.0 Darwin Kernel Version 13.3.0: Tue Jun  3 21:27:35 PDT 2014;
-        root:xnu-2422.110.17~1/RELEASE_X86_64 x86_64"}'
+        Andhika.local 13.3.0 Darwin Kernel Version 13.3.0: Tue Jun  3 21:27:35 PDT
+        2014; root:xnu-2422.110.17~1/RELEASE_X86_64 x86_64"}'
       Content-Length:
       - '82'
   response:
@@ -31,7 +31,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 19 Aug 2014 04:18:52 GMT
+      - Thu, 28 Aug 2014 10:08:41 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
@@ -52,14 +52,14 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_14T45AEEWX6SuFHy0yYB5p6L",
+          "id": "tok_14WPpdEEWX6SuFHyvh5tjr8g",
           "livemode": false,
-          "created": 1408421932,
+          "created": 1409220521,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_14T45AEEWX6SuFHyIuZGAIa1",
+            "id": "card_14WPpdEEWX6SuFHyFfC9VCXO",
             "object": "card",
             "last4": "0002",
             "brand": "Visa",
@@ -79,13 +79,13 @@ http_interactions:
           }
         }
     http_version: 
-  recorded_at: Tue, 19 Aug 2014 04:18:52 GMT
+  recorded_at: Thu, 28 Aug 2014 10:08:41 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/charges
     body:
       encoding: US-ASCII
-      string: amount=999&currency=aud&card=tok_14T45AEEWX6SuFHy0yYB5p6L&description=An%20invalid%20charge
+      string: amount=999&currency=aud&card=tok_14WPpdEEWX6SuFHyvh5tjr8g&description=An%20invalid%20charge
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -99,8 +99,8 @@ http_interactions:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"1.15.0","lang":"ruby","lang_version":"2.1.1 p76 (2014-02-24)","platform":"x86_64-darwin13.0","publisher":"stripe","uname":"Darwin
-        andhika 13.3.0 Darwin Kernel Version 13.3.0: Tue Jun  3 21:27:35 PDT 2014;
-        root:xnu-2422.110.17~1/RELEASE_X86_64 x86_64"}'
+        Andhika.local 13.3.0 Darwin Kernel Version 13.3.0: Tue Jun  3 21:27:35 PDT
+        2014; root:xnu-2422.110.17~1/RELEASE_X86_64 x86_64"}'
       Content-Length:
       - '91'
   response:
@@ -111,7 +111,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 19 Aug 2014 04:18:54 GMT
+      - Thu, 28 Aug 2014 10:08:42 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
@@ -136,9 +136,9 @@ http_interactions:
             "message": "Your card was declined.",
             "type": "card_error",
             "code": "card_declined",
-            "charge": "ch_14T45BEEWX6SuFHyG5oEeGA3"
+            "charge": "ch_14WPpeEEWX6SuFHyUMpJgEvr"
           }
         }
     http_version: 
-  recorded_at: Tue, 19 Aug 2014 04:18:53 GMT
+  recorded_at: Thu, 28 Aug 2014 10:08:42 GMT
 recorded_with: VCR 2.9.2

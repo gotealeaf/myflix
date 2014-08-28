@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.stripe.com/v1/tokens
     body:
       encoding: US-ASCII
-      string: card[number]=4242424242424242&card[exp_month]=12&card[exp_year]=2016&card[cvc]=123
+      string: card[number]=4000000000000002&card[exp_month]=12&card[exp_year]=2016&card[cvc]=123
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -31,7 +31,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 28 Aug 2014 10:06:55 GMT
+      - Thu, 28 Aug 2014 11:50:42 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
@@ -52,21 +52,21 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_14WPnvEEWX6SuFHyNwOSTLtr",
+          "id": "tok_14WRQLEEWX6SuFHyixegyh2k",
           "livemode": false,
-          "created": 1409220415,
+          "created": 1409226641,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_14WPnvEEWX6SuFHysDX8Xi9z",
+            "id": "card_14WRQLEEWX6SuFHyFx4yfybZ",
             "object": "card",
-            "last4": "4242",
+            "last4": "0002",
             "brand": "Visa",
             "funding": "credit",
             "exp_month": 12,
             "exp_year": 2016,
-            "fingerprint": "hjWFn5h9EJtWX9XC",
+            "fingerprint": "smRohPuadOa0hrVC",
             "country": "US",
             "name": null,
             "address_line1": null,
@@ -79,13 +79,13 @@ http_interactions:
           }
         }
     http_version: 
-  recorded_at: Thu, 28 Aug 2014 10:06:55 GMT
+  recorded_at: Thu, 28 Aug 2014 11:50:41 GMT
 - request:
     method: post
-    uri: https://api.stripe.com/v1/charges
+    uri: https://api.stripe.com/v1/customers
     body:
       encoding: US-ASCII
-      string: amount=999&currency=aud&card=tok_14WPnvEEWX6SuFHyNwOSTLtr&description=A%20valid%20charge
+      string: card=tok_14WRQLEEWX6SuFHyixegyh2k&email=gabriel_emmerich%40botsford.biz&plan=myflixbasic
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -105,17 +105,17 @@ http_interactions:
       - '88'
   response:
     status:
-      code: 200
-      message: OK
+      code: 402
+      message: Payment Required
     headers:
       Server:
       - nginx
       Date:
-      - Thu, 28 Aug 2014 10:06:56 GMT
+      - Thu, 28 Aug 2014 11:50:44 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
-      - '1211'
+      - '117'
       Access-Control-Allow-Credentials:
       - 'true'
       Access-Control-Allow-Methods:
@@ -132,56 +132,12 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "ch_14WPnwEEWX6SuFHyMzjCCGoe",
-          "object": "charge",
-          "created": 1409220416,
-          "livemode": false,
-          "paid": true,
-          "amount": 999,
-          "currency": "aud",
-          "refunded": false,
-          "card": {
-            "id": "card_14WPnvEEWX6SuFHysDX8Xi9z",
-            "object": "card",
-            "last4": "4242",
-            "brand": "Visa",
-            "funding": "credit",
-            "exp_month": 12,
-            "exp_year": 2016,
-            "fingerprint": "hjWFn5h9EJtWX9XC",
-            "country": "US",
-            "name": null,
-            "address_line1": null,
-            "address_line2": null,
-            "address_city": null,
-            "address_state": null,
-            "address_zip": null,
-            "address_country": null,
-            "cvc_check": "pass",
-            "address_line1_check": null,
-            "address_zip_check": null,
-            "customer": null
-          },
-          "captured": true,
-          "refunds": {
-            "object": "list",
-            "total_count": 0,
-            "has_more": false,
-            "url": "/v1/charges/ch_14WPnwEEWX6SuFHyMzjCCGoe/refunds",
-            "data": []
-          },
-          "balance_transaction": "txn_14WPnwEEWX6SuFHycV4oU53f",
-          "failure_message": null,
-          "failure_code": null,
-          "amount_refunded": 0,
-          "customer": null,
-          "invoice": null,
-          "description": "A valid charge",
-          "dispute": null,
-          "metadata": {},
-          "statement_description": null,
-          "receipt_email": null
+          "error": {
+            "message": "Your card was declined.",
+            "type": "card_error",
+            "code": "card_declined"
+          }
         }
     http_version: 
-  recorded_at: Thu, 28 Aug 2014 10:06:56 GMT
+  recorded_at: Thu, 28 Aug 2014 11:50:43 GMT
 recorded_with: VCR 2.9.2

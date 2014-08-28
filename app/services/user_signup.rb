@@ -1,6 +1,6 @@
 class UserSignup
 
-  attr_reader :error_message
+  attr_reader :error_message, :user
 
   def initialize(user)
     @user = user
@@ -8,12 +8,12 @@ class UserSignup
 
   def sign_up(stripeToken, invite_token)
     if @user.valid?
-      charge = StripeWrapper::Charge.create(
-          amount: 999,
+      set_stripe_sec_key
+      customer = StripeWrapper::Customer.create(
           card: stripeToken,
-          description: "Sign up charge for #{ @user.email }"
+          email: user.email
         )
-      if charge.successful?
+      if customer.successful?
         @user.save!
         MyflixMailer.delay.welcome_email(user.id)
         follow_inviter_if_invited(invite_token)
@@ -22,7 +22,7 @@ class UserSignup
         self
       else
         @status = :fail
-        @error_message = charge.error_message
+        @error_message = customer.error_message
         self
       end
     else
@@ -37,6 +37,14 @@ class UserSignup
   end
 
   private
+
+  def set_stripe_sec_key
+    if Rails.env.development? || Rails.env.test?
+      Stripe.api_key = Rails.application.secrets.stripe_sec_key
+    else
+      Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+    end
+  end
 
   def follow_inviter_if_invited(invite_token)
     unless invite_token.blank?

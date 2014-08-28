@@ -31,7 +31,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 28 Aug 2014 10:06:55 GMT
+      - Thu, 28 Aug 2014 09:10:13 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
@@ -52,14 +52,14 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_14WPnvEEWX6SuFHyNwOSTLtr",
+          "id": "tok_14WOv3EEWX6SuFHyam678rqk",
           "livemode": false,
-          "created": 1409220415,
+          "created": 1409217013,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_14WPnvEEWX6SuFHysDX8Xi9z",
+            "id": "card_14WOv3EEWX6SuFHy82O9kIhL",
             "object": "card",
             "last4": "4242",
             "brand": "Visa",
@@ -79,13 +79,13 @@ http_interactions:
           }
         }
     http_version: 
-  recorded_at: Thu, 28 Aug 2014 10:06:55 GMT
+  recorded_at: Thu, 28 Aug 2014 09:10:13 GMT
 - request:
     method: post
-    uri: https://api.stripe.com/v1/charges
+    uri: https://api.stripe.com/v1/customers
     body:
       encoding: US-ASCII
-      string: amount=999&currency=aud&card=tok_14WPnvEEWX6SuFHyNwOSTLtr&description=A%20valid%20charge
+      string: plan=myflixbasic&email=chet%40stark.info
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -102,7 +102,7 @@ http_interactions:
         Andhika.local 13.3.0 Darwin Kernel Version 13.3.0: Tue Jun  3 21:27:35 PDT
         2014; root:xnu-2422.110.17~1/RELEASE_X86_64 x86_64"}'
       Content-Length:
-      - '88'
+      - '40'
   response:
     status:
       code: 200
@@ -111,11 +111,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 28 Aug 2014 10:06:56 GMT
+      - Thu, 28 Aug 2014 09:10:20 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
-      - '1211'
+      - '1563'
       Access-Control-Allow-Credentials:
       - 'true'
       Access-Control-Allow-Methods:
@@ -132,56 +132,66 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "ch_14WPnwEEWX6SuFHyMzjCCGoe",
-          "object": "charge",
-          "created": 1409220416,
+          "object": "customer",
+          "created": 1409217020,
+          "id": "cus_4fkQCfFY6hE964",
           "livemode": false,
-          "paid": true,
-          "amount": 999,
-          "currency": "aud",
-          "refunded": false,
-          "card": {
-            "id": "card_14WPnvEEWX6SuFHysDX8Xi9z",
-            "object": "card",
-            "last4": "4242",
-            "brand": "Visa",
-            "funding": "credit",
-            "exp_month": 12,
-            "exp_year": 2016,
-            "fingerprint": "hjWFn5h9EJtWX9XC",
-            "country": "US",
-            "name": null,
-            "address_line1": null,
-            "address_line2": null,
-            "address_city": null,
-            "address_state": null,
-            "address_zip": null,
-            "address_country": null,
-            "cvc_check": "pass",
-            "address_line1_check": null,
-            "address_zip_check": null,
-            "customer": null
+          "description": null,
+          "email": "chet@stark.info",
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4fkQCfFY6hE964/subscriptions",
+            "data": [
+              {
+                "id": "sub_4fkQJsRmdQvleB",
+                "plan": {
+                  "interval": "month",
+                  "name": "Basic",
+                  "created": 1409181662,
+                  "amount": 999,
+                  "currency": "aud",
+                  "id": "myflixbasic",
+                  "object": "plan",
+                  "livemode": false,
+                  "interval_count": 1,
+                  "trial_period_days": 14,
+                  "metadata": {},
+                  "statement_description": "Myflix fee"
+                },
+                "object": "subscription",
+                "start": 1409217020,
+                "status": "trialing",
+                "customer": "cus_4fkQCfFY6hE964",
+                "cancel_at_period_end": false,
+                "current_period_start": 1409217020,
+                "current_period_end": 1410426620,
+                "ended_at": null,
+                "trial_start": 1409217020,
+                "trial_end": 1410426620,
+                "canceled_at": null,
+                "quantity": 1,
+                "application_fee_percent": null,
+                "discount": null,
+                "metadata": {}
+              }
+            ]
           },
-          "captured": true,
-          "refunds": {
+          "discount": null,
+          "account_balance": 0,
+          "currency": "aud",
+          "cards": {
             "object": "list",
             "total_count": 0,
             "has_more": false,
-            "url": "/v1/charges/ch_14WPnwEEWX6SuFHyMzjCCGoe/refunds",
+            "url": "/v1/customers/cus_4fkQCfFY6hE964/cards",
             "data": []
           },
-          "balance_transaction": "txn_14WPnwEEWX6SuFHycV4oU53f",
-          "failure_message": null,
-          "failure_code": null,
-          "amount_refunded": 0,
-          "customer": null,
-          "invoice": null,
-          "description": "A valid charge",
-          "dispute": null,
-          "metadata": {},
-          "statement_description": null,
-          "receipt_email": null
+          "default_card": null
         }
     http_version: 
-  recorded_at: Thu, 28 Aug 2014 10:06:56 GMT
+  recorded_at: Thu, 28 Aug 2014 09:10:20 GMT
 recorded_with: VCR 2.9.2
