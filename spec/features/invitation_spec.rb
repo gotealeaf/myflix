@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'User invites a friend to MyFlix' do
+feature 'User invites a friend to MyFlix', :vcr do
   scenario 'a friend registers after an invitation from a current user', { js: true, vcr: true } do
     inviter = Fabricate(:user)
     visit sign_in_path
