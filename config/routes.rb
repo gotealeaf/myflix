@@ -37,6 +37,7 @@ Myflix::Application.routes.draw do
   get 'invited_registration', to: 'invited_registrations#new'
 
   mount Sidekiq::Web => '/sidekiq'
+  mount StripeEvent::Engine => '/stripe_events'
 
   get 'ui(/:action)', controller: 'ui'
 end
