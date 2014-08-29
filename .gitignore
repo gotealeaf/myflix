@@ -16,3 +16,4 @@
 .env
 secrets.yml
 database.yml
+ngrok
