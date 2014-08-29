@@ -22,15 +22,50 @@ describe QueueItemsController do
 			video = Fabricate(:video)
 			post :create, video_id: video.id
 			expect(response).to redirect_to my_queue_path
-
 		end
 
-		it 'creates a queue item'
-		it 'creates a queue item associated with the video'
-		it 'creates a queue time associated with the current user'
-		it 'puts the video as the last one in the queue'
-		it 'does not add video if it is already in the queue'
-		it 'redirects to the sign in page for an unathenticated user'
+		it 'creates a queue item' do
+			session[:user_id] = Fabricate(:user).id
+			video = Fabricate(:video)
+			post :create, video_id: video.id
+			expect(QueueItem.count).to eq(1)
+		end
+
+		it 'creates a queue item associated with the video' do
+			session[:user_id] = Fabricate(:user).id
+			video = Fabricate(:video)
+			post :create, video_id: video.id
+			expect(QueueItem.first.video).to eq(video)
+		end
+		it 'creates a queue time associated with the current user' do
+			abby = Fabricate(:user)
+			session[:user_id] = abby.id
+			video = Fabricate(:video)
+			post :create, video_id: video.id
+			expect(QueueItem.first.user).to eq(abby)
+		end
+		it 'puts the video as the last one in the queue' do
+			abby = Fabricate(:user)
+			session[:user_id] = abby.id
+			vikings = Fabricate(:video)
+			Fabricate(:queue_item, video: vikings, user: abby)
+			stargate = Fabricate(:video)
+			post :create, video_id: stargate.id
+			stargate_queue_item = QueueItem.where(video_id: stargate.id, user_id: abby.id).first
+			expect(stargate_queue_item.position).to eq(2)
+		end
+		it 'does not add video if it is already in the queue' do
+			abby = Fabricate(:user)
+			session[:user_id] = abby.id
+			vikings = Fabricate(:video)
+			Fabricate(:queue_item, video: vikings, user: abby)
+			post :create, video_id: vikings.id
+			expect(abby.queue_items.count).to eq(1)
+		end
+		it 'redirects to the sign in page for an unathenticated user' do
+			post :create, video_id: 3
+			expect(response).to redirect_to sign_in_path
+		end
 
 	end	
 end
