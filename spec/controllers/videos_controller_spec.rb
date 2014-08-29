@@ -55,4 +55,26 @@ describe VideosController do
 
       end
   end
+
+  context "user NOT logged in" do
+      describe 'GET show' do
+        it "redirects to sign in page" do
+          @monk = Fabricate(:video)
+          get :show, id: 1
+          response.should redirect_to sign_in_path
+        end
+      end
+
+
+      describe 'GET search' do
+        it "redirects to sign in page" do
+          @monk = Fabricate(:video)
+          get :search, search_term: @monk.title
+          response.should redirect_to sign_in_path
+        end
+      end
+
+
+  end
+
 end
