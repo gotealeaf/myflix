@@ -8,9 +8,8 @@
       %li= link_to "People"
       =form_tag(search_videos_path, method: "get", class: "col-md-5 navbar-form") do
         .form-group
-          =search_field(:video, :search_term, class: "form-control")
+          =search_field(:search, :term, class: "form-control")
         = submit_tag( "Search", class: "btn btn-default")
-
 
     #user_links.pull-right
       %ul

@@ -28,6 +28,8 @@ end
 group :test do
   gem 'database_cleaner', '1.2.0'
   gem 'shoulda-matchers', require: false
+  gem 'fabrication'
+  gem 'faker'
 end
 
 group :production do
