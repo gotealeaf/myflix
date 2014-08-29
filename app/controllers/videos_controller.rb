@@ -1,6 +1,6 @@
 class VideosController < ApplicationController
 
-#  before_filter :logged_in?
+  before_filter :logged_in?
 
   def index 
     @categories = Category.all
