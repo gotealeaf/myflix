@@ -19,6 +19,6 @@ Myflix::Application.routes.draw do
   resources :users, only: [:create]
   resources :categories, only: [:show]
   resources :sessions, only: [:create]
-  resources :queue_items, only: [:create]
+  resources :queue_items, only: [:create, :destroy]
 
 end
