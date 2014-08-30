@@ -12,6 +12,7 @@ gem 'jquery-rails'
 gem 'bcrypt'
 gem 'fabrication'
 gem 'faker'
+gem 'sidekiq'
 
 group :development do
   gem 'sqlite3'
