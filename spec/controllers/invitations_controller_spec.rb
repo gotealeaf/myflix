@@ -46,6 +46,7 @@ describe InvitationsController do
     end
 
     context "with invalid input" do
+
       it "renders the :new template" do
         set_current_user
         post :create, invitation: { recipient_email: "joe@example.com", message: "Hey join Myflix!" }
@@ -69,10 +70,9 @@ describe InvitationsController do
         post :create, invitation: { recipient_email: "joe@example.com", message: "Hey join Myflix!" }
         expect(flash[:error]).to be_present
       end
-
       it "sets @invitation" do
         set_current_user
-        post :create, invitation: { recipient_email: "joe@example.com", message: "Hey join Myflix!" }
+        post :create, invitation: { recipient_email: "joe@example.com", message: "Hey, join Myflix!" }
         expect(assigns(:invitation)).to be_present
       end
     end
