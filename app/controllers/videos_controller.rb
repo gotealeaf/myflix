@@ -1,6 +1,5 @@
 class VideosController < ApplicationController
   before_action :setup_categories, only: [:home, :index]
-  before_action :set_video, only: [:show]
   before_filter :require_user
 
   def home
@@ -10,6 +9,8 @@ class VideosController < ApplicationController
   end
 
   def show
+    @video = Video.find(params[:id])
+    @reviews = @video.reviews
   end
 
   def search
@@ -23,7 +24,4 @@ class VideosController < ApplicationController
     @categories = Category.all
   end
 
-  def set_video
-    @video = Video.find(params[:id])
-  end
 end
