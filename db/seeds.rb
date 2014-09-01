@@ -40,3 +40,9 @@ video5 = Video.create!(title: 'Family Guy2',
 video6 = Video.create!(title: 'Futurama2', 
                       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non veritatis eum nulla magni labore hic cumque, ipsum asperiores, dolorem eos quis quasi nemo est, laborum fuga doloribus mollitia ea! Ullam.',
                       url: '/tmp/futurama.jpg', category: television)
+
+karen = User.create(full_name: 'Karen Smith', password: 'password', email: 'karen@example.com')
+
+Review.create(user: karen, video: video1, rating: 4, content: "An interesting moview...blah blah blah")
+
+Review.create(user: karen, video: video1, rating: 1, content: "actually this was a boring movie")

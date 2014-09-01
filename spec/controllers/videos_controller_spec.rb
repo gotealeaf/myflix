@@ -4,9 +4,19 @@ describe VideosController do
 
   describe "GET show" do
     it "should set the video instance variable" do
+      session[:user_id] = Fabricate(:user).id
       video = Fabricate(:video)
       get :show, id: video.id 
       assigns(:video).should == video
+    end
+
+    it "should set the @review variable" do
+      session[:user_id] = Fabricate(:user).id
+      video = Fabricate(:video)
+      review1 = Fabricate(:review, video: video)
+      review2 = Fabricate(:review, video: video)
+      get :show, id: video.id
+      assigns(:reviews).should =~ [review1, review2]
     end
 
     it "should render the sign in page if not logged in" do
