@@ -1,8 +1,7 @@
 class MailWorker
   include Sidekiq::Worker
 
-  def perform(invitation_id)
-    invitation = Invitation.find(invitation_id)
+  def perform(invitation)
     AppMailer.send_invitation_email(invitation).deliver
   end
 end
