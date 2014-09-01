@@ -22,4 +22,9 @@ class MyflixMailer < ActionMailer::Base
     @message = msg
     mail to: @friend_email, from: @inviter.email, subject: "#{ @inviter.full_name } would like to see you on MyFlix!"
   end
+
+  def account_suspension(user_id)
+    @user = User.find(user_id)
+    mail to: @user.email, subject: 'Account suspension'
+  end
 end
