@@ -14,6 +14,7 @@ class UserSignup
           email: user.email
         )
       if customer.successful?
+        @user.stripe_id = customer.stripe_id
         @user.save!
         MyflixMailer.delay.welcome_email(user.id)
         follow_inviter_if_invited(invite_token)

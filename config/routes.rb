@@ -9,6 +9,7 @@ Myflix::Application.routes.draw do
 
   namespace :admin do
     resources :videos, only: [:new, :create, :destroy]
+    resources :payments, only: :index
   end
 
   resources :genres, except: :index
@@ -37,6 +38,7 @@ Myflix::Application.routes.draw do
   get 'invited_registration', to: 'invited_registrations#new'
 
   mount Sidekiq::Web => '/sidekiq'
+  mount StripeEvent::Engine => '/stripe_events'
 
   get 'ui(/:action)', controller: 'ui'
 end

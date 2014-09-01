@@ -61,6 +61,13 @@ describe StripeWrapper do
         )
         expect(response).to be_successful
       end
+      it 'returns the stripe_id for a valid card', :vcr do
+        response = StripeWrapper::Customer.create(
+          card: stripe_valid_token.id,
+          email: user.email
+        )
+        expect(response.stripe_id).to be_present
+      end
       it 'should not create a customer if card is not valid', :vcr do
         response = StripeWrapper::Customer.create(
           card: stripe_invalid_token.id,

@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :followings
   has_many :followees, through: :followings
   has_many :user_tokens
+  has_many :payments
 
   def normalise_queue_positions
     queue_videos.each_with_index do |position, index|
