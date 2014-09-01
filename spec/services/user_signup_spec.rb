@@ -40,7 +40,7 @@ describe UserSignup do
 
       context 'if user was invited to register' do
 
-        let(:customer) { double('customer', successful?: true) }
+        let(:customer) { double('customer', successful?: true, stripe_id: 'abcdefg') }
 
         before do
           allow(StripeWrapper::Customer).to receive(:create).and_return(customer)
