@@ -33,4 +33,12 @@ class User < ActiveRecord::Base
   def admin?
     admin == true
   end
+
+  def active?
+    status == 'active'
+  end
+
+  def deactivate!
+    update_column(:status, 'inactive')
+  end
 end
