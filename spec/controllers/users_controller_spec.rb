@@ -2,6 +2,13 @@ require 'spec_helper'
 
 describe UsersController do
 
+  describe 'GET new' do
+        it "generates a new record" do
+          get :new
+          assigns(:user).should be_new_record
+        end
+  end
+
   context "the user sign up is valid" do
 
       describe 'POST create' do
