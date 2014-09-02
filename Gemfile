@@ -16,6 +16,8 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
 gem 'unicorn'
+gem "sentry-raven", :git => "https://github.com/getsentry/raven-ruby.git"
+gem 'paratrooper'
 
 group :development do
   gem 'sqlite3'
