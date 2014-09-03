@@ -29,9 +29,16 @@ describe VideosController do
 
       describe 'GET show' do
 
-        it "prepares the data" do
+        it "prepares the video instance variable" do
           get :show, id: 1
           assigns(:video).should == @monk
+        end
+
+        it "prepares the reviews instance variable" do
+          @review1 = Fabricate(:review, video: @monk)
+          @review2 = Fabricate(:review, video: @monk)
+          get :show, id: 1
+          assigns(:reviews).should == [@review1, @review2]
         end
 
         it "renders the template" do
