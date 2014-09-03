@@ -14,5 +14,7 @@
     Video.create(title: 'Future Family', description: "Family guy in the future", small_cover_url: "/tmp/family_guy.jpg", large_cover_url: "/tmp/south_park.jpg", category: cartoon)
 
     User.create(email: 'rick.heller@yahoo.com', full_name: "Rick Heller", password: "password")
+    User.create(email: 'seeingtheroses@gmail.com', full_name: "Harry Jones", password: "password")
 
 
+    Review.create(rating: 4, description: "Almost fabulous", video_id: 1, user_id: 1)
