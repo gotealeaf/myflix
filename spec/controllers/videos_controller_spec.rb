@@ -41,6 +41,20 @@ describe VideosController do
           assigns(:reviews).should == [@review1, @review2]
         end
 
+        it "computer the average rating" do
+          @review1 = Fabricate(:review, video: @monk)
+          @review2 = Fabricate(:review, video: @monk)
+          @review3 = Fabricate(:review, video: @monk)
+          get :show, id: 1
+          
+          ratings = assigns(:reviews).map(&:rating)
+          mock_ratings = [@review1.rating, @review2.rating, @review3.rating]
+          assign_avg =  ratings.inject{ |sum, el| sum + el }.to_f / ratings.size
+          mock_avg = mock_ratings.inject{ |sum, el| sum + el }.to_f / mock_ratings.size
+          assign_avg.should == mock_avg
+          
+        end
+
         it "renders the template" do
           get :show, id: 1
           response.should render_template :show
