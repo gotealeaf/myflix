@@ -3,7 +3,8 @@ Myflix::Application.routes.draw do
   root :to => 'pages#front'
   get 'home', to: 'videos#index'
   get 'my_queue', to: 'queue_items#index'
-  resources :queue_items, only: [:create]
+  post 'update_queue', to: 'queue_items#update_queue'
+  resources :queue_items, only: [:create, :destroy]
 
   get 'ui(/:action)', controller: 'ui'
   resources :videos, only: [:show] do

@@ -89,4 +89,123 @@ describe QueueItemsController do
       end
     end
   end
+
+  describe "DELETE destroy" do
+    it "redirects to the queue page" do
+      video = Fabricate(:video)
+      karen = Fabricate(:user)
+      session[:user_id] = karen.id
+      item = Fabricate(:queue_item, video: video, user: karen)
+      delete :destroy, id: item.id
+      response.should redirect_to my_queue_path
+    end
+
+    it "deletes the item from the queue" do
+      video = Fabricate(:video)
+      karen = Fabricate(:user)
+      session[:user_id] = karen.id
+      item = Fabricate(:queue_item, video: video, user: karen)
+      delete :destroy, id: item.id
+      QueueItem.count.should == 0
+    end
+    it "does not delete the queue item if not in current user queue" do
+      video = Fabricate(:video)
+      karen = Fabricate(:user)
+      bob = Fabricate(:user)
+      session[:user_id] = karen.id
+      item = Fabricate(:queue_item, video: video, user: bob)
+      delete :destroy, id: item.id
+      QueueItem.count.should == 1
+    end
+
+    it "redirects to the sign in path for unauthenticated users" do
+      delete :destroy, id: 3
+      response.should redirect_to sign_in_path
+    end
+
+    it "normalizes existing queue item positions" do
+      karen = Fabricate(:user)
+      session[:user_id] = karen.id
+      item1 = Fabricate(:queue_item, user: karen, position: 1)
+      item2 = Fabricate(:queue_item, user: karen, position: 2)
+      delete :destroy, id: item1.id
+      QueueItem.first.position.should == 1
+    end
+  end
+
+  describe "POST update_queue" do
+    context "with valid inputs" do
+      it "redirects to the queue page" do
+        karen = Fabricate(:user)
+        session[:user_id] = karen.id
+        item1 = Fabricate(:queue_item, user: karen, position: 1)
+        item2 = Fabricate(:queue_item, user: karen, position: 2)
+        post :update_queue, queue_items: [{id: item1.id, position: 1}, {id: item2.id, position: 2}]
+        response.should redirect_to my_queue_path
+      end
+
+      it "reorders the queue items" do 
+        karen = Fabricate(:user)
+        session[:user_id] = karen.id
+        item1 = Fabricate(:queue_item, user: karen, position: 1)
+        item2 = Fabricate(:queue_item, user: karen, position: 3)
+        item3 = Fabricate(:queue_item, user: karen, position: 2)
+        post :update_queue, queue_items: [{id: item1.id, position: 1}, {id: item2.id, position: 3}, {id: item3.id, position: 2}]
+        karen.queue_items.should == [item1, item3, item2]
+      end
+      it "normalizes position numbers" do
+        karen = Fabricate(:user)
+        session[:user_id] = karen.id
+        item1 = Fabricate(:queue_item, user: karen, position: 2)
+        item2 = Fabricate(:queue_item, user: karen, position: 3)
+        post :update_queue, queue_items: [{id: item1.id, position: 2}, {id: item2.id, position: 3}]
+        karen.queue_items.map(&:position).should == [1, 2]
+      end
+    end
+
+    context "with invalid inputs" do
+      it "redirects to queue page if no parameters" do
+        karen = Fabricate(:user)
+        session[:user_id] = karen.id
+        item1 = Fabricate(:queue_item, user: karen, position: 1)
+        item2 = Fabricate(:queue_item, user: karen, position: 2)
+        post :update_queue, queue_items: [{id: item1.id, position: 1.343}, {id: item2.id, position: 2}]
+        response.should redirect_to my_queue_path
+      end
+
+      it "sets the flash error message" do
+        karen = Fabricate(:user)
+        session[:user_id] = karen.id
+        item1 = Fabricate(:queue_item, user: karen, position: 1)
+        post :update_queue, queue_items: [{id: item1.id, position: 1.343}]
+        flash[:error].should be_present
+      end
+
+      it "does not chang the queue items" do 
+        karen = Fabricate(:user)
+        session[:user_id] = karen.id
+        item1 = Fabricate(:queue_item, user: karen, position: 1)
+        post :update_queue, queue_items: [{id: item1.id, position: 1.343}]
+        karen.queue_items.map(&:position).should == [1]
+      end
+    end
+    context "with unauthenticated users" do
+      it "redirects to sign in page" do
+        post :update_queue
+        response.should redirect_to sign_in_path
+      end
+    end
+    context "with queue items that do not belong to current user" do
+      it "does not change queue items" do
+        karen = Fabricate(:user)
+        bob = Fabricate(:user)
+        session[:user_id] = karen.id
+        item1 = Fabricate(:queue_item, user: karen, position: 1)
+        item2 = Fabricate(:queue_item, user: bob, position: 2)
+        post :update_queue, queue_items: [{id: item1.id, position: 1}, {id: item2.id, position: 3}]
+        item2.reload.position.should == 2
+      end
+    end
+
+  end
 end
