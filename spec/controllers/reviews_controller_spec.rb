@@ -8,11 +8,11 @@ describe ReviewsController do
       @rick = Fabricate(:user)
       session[:user_id] = @rick.id
       @monk = Fabricate(:video)
-      post :create, review: {rating: 5, description: "great", video_id: @monk.id,  user_id: @rick.id}
     end
 
     describe 'POST create with valid data' do
       it "renders redirect to sign_in" do
+        post :create, review: {rating: 5, description: "great", video_id: @monk.id,  user_id: @rick.id }
         response.should redirect_to video_path(@monk.id)
       end
     end
