@@ -38,7 +38,8 @@ describe VideosController do
           @review1 = Fabricate(:review, video: @monk)
           @review2 = Fabricate(:review, video: @monk)
           get :show, id: 1
-          assigns(:reviews).should == [@review1, @review2]
+#match array regardless of order
+          assigns(:reviews).should =~ [@review1, @review2]
         end
 
         it "computer the average rating" do

@@ -8,7 +8,7 @@ class VideosController < ApplicationController
 
   def show
     @video = Video.find_by_id(params[:id])
-    @reviews = Review.where(video_id: @video.id)
+    @reviews = @video.reviews
     @avg_rating = average_rating @reviews.map(&:rating)
   end
 
