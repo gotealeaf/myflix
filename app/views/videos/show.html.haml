@@ -14,13 +14,14 @@
 %section.reviews.container
   .row
     .col-sm-10.col-sm-offset-1
-      %form
+      -#%form
+      = bootstrap_form_for(@review, html: {class: "form-horizonal"}) do |f|
         %fieldset
           .form-group
             %label Rate this video
             .row
               .col-sm-3
-                %select.form-control(name="")
+                %select.form-control(name="review[rating]")
                   %option(value="5") 5 Stars
                   %option(value="4") 4 Stars
                   %option(value="3") 3 Stars
@@ -30,8 +31,11 @@
             %label Write Review
             .row
               .col-sm-8
-                %textarea.form-control(name="" rows="6")
+                %textarea.form-control(name="review[description]" rows="6")
         %fieldset.form-group.actions.clearfix
+          %input(type="hidden" name="review[video_id]" value="#{@video.id}")
+          %input(type="hidden" name="review[user_id]" value="#{current_user.id}")
+
           %input(type="submit" value="Submit" class="btn")
           %a(href="") Cancel
       %header

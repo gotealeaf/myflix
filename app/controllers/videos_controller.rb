@@ -8,6 +8,7 @@ class VideosController < ApplicationController
 
   def show
     @video = Video.find_by_id(params[:id])
+    @review = Review.new #for form
     @reviews = @video.reviews
     @avg_rating = average_rating @reviews.map(&:rating)
   end

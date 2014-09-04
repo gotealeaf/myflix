@@ -34,6 +34,11 @@ describe VideosController do
           assigns(:video).should == @monk
         end
 
+        it "prepares the review instance variable for the form" do
+          get :show, id: 1
+          assigns(:review).should be_a_new(Review)
+        end
+
         it "prepares the reviews instance variable" do
           @review1 = Fabricate(:review, video: @monk)
           @review2 = Fabricate(:review, video: @monk)
