@@ -20,8 +20,16 @@ describe ReviewsController do
         Review.count.should == 1
       end
 
+      it "saves the record with the association to the video" do
+        Review.first.video_id.should == @monk.id
+      end
+
+      it "saves the record with the association to the user" do
+        Review.first.user_id.should == @rick.id
+      end
+
       it "redirects to video" do
-        response.should redirect_to video_path(@monk.id)
+        response.should redirect_to @monk
       end
 
       it "sets the notice" do
@@ -40,8 +48,8 @@ describe ReviewsController do
         Review.count.should == 0
       end
 
-      it "renders returns to video" do
-        response.should redirect_to video_path(@monk.id)
+      it "returns to video" do
+        response.should redirect_to @monk
       end
 
       it "sets the error" do
