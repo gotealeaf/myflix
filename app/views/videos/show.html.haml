@@ -14,8 +14,8 @@
 %section.reviews.container
   .row
     .col-sm-10.col-sm-offset-1
-      -#%form
-      = bootstrap_form_for(@review, html: {class: "form-horizonal"}) do |f|
+      -#form for nested resource
+      = form_for([@video, @review], html: {class: "form-horizonal"}) do |f|
         %fieldset
           .form-group
             %label Rate this video
@@ -33,11 +33,8 @@
               .col-sm-8
                 %textarea.form-control(name="review[description]" rows="6")
         %fieldset.form-group.actions.clearfix
-          %input(type="hidden" name="review[video_id]" value="#{@video.id}")
-          %input(type="hidden" name="review[user_id]" value="#{current_user.id}")
-
           %input(type="submit" value="Submit" class="btn")
-          %a(href="") Cancel
+          = link_to "Cancel", @video
       %header
         %h3 User Reviews (#{@reviews.count})
       %ul

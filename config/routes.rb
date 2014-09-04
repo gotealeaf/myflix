@@ -14,10 +14,12 @@ Myflix::Application.routes.draw do
     collection do
       get 'search', to: 'videos#search'
     end
+
+    #nested
+    resources :reviews, only: [:create]
   end
 
   resources :sessions, only: [:new, :create]
-  resources :reviews, only: [:create]
 
   resources :users, only: [:new, :create] do
     collection do

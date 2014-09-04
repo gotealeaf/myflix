@@ -3,13 +3,13 @@ class ReviewsController < ApplicationController
   before_filter :logged_in?
 
   def create
-    @review = Review.new(review_params)
+    video = Video.find_by_id(params[:video_id])
+    @review = video.reviews.build(review_params.merge!({user: current_user}))
     if @review.save
        flash[:notice] = "Review has been saved"
      else
        flash[:error] = "Review cannot be saved. Please enter all required fields"
     end
-    video = Video.find_by_id(params[:review][:video_id])
     redirect_to video
   end
 

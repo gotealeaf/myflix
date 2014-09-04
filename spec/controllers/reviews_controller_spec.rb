@@ -13,7 +13,7 @@ describe ReviewsController do
     describe 'POST create with valid data' do
    
       before do
-        post :create, review: {rating: 5, description: "great", video_id: @monk.id,  user_id: @rick.id }
+        post :create, review: {rating: 5, description: "great", user_id: @rick.id }, video_id: @monk.id
       end
 
       it "saves the record" do
@@ -41,7 +41,7 @@ describe ReviewsController do
     describe 'POST create with INVALID data' do
       
       before do
-        post :create, review: {rating: nil, description: nil, video_id: @monk.id,  user_id: @rick.id }
+        post :create, review: {rating: nil, description: nil, user_id: @rick.id }, video_id: @monk.id
       end
 
       it "does NOT saves the record" do
@@ -64,7 +64,7 @@ describe ReviewsController do
 
     before do
       @monk = Fabricate(:video)
-      post :create, review: {rating: 5, description: "great",  user_id: nil, video: @monk}
+      post :create, review: {rating: 5, description: "great",  user_id: nil}, video_id: @monk.id
     end
 
     describe 'POST create' do
