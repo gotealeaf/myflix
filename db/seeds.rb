@@ -19,3 +19,7 @@
 
     Review.create(rating: 4, description: "Almost fabulous", video_id: 1, user_id: 1)
     Review.create(rating: 2, description: "Sucked", video_id: 1, user_id: 2)
+
+    QueueItem.create(position: 1, video_id: 1, user_id: 1)
+    QueueItem.create(position: 2, video_id: 2, user_id: 1)
+
