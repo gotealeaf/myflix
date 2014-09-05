@@ -31,6 +31,7 @@ describe QueueItemsController do
         post :create, video_id: video.id
         QueueItem.count.should == 1
       end
+
       it "associates the queue item to the video" do
         video = Fabricate(:video)
         karen = Fabricate(:user)
@@ -138,8 +139,9 @@ describe QueueItemsController do
       it "redirects to the queue page" do
         karen = Fabricate(:user)
         session[:user_id] = karen.id
-        item1 = Fabricate(:queue_item, user: karen, position: 1)
-        item2 = Fabricate(:queue_item, user: karen, position: 2)
+        video = Fabricate(:video)
+        item1 = Fabricate(:queue_item, user: karen, position: 1, video: video)
+        item2 = Fabricate(:queue_item, user: karen, position: 2, video: video)
         post :update_queue, queue_items: [{id: item1.id, position: 1}, {id: item2.id, position: 2}]
         response.should redirect_to my_queue_path
       end
@@ -147,17 +149,18 @@ describe QueueItemsController do
       it "reorders the queue items" do 
         karen = Fabricate(:user)
         session[:user_id] = karen.id
-        item1 = Fabricate(:queue_item, user: karen, position: 1)
-        item2 = Fabricate(:queue_item, user: karen, position: 3)
-        item3 = Fabricate(:queue_item, user: karen, position: 2)
+        item1 = Fabricate(:queue_item, user: karen, position: 1, video: Fabricate(:video))
+        item2 = Fabricate(:queue_item, user: karen, position: 3, video: Fabricate(:video))
+        item3 = Fabricate(:queue_item, user: karen, position: 2, video: Fabricate(:video))
         post :update_queue, queue_items: [{id: item1.id, position: 1}, {id: item2.id, position: 3}, {id: item3.id, position: 2}]
         karen.queue_items.should == [item1, item3, item2]
       end
       it "normalizes position numbers" do
         karen = Fabricate(:user)
         session[:user_id] = karen.id
-        item1 = Fabricate(:queue_item, user: karen, position: 2)
-        item2 = Fabricate(:queue_item, user: karen, position: 3)
+        video = Fabricate(:video)
+        item1 = Fabricate(:queue_item, user: karen, position: 2, video: video)
+        item2 = Fabricate(:queue_item, user: karen, position: 3, video: video)
         post :update_queue, queue_items: [{id: item1.id, position: 2}, {id: item2.id, position: 3}]
         karen.queue_items.map(&:position).should == [1, 2]
       end
@@ -167,8 +170,9 @@ describe QueueItemsController do
       it "redirects to queue page if no parameters" do
         karen = Fabricate(:user)
         session[:user_id] = karen.id
-        item1 = Fabricate(:queue_item, user: karen, position: 1)
-        item2 = Fabricate(:queue_item, user: karen, position: 2)
+        video = Fabricate(:video)
+        item1 = Fabricate(:queue_item, user: karen, position: 1, video: video)
+        item2 = Fabricate(:queue_item, user: karen, position: 2, video: video)
         post :update_queue, queue_items: [{id: item1.id, position: 1.343}, {id: item2.id, position: 2}]
         response.should redirect_to my_queue_path
       end
@@ -176,7 +180,8 @@ describe QueueItemsController do
       it "sets the flash error message" do
         karen = Fabricate(:user)
         session[:user_id] = karen.id
-        item1 = Fabricate(:queue_item, user: karen, position: 1)
+        video = Fabricate(:video)
+        item1 = Fabricate(:queue_item, user: karen, position: 1, video: video)
         post :update_queue, queue_items: [{id: item1.id, position: 1.343}]
         flash[:error].should be_present
       end
@@ -184,7 +189,8 @@ describe QueueItemsController do
       it "does not chang the queue items" do 
         karen = Fabricate(:user)
         session[:user_id] = karen.id
-        item1 = Fabricate(:queue_item, user: karen, position: 1)
+        video = Fabricate(:video)
+        item1 = Fabricate(:queue_item, user: karen, position: 1, video: video)
         post :update_queue, queue_items: [{id: item1.id, position: 1.343}]
         karen.queue_items.map(&:position).should == [1]
       end
@@ -200,8 +206,9 @@ describe QueueItemsController do
         karen = Fabricate(:user)
         bob = Fabricate(:user)
         session[:user_id] = karen.id
-        item1 = Fabricate(:queue_item, user: karen, position: 1)
-        item2 = Fabricate(:queue_item, user: bob, position: 2)
+        video = Fabricate(:video)
+        item1 = Fabricate(:queue_item, user: karen, position: 1, video: Fabricate(:video))
+        item2 = Fabricate(:queue_item, user: bob, position: 2, video: video)
         post :update_queue, queue_items: [{id: item1.id, position: 1}, {id: item2.id, position: 3}]
         item2.reload.position.should == 2
       end
