@@ -2,10 +2,8 @@ require 'spec_helper'
 
 describe QueueItemsController do
 
-  context "user logged in" do
-
-
-    describe "delete item" do
+  describe "delete item" do
+    context "user logged in" do
       before do
         @rick = Fabricate(:user)
         session[:user_id] = @rick.id
@@ -40,6 +38,17 @@ describe QueueItemsController do
 =end
 
     end
+
+    context "user NOT logged in" do
+      it "redirects to sign_in" do
+        delete :destroy, id: 1
+        response.should redirect_to sign_in_path
+      end
+    end
+  end
+
+  context "user logged in" do
+
 
     describe 'GET index' do
       before do
@@ -128,12 +137,6 @@ describe QueueItemsController do
       end
     end
 
-    describe 'delete destroy' do
-      it "redirects to sign_in" do
-        delete :destroy, id: 1
-        response.should redirect_to sign_in_path
-      end
-    end
 
   end
 
