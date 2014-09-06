@@ -7,7 +7,8 @@
         %header
           %h3 
           = @video.title
-          %span Rating: #{sprintf '%.1f', @avg_rating}/5.0
+          - if @avg_rating.present?
+            %span Rating: #{sprintf '%.1f', @avg_rating}/5.0
         %p
         = @video.description
         .actions

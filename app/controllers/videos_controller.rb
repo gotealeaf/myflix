@@ -22,7 +22,11 @@ class VideosController < ApplicationController
 private
 
 def average_rating arr
-  arr.inject{ |sum, el| sum + el }.to_f / arr.size
+  if arr.count > 0
+    arr.inject{ |sum, el| sum + el }.to_f / arr.size
+  else
+    nil
+  end
 end
 
 end
