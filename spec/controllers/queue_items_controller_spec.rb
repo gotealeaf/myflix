@@ -4,6 +4,28 @@ describe QueueItemsController do
 
   context "user logged in" do
 
+
+    describe "delete item" do
+      before do
+        @rick = Fabricate(:user)
+        session[:user_id] = @rick.id
+        @monk = Fabricate(:video)
+        @q1   = Fabricate(:queue_item, position: 1, user: @rick)
+        delete :destroy, id: @q1.id
+      end
+
+        it "renders the template" do
+          response.should redirect_to my_queue_path
+      end
+
+      it "removes the item" do
+        QueueItem.count.should == 0
+      end
+
+      it "repositions the items"
+    end
+
+
     describe 'GET index' do
       before do
         @rick = Fabricate(:user)
@@ -102,13 +124,18 @@ describe QueueItemsController do
     end
 
     describe 'post create' do
-      it "renders redirect to sign_in" do
+      it "redirects to sign_in" do
         post :create
         response.should redirect_to sign_in_path
       end
     end
 
-
+    describe 'delete destroy' do
+      it "redirects to sign_in" do
+        delete :destroy, id: 1
+        response.should redirect_to sign_in_path
+      end
+    end
 
   end
 
