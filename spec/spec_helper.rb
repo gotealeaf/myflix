@@ -25,10 +25,10 @@ RSpec.configure do |config|
     #c.syntax = :should
 
     # ...or disable the `should` syntax...
-    c.syntax = :expect
+    #c.syntax = :expect
 
     # ...or explicitly enable both
-    #c.syntax = [:should, :expect]
+    c.syntax = [:should, :expect]
   end
 
 
