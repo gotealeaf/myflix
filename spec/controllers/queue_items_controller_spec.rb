@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe QueueItemsController do
 
+############################################
+
   describe "delete item" do
     context "user logged in" do
       before do
@@ -47,10 +49,11 @@ describe QueueItemsController do
     end
   end
 
-  context "user logged in" do
+############################################
 
 
-    describe 'GET index' do
+  describe 'GET index' do
+    context "user logged in" do
       before do
         @rick = Fabricate(:user)
         session[:user_id] = @rick.id
@@ -60,20 +63,31 @@ describe QueueItemsController do
         @q2   = Fabricate(:queue_item, position: 1, user: @rick)
       end
 
-        it "prepares the queue items for the current user" do
-          get :index
-    #puts assigns(:categories).inspect
-          assigns(:queue_items).should == [@q2,@q1]
-        end
-
-        it "renders the template" do
-          get :index
-          response.should render_template :index
-        end
-
+      it "prepares the queue items for the current user" do
+        get :index
+  #puts assigns(:categories).inspect
+        assigns(:queue_items).should == [@q2,@q1]
       end
+
+      it "renders the template" do
+        get :index
+        response.should render_template :index
+      end
+
+    end
+
+    context "user NOT logged in" do
+      it "renders redirect to sign_in" do
+        get :index
+        response.should redirect_to sign_in_path
+      end
+    end
+  end 
+
 #####################################################
-    describe 'POST create' do
+
+  describe 'POST create' do
+    context "user logged in" do
       before do
         @rick = Fabricate(:user)
         session[:user_id] = @rick.id
@@ -114,30 +128,14 @@ describe QueueItemsController do
       end
 
     end
-
-  end
-
-  context "user NOT logged in" do
-
-    before do
-      @monk = Fabricate(:video)
-    end
-
-    describe 'get index' do
-      it "renders redirect to sign_in" do
-        get :index
-        response.should redirect_to sign_in_path
-      end
-    end
-
-    describe 'post create' do
+    context "user NOT logged in" do
       it "redirects to sign_in" do
         post :create
         response.should redirect_to sign_in_path
       end
     end
 
-
   end
+#####################################################
 
 end
