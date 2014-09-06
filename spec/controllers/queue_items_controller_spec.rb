@@ -10,21 +10,36 @@ describe QueueItemsController do
         @rick = Fabricate(:user)
         session[:user_id] = @rick.id
         @monk = Fabricate(:video)
-        @q1   = Fabricate(:queue_item, position: 1, user: @rick)
-        delete :destroy, id: @q1.id
+        @q1   = Fabricate(:queue_item, position: 1, video: @monk, user: @rick)
       end
 
-        it "renders the template" do
-          response.should redirect_to my_queue_path
+      it "renders the template" do
+        delete :destroy, id: @q1.id
+        response.should redirect_to my_queue_path
       end
 
       it "removes the item" do
+        delete :destroy, id: @q1.id
         QueueItem.count.should == 0
       end
+ 
+      it "does not remove a queue item from another user" do
+        @ellen = Fabricate(:user)
+        @q2   = Fabricate(:queue_item, position: 2, video: @conk, user: @ellen)
+        delete :destroy, id: @q2.id
+        QueueItem.count.should == 2
+      end
 
-      it "repositions the items"
+=begin
+      it "repositions the items" do
+        @conk = Fabricate(:video)
+        @q2   = Fabricate(:queue_item, position: 2, video: @conk, user: @rick)
+        delete :destroy, id: @q1.id
+        QueueItem.first.position.should == 1
+      end
+=end
+
     end
-
 
     describe 'GET index' do
       before do
@@ -90,23 +105,6 @@ describe QueueItemsController do
       end
 
     end
-
-=begin
-    describe 'POST change item order' do
-   
-      it "updates the queue items orders" do
-      end
-
-      it "redirects to queue items" do
-      #  response.should redirect_to @monk
-      end
-
-      it "sets the notice" do
-        flash[:notice].should_not be_blank
-      end
-
-    end
-=end
 
   end
 

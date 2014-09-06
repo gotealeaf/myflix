@@ -13,7 +13,7 @@ class QueueItemsController < ApplicationController
 
   def destroy
     qi = QueueItem.find_by_id(params[:id])
-    qi.destroy unless qi.blank?
+    qi.destroy unless (qi.blank? || qi.user != current_user )
     redirect_to my_queue_path
   end
 
