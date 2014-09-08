@@ -66,6 +66,7 @@ describe QueueItemsController do
       it "prepares the queue items for the current user" do
         get :index
   #puts assigns(:categories).inspect
+  #      binding.pry
         assigns(:queue_items).should == [@q2,@q1]
       end
 

@@ -15,7 +15,6 @@ gem 'faker'
 
 group :development do
   gem 'sqlite3'
-  gem 'pry'
   gem 'pry-nav'
   gem 'thin'
   gem "better_errors"
@@ -23,6 +22,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'pry'
   gem 'rspec-rails', '2.99'
 end
 
