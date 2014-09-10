@@ -29,6 +29,9 @@ describe QueueItemsController do
       end
 
       it "saves normalizes the order when valid" do
+        @qis = [{"id"=>"1", "position"=>"13"},{"id"=>"2", "position"=>"4"}]
+        post :update, "queue_items"=> @qis
+        QueueItem.all.map(&:position).should == [2,1]
       end
 
       it "saves NONE of the values when INvalid" do

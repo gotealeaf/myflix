@@ -30,12 +30,19 @@ private
   end
 
   def update_all_queue_items qi
+
+#the position in the parameters just gives the relative order
+#have the actual order start with one and proceed up
+    sorted_qi = qi.sort{|a,b| a[:position].to_i <=> b[:position].to_i}
+
     #wrap in transaction because positions are related to each other
     ActiveRecord::Base.transaction do
-      qi.each do |q|
+      next_position = 1
+      sorted_qi.each do |q|
         queue_item = current_user.queue_items.select{|i| q[:id] == i.id.to_s}
         if queue_item.first.present?
-          queue_item.first.position = q[:position].to_i
+          queue_item.first.position = next_position
+          next_position+= 1
           queue_item.first.save
         else
           #if item doesn't belong to user, roll back everything
