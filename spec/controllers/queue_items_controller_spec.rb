@@ -93,14 +93,12 @@ describe QueueItemsController do
         QueueItem.count.should == 2
       end
 
-=begin
       it "repositions the items" do
         @conk = Fabricate(:video)
         @q2   = Fabricate(:queue_item, position: 2, video: @conk, user: @rick)
         delete :destroy, id: @q1.id
         QueueItem.first.position.should == 1
       end
-=end
 
     end
 
