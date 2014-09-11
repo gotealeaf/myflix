@@ -44,9 +44,7 @@ private
         qi.each do |q|
           queue_item = current_user.queue_items.select{|i| q[:id] == i.id.to_s}
           if queue_item.first.present?
-            if !queue_item.first.update_attributes!(position: q[:position])
-              return false
-            end
+            queue_item.first.update_attributes!(position: q[:position])
           else
             #if item doesn't belong to user, roll back everything
 #            raise ActiveRecord::Rollback
