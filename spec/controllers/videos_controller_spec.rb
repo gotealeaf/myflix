@@ -4,14 +4,14 @@ describe VideosController do
 
   describe "GET show" do
     it "should set the video instance variable" do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       video = Fabricate(:video)
       get :show, id: video.id 
       assigns(:video).should == video
     end
 
     it "should set the @review variable" do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       video = Fabricate(:video)
       review1 = Fabricate(:review, video: video)
       review2 = Fabricate(:review, video: video)
@@ -26,7 +26,7 @@ describe VideosController do
     end
 
     it "should render the show page if logged in" do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       video = Fabricate(:video)
       get :show, id: video.id
       response.should render_template :show
@@ -35,15 +35,14 @@ describe VideosController do
 
   describe "GET search" do
     it "sets @results for authenticated users" do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       futurama = Fabricate(:video, title: 'Futurama')
       get :search, {'search' => {'term' => 'rama'}}
       assigns(:results).should == [futurama]
     end
-    it "redirects to sign in page for unathenticated users" do
-      futurama = Fabricate(:video, title: 'Futurama')
-      get :search, {'search' => {'term' => 'rama'}}
-      assigns(:results).should redirect_to sign_in_path
+
+    it_behaves_like "require_sign_in" do 
+      let(:action) { get :search, {'search' => {'term' => 'rama'}} }
     end
   end
 end
