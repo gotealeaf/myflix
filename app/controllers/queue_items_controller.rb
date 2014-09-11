@@ -14,7 +14,9 @@ class QueueItemsController < ApplicationController
   def update
     @queue_items = params[:queue_items]
     if !update_all_queue_items params[:queue_items]
-      flash[:errors] = "Could not save!"
+      flash[:errors] = "Error: Could not save!"
+    else
+      flash[:notice] = "Your queue has been updated"
     end
 
     redirect_to my_queue_path
@@ -35,20 +37,18 @@ private
 
   def update_all_queue_items qi
 
-#the position in the parameters just gives the relative order
-#have the actual order start with one and proceed up
-    sorted_qi = qi.sort{|a,b| a[:position].to_i <=> b[:position].to_i}
 
     #wrap in transaction because positions are related to each other
     begin
       ActiveRecord::Base.transaction do
-        next_position = 1
-        sorted_qi.each do |q|
+        qi.each do |q|
           queue_item = current_user.queue_items.select{|i| q[:id] == i.id.to_s}
           if queue_item.first.present?
-            queue_item.first.position = next_position
-            next_position+= 1
-            queue_item.first.save!
+            if !queue_item.first.update_attributes(position: q[:position])
+              raise ActiveRecord::RecordNotFound
+#dont understand why, but it needs this too
+              return false
+            end
           else
             #if item doesn't belong to user, roll back everything
 #            raise ActiveRecord::Rollback
@@ -57,9 +57,11 @@ private
           end
         end
       end
-    rescue ActiveRecord::RecordNotFound
+
+    rescue
       return false
     end
+    normalize_positions
     return true
   end    
 

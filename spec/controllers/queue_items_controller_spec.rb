@@ -40,6 +40,12 @@ describe QueueItemsController do
         QueueItem.all.map(&:position).should == [1,2]
       end
 
+      it "gives the user an error when when INvalid" do
+        @qis = [{"id"=>"1", "position"=>"green"}, {"id"=>"2", "position"=>"blue"}]
+        post :update, "queue_items"=> @qis
+        flash[:errors].should_not be_blank
+      end
+
       it "saves NONE of the values when a queue item does not belong to the user" do
         @ellen = Fabricate(:user)
         @q3   = Fabricate(:queue_item, position: 3, video: @donk, user: @ellen)
