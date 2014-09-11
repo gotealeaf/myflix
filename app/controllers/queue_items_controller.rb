@@ -54,7 +54,12 @@ private
         end
       end
 
-    rescue
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound
+  #   rescue => e
+  #     puts e.inspect
+  # #The two exceptions are:
+  #<ActiveRecord::RecordNotFound: ActiveRecord::RecordNotFound>
+  #<ActiveRecord::RecordInvalid: Validation failed: Position is not a number>    
       return false
     end
     normalize_positions
