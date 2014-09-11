@@ -25,7 +25,7 @@ class QueueItemsController < ApplicationController
   def destroy
     qi = QueueItem.find_by_id(params[:id])
     qi.destroy unless (qi.blank? || qi.user != current_user )
-    normalize_positions
+    current_user.normalize_positions
     redirect_to my_queue_path
   end
 
@@ -62,16 +62,9 @@ private
   #<ActiveRecord::RecordInvalid: Validation failed: Position is not a number>    
       return false
     end
-    normalize_positions
+    current_user.normalize_positions
     return true
   end    
 
-  def normalize_positions
-    current_user.queue_items.each_with_index do |q, i|
-      # index starts at 0, position at 1
-      q.update_attributes(position: i + 1)
-    end
-
-  end
 
 end
