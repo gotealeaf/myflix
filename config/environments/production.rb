@@ -21,11 +21,11 @@ Myflix::Application.configure do
   config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.smtp_settings = {
-    address:              'smtp.gmail.com',
+    address:              'smtp.sendgrid.net',
     port:                 587,
-    domain:               'example.com',
-    user_name:            ENV['gmail_username'],
-    password:             ENV['gmail_password'],
     authentication:       'plain',
+    user_name:            ENV['SENDGRID_USERNAME'],
+    password:             ENV['SENDGRID_PASSWORD'],
+    domain:               'heroku.com',
     enable_starttls_auto: true  }
 end
