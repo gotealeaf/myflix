@@ -44,9 +44,7 @@ private
         qi.each do |q|
           queue_item = current_user.queue_items.select{|i| q[:id] == i.id.to_s}
           if queue_item.first.present?
-            if !queue_item.first.update_attributes(position: q[:position])
-              raise ActiveRecord::RecordNotFound
-#dont understand why, but it needs this too
+            if !queue_item.first.update_attributes!(position: q[:position])
               return false
             end
           else
