@@ -4,7 +4,7 @@ describe SessionsController do
   describe "GET new" do
     context "authenticated user" do
       it "redirects to home_path" do
-        session[:user_id] = Fabricate(:user).id
+        set_current_user
         get :new
         response.should redirect_to home_path
       end
@@ -53,8 +53,7 @@ describe SessionsController do
 
   describe "GET destroy" do
     before do 
-      bob = Fabricate(:user) 
-      session[:user_id] = bob.id
+      set_current_user
     end
     it "clears the user cookie" do 
       get :destroy
