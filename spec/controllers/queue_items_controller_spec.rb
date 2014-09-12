@@ -8,8 +8,8 @@ describe QueueItemsController do
     
     context "user logged in" do
       before do
-        @rick = Fabricate(:user)
-        session[:user_id] = @rick.id
+        set_current_user
+        @rick = current_user
         @monk = Fabricate(:video)
         @q1   = Fabricate(:queue_item, position: 1, video: @monk, user: @rick)
         @donk = Fabricate(:video)
@@ -62,11 +62,11 @@ describe QueueItemsController do
     end
 
     context "user NOT logged in" do
-      it "redirects to sign_in" do
-        post :update
-        response.should redirect_to sign_in_path
+      it_behaves_like "require_sign_in" do
+        let(:action) {post :update}
       end
     end
+
   end
 
 
@@ -76,8 +76,8 @@ describe QueueItemsController do
   describe "delete item" do
     context "user logged in" do
       before do
-        @rick = Fabricate(:user)
-        session[:user_id] = @rick.id
+        set_current_user
+        @rick = current_user
         @monk = Fabricate(:video)
         @q1   = Fabricate(:queue_item, position: 1, video: @monk, user: @rick)
       end
@@ -109,9 +109,8 @@ describe QueueItemsController do
     end
 
     context "user NOT logged in" do
-      it "redirects to sign_in" do
-        delete :destroy, id: 1
-        response.should redirect_to sign_in_path
+      it_behaves_like "require_sign_in" do
+        let(:action) {delete :destroy, id: 1}
       end
     end
   end
@@ -122,8 +121,8 @@ describe QueueItemsController do
   describe 'GET index' do
     context "user logged in" do
       before do
-        @rick = Fabricate(:user)
-        session[:user_id] = @rick.id
+        set_current_user
+        @rick = current_user
         @monk = Fabricate(:video)
         @conk = Fabricate(:video)
         @q1   = Fabricate(:queue_item, position: 2, user: @rick)
@@ -145,10 +144,10 @@ describe QueueItemsController do
     end
 
     context "user NOT logged in" do
-      it "renders redirect to sign_in" do
-        get :index
-        response.should redirect_to sign_in_path
+      it_behaves_like "require_sign_in" do
+        let(:action) {get :index}
       end
+
     end
   end 
 
@@ -157,8 +156,8 @@ describe QueueItemsController do
   describe 'POST create' do
     context "user logged in" do
       before do
-        @rick = Fabricate(:user)
-        session[:user_id] = @rick.id
+        set_current_user
+        @rick = current_user
         @monk = Fabricate(:video)
       end
 
@@ -197,9 +196,8 @@ describe QueueItemsController do
 
     end
     context "user NOT logged in" do
-      it "redirects to sign_in" do
-        post :create
-        response.should redirect_to sign_in_path
+      it_behaves_like "require_sign_in" do
+        let(:action) {post :create}
       end
     end
 

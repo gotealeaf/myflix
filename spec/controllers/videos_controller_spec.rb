@@ -5,8 +5,7 @@ describe VideosController do
   context "user logged in" do
 
       before do
-          @user = Fabricate(:user)
-          session[:user_id] = @user.id
+          set_current_user
           @monk = Fabricate(:video)
           @conk = Fabricate(:video)
           @donk = Fabricate(:video)
@@ -85,22 +84,17 @@ describe VideosController do
 
   context "user NOT logged in" do
       describe 'GET show' do
-        it "redirects to sign in page" do
-          @monk = Fabricate(:video)
-          get :show, id: 1
-          response.should redirect_to sign_in_path
+        it_behaves_like "require_sign_in" do
+          let(:action) {get :show, id: 1}
         end
       end
 
 
       describe 'GET search' do
-        it "redirects to sign in page" do
-          @monk = Fabricate(:video)
-          get :search, search_term: @monk.title
-          response.should redirect_to sign_in_path
+        it_behaves_like "require_sign_in" do
+          let(:action) {get :search, search_term: 'monk'}
         end
       end
-
 
   end
 

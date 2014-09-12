@@ -5,8 +5,8 @@ describe ReviewsController do
   context "user logged in" do
 
     before do
-      @rick = Fabricate(:user)
-      session[:user_id] = @rick.id
+      set_current_user
+      @rick = current_user
       @monk = Fabricate(:video)
     end
 
@@ -61,15 +61,10 @@ describe ReviewsController do
   end
 
   context "user NOT logged in" do
-
-    before do
-      @monk = Fabricate(:video)
-      post :create, review: {rating: 5, description: "great",  user_id: nil}, video_id: @monk.id
-    end
-
     describe 'POST create' do
-      it "renders redirect to sign_in" do
-        response.should redirect_to sign_in_path
+      it_behaves_like "require_sign_in" do
+        let(:action) {      post :create, review: {rating: 5, description: "great",  user_id: nil}, video_id: 1
+}
       end
     end
 
