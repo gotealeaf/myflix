@@ -4,6 +4,75 @@ describe QueueItemsController do
 
 ############################################
 
+  describe "update all queue items" do
+    
+    context "user logged in" do
+      before do
+        @rick = Fabricate(:user)
+        session[:user_id] = @rick.id
+        @monk = Fabricate(:video)
+        @q1   = Fabricate(:queue_item, position: 1, video: @monk, user: @rick)
+        @donk = Fabricate(:video)
+        @q2   = Fabricate(:queue_item, position: 2, video: @donk, user: @rick)
+      end
+
+      it "populates the array of hashes" do
+        @qis = [{"id"=>"1", "position"=>"2"}, {"id"=>"2", "position"=>"1"}]
+        post :update, "queue_items"=> @qis
+        assigns[:queue_items].should == @qis
+      end
+
+      it "saves all the values when valid" do
+        @qis = [{"id"=>"1", "position"=>"2"}, {"id"=>"2", "position"=>"1"}]
+        post :update, "queue_items"=> @qis
+        QueueItem.all.map(&:position).should == [2,1]
+      end
+
+      it "saves normalizes the order when valid" do
+        @qis = [{"id"=>"1", "position"=>"13"},{"id"=>"2", "position"=>"4"}]
+        post :update, "queue_items"=> @qis
+        QueueItem.all.map(&:position).should == [2,1]
+      end
+
+      it "saves NONE of the values when INvalid" do
+        @qis = [{"id"=>"1", "position"=>"green"}, {"id"=>"2", "position"=>"blue"}]
+        post :update, "queue_items"=> @qis
+        QueueItem.all.map(&:position).should == [1,2]
+      end
+
+      it "gives the user an error when when INvalid" do
+        @qis = [{"id"=>"1", "position"=>"green"}, {"id"=>"2", "position"=>"blue"}]
+        post :update, "queue_items"=> @qis
+        flash[:errors].should_not be_blank
+      end
+
+      it "saves NONE of the values when a queue item does not belong to the user" do
+        @ellen = Fabricate(:user)
+        @q3   = Fabricate(:queue_item, position: 3, video: @donk, user: @ellen)
+        @qis = [{"id"=>"1", "position"=>"2"},{"id"=>"2", "position"=>"3"}, {"id"=>"3", "position"=>"5"}]
+        post :update, "queue_items"=> @qis
+        QueueItem.all.map(&:position).should == [1,2,3]
+      end
+
+      it "redirects to index" do
+        @qis = [{"id"=>"1", "position"=>"2"}, {"id"=>"2", "position"=>"1"}]
+        post :update, "queue_items"=> @qis
+        response.should redirect_to my_queue_path
+      end
+    end
+
+    context "user NOT logged in" do
+      it "redirects to sign_in" do
+        post :update
+        response.should redirect_to sign_in_path
+      end
+    end
+  end
+
+
+
+############################################
+
   describe "delete item" do
     context "user logged in" do
       before do
@@ -30,14 +99,12 @@ describe QueueItemsController do
         QueueItem.count.should == 2
       end
 
-=begin
       it "repositions the items" do
         @conk = Fabricate(:video)
         @q2   = Fabricate(:queue_item, position: 2, video: @conk, user: @rick)
         delete :destroy, id: @q1.id
         QueueItem.first.position.should == 1
       end
-=end
 
     end
 
@@ -66,6 +133,7 @@ describe QueueItemsController do
       it "prepares the queue items for the current user" do
         get :index
   #puts assigns(:categories).inspect
+  #      binding.pry
         assigns(:queue_items).should == [@q2,@q1]
       end
 

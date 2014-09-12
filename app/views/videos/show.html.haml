@@ -24,12 +24,7 @@
             %label Rate this video
             .row
               .col-sm-3
-                %select.form-control(name="review[rating]")
-                  %option(value="5") 5 Stars
-                  %option(value="4") 4 Stars
-                  %option(value="3") 3 Stars
-                  %option(value="2") 2 Stars
-                  %option(value="1") 1 Star
+                = f.select :rating, options_for_video_reviews
           .form-group
             %label Write Review
             .row
