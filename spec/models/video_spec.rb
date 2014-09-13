@@ -8,6 +8,28 @@ describe Video do
   it { should have_many(:reviews).order("created_at DESC")}
   it { should have_many(:queue_items) }
 
+
+  describe "in my queue" do
+
+    it "finds video in my queue when in my queue" do
+      rick = Fabricate(:user)
+      video = Fabricate(:video)
+      queue_item = Fabricate(:queue_item, video:video, user:rick)
+      expect(video.in_my_queue?(rick)).to eq(true)
+    end
+
+    it "knows video is NOT in my queue when its not" do
+      rick = Fabricate(:user)
+      video = Fabricate(:video)
+      expect(video.in_my_queue?(rick)).to eq(false)
+    end
+
+
+
+  end
+
+
+
   describe "find recent videos do" do
 
     it "searches and finds no videos when none exist" do

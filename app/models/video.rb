@@ -6,6 +6,10 @@ class Video < ActiveRecord::Base
   validates :title, presence: true
   validates :description, presence: true
 
+  def in_my_queue?(current_user)
+    QueueItem.where(video_id: id, user_id: current_user.id).first.present?
+  end
+
   def self.recent_videos
     #sort in reverse order
     found_videos = Video.last(6).sort{|b,a| a.created_at <=> b.created_at}
