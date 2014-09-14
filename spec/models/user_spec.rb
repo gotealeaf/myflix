@@ -20,4 +20,13 @@ describe User do
       user.queued_video?(video).should be_false
     end
   end
+
+  describe "#video_queue_count" do
+    it "returns the number of videos in the users queueu" do
+      user = Fabricate(:user)
+      video = Fabricate(:video)
+      Fabricate(:queue_item, user: user, video: video)
+      user.video_queue_count.should == 1
+    end
+  end
 end
