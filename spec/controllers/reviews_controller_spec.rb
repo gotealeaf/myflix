@@ -4,16 +4,17 @@ describe ReviewsController do
 
   context "user logged in" do
 
+    let(:rick) {current_user} 
+    let(:monk)  { Fabricate(:video) }
+
     before do
       set_current_user
-      @rick = current_user
-      @monk = Fabricate(:video)
     end
 
     describe 'POST create with valid data' do
    
       before do
-        post :create, review: {rating: 5, description: "great", user_id: @rick.id }, video_id: @monk.id
+        post :create, review: {rating: 5, description: "great", user_id: rick.id }, video_id: monk.id
       end
 
       it "saves the record" do
@@ -21,15 +22,15 @@ describe ReviewsController do
       end
 
       it "saves the record with the association to the video" do
-        Review.first.video_id.should == @monk.id
+        Review.first.video_id.should == monk.id
       end
 
       it "saves the record with the association to the user" do
-        Review.first.user_id.should == @rick.id
+        Review.first.user_id.should == rick.id
       end
 
       it "redirects to video" do
-        response.should redirect_to @monk
+        response.should redirect_to monk
       end
 
       it "sets the notice" do
@@ -41,7 +42,7 @@ describe ReviewsController do
     describe 'POST create with INVALID data' do
       
       before do
-        post :create, review: {rating: nil, description: nil, user_id: @rick.id }, video_id: @monk.id
+        post :create, review: {rating: nil, description: nil, user_id: rick.id }, video_id: monk.id
       end
 
       it "does NOT saves the record" do
@@ -49,7 +50,7 @@ describe ReviewsController do
       end
 
       it "returns to video" do
-        response.should redirect_to @monk
+        response.should redirect_to monk
       end
 
       it "sets the error" do
