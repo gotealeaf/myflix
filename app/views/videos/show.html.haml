@@ -12,7 +12,7 @@
         %p
         = @video.description
         .actions
-          = link_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: 'btn btn-default'
+          = link_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: 'btn btn-default' unless @video.in_my_queue?(current_user)
 
 %section.reviews.container
   .row

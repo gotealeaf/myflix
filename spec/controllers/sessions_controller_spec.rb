@@ -9,8 +9,8 @@ describe SessionsController do
     end
 
     it "redirects to home for logged-in user" do
-      @user = Fabricate(:user)
-      session[:user_id] = @user.id
+      set_current_user
+      @user = current_user
       get :new
       response.should redirect_to home_path
     end
