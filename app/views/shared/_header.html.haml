@@ -4,7 +4,7 @@
   - if current_user
     %ul.col-md-4.clearfix
       %li= link_to "Videos"
-      %li= link_to "My Queue"
+      %li= link_to "My Queue", my_queue_path
       %li= link_to "People"
       =form_tag(search_videos_path, method: "get", class: "col-md-5 navbar-form") do
         .form-group
@@ -19,6 +19,6 @@
             %b.caret
           %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
             %li
-              %a(href="#") Account
+              = link_to 'Account', user_path(current_user)
               %a(href="#") Plan and Billing
               = link_to 'Sign Out', sign_out_path
