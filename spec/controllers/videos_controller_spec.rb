@@ -6,9 +6,9 @@ describe VideosController do
 
       before do
           set_current_user
-          @monk = Fabricate(:video)
-          @conk = Fabricate(:video)
-          @donk = Fabricate(:video)
+          @monk = Fabricate(:video, title: 'monk')
+          @conk = Fabricate(:video, title: 'conk')
+          @donk = Fabricate(:video, title: 'donk')
         end
       
       describe 'GET index' do
