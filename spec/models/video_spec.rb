@@ -9,7 +9,7 @@ describe Video do
   it { should have_many(:queue_items) }
 
 
-  describe "in my queue" do
+  describe "in_my_queue?" do
 
     it "finds video in my queue when in my queue" do
       rick = Fabricate(:user)
@@ -24,11 +24,7 @@ describe Video do
       expect(video.in_my_queue?(rick)).to eq(false)
     end
 
-
-
   end
-
-
 
   describe "find recent videos do" do
 
