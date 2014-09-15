@@ -20,4 +20,12 @@ class User < ActiveRecord::Base
   def video_queue_count
     queue_items.count
   end
+
+  def follows?(another_user)
+    following_relationships.map(&:leader).include?(another_user)
+  end
+
+  def can_follow?(another_user)
+     !(self.follows?(another_user) || self == another_user)
+  end
 end
