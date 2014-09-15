@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_filter :logged_in?, except: [:new, :create]
 
 
   def new
@@ -13,6 +14,10 @@ class UsersController < ApplicationController
        render "new"
     end
   end
+
+  def show
+    @user = User.find_by_id(params[:id])
+  end 
 
   private
 

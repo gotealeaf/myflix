@@ -28,7 +28,7 @@ Myflix::Application.routes.draw do
 
   resources :sessions, only: [:new, :create]
 
-  resources :users, only: [:new, :create] do
+  resources :users, only: [:new, :create, :show] do
     collection do
       post 'start_session', to: 'users#start_session'
     end
