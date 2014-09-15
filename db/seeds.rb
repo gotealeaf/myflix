@@ -42,7 +42,10 @@ video6 = Video.create!(title: 'Futurama2',
                       url: '/tmp/futurama.jpg', category: television)
 
 karen = User.create(full_name: 'Karen Smith', password: 'password', email: 'karen@example.com')
+bob = User.create(full_name: 'bob billy', password: 'password', email: 'bob@example.com')
 
 Review.create(user: karen, video: video1, rating: 4, content: "An interesting moview...blah blah blah")
 
 Review.create(user: karen, video: video1, rating: 1, content: "actually this was a boring movie")
+
+

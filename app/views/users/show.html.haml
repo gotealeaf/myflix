@@ -5,7 +5,7 @@
         %header
           %img(src="http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest('knwang@gmail.com'.downcase)}?s=40")
           %h2 "#{@user.full_name}'s video collections (#{@user.video_queue_count})"
-          %button.btn.btn-default Follow
+          = link_to "Follow", relationships_path(leader_id: @user.id), class: "btn btn-default", method: :post if current_user.can_follow?(@user) 
         %table.table
           %thead
             %tr
