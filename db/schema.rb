@@ -11,10 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140906225633) do
+ActiveRecord::Schema.define(version: 20140914064109) do
 
   create_table "categories", force: true do |t|
     t.string "name"
+  end
+
+  create_table "reviews", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "video_id"
+    t.text     "content"
+    t.integer  "rating"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: true do |t|
+    t.string   "full_name"
+    t.string   "password_digest"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "video_categories", force: true do |t|
@@ -23,10 +40,12 @@ ActiveRecord::Schema.define(version: 20140906225633) do
   end
 
   create_table "videos", force: true do |t|
-    t.string "title"
-    t.text   "description"
-    t.string "small_cover_url"
-    t.string "large_cover_url"
+    t.string   "title"
+    t.text     "description"
+    t.string   "small_cover_url"
+    t.string   "large_cover_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
