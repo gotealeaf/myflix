@@ -11,7 +11,7 @@ describe UsersController do
 
     it "prepares the user instance variable" do
       set_current_user(hank)
-      get :show, id: 1
+      get :show, id: hank.id
       expect(assigns(:user)).to eq(hank)
       end
   end
