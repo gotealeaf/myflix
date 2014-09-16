@@ -21,4 +21,8 @@ Myflix::Application.routes.draw do
   get 'sign_out', to: 'sessions#destroy'
   resources :users, only: [:create, :show]
   resources :sessions, only: [:create]
+
+  get 'forgot_password', to: 'forgot_passwords#new'
+  get 'forgot_password_confirmation', to: 'forgot_passwords#confirm'
+  resources :forgot_passwords, only: [:create]
 end
