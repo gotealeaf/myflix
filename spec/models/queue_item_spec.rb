@@ -32,7 +32,7 @@ describe QueueItem do
     it "should replace the rating if there is one" do
       review1 = Fabricate(:review, video: @video1, user: @user1, rating: 1)
       @queue_item1.rating= 3
-      review1.reload.rating.to_i.should == 3
+      review1.reload.rating.should == 3
     end
 
     it "should blank out the rating" do
