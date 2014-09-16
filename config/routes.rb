@@ -5,6 +5,7 @@ Myflix::Application.routes.draw do
   get 'sign_in', to: 'sessions#new'
   get 'sign_out', to: 'sessions#destroy'
   get 'my_queue', to: 'queue_items#index'
+  get 'people',   to: 'relationships#index'
 
 #  The following two routes are alternates that send the user home  
 #  get 'home', controller: 'videos', action: 'index'
@@ -25,6 +26,8 @@ Myflix::Application.routes.draw do
       post 'update_all', to: 'queue_items#update'
     end
   end
+
+  resources :relationships, only: [:destroy]
 
   resources :sessions, only: [:new, :create]
 
