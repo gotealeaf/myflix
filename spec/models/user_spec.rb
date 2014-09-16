@@ -6,6 +6,11 @@ describe User do
   it { should validate_presence_of(:full_name) }
   it { should validate_uniqueness_of(:email) }
   it { should have_many(:queue_items).order('position asc') }
+
+  it "generates a random token when the user is created" do
+    karen = Fabricate(:user)
+    karen.token.should be_present
+  end
   
   describe "#queued_video?" do 
     it "returns true when the user queued the video" do
