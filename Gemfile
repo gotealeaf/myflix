@@ -33,6 +33,8 @@ group :test do
   gem 'faker'
   gem 'capybara'
   gem 'launchy'
+  # gem 'capybara-email' waiting for new release cuz open email errors
+  gem 'capybara-email', github: 'dockyard/capybara-email'
 end
 
 group :production do
