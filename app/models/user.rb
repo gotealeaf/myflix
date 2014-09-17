@@ -14,6 +14,11 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
+  def follows? leader
+    leaders.include?(leader)
+  end
+
+
   def normalize_positions
     queue_items.each_with_index do |q, i|
       # index starts at 0, position at 1

@@ -12,4 +12,21 @@ describe User do
   it { should have_many(:leading_relationships) }
   it { should have_many(:leaders) }
 
+  describe "follows?" do
+
+    it "identifies follower" do
+      joe = Fabricate(:user)
+      hank = Fabricate(:user)
+      following = Fabricate(:relationship , leader:joe, follower: hank)
+      expect(hank.follows?(joe)).to be(true)
+    end
+
+    it "returns false for non-follower" do
+      joe = Fabricate(:user)
+      hank = Fabricate(:user)
+      expect(hank.follows?(joe)).to be(false)
+    end
+
+  end
+
 end
