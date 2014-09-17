@@ -7,7 +7,7 @@ def clear_current_user
 end
 
 def sign_in(a_user=nil)
-  user = a_user || Fabricate(:user)
+  user = a_user || Fabricate(:user, password: "password")
   visit sign_in_path
   fill_in "Email Address", with: user.email
   fill_in "Password", with: user.password
