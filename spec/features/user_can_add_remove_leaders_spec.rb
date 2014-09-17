@@ -3,7 +3,7 @@ require 'spec_helper'
 feature "User can add and remove leaders" do 
   
   scenario "user logs in, looks at a video, selects a user in the video review, follows user" do
-    karen = Fabricate(:user)
+    karen = Fabricate(:user, password: "password")
     bob = Fabricate(:user, full_name: "bob")
 
     comedies = Fabricate(:category) 

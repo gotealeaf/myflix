@@ -8,7 +8,17 @@ feature "User interacts with the queue" do
     futurama = Fabricate(:video, title: "Futurama", category: comedies)
     south_park = Fabricate(:video, title: "South Park", category: comedies)
 
-    sign_in
+    visit root_path
+    click_link "Sign Up Now!"
+    fill_in "Email Address", with: "karen@example.com"
+    fill_in "Password", with: "password"
+    fill_in "Full Name", with: "karen"
+    click_button "Create User"
+
+    fill_in "Email Address", with: "karen@example.com"
+    fill_in "Password", with: "password"
+    click_button "Sign in"
+    
     click_on_video_on_home_page(monk)
     page.should have_content(monk.title)  
 

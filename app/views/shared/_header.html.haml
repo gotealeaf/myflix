@@ -1,4 +1,5 @@
 %section#top-header.row
+  binding.pry
   %h1.col-md-2
     = link_to "MyFLiX", root_path
   - if current_user
@@ -20,6 +21,6 @@
             %b.caret
           %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
             %li
-              = link_to 'Account', user_path(current_user)
+              = link_to 'Account', user_path(current_user.id)
               %a(href="#") Plan and Billing
               = link_to 'Sign Out', sign_out_path

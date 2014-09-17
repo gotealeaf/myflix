@@ -7,6 +7,6 @@
         %fieldset.form-group
           = label_tag :password, "New Password"
           = text_field_tag :password
-          = hidden_field_tag :token
+          = hidden_field_tag :token, @token
         %fieldset.form-group.action
           %input(type="submit" value="Reset Password" class="btn btn-default")
