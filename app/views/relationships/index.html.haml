@@ -12,12 +12,12 @@
       - @leads.each do |lead|
         %tr
           %td
-            %img(src="http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(lead.user.email.downcase)}?s=40")
-            = link_to lead.user.full_name, lead.user
+            %img(src="http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(lead.leader.email.downcase)}?s=40")
+            = link_to lead.leader.full_name, lead.leader
           %td.extra-padding 
-            = lead.user.queue_items.count
+            = lead.leader.queue_items.count
           %td.extra-padding 
-            = lead.user.followers.count
+            = lead.leader.followers.count
           %td.extra-padding
             = link_to relationship_path(lead), method: :delete do
               %i.glyphicon.glyphicon-remove

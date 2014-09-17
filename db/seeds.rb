@@ -23,4 +23,4 @@
     QueueItem.create(position: 1, video_id: 1, user_id: 1)
     QueueItem.create(position: 2, video_id: 2, user_id: 1)
 
-    Relationship.create(user_id: 2, follower_id: 1)
+    Relationship.create(leader_id: 2, follower_id: 1)
