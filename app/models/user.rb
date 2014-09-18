@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
+  def can_follow? leader
+    !self.follows?(leader)  && (self != leader) 
+  end
+
   def follows? leader
     leaders.include?(leader)
   end

@@ -7,7 +7,7 @@ class RelationshipsController < ApplicationController
 
   def create
     user = User.find_by_id(params[:leader_id])
-    Relationship.create(leader: user, follower: current_user) unless user.blank? || current_user.follows?(user) || current_user == user
+    Relationship.create(leader: user, follower: current_user) if user.present? && current_user.can_follow?(user)
     redirect_to people_path
   end
 
