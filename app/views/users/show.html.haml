@@ -7,9 +7,8 @@
           %h2 #{@user.full_name}'s video collections ( #{@user.queue_items.count})
           - if current_user.follows?(@user)
             YOU ARE A FOLLOWER
-          -else
-            %button.btn.btn-default 
-              = link_to "Follow", user_relationships_path(@user), method: 'POST'
+          -elsif current_user != @user
+            = link_to "Follow", relationships_path(leader_id: @user.id), class: 'btn btn-default', method: 'POST'
         %table.table
           %thead
             %tr

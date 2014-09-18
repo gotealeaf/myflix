@@ -27,7 +27,7 @@ Myflix::Application.routes.draw do
     end
   end
 
-  resources :relationships, only: [:destroy]
+  resources :relationships, only: [:destroy, :create]
 
   resources :sessions, only: [:new, :create]
 
@@ -35,8 +35,6 @@ Myflix::Application.routes.draw do
     collection do
       post 'start_session', to: 'users#start_session'
     end
-    #nested
-    resources :relationships, only: [:create]
   end
   resources :categories, only: :show
 end

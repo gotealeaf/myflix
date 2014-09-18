@@ -22,34 +22,33 @@ describe RelationshipsController do
   describe "POST create" do
 
     it_behaves_like "require_sign_in" do
-      let(:action) {post :create, user_id: joe.id}
+      let(:action) {post :create, leader_id: joe.id}
     end
 
     it "redirects to the people page" do
       set_current_user(hank)
-      post :create, user_id: joe.id
+      post :create, leader_id: joe.id
       response.should redirect_to people_path
     end
 
     it "follows the user if not already followed" do
       set_current_user(hank)
-      post :create, user_id: joe.id
+      post :create, leader_id: joe.id
       expect(Relationship.count).to eq(1)
     end
 
     it "does not follows the user if already followed"  do
       set_current_user(hank)
       Relationship.create(leader: joe, follower:hank)
-      post :create, user_id: joe.id
+      post :create, leader_id: joe.id
       expect(Relationship.count).to eq(1)
     end
 
     it "does not follows itself" do
       set_current_user(hank)
-      post :create, user_id: hank.id
+      post :create, leader_id: hank.id
       expect(Relationship.count).to eq(0)
     end 
-
 
   end
 
