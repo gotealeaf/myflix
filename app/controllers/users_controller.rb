@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+       AppMailer.notify_on_new(@user).deliver
        redirect_to sign_in_path, notice: "You are signed up. Please log in"
      else
        render "new"
