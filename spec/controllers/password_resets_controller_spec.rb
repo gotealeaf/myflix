@@ -26,7 +26,10 @@ describe PasswordResetsController do
         tok = SecureRandom::urlsafe_base64
         joe.update_attributes(token: tok)
         post :create, password: "new password", token: tok
-        expect(joe.reload.authenticate("new password")).to be_true
+
+      #authenticate returns false if authentication fails
+      #or the user object if it succeeds, which is "truthy"
+        expect(joe.reload.authenticate("new password")).to be_truthy
       end
 
 
