@@ -4,15 +4,14 @@ Myflix::Application.routes.draw do
   get 'register', to: 'users#new'
   get 'sign_in', to: 'sessions#new'
   get 'sign_out', to: 'sessions#destroy'
-  get 'forgot_password', to: 'users#forgot_password'
-  post 'confirm_password_reset', to: 'users#confirm_password_reset'
-  post 'reset_password', to: 'users#reset_password'
   get 'my_queue', to: 'queue_items#index'
   get 'people',   to: 'relationships#index'
 
 #  The following two routes are alternates that send the user home  
 #  get 'home', controller: 'videos', action: 'index'
   get 'home', to: 'videos#index'
+
+
 
 #limit routes to those actions supported by controller
   resources :videos, only: [:index, :show] do
@@ -40,4 +39,9 @@ Myflix::Application.routes.draw do
     end
   end
   resources :categories, only: :show
+
+  get 'forgot_password', to: 'forgot_passwords#new'
+  post 'reset_password', to: 'users#reset_password'
+  resources :forgot_passwords, only: [:create]
+
 end
