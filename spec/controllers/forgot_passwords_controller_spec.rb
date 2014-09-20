@@ -10,14 +10,6 @@ describe ForgotPasswordsController do
     end
   end
 
-# #######################################################
-
-#   describe 'reset_password' do
-#     it_behaves_like "does_not_require_sign_in" do
-#       let(:action) {get :reset_password}
-#     end
-#   end
-
 #######################################################
   describe 'create' do
 
@@ -30,13 +22,27 @@ describe ForgotPasswordsController do
       expect(ActionMailer::Base.deliveries).to_not be_empty
       ActionMailer::Base.deliveries.clear
     end
+###########################################
+    context "email is invalid" do
 
-    it "does NOT send a password reset email when the email is INvalid" do
-      post :create, email: "r@fake.com"
-      expect(ActionMailer::Base.deliveries).to be_empty
-      ActionMailer::Base.deliveries.clear
+      it "redirects when the email is INvalid" do
+        post :create, email: "r@fake.com"
+        expect(response).to redirect_to forgot_password_path
+      end
+
+      it "sets error message" do
+        post :create, email: "r@fake.com"
+        expect(flash[:errors]).to_not be_blank
+      end
+
+      it "does NOT send a password reset email when the email is INvalid" do
+        post :create, email: "r@fake.com"
+        expect(ActionMailer::Base.deliveries).to be_empty
+        ActionMailer::Base.deliveries.clear
+      end
     end
-  end
+###########################################
 
+  end
 
 end

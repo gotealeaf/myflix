@@ -31,17 +31,23 @@ Myflix::Application.routes.draw do
 
   resources :relationships, only: [:destroy, :create]
 
-  resources :sessions, only: [:new, :create]
+  resources :categories, only: :show
 
   resources :users, only: [:new, :create, :show] do
     collection do
       post 'start_session', to: 'users#start_session'
     end
   end
-  resources :categories, only: :show
+  resources :sessions, only: [:new, :create]
 
+####################################################
   get 'forgot_password', to: 'forgot_passwords#new'
-  post 'reset_password', to: 'users#reset_password'
   resources :forgot_passwords, only: [:create]
+
+  get 'confirm_password', to: 'forgot_passwords#confirm'
+
+  resources :password_resets, only: [:show, :create]
+  get 'invalid_token', to: 'password_resets#invalid_token'
+####################################################
 
 end

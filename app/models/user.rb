@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
+  before_create :generate_token
+
   def can_follow? leader
     !self.follows?(leader)  && (self != leader) 
   end
@@ -28,4 +30,10 @@ class User < ActiveRecord::Base
       q.update_attributes(position: i + 1)
     end
   end
+
+  def generate_token
+    self.token = SecureRandom::urlsafe_base64
+  end
+
+
 end
