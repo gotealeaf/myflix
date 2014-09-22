@@ -7,7 +7,7 @@ class InvitationsController < ApplicationController
 
   def create
     # binding.pry
-    @invitation = current_user.invitations.build(invitation_params)
+    @invitation = current_user.invitations.new(invitation_params)
     if @invitation.save
       AppMailer.send_invitation_email(@invitation).deliver
       flash[:success] = "You have successfully invited #{@invitation.recipient_name}"
