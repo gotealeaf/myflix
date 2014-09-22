@@ -5,3 +5,9 @@ shared_examples "require_sign_in" do
   response.should redirect_to sign_in_path 
  end 
 end
+
+shared_examples "tokenable" do 
+  it "generates a random token when the user is created" do 
+    object.token.should be_present
+  end
+end
