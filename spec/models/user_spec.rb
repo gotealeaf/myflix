@@ -7,6 +7,10 @@ describe User do
   it { should validate_uniqueness_of(:email) }
   it { should have_many(:queue_items).order('position asc') }
 
+  it_behaves_like "tokenable" do
+    let(:object) { Fabricate(:user) }
+  end
+
   it "generates a random token when the user is created" do
     karen = Fabricate(:user)
     karen.token.should be_present
