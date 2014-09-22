@@ -48,4 +48,18 @@ describe User do
       karen.follows?(bob).should be_false
     end
   end
+
+  describe "#follow" do
+    it "follows another user" do
+      karen = Fabricate(:user)
+      bob = Fabricate(:user)
+      karen.follow(bob)
+      karen.follows?(bob).should be_true
+    end
+    it "does not follow one self" do
+      karen = Fabricate(:user)
+      karen.follow(karen)
+      karen.follows?(karen).should be_false
+    end
+  end
 end
