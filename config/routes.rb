@@ -30,6 +30,7 @@ Myflix::Application.routes.draw do
   end
 
   resources :relationships, only: [:destroy, :create]
+  resources :invitations, only: [:new, :create]
 
   resources :categories, only: :show
 

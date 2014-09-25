@@ -12,4 +12,13 @@ class AppMailer < ActionMailer::Base
     #mail from: 'info@myflix.com', to: user.email, subject: "Welcome to RickMyflix" 
     mail from: 'info@myflix.com', to: 'rick.heller@yahoo.com', subject: "Welcome to RickMyflix" 
   end
+
+  def invite(invitation)
+    @invitation = invitation
+#dont sent emails to random users, send to my yahoo account.
+    #mail from: 'info@myflix.com', to: user.email, subject: "Welcome to RickMyflix" 
+    mail from: 'info@myflix.com', to: 'rick.heller@yahoo.com', subject: "Check out RickMyflix" 
+  end
+
+
 end
