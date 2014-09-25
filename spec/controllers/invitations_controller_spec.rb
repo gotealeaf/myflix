@@ -21,6 +21,10 @@ describe InvitationsController do
   end
 ##########################################################
   describe "POST create" do
+    
+    after do
+      ActionMailer::Base.deliveries.clear
+    end
 
     it_behaves_like "require_sign_in" do
       let(:action) {post :create}
@@ -41,6 +45,8 @@ describe InvitationsController do
 
         
       it "sends the email to the right person" do
+        set_current_user(hank)
+        post :create, invitation: {"recipient_name"=>"r", "recipient_email"=>"a@b.com", "message"=>"Hi"}
         expect(ActionMailer::Base.deliveries.last.to).to eq(["rick.heller@yahoo.com"])
       end
 
@@ -79,6 +85,11 @@ describe InvitationsController do
        end
     end
     
+    it "sets the instance variable" do
+      set_current_user(hank)
+      post :create, invitation: {"recipient_name"=>"r", "message"=>"Hi"}
+      assigns(:invitation).should be_instance_of(Invitation)
+    end
 
 
 

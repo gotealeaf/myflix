@@ -4,4 +4,8 @@
     %p
       Hey,
       = @invitation.recipient_name
+      you have been invited by
+      = @invitation.inviter.full_name 
+      to join MyFlix
       = @invitation.message
+      = link_to "Register", new_user_url(inviter_id: @invitation.inviter_id, recipient_email: @invitation.recipient_email)

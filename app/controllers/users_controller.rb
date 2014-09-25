@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_filter :logged_in?, except: [:new, :create]
 
   def new
-    @user = User.new
+    @user = User.new(email: params[:recipient_email])
   end
 
   def create
