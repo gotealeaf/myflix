@@ -16,7 +16,7 @@ feature "Admin can add videos" do
     fill_in "Description", with: "An action movie starring Brad Pitt"
     attach_file  "Large cover", "spec/support/uploads/fight_club_large.jpg"
     attach_file  "Small cover", "spec/support/uploads/fight_club.jpeg"
-    fill_in "Video url", with: "spec/support/uploads/fight_club.mp4"
+    fill_in "Video url", with: "https://www.youtube.com/watch?v=EyOB9f7r14o"
     click_button "Create Video"
     page.should have_content "has been added"
 
@@ -26,7 +26,7 @@ feature "Admin can add videos" do
     visit video_path(Video.first)
     # save_and_open_page
     page.should have_selector("img[src='/uploads/fight_club_large.jpg']")
-    page.should have_selector("a[href='spec/support/uploads/fight_club.mp4']")
+    page.should have_selector("a[href='https://www.youtube.com/watch?v=EyOB9f7r14o']")
 
   end
 
