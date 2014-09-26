@@ -54,6 +54,31 @@ end
 
 #######################################################
   describe 'POST create' do
+
+
+    context "the user sign up via an invitation is valid" do
+
+      it "creates a new user" do
+        invitation = Fabricate(:invitation, inviter: hank)
+        post :create, user: Fabricate.attributes_for(:user), token: invitation.token
+        expect(User.count).to eq(2)
+      end
+
+      it "creates a follower for the inviter" do
+        invitation = Fabricate(:invitation, inviter: hank)
+        post :create, user: Fabricate.attributes_for(:user), token: invitation.token
+        expect(hank.followers.count).to eq(1)
+      end
+      it "creates a followere for the invitee" do
+        invitation = Fabricate(:invitation, inviter: hank)
+        post :create, user: Fabricate.attributes_for(:user), token: invitation.token
+        expect(hank.leaders.count).to eq(1)
+      end
+
+
+     
+    end
+
  
     context "the user sign up is valid" do
    
@@ -94,6 +119,9 @@ end
 
       before do
         post :create, user: {email: "", password: "", full_name: ""}
+      end
+      after do
+        ActionMailer::Base.deliveries.clear
       end
 
       it "renders redirect to sign_in" do
