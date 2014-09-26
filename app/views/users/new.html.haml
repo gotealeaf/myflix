@@ -8,5 +8,5 @@
           = hidden_field_tag :invitation_token, @invitation.token unless @invitation.blank?
           = f.email_field :email, label: "Email Address"
           = f.password_field :password
-          = f.text_field :full_name
+          = f.text_field :full_name, label: "Full Name"
         = f.submit "Sign Up", class: "btn btn-default"
