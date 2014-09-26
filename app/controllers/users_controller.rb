@@ -19,18 +19,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
        AppMailer.notify_on_new(@user).deliver
-       token = params[:invitation_token]
-       if token.present?
-         invitation = Invitation.where(token: token).first
-         if invitation.present?
-           inviter = invitation.inviter
-           if inviter.present?
-             inviter.follow(@user)
-             @user.follow(inviter)
-             invitation.update_column(:token, nil)
-           end
-         end
-       end
+       handle_invitation
        redirect_to sign_in_path, notice: "You are signed up. Please log in"
      else
        render "new"
@@ -43,6 +32,21 @@ class UsersController < ApplicationController
 
 
   private
+
+    def handle_invitation
+       token = params[:invitation_token]
+       if token.present?
+         invitation = Invitation.where(token: token).first
+         if invitation.present?
+           inviter = invitation.inviter
+           if inviter.present?
+             inviter.follow(@user)
+             @user.follow(inviter)
+             invitation.update_column(:token, nil)
+           end
+         end
+       end
+    end
 
     def user_params
       params.require(:user).permit(:email, :full_name, :password)
