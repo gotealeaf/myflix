@@ -26,6 +26,10 @@ class User < ActiveRecord::Base
     leaders.include?(leader)
   end
 
+  def follow leader
+    Relationship.create(leader: leader, follower: self) if can_follow?(leader)
+  end
+
   def normalize_positions
     queue_items.each_with_index do |q, i|
       # index starts at 0, position at 1

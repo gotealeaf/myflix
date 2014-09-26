@@ -19,15 +19,16 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
        AppMailer.notify_on_new(@user).deliver
-       token = params[:token]
+       token = params[:invitation_token]
        if token.present?
          invitation = Invitation.where(token: token).first
          if invitation.present?
            inviter = invitation.inviter
            if inviter.present?
-             Relationship.create(leader: inviter, follower: @user)
-             Relationship.create(leader: @user, follower: inviter)
-           end 
+             inviter.follow(@user)
+             @user.follow(inviter)
+             invitation.update_column(:token, nil)
+           end
          end
        end
        redirect_to sign_in_path, notice: "You are signed up. Please log in"

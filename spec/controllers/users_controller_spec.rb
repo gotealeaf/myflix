@@ -58,21 +58,23 @@ end
 
     context "the user sign up via an invitation is valid" do
 
-      it "creates a new user" do
-        invitation = Fabricate(:invitation, inviter: hank)
-        post :create, user: Fabricate.attributes_for(:user), token: invitation.token
-        expect(User.count).to eq(2)
-      end
 
       it "creates a follower for the inviter" do
         invitation = Fabricate(:invitation, inviter: hank)
-        post :create, user: Fabricate.attributes_for(:user), token: invitation.token
+        post :create, user: Fabricate.attributes_for(:user), invitation_token: invitation.token
         expect(hank.followers.count).to eq(1)
       end
-      it "creates a followere for the invitee" do
+      it "creates a follower for the invitee" do
         invitation = Fabricate(:invitation, inviter: hank)
-        post :create, user: Fabricate.attributes_for(:user), token: invitation.token
+        post :create, user: Fabricate.attributes_for(:user), invitation_token: invitation.token
         expect(hank.leaders.count).to eq(1)
+      end
+
+      it "expires the invitation token" do
+        invitation = Fabricate(:invitation, inviter: hank)
+        old_token = invitation.token
+        post :create, user: Fabricate.attributes_for(:user), invitation_token: invitation.token
+        expect(invitation.reload.token).to_not eq(old_token)
       end
 
 

@@ -18,8 +18,24 @@ describe User do
       expect(joe.token).to_not be_blank
   end
 
+  describe "#follow" do
 
-  describe "follows?" do
+    it "creates a following relationship" do
+      joe = Fabricate(:user)
+      hank = Fabricate(:user)
+      hank.follow(joe)
+      expect(hank.follows?(joe)).to be(true)
+    end
+
+    it "does not follow itself" do
+      joe = Fabricate(:user)
+      joe.follow(joe)
+      expect(joe.follows?(joe)).to be(false)
+    end
+
+  end
+
+  describe "#follows?" do
 
     it "identifies follower" do
       joe = Fabricate(:user)
