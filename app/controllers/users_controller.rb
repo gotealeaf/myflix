@@ -1,8 +1,18 @@
 class UsersController < ApplicationController
-  before_filter :logged_in?, except: [:new, :create]
+  before_filter :logged_in?, except: [:new, :create, :new_with_invitation_token]
 
   def new
-    @user = User.new(email: params[:recipient_email])
+    @user = User.new
+  end
+
+  def new_with_invitation_token
+    @invitation = Invitation.where(token: params[:token] ).first
+    if @invitation.present?
+      @user = User.new(email: @invitation.recipient_email)
+      render "new"
+    else
+      redirect_to invalid_token_path
+    end
   end
 
   def create
