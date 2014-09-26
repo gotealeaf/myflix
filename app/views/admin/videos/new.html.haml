@@ -10,26 +10,10 @@
               %a(href="") Add a New Video
           %br
           %fieldset
-            .form-group
-              .col-sm-6
-                = f.text_field :title
-            .form-group
-              .col-sm-6
-                = f.select :category_id, options_for_select(Category.all.map { |category| [category.name, category.id]})
-            .form-group
-              .col-sm-6
-                = f.text_area :description
-            .form-group
-              %label.control-label.col-sm-3 Large Cover
-              .col-sm-6
-                %col.btn.btn-file
-                  %input.form-control(type="file")
-            .form-group
-              %label.control-label.col-sm-3 Small Cover
-              .col-sm-6
-                %col.btn.btn-file
-                  %input.form-control(type="file")
-
-        %fieldset.actions.form-group
-          .col-sm-6.col-md-offset-3
-            %input(type="submit" value="Add Video" class="btn btn-default")
+            = f.text_field :title
+            = f.select :category_id, options_for_select(Category.all.map { |category| [category.name, category.id]})
+            = f.text_area :description
+            = f.file_field :large_cover, class: "btn btn-file"
+            = f.file_field :small_cover, class: "btn btn-file"
+            = f.submit
+        
