@@ -14,5 +14,10 @@ shared_examples "does_not_require_sign_in" do
   end
 end
 
+shared_examples "is_tokenable" do 
+  it "generates a random token when created" do
+      expect(record.token).to_not be_blank
+  end
+end
 
 

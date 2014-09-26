@@ -13,9 +13,8 @@ describe User do
   it { should have_many(:leaders) }
   it { should have_many(:invitations) }
 
-  it "generates a random token when the user is created" do 
-      joe = Fabricate(:user)
-      expect(joe.token).to_not be_blank
+  it_behaves_like "is_tokenable" do
+    let(:record) {Fabricate(:user)}
   end
 
   describe "#follow" do

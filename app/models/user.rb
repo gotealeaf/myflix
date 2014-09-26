@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  include Tokenable
   validates :email, presence: true, uniqueness: true
   validates :full_name, presence: true
   validates :password_digest, presence: true
@@ -15,8 +16,6 @@ class User < ActiveRecord::Base
 
 
   has_secure_password
-
-  before_create :generate_token
 
   def can_follow? leader
     !self.follows?(leader)  && (self != leader) 
@@ -36,10 +35,5 @@ class User < ActiveRecord::Base
       q.update_attributes(position: i + 1)
     end
   end
-
-  def generate_token
-    self.token = SecureRandom::urlsafe_base64
-  end
-
 
 end
