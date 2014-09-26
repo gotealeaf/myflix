@@ -29,6 +29,8 @@ feature 'user forgot password' do
 
     click_button "Sign In"
     expect(page).to have_content "Welcome, " + joe.full_name
+    
+    clear_email
   end
 
 
