@@ -49,7 +49,7 @@ Myflix::Application.routes.draw do
   get 'confirm_password', to: 'forgot_passwords#confirm'
 
   resources :password_resets, only: [:show, :create]
-  get 'invalid_token', to: 'password_resets#invalid_token'
 ####################################################
+  get 'invalid_token', to: 'pages#invalid_token'
 
 end
