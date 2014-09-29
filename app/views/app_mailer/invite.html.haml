@@ -1,0 +1,11 @@
+%html
+  %head
+  %body  
+    %p
+      Hey,
+      = @invitation.recipient_name
+      you have been invited by
+      = @invitation.inviter.full_name 
+      to join MyFlix
+      = @invitation.message
+      = link_to "Register", register_with_token_url(token: @invitation.token)

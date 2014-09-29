@@ -3,20 +3,21 @@
     = link_to "MyFLiX"
   %ul.col-md-4.clearfix
     %li= link_to "Videos"
-    %li= link_to "My Queue"
-    %li= link_to "People"
-  %form.col-md-5.navbar-form(action="")
+    %li= link_to "My Queue", my_queue_path
+    %li= link_to "People", people_path
+  %form.col-md-5.navbar-form(action=search_videos_path)
     .form-group
-      %input.form-control(type="text" placeholder="Search for videos here")
+      %input.form-control(type="text" name="search_term"  placeholder="Search for videos here")
     %button.btn.btn-default(type="submit") Search
   #user_links.pull-right
     %ul
       %li.dropdown
         %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
-          Welcome, Philip J. Fry
+          Welcome, #{current_user.full_name}
           %b.caret
         %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
           %li
+            %a(href="#{new_invitation_path}") Invite A Friend
             %a(href="#") Account
             %a(href="#") Plan and Billing
-            %a(href="#") Sign Out
+            = link_to "Sign Out", sign_out_path

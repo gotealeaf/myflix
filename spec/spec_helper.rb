@@ -2,6 +2,9 @@
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'capybara/rails'
+require 'capybara/email/rspec'
+require 'shoulda/matchers'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -17,6 +20,20 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+
+
+  config.expect_with :rspec do |c|
+    # Disable the `expect` sytax...
+    #c.syntax = :should
+
+    # ...or disable the `should` syntax...
+    #c.syntax = :expect
+
+    # ...or explicitly enable both
+    c.syntax = [:should, :expect]
+  end
+
+
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:

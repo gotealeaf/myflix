@@ -1,0 +1,48 @@
+%article.video
+  .container
+    .row
+      .video_large_cover.col-sm-7.col-sm-offset-1
+        %img(src="/tmp/monk_large.jpg")
+      .video_info.col-sm-3
+        %header
+          %h3 
+          = @video.title
+          - if @avg_rating.present?
+            %span Rating: #{sprintf '%.1f', @avg_rating}/5.0
+        %p
+        = @video.description
+        .actions
+          = link_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: 'btn btn-default' unless @video.in_my_queue?(current_user)
+
+%section.reviews.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      -#form for nested resource
+      = form_for([@video, @review], html: {class: "form-horizonal"}) do |f|
+        %fieldset
+          .form-group
+            %label Rate this video
+            .row
+              .col-sm-3
+                = f.select :rating, options_for_video_reviews
+          .form-group
+            %label Write Review
+            .row
+              .col-sm-8
+                %textarea.form-control(name="review[description]" rows="6")
+        %fieldset.form-group.actions.clearfix
+          %input(type="submit" value="Submit" class="btn")
+          = link_to "Cancel", @video
+      %header
+        %h3 User Reviews (#{@reviews.count})
+      %ul
+        - @reviews.each do|review|
+          %article.review
+            %li.row
+              .col-sm-2
+                %span Rating: #{review.rating} / 5
+                %p 
+                  by 
+                  = link_to review.user.full_name, review.user
+              .col-sm-8
+                %p #{review.description} 

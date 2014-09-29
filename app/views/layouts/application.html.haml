@@ -9,7 +9,8 @@
     = javascript_include_tag "application"
   %body
     %header
-      = render 'shared/header'
+      - if current_user
+        = render 'shared/header'
     %section.content.clearfix
       = render 'shared/messages'
       = yield
