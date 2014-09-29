@@ -9,4 +9,4 @@
           = f.password_field :password
           = f.text_field :full_name, label: "Full Name"
           = hidden_field_tag :invitation_token, @invitation_token
-          =f.submit
+          %script(src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="#{ENV['STRIPE_PUBLISHABLE_KEY']}" data-image="/square-image.png" data-name="Riceflix Sign up charge" data-description="$9.99 to sign up" data-amount="999")
