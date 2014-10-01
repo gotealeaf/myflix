@@ -27,20 +27,23 @@ group :development do
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
-  gem 'letter_opener'
 end
 
 group :development, :test do
   gem 'rspec-rails', '2.99'
+  gem 'letter_opener'
 end
 
 group :test do
-  gem 'database_cleaner', '1.2.0'
+  gem 'database_cleaner', '1.3.0'
   gem 'shoulda-matchers', require: false
   gem 'fabrication'
   gem 'faker'
   gem 'capybara'
   gem 'launchy'
+  gem 'vcr'
+  gem 'webmock'
+  gem 'selenium-webdriver'
   # gem 'capybara-email' waiting for new release cuz open email errors
   gem 'capybara-email', github: 'dockyard/capybara-email'
 end
