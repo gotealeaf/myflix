@@ -23,8 +23,14 @@ describe UsersController do
   end
 
   describe "POST create" do
-    context "with valid input" do 
-      before { post :create, user: Fabricate.attributes_for(:user) }
+    context "with valid personal info and valid credit card" do 
+      before do
+        DatabaseCleaner.clean
+        charge = double(:charge, successful?: true)
+        StripeWrapper::Charge.stub(:create).and_return(charge)
+        post :create, user: Fabricate.attributes_for(:user)
+      end
+
       it "creates user" do
         User.count.should == 1
       end
@@ -53,8 +59,34 @@ describe UsersController do
         Invitation.first.token.should be_nil
       end
     end
-    context "with invalid input" do
-      before { post :create, user: { password: "password", full_name: "Bob Dylan" } }
+    context "with valid personal info and declined card" do
+      before do
+        DatabaseCleaner.clean
+        charge = double(:charge, successful?: false, error_message: "Your card was declined")
+        StripeWrapper::Charge.should_receive(:create).and_return(charge)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: '12345'
+      end
+      it "does not create a new user record" do 
+        User.count.should == 0
+      end
+
+      it "renders the new template" do
+        response.should render_template :new
+      end
+      it "sets the flash error message" do 
+        flash[:error].should be_present
+      end
+    end
+
+    context "with invalid personal info" do
+      before do
+        DatabaseCleaner.clean
+        post :create, user: { password: "password", full_name: "Bob Dylan" } 
+      end
+
+      it "does not charge the card" do 
+        StripeWrapper::Charge.should_not_receive(:create)
+      end
       it "does not create the user" do
         User.count.should == 0
       end
@@ -65,6 +97,7 @@ describe UsersController do
         assigns(:user).should be_instance_of(User)
       end
     end
+
     context "sending email" do
       around(:each) { ActionMailer::Base.deliveries.clear }  
 
