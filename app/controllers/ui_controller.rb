@@ -6,5 +6,14 @@ class UiController < ApplicationController
   layout "application"
 
   def index
+
+  end
+
+  def home
+  	@videos = Video.all
+  end
+
+  def genre
+  	@category = Category.all
   end
 end
