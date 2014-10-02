@@ -11,14 +11,14 @@ gem 'jquery-rails'
 
 group :development do
   gem 'sqlite3'
-  gem 'pry'
-  gem 'pry-nav'
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
 end
 
 group :development, :test do
+  gem 'pry'
+  gem 'pry-nav'
   gem 'rspec-rails', '2.99'
 end
 
