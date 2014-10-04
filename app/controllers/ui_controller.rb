@@ -16,4 +16,10 @@ class UiController < ApplicationController
   def genre
   	@category = Category.all
   end
+
+  def searchresults
+  	@videoes = Video.search_by_title("#{params[:query]}")
+  	
+  end
+
 end

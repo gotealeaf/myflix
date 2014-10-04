@@ -1,0 +1,21 @@
+%section.sign_in.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = form_tag('/signin', method: "post") do
+        %header
+          %h1 Sign in
+
+          %fieldset
+            .form-group
+              %label Email Address
+              .row
+                .col-sm-4
+                  = text_field_tag(:email, "Email address")
+            .form-group
+              %label Password
+              .row
+                .col-sm-4
+                  = password_field_tag(:password, "Password")
+          %fieldset.form-group.action
+            %input(type="submit" value="Sign in" class="btn btn-default")
+
