@@ -5,9 +5,8 @@ describe Video do
     Video.all.each do |v|
       v.delete
     end
-    
-    video = Video.new
-    video.save
+
+    video = Video.create    
     Video.first.should == video  
   end  
 end
