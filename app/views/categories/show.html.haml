@@ -1,0 +1,5 @@
+%article.video_category  
+  %header
+    %h3= link_to "#{@category.name}"
+  .videos.row
+    = render @category.videos
