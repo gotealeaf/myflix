@@ -28,9 +28,6 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
-    better_errors (1.0.1)
-      coderay (>= 1.0.0)
-      erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.1.1.1)
@@ -71,7 +68,8 @@ GEM
     mime-types (1.25.1)
     minitest (5.3.4)
     multi_json (1.10.1)
-    pg (0.17.0)
+    mysql2 (0.3.16)
+    pg (0.17.1)
     polyglot (0.3.5)
     pry (0.9.12.3)
       coderay (~> 1.0)
@@ -124,6 +122,8 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0)
+    shoulda-matchers (2.6.2)
+      activesupport (>= 3.0.0)
     slop (3.4.7)
     sprockets (2.11.0)
       hike (~> 1.2)
@@ -155,20 +155,21 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  better_errors
   binding_of_caller
   bootstrap-sass
   coffee-rails
   database_cleaner (= 1.2.0)
   haml-rails
   jquery-rails
-  pg
+  mysql2 (~> 0.3.16)
+  pg (~> 0.17.1)
   pry
   pry-nav
   rails (= 4.1.1)
   rails_12factor
   rspec-rails (= 2.99)
   sass-rails
+  shoulda-matchers (~> 2.6.2)
   sqlite3
   thin
   uglifier
