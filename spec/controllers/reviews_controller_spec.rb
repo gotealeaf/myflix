@@ -3,10 +3,14 @@ require 'spec_helper'
 describe ReviewsController do
   describe "POST create" do
     context "athenticated users" do
-      it "creates a new review object"
-      it "associates the review with the video"
-      it "associates the review with the current user"
       context "the data is valid" do
+        it "creates a review" do
+          video = Fabricate(:video)
+          post :create, Fabricate.attributes_for(:review), video_id: video.id
+          expect(Review.count).to eq(1)
+        end
+        it "associates the review with the video"
+        it "associates the review with the current user"
         it "saves the review"
         it "redirects to the 'video/show' page"
       end
