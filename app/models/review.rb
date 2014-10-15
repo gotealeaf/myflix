@@ -4,5 +4,6 @@ class Review < ActiveRecord::Base
   belongs_to :reviewer, foreign_key: 'user_id', class_name: 'User'
   
   validates_presence_of :content, :rating
+  validates_uniqueness_of :reviewer, scope: :video
   
   end
