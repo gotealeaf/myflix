@@ -11,6 +11,7 @@ gem 'jquery-rails'
 gem 'bcrypt'
 gem 'bootstrap_form'
 
+
 group :development do
   gem 'sqlite3'
   gem 'pry'
@@ -22,6 +23,8 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '2.99'
+  gem 'fabrication', '~> 2.11.3'
+  gem 'faker'
 end
 
 group :test do

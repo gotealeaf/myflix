@@ -4,7 +4,8 @@
       %p 
         %h1= category.name
         - category.recent_videos.each do |video|
-          %p=video.title
+          %p
+            =link_to video.title, video_path(video)
           %p=video.description
           %img(src="#{video.small_cover_url}")
 

@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 	end
 
 	def create
+	
 		@user = User.new(userparams)
 		if @user.save
 			flash[:notice] = "You have successfully registered"
