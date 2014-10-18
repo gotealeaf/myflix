@@ -1,0 +1,10 @@
+%h2 Search Results
+
+- @videos.each do |video|
+  .col-md-3
+    %p 	
+      %img(src="#{video.small_cover_url}")
+    %p 
+      =video.title
+    %p
+      =video.description

@@ -6,5 +6,20 @@ class UiController < ApplicationController
   layout "application"
 
   def index
+
   end
+
+  def home
+  	@videos = Video.all
+  end
+
+  def genre
+  	@category = Category.all
+  end
+
+  def searchresults
+  	@videoes = Video.search_by_title("#{params[:query]}")
+  	
+  end
+
 end

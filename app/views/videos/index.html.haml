@@ -1,0 +1,15 @@
+%section.genre
+  %header.clearfix
+    - @category.each do |category|
+      %p 
+        %h1
+          = category.name
+        - category.recent_videos.each do |video|
+          = link_to video.title, video_path(video)
+          %p
+            =video.description
+            %img(src="#{video.small_cover_url}")
+
+
+
+
