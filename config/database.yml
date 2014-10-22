@@ -4,10 +4,14 @@ development:
   database: myflix_development
   pool: 5
   host: localhost
+  username: arjun
+  password: arjun
 
 test:
   adapter: postgresql
   encoding: unicode
   database: myflix_test
   pool: 5
-  host: localhost 
+  host: localhost
+  username: arjun
+  password: arjun
