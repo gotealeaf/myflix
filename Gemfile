@@ -8,11 +8,9 @@ gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
-gem 'bootstrap_form'
-gem 'bcrypt-ruby', '3.1.2'
+gem 'pg'
 
 group :development do
-  gem 'sqlite3'
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
@@ -29,7 +27,6 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
   gem 'rails_12factor'
 end
 
