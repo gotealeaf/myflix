@@ -23,13 +23,4 @@ class VideosController < ApplicationController
   
   private
   
-#  def average_rating(video)
-#    ratings = collect_ratings(video)
-#    ratings.inject(0.0) { |sum, el| sum + el } / ratings.size
-#  end
-  
-#  def collect_ratings(video)
-#    Array.new(video.reviews.count) { video.reviews.each { |review| review.rating } }
-#  end
-  
 end
