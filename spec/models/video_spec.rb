@@ -10,5 +10,17 @@ describe Video do
     video.save
     expect(Video.first).to eq(video)
   end
+
+  it "belongs to category" do
+    comedy = Category.create(name: "Comedy")
+    vid1 = Video.create(
+            title: "Comedy1", 
+            description: "Follow the adventures of an endearingly ignorant dad, PETER GRIFFIN, and his hilariously odd family.",
+            small_cover_url: "/tmp/family_guy.jpg",
+            large_cover_url: "/tmp/family_guy.jpg",
+            category: comedy
+            )
+    expect(vid1.category).to eq(comedy)
+  end
 end
 
