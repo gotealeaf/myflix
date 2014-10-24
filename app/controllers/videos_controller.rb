@@ -12,7 +12,7 @@ class VideosController < ApplicationController
     @video = Video.find(params[:id])
     @review = Review.new
     @reviews = @video.reviews.sort_by {|x| x.created_at}.reverse
-    #@rating = average_rating(@video)
+    @rating = average_rating(@video)
   end
   
   def search
@@ -22,5 +22,10 @@ class VideosController < ApplicationController
   end
   
   private
+  
+  def average_rating(video)
+    ratings = video.reviews.map(&:rating)
+    (ratings.sum / ratings.size.to_f).round(2)
+  end
   
 end
