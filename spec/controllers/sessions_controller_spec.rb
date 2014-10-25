@@ -8,7 +8,6 @@ describe SessionsController do
       get :new
       expect(response).to redirect_to home_path
     end
-    
     it "renders the new template if user is unauthenticated" do
       get :new
       expect(response).to render_template(:new)
@@ -18,8 +17,7 @@ describe SessionsController do
   describe "POST create" do
     context "user exists and password is authenticated" do
       before do
-        darren = Fabricate(:user)
-        post :create, email: darren.email, password: darren.password
+        post_user_to_session
       end
       it "adds the user_id to the session" do
         expect(session[:user_id]).to eq(User.first.id)
@@ -45,8 +43,7 @@ describe SessionsController do
   
   describe "GET destroy" do
     before do
-      darren = Fabricate(:user)
-      post :create, email: darren.email, password: darren.password
+      post_user_to_session
       get :destroy
     end
     it "sets the session user_id to nil" do
