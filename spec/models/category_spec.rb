@@ -3,7 +3,6 @@ require 'spec_helper'
 describe Category do
 
   it { should validate_presence_of(:name) }
-  
   it { should have_many(:videos).through(:video_categories) }  
   
   describe "#show_recent" do

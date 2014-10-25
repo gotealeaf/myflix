@@ -133,5 +133,4 @@ describe QueueItemsController do
       let(:action) {delete :destroy, id: 2}
     end
   end
-  
 end
