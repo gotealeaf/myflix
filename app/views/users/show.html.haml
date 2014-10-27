@@ -3,8 +3,8 @@
     .col-sm-10.col-sm-offset-1
       %article
         %header
-          %img(src="http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest('knwang@gmail.com'.downcase)}?s=40")
-          %h2 #{@user.full_name}'s video collections (#{@queue_items.count})
+          %img(src="#{@user.avatar_url}")
+          %h2 #{@user.full_name}'s video collections (#{@user.queue_items.count})
           %button.btn.btn-default Follow
         %table.table
           %thead
@@ -12,25 +12,25 @@
               %th(width="30%") Video Title
               %th(width="15%") Genre
           %tbody
-            - @queue_items.each do |queue_item| 
+            - @user.queue_items.each do |queue_item| 
               %tr
                 %td
-                  = link_to queue_item.video.title, video_path(queue_item.video)
+                  = link_to queue_item.video.title, queue_item.video
                 %td
-                  = link_to queue_item.video.categories.first.name, category_path(queue_item.video.categories.first)
+                  = link_to queue_item.video.categories.first.name, queue_item.video.categories.first
 
 %section.user_reviews.container
   .row
     .col-sm-10.col-sm-offset-1
       %header
-        %h3 #{@user.full_name}'s Reviews (#{@reviews.count})
+        %h3 #{@user.full_name}'s Reviews (#{@user.reviews.count})
       %ul
-        - @reviews.each do |review|
+        - @user.reviews.each do |review|
           %article.review
             %li.row
               .col-sm-2
                 %p
-                  = link_to review.video.title, video_path(review.video)
+                  = link_to review.video.title, review.video
                 %col Rating: #{review.rating} / 5
               .col-sm-8
-                %p #{review.content}
+                %p= review.content
