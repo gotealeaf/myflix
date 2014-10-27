@@ -14,6 +14,12 @@ class UsersController < ApplicationController
     end
   end
   
+  def show
+    @user = current_user
+    @queue_items = @user.queue_items
+    @reviews = @user.reviews
+  end
+  
   private
   
   def user_params
