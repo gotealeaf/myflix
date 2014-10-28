@@ -33,3 +33,73 @@ Video.create(
             large_cover_url: "/tmp/south_park.jpg",
             category: comedy
             )
+Video.create(
+            title: "Monk", 
+            description: "Monk is an American comedy-drama detective mystery television series created by Andy Breckman and starring Tony Shalhou.",
+            small_cover_url: "/tmp/monk.jpg",
+            large_cover_url: "/tmp/monk_large.jpg",
+            category: drama
+            )
+Video.create(
+            title: "South Park", 
+            description: "South Park is an American adult animated sitcom created by Trey Parker and Matt Stone for the Comedy Central television network.",
+            small_cover_url: "/tmp/south_park.jpg",
+            large_cover_url: "/tmp/south_park.jpg",
+            category: comedy
+            )
+Video.create(
+            title: "Monk", 
+            description: "Monk is an American comedy-drama detective mystery television series created by Andy Breckman and starring Tony Shalhou.",
+            small_cover_url: "/tmp/monk.jpg",
+            large_cover_url: "/tmp/monk_large.jpg",
+            category: drama
+            )
+Video.create(
+            title: "South Park", 
+            description: "South Park is an American adult animated sitcom created by Trey Parker and Matt Stone for the Comedy Central television network.",
+            small_cover_url: "/tmp/south_park.jpg",
+            large_cover_url: "/tmp/south_park.jpg",
+            category: comedy
+            )
+Video.create(
+            title: "Monk", 
+            description: "Monk is an American comedy-drama detective mystery television series created by Andy Breckman and starring Tony Shalhou.",
+            small_cover_url: "/tmp/monk.jpg",
+            large_cover_url: "/tmp/monk_large.jpg",
+            category: drama
+            )
+Video.create(
+            title: "South Park", 
+            description: "South Park is an American adult animated sitcom created by Trey Parker and Matt Stone for the Comedy Central television network.",
+            small_cover_url: "/tmp/south_park.jpg",
+            large_cover_url: "/tmp/south_park.jpg",
+            category: comedy
+            )
+Video.create(
+            title: "Monk", 
+            description: "Monk is an American comedy-drama detective mystery television series created by Andy Breckman and starring Tony Shalhou.",
+            small_cover_url: "/tmp/monk.jpg",
+            large_cover_url: "/tmp/monk_large.jpg",
+            category: drama
+            )
+Video.create(
+            title: "South Park", 
+            description: "South Park is an American adult animated sitcom created by Trey Parker and Matt Stone for the Comedy Central television network.",
+            small_cover_url: "/tmp/south_park.jpg",
+            large_cover_url: "/tmp/south_park.jpg",
+            category: comedy
+            )
+Video.create(
+            title: "Monk", 
+            description: "Monk is an American comedy-drama detective mystery television series created by Andy Breckman and starring Tony Shalhou.",
+            small_cover_url: "/tmp/monk.jpg",
+            large_cover_url: "/tmp/monk_large.jpg",
+            category: drama
+            )
+Video.create(
+            title: "South Park", 
+            description: "South Park is an American adult animated sitcom created by Trey Parker and Matt Stone for the Comedy Central television network.",
+            small_cover_url: "/tmp/south_park.jpg",
+            large_cover_url: "/tmp/south_park.jpg",
+            category: comedy
+            )
