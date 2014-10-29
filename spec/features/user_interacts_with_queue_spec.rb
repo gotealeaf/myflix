@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "User interacts with the queue" do
-  scenario "user adds adds and reorders videos in the queue" do
+  scenario "user adds and reorders videos in the queue" do
     action = Category.create(name: "Action")
     video1 = Fabricate(:video, title: "Video 1")
     video1.categories << action
@@ -34,7 +34,7 @@ feature "User interacts with the queue" do
   
   def add_video_to_queue(video)
     click_link("MyFlix")
-    find("a[href='/videos/#{video.id}']").click
+    click_on_video_on_home_page(video)
     click_link("+ My Queue")
   end
   

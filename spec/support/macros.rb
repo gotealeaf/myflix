@@ -23,3 +23,7 @@ def post_user_to_session
   darren = Fabricate(:user)
   post :create, email: darren.email, password: darren.password
 end
+
+def click_on_video_on_home_page(video)
+  find("a[href='/videos/#{video.id}']").click
+end
