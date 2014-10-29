@@ -7,6 +7,10 @@ describe User do
   it { should validate_uniqueness_of(:email) }
   it { should have_many(:queue_items).order(:position) }
   it { should have_many(:reviews).order("created_at DESC") }
+  it { should have_many(:follower_relationships).class_name('Relationship').with_foreign_key('following_id') }
+  it { should have_many(:following_relationships).class_name('Relationship').with_foreign_key('follower_id') }
+  it { should have_many(:follower_users).through(:follower_relationships).source(:follower) }
+  it { should have_many(:following_users).through(:following_relationships).source(:following) }
   
   describe "#queued_video?" do
     it "returns true when the user queued the video" do

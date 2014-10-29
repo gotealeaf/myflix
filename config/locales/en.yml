@@ -2,4 +2,13 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      relationship:
+        following_id: "This person"
+    errors:
+      models:
+        relationship:
+          attributes:
+            following_id:
+              taken: "is already being followed by you"

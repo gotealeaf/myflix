@@ -5,6 +5,12 @@ class User < ActiveRecord::Base
   has_many :reviews, -> { order('created_at DESC') }
   has_many :queue_items, -> { order(:position) }
   
+  has_many :follower_relationships, class_name: "Relationship", foreign_key: "following_id"
+  has_many :following_relationships, class_name: "Relationship", foreign_key: "follower_id"
+
+  has_many :follower_users, through: :follower_relationships, source: :follower
+  has_many :following_users, through: :following_relationships, source: :following
+  
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true, on: :create, length: {minimum: 5}
   validates :full_name, presence: true

@@ -5,7 +5,8 @@
         %header
           %img(src="#{@user.avatar_url}")
           %h2 #{@user.full_name}'s video collections (#{@user.queue_items.count})
-          %button.btn.btn-default Follow
+          - if @user != current_user && current_user.following_users.exclude?(@user)
+            %button.btn.btn-default= link_to "Follow", follow_user_path(@user), method: :post
         %table.table
           %thead
             %tr
