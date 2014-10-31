@@ -51,19 +51,17 @@ describe SessionsController do
   end 
 
   describe "GET destroy" do 
-    it "clears the session" do 
+    before do 
       session[:user_id] = Fabricate(:user).id
       get :destroy 
+    end 
+    it "clears the session" do 
       expect(session[:user_id]).to be_nil
     end
     it "redirects to root path" do 
-      session[:user_id] = Fabricate(:user).id
-      get :destroy 
       expect(response).to redirect_to root_path
     end 
     it "sets the notice" do 
-      session[:user_id] = Fabricate(:user).id
-      get :destroy 
       expect(flash[:notice]).not_to  be_blank
     end 
   end
