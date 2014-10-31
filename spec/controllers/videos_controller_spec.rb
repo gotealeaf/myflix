@@ -22,7 +22,6 @@ describe VideosController do
       futurama = Fabricate(:video, title: 'Futurama')
       post :search, search_term: 'rama'
       expect(assigns(:results)).to eq([futurama])
-
     end
 
     it "redirects to sign in page for unauthenticated users" do 
