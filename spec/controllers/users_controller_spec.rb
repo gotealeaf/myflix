@@ -11,6 +11,24 @@ describe UsersController do
   
   describe "POST create" do
     
+    context "email sending" do
+      
+      after { ActionMailer::Base.deliveries.clear }
+      
+      it "sends out the email to the user with valid inputs" do
+        post :create, user: { email: "dcprime@gmail.com", password: "password", full_name: "Dave Conley" }
+        expect(ActionMailer::Base.deliveries.last.to).to eq(["dcprime@gmail.com"])
+      end
+      it "sends the email containing the user's name with valid inputs" do
+        post :create, user: { email: "dcprime@gmail.com", password: "password", full_name: "Dave Conley" }
+        expect(ActionMailer::Base.deliveries.last).to have_content("Dave Conley")
+      end
+      it "does not send the email with invalid inputs" do 
+        post :create, user: { email: "dcprime@gmail.com", full_name: "Dave Conley" }
+        expect(ActionMailer::Base.deliveries).to be_empty
+      end
+    end
+    
     context "with valid input" do
       before do
         post :create, user: Fabricate.attributes_for(:user)
