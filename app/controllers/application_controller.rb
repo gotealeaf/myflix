@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  require 'pry'
   protect_from_forgery
   
   helper_method :current_user, :logged_in?
