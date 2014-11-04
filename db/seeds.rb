@@ -96,10 +96,19 @@ Video.create(
             large_cover_url: "/tmp/monk_large.jpg",
             category: drama
             )
-Video.create(
+southpark = Video.create(
             title: "South Park", 
             description: "South Park is an American adult animated sitcom created by Trey Parker and Matt Stone for the Comedy Central television network.",
             small_cover_url: "/tmp/south_park.jpg",
             large_cover_url: "/tmp/south_park.jpg",
             category: comedy
             )
+
+
+
+arjun = User.create(full_name: "Arjun Rajkumar", password: "arjun", 
+      email: "arjun@arjun.arjun")
+
+Review.create(user: arjun, video: southpark, rating: 5, content: "This is a really good movie!")
+Review.create(user: arjun, video: southpark, rating: 2, content: "TNot goodhis is a really good movie!")
+
