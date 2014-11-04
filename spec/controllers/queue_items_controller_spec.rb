@@ -103,5 +103,17 @@ describe QueueItemsController do
     end
    end 
 
+   describe "POST update_queue" do 
+    context "with valid inputs" do 
+      it "redirects to the my queue page" do 
+        
+      end 
+      it "reorders the queue items"
+      it "normalises the position numbers"
+    end
+    context "with invalid inputs"
+    context "with unauth users"
+    context "with queue items that do not belong to the current user"
+   end 
 
 end
