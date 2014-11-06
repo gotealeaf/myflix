@@ -12,6 +12,11 @@ describe User do
   it { should have_many(:follower_users).through(:follower_relationships).source(:follower) }
   it { should have_many(:following_users).through(:following_relationships).source(:following) }
   
+  it "generates a randome token when the user is created" do
+    darren = Fabricate(:user)
+    expect(darren.token).not_to be_nil
+  end
+  
   describe "#queued_video?" do
     it "returns true when the user queued the video" do
       user = Fabricate(:user)

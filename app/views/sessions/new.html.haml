@@ -17,3 +17,5 @@
                 = password_field_tag :password, nil, class: 'form-control'
         %fieldset.form-group.action
           %input(type="submit" value="Sign in" class="btn btn-default")
+          &nbsp; &nbsp; &nbsp;
+          = link_to "Forgot your password?", forgot_password_path

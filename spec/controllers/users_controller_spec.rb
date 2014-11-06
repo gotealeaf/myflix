@@ -10,9 +10,8 @@ describe UsersController do
   end
   
   describe "POST create" do
-    
     context "email sending" do
-      
+      before { ActionMailer::Base.deliveries.clear }
       after { ActionMailer::Base.deliveries.clear }
       
       it "sends out the email to the user with valid inputs" do

@@ -9,6 +9,8 @@ Myflix::Application.routes.draw do
   get 'my_queue', to: 'queue_items#index'
   post 'update_queue', to: 'queue_items#update_queue'
   get '/following', to: 'users#following'
+
+  
       
   resources :videos, only: [:show, :index] do
     collection do
@@ -27,4 +29,10 @@ Myflix::Application.routes.draw do
   resources :sessions, only: [:create]
   resources :queue_items, only: [:create, :destroy]
   
+  resources :forgot_passwords, only: [:create]
+  get 'forgot_password', to: 'forgot_passwords#new'
+  get 'confirm_password_reset', to: 'forgot_passwords#confirm'
+  
+  resources :password_resets, only: [:show, :create]
+  get 'invalid_token', to: 'password_resets#invalid_token'
 end
