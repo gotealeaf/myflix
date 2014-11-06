@@ -17,10 +17,12 @@ describe UsersController do
       it "creates the user" do 
         expect(User.count).to eq(1)
       end
-      it "redirects to sign_in page" do 
-        expect(response).to redirect_to sign_in_path
-      end
+     end
+     
+      it_behaves_like "requires sign in" do 
+      let(:action) { post :create, user: Fabricate.attributes_for(:user) }
     end
+    
 
     context "with invalid input" do 
       before do
