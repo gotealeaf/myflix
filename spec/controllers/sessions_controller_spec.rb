@@ -7,7 +7,7 @@ describe SessionsController do
       expect(response).to render_template :new
     end 
     it "redirects to home page for auth users" do 
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       get :new
       expect(response).to redirect_to home_path
     end 
@@ -52,7 +52,7 @@ describe SessionsController do
 
   describe "GET destroy" do 
     before do 
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       get :destroy 
     end 
     it "clears the session" do 
