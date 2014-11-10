@@ -5,7 +5,10 @@
         %header
           %h1 Register
         %fieldset
-          = f.email_field :email, label: "Email Address", placeholder: "example@email.com"
+          - if @friend_email
+            = f.email_field :email, label: "Email Address", value: @friend_email
+          - else
+            = f.email_field :email, label: "Email Address", placeholder: "example@email.com"
           = f.password_field :password, placeholder: "Min 5 chars"
           = f.text_field :full_name, label: "Full Name", placeholder: "First Last"
         %fieldset.credit_card

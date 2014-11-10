@@ -11,6 +11,10 @@ def sign_in(a_user=nil)
   click_button "Sign in"
 end
 
+def sign_out
+  visit sign_out_path
+end
+
 def clear_current_user
   session[:user_id] = nil
 end

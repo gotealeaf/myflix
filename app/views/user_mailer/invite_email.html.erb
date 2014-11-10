@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hi <%= @friend_name %>! <%= @sender.full_name %> has invited you to join MyFlix!</h1>
+    <p>
+      <%= @message %><br>
+    </p>
+    <p>
+      Click the link below to join MyFlix<br>
+    </p>
+    <p><%= link_to "Join MyFlix now!", invitation_url(@invite.token) %></p>
+  </body>
+</html>

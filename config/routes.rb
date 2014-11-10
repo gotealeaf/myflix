@@ -10,8 +10,6 @@ Myflix::Application.routes.draw do
   post 'update_queue', to: 'queue_items#update_queue'
   get '/following', to: 'users#following'
 
-  
-      
   resources :videos, only: [:show, :index] do
     collection do
       get :search, to: 'videos#search'
@@ -34,5 +32,8 @@ Myflix::Application.routes.draw do
   get 'confirm_password_reset', to: 'forgot_passwords#confirm'
   
   resources :password_resets, only: [:show, :create]
-  get 'invalid_token', to: 'password_resets#invalid_token'
+  get 'invalid_token', to: 'pages#invalid_token'
+  
+  resources :invitations, only: [:create, :show]
+  get 'invite', to: 'invitations#new'
 end

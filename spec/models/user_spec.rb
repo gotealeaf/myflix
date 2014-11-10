@@ -11,10 +11,10 @@ describe User do
   it { should have_many(:following_relationships).class_name('Relationship').with_foreign_key('follower_id') }
   it { should have_many(:follower_users).through(:follower_relationships).source(:follower) }
   it { should have_many(:following_users).through(:following_relationships).source(:following) }
+  it { should have_many(:invitations) }
   
-  it "generates a randome token when the user is created" do
-    darren = Fabricate(:user)
-    expect(darren.token).not_to be_nil
+  it_behaves_like "tokenable" do
+    let(:object) { Fabricate(:user) }
   end
   
   describe "#queued_video?" do

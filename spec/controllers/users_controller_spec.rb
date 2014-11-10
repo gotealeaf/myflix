@@ -54,6 +54,23 @@ describe UsersController do
         expect(assigns(:user)).to be_instance_of(User)
       end
     end
+    
+    context "with friend invite" do
+      it "creates a Relationship where the inviter follows the friend" do
+        darren = Fabricate(:user)
+        invitation = Fabricate(:invitation, user_id: darren.id)
+        invitation.update_column(:token, '12345')
+        post :create, user: { email: invitation.friend_email, password: "password", full_name: "Alice Smith" }
+        expect(darren.following_users.last.full_name).to eq("Alice Smith")
+      end
+      it "creates a Relationship where the friend follows the invitor" do
+        darren = Fabricate(:user)
+        invitation = Fabricate(:invitation, user_id: darren.id)
+        invitation.update_column(:token, '12345')
+        post :create, user: { email: invitation.friend_email, password: "password", full_name: "Alice Smith" }
+        expect(User.find_by(full_name: "Alice Smith").following_users.last).to eq(darren)
+      end
+    end
   end
   
   describe "GET show" do

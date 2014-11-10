@@ -9,6 +9,11 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      invitation = Invitation.find_by(friend_email: @user.email)
+      if invitation
+        Relationship.create(follower_id: invitation.user_id, following_id: @user.id)
+        Relationship.create(follower_id: @user.id, following_id: invitation.user_id)
+      end
       UserMailer.welcome_email(@user).deliver
       flash[:notice] = "You have been registered"
       redirect_to sign_in_path

@@ -33,6 +33,7 @@ group :test do
   gem 'shoulda-matchers', require: false
   gem 'shoulda'
   gem 'capybara'
+  gem 'capybara-email', github: 'dockyard/capybara-email'
 end
 
 group :production do
