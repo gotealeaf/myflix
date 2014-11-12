@@ -12,7 +12,10 @@ gem 'bcrypt-ruby', '3.1.2'
 gem 'bootstrap_form'
 gem 'fabrication'
 gem 'faker'
-gem "figaro"
+gem 'figaro'
+gem 'redis'
+gem 'sidekiq'
+gem 'unicorn'
 
 group :development do
   gem 'sqlite3'

@@ -5,8 +5,8 @@ class InvitationsController < ApplicationController
   def create
     invitation = Invitation.create(friend_email: params[:friend_email], user_id: current_user.id) unless already_invited?(params[:friend_email])
     if invitation
-      invite = Invitation.find_by(friend_email: params[:friend_email])
-      UserMailer.invite_email(current_user, invite, params[:friend_name], params[:invitation_message]).deliver
+      invite_id = Invitation.find_by(friend_email: params[:friend_email]).id
+      UserMailer.delay.invite_email(current_user.id, invite_id, params[:friend_name], params[:invitation_message])
       flash[:success] = "Your invitation has been sent"
     else
       flash[:error] = "That user has already been invited"
