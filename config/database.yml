@@ -1,7 +1,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: myflix_development
+  database: myflix_new_development
   pool: 5
   host: localhost
   username: arjun
@@ -10,7 +10,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: myflix_test
+  database: myflix_new_test
   pool: 5
   host: localhost
   username: arjun
