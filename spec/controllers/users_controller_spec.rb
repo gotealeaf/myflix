@@ -18,6 +18,30 @@ describe UsersController do
         expect(User.count).to eq(1)
       end
      end
+
+    context "email sending" do 
+      
+      after { ActionMailer::Base.deliveries.clear }
+
+      it "sends out the email" do 
+        post :create, user: { email: "arjun@example.com", password: "arjun", full_name: "Arjun Rajkumar" }
+        ActionMailer::Base.deliveries.should_not be_empty
+      end
+      it "sends to the right recipient" do 
+        post :create, user: { email: "arjun@example.com", password: "arjun", full_name: "Arjun Rajkumar" }
+        message = ActionMailer::Base.deliveries.last
+        message.to.should == ["arjun@example.com"]
+      end
+      it "has the right content" do 
+        post :create, user: { email: "arjun@example.com", password: "arjun", full_name: "Arjun Rajkumar" }
+        message = ActionMailer::Base.deliveries.last
+        message.body.should include "Arjun Rajkumar"
+      end
+      it "does not send out email with invalid inputs" do 
+        post :create, user: { email: "arjun@example.com", full_name: "Arjun Rajkumar" }
+        ActionMailer::Base.deliveries.should be_empty
+      end
+    end
      
       it_behaves_like "requires sign in" do 
       let(:action) { post :create, user: Fabricate.attributes_for(:user) }
@@ -41,17 +65,4 @@ describe UsersController do
     end
   end
 
-
-  describe "GET show" do 
-    it_behaves_like "requires sign in" do 
-      let(:action) { get :show, id: 3}
-    end
-    
-    it "sets @user" do 
-      set_current_user
-      alice = Fabricate(:user)
-      get :show, id: alice.id 
-      expect(assigns(:user)).to eq(alice)
-    end
-  end
 end
