@@ -26,5 +26,7 @@ Myflix::Application.routes.draw do
   resources :relationships, only: [:create, :destroy]
   resources :sessions, only: [:create]
 
-
+  get 'forgot_password', to: 'forgot_passwords#new'
+  resources :forgot_passwords, only: [:create]
+  get 'forgot_password_confirmation', to: 'forgot_passwords#confirm'
 end
