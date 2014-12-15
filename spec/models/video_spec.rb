@@ -10,3 +10,10 @@ describe Video do
     Video.first.should == video  
   end  
 end
+
+
+describe Category do
+  it 'should has many Video' do
+    
+  end
+end
