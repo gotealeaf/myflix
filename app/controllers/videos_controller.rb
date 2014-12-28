@@ -1,15 +1,17 @@
 class VideosController < ApplicationController
 
-	def index		
+  def index		
     redirect_to root_path unless logged_in?
-	end
+  end
 
-	def show
-		@video = Video.find(params[:id])
-	end
+  def show
+  	@video = Video.find(params[:id])
+  end
 
   def search
     @results = Video.search(params[:query])
 
   end
+
+  
 end
