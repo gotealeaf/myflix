@@ -2,6 +2,8 @@ class VideosController < ApplicationController
 
   def index		
     redirect_to root_path unless logged_in?
+    @categories = Category.all
+
   end
 
   def show
@@ -13,5 +15,4 @@ class VideosController < ApplicationController
 
   end
 
-  
 end

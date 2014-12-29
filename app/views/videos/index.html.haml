@@ -1,6 +1,6 @@
-- Category.all.each do |c|
+- @categories.each do |category|
   %article.video_category  
     %header
-      %h3= link_to "#{c.name}", category_path(c)
+      %h3= link_to "#{category.name}", category_path(category)
     .videos.row
-      = render c.recent_videos
+      = render category.recent_videos
