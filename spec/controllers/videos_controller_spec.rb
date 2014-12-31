@@ -9,8 +9,18 @@ describe VideosController do
       get :index
       assigns(:categories).should == [sifi]
     end
-    
-    it 'render the index template' do
+    it 'render indext emplate when signed in' do
+      usr = User.create(email: '123@123.com', password: '12345')
+      login(usr)
+      get :index
+      response.should render_template :index
+    end
+    it 'redirect to signup page when not sigied in' do
+      get :index
+      response.should be_redirect
+    end
+
+
           
   end  
 end
