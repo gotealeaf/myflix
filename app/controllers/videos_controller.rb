@@ -1,7 +1,7 @@
 class VideosController < ApplicationController
+before_action :require_user
 
-  def index		
-    redirect_to root_path unless logged_in?
+  def index		    
     @categories = Category.all
 
   end
