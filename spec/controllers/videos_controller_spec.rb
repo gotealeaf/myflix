@@ -22,6 +22,7 @@ describe VideosController do
       response.should be_redirect
     end              
   end  
+
   describe 'GET Show' do
     it 'should set the @video attribute' do
       usr = User.create(email: '123@123.com', password: '12345')
@@ -41,6 +42,28 @@ describe VideosController do
     it 'should redirect to front page if not logged in' do
       et = Video.create(title: 'et', description: 'lalalalala') 
       get :show, id: '1'
+      response.should be_redirect
+    end
+  end
+
+  describe 'GET Search' do
+    it 'should set the results attribute correctly' do
+      usr = User.create(email: '123@123.com', password: '12345')
+      login(usr)
+      et = Video.create(title: 'et', description: 'lalalalala') 
+      get :search, query: 'e'
+      assigns(:results).should == [et]
+    end
+    it 'should render the search template when logged in' do
+      usr = User.create(email: '123@123.com', password: '12345')
+      login(usr)
+      et = Video.create(title: 'et', description: 'lalalalala') 
+      get :search, query: 'e'
+      response.should render_template :search
+    end
+
+    it 'should redirect when not logged in' do
+      get :search, query: 'e'
       response.should be_redirect
     end
   end
