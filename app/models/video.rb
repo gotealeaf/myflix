@@ -11,4 +11,13 @@ class Video < ActiveRecord::Base
     return [] if query.blank?
     where('title   LIKE ?', "%#{query}%").order('title DESC')
   end
-end
+
+  def rating
+    return  0 if reviews.size == 0
+    reviews.sum(:rating) / reviews.size
+  end
+
+  def nr_of_reviews
+    reviews.size
+  end
+end 

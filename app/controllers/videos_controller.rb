@@ -8,6 +8,7 @@ before_action :require_user
 
   def show
   	@video = Video.find(params[:id])
+    @review = Review.new
   end
 
   def search
