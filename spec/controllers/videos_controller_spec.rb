@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe VideosController do
-  let(:user) { User.create(email: '123@123.com', password: '12345')}
+  let(:user) { Fabricate(:user)}
 
   describe 'GET Index' do    
     context 'logged in' do
@@ -24,7 +24,7 @@ describe VideosController do
   end  
 
   describe 'GET Show' do  
-    let!(:et) { Video.create(title: 'et', description: 'lalalalala') } # eager loading by using !
+    let!(:et) { Fabricate(:video) } # eager loading by using !
     context 'logged in' do      
       before {login(user)}             
       it 'should set the @video attribute' do              
@@ -44,7 +44,7 @@ describe VideosController do
   end
 
   describe 'GET Search' do
-    let!(:et) { Video.create(title: 'et', description: 'lalalalala') }
+    let!(:et) { Fabricate(:video) }
 
     context 'logged in' do
       before { login(user) }
