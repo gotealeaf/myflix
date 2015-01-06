@@ -1,66 +1,62 @@
 require 'rails_helper'
 
 describe VideosController do
-  describe 'GET Index' do
-    it 'sets the @category attribute when logged in'  do
-      sifi = Category.create(name: 'sifi')
-      et = Video.create(title: 'et', description: 'lalalalala', categories: [sifi])
-      usr = User.create(email: '123@123.com', password: '12345')
-      login(usr)
-      
-      get :index
-      assigns(:categories).should == [sifi]
-    end
-    it 'render index template when signed in' do
-      usr = User.create(email: '123@123.com', password: '12345')
-      login(usr)
-      get :index
-      response.should render_template :index
-    end
+  let(:user) { User.create(email: '123@123.com', password: '12345')}
+
+  describe 'GET Index' do    
+    context 'logged in' do
+      before { login(user) }
+      it 'sets the @category attribute when logged in'  do
+        sifi = Category.create(name: 'sifi')
+        et = Video.create(title: 'et', description: 'lalalalala', categories: [sifi])              
+        get :index
+        assigns(:categories).should == [sifi]
+      end
+      it 'render index template when signed in' do
+        get :index
+        response.should render_template :index
+      end  
+    end    
     it 'redirect to signup page when not sigied in' do
       get :index
       response.should be_redirect
     end              
   end  
 
-  describe 'GET Show' do
-    it 'should set the @video attribute' do
-      usr = User.create(email: '123@123.com', password: '12345')
-      login(usr)
-      et = Video.create(title: 'et', description: 'lalalalala') 
-      get :show, id: '1'
-      assigns(:video).should == et
+  describe 'GET Show' do  
+    let!(:et) { Video.create(title: 'et', description: 'lalalalala') } # eager loading by using !
+    context 'logged in' do      
+      before {login(user)}             
+      it 'should set the @video attribute' do              
+        get :show, id: '1'
+        assigns(:video).should == et
+      end
+      it 'should render show template when logged in' do          
+        get :show, id: '1'
+        response.should render_template :show      
+      end  
     end
-    it 'should render show template when logged in' do
-      usr = User.create(email: '123@123.com', password: '12345')
-      login(usr)
-      et = Video.create(title: 'et', description: 'lalalalala') 
-      get :show, id: '1'
-      response.should render_template :show
-    end
-
-    it 'should redirect to front page if not logged in' do
-      et = Video.create(title: 'et', description: 'lalalalala') 
+    
+    it 'should redirect to front page if not logged in' do            
       get :show, id: '1'
       response.should be_redirect
     end
   end
 
   describe 'GET Search' do
-    it 'should set the results attribute correctly' do
-      usr = User.create(email: '123@123.com', password: '12345')
-      login(usr)
-      et = Video.create(title: 'et', description: 'lalalalala') 
-      get :search, query: 'e'
-      assigns(:results).should == [et]
-    end
-    it 'should render the search template when logged in' do
-      usr = User.create(email: '123@123.com', password: '12345')
-      login(usr)
-      et = Video.create(title: 'et', description: 'lalalalala') 
-      get :search, query: 'e'
-      response.should render_template :search
-    end
+    let!(:et) { Video.create(title: 'et', description: 'lalalalala') }
+
+    context 'logged in' do
+      before { login(user) }
+      it 'should set the results attribute correctly' do             
+        get :search, query: 'e'
+        assigns(:results).should == [et]
+      end
+      it 'should render the search template when logged in' do       
+        get :search, query: 'e'
+        response.should render_template :search
+      end
+    end    
 
     it 'should redirect when not logged in' do
       get :search, query: 'e'
