@@ -1,5 +1,5 @@
 Fabricator(:review) do  
   rating { 5 }
-  body { 'this is a good movie'}
+  body { Faker::Lorem.paragraph }
   user    
 end
