@@ -2,6 +2,7 @@ class Video < ActiveRecord::Base
 	has_many :video_categories
 	has_many :categories, through: :video_categories
   has_many :reviews, -> {  order 'created_at desc' }
+  has_many :my_queues, through: :my_queue_videos
 
   validates :title, presence: true
   validates :description, presence: true, length: {minimum: 5}
