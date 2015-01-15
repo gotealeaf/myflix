@@ -9,22 +9,34 @@ describe MyQueueVideosController do
         video = Fabricate(:video)
         vq = Fabricate(:my_queue_video, video_id: video.id, user_id: user.id )
       end
-      get 'index'
-      assigns(:videos).size.should == 2
-      
-
+      get :index
+      assigns(:videos).size.should == 2      
     end
 
     it "should render the index template when login" do
       user = Fabricate(:user)
       login(user)
-      get 'index'
+      get :index
       response.should render_template :index
     end
 
     it "should redirect to root path when not logged in" do
-      get 'index'
+      get :index
       response.should redirect_to root_path
+    end
+  end
+
+  describe 'POST Create' do
+    it "should redirect to root path if not logged in" do
+      post :create
+      response.should redirect_to root_path
+    end
+
+    it "should create the my_queue_video object successfully when logged in" do
+      user = Fabricate(:user)
+      login(user)
+      post :create, video_id: 1
+      response.should redirect_to my_queue_path
     end
   end
 end
