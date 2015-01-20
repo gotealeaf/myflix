@@ -14,18 +14,22 @@ describe UsersController do
   end
   
   describe 'POST Create' do    
-    it 'should redirect to sessions/new if registration successful' do
+    it 'should create user successfuly if registration successful' do
       post :create, user:{email: 'example@123.com', password: '12345'}
-      response.should redirect_to login_path
+      expect(User.count).to eq(1)
     end
 
+    it 'should redirect to sign in path after register' do
+      post :create, user:{email: 'example@123.com', password: '12345'}    
+      response.should redirect_to login_path
+    end
     it 'should fail if email is not valid' do 
       post :create, user:{email: '', password: '12345'}
-      response.should render_template :new
+      expect(User.count).to eq(0)
     end
     it 'should fail if password is not valid' do
       post :create, user:{email: 'example@example.com', password: '123'}
-      response.should render_template :new 
+      expect(User.count).to eq(0)
     end
     it 'should faile if email is already been taken' do
       user = User.create(email: 'example@example.com', password: '12345')

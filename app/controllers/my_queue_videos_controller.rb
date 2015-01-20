@@ -13,6 +13,11 @@ class MyQueueVideosController < ApplicationController
     else
         redirect_to :back
     end
+  end
 
+  def destroy    
+    queue_video = MyQueueVideo.find(params[:id])
+    queue_video.destroy unless queue_video.nil? 
+    redirect_to my_queue_path
   end
 end
