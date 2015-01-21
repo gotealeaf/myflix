@@ -37,7 +37,7 @@ describe MyQueueVideosController do
         video = Fabricate(:video)        
       end
       post :create, video_id: 1
-      response.should redirect_to my_queue_path
+      expect(MyQueueVideo.count).to eq(1)
     end
   end
 
@@ -49,7 +49,7 @@ describe MyQueueVideosController do
         vq = Fabricate(:my_queue_video, video_id: video.id, user_id: user.id )
       end
       delete :destroy, id: 1
-      response.should redirect_to my_queue_path
+      expect(MyQueueVideo.count).to eq(1)
     end
 
     it 'should redirect to root path when not logged in' do
