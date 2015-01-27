@@ -4,6 +4,6 @@ class Category < ActiveRecord::Base
 
   def recent_videos
     
-    @recent_videos = videos.sort_by{|v| v.created_at}.reverse.take(6)
+    @recent_videos = videos.reorder('created_at DESC').take(6)
   end
 end
