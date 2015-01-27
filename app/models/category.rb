@@ -3,6 +3,7 @@ class Category < ActiveRecord::Base
 	has_many :videos, -> { order 'title' }, through: :video_categories
 
   def recent_videos
-    @recent_videos = videos.order(created_at: :desc).take(6)
+    
+    @recent_videos = videos.reorder('created_at DESC').take(6)
   end
 end
