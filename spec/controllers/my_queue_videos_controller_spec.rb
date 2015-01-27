@@ -7,7 +7,7 @@ describe MyQueueVideosController do
       login(user)
       2.times do
         video = Fabricate(:video)
-        vq = Fabricate(:my_queue_video, video_id: video.id, user_id: user.id )
+        vq = Fabricate(:my_queue_video, video: video, user: user )
       end
       get :index
       assigns(:videos).size.should == 2      
