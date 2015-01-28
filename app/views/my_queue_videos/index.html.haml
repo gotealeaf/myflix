@@ -14,6 +14,6 @@
               %th(width="15%") Genre
               %th(width="15%") Remove
           %tbody
-            
+            / = form_tag update_queue_video_path, , method: 'get' do    
             = render @videos
         = button_to "Update Instant Queue", nil, class: "btn btn-default"

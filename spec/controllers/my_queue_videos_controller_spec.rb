@@ -57,4 +57,27 @@ describe MyQueueVideosController do
       response.should redirect_to root_path
     end
   end
+
+  describe 'POST Update_queue_videos' do
+    let!(:user) { Fabricate(:user)}
+    let(:video1) { Fabricate(:video)}
+    let(:video2) { Fabricate(:video)}
+    let(:q1) { Fabricate(:my_queue_video, user: user, video: video1, index: 1)}
+    let(:q2) { Fabricate(:my_queue_video, user: user, video: video2, index: 2)}
+    context 'with valid inputs' do
+      before do
+        login(user)    
+      end      
+      it 'should redirect to queue path after update succesfully' do
+        post :update_queue_videos
+        expect(response).to redirect_to my_queue_videos_path
+      end
+      it 'should update the index order of the videos correctly' do        
+        post :update_queue_videos, video: [{id: video1.id, index: 2}, {id: video2.id, index: 1} ]
+        expect(user.my_queue_videos).to eq([q2, q1])
+      end
+    end
+    context 'with invalid inputs'
+    context 'update as a non-owner'
+  end
 end

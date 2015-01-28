@@ -6,7 +6,7 @@ describe Video do
   it { should validate_presence_of(:description) }
   it { should have_many(:categories).through(:video_categories) }
   it { should have_many(:reviews).order('created_at desc')}
-  it { should have_many(:my_queue_videos).order('index')}
+  it { should have_many(:my_queue_videos)}
 
   it 'should return blank when search keyword is empty' do
     et = Video.create(title: 'et', description: 'lalalala')
