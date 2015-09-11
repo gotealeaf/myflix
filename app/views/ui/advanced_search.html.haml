@@ -1,0 +1,67 @@
+%section.advanced_search.container
+  %form.form-horizontal
+    %header
+      %h1 Advanced Search
+    .form-group
+      .col-sm-6
+        %input.form-control(type="search" placeholder="Search videos by title, description")
+    .form-group
+      .col-sm-6
+        .checkbox
+          %label
+            %input(type="checkbox") Include Reviews
+    .form-group
+      .row.average_rating_label Average Rating
+      %label.col-sm-1.control-label(for="rating_from") From:
+      .col-sm-2
+        %select.form-control(id="rating_from")
+          %option -
+          - (10..50).map { |num| num / 10.0 }.each do |number|
+            %option{ value: number }= number
+      %label.col-sm-1.control-label(for="rating_to") To:
+      .col-sm-2
+        %select.form-control(id="rating_to")
+          %option -
+          - (10..50).map { |num| num / 10.0 }.each do |number|
+            %option{ value: number }= number
+    .form-group
+      .col-sm-6
+        = button_tag(type: "submit", class: "btn btn-primary") do
+          %span.glyphicon.glyphicon-search
+          Search
+  %hr
+  %h2.results_count Results: 2 videos found
+  %article.video.row
+    .video_data
+      %figure.col-sm-2
+        %img(src="http://dummyimage.com/166x236/000/fff" alt="video cover")
+      .video_body.col-sm-10
+        %header
+          %h3
+            Video
+            %em.label.label-highlight Title
+        %p.video_description
+          Lorem ipsum dolor sit amet, qui risus mus aliquet alias, placerat volutpat consequat turpis vivamus quis fermentum. Massa dui odio. Pretium sociis luctus sodales in ratione.
+          %em.label.label-highlight Laoreet
+          vulputate sit wisi, a aliquam, est vivamus malesuada condimentum nostra volutpat, odio et sed eros aliquam, pulvinar est in nulla hendrerit. Vestibulum volutpat orci varius, euismod quis nunc mattis malesuada, quis nulla tortor lacinia id vestibulum, mattis venenatis sed integer.
+        %hr
+        .details
+          %span.average_rating Average rating: 3.5
+          %span.reviews_count 5 reviews
+        %footer.video_review
+          In nulla hendrerit. Vestibulum volutpat orci varius, euismod quis nunc mattis malesuada, quis nulla tortor lacinia id vestibulum, mattis venenatis sed integer. Lorem ipsum dolor sit amet, qui risus mus aliquet alias, placerat volutpat consequat turpis vivamus quis...
+  %article.video.row
+    .video_data
+      %figure.col-sm-2
+        %img(src="http://dummyimage.com/166x236/000/fff" alt="video cover")
+      .video_body.col-sm-10
+        %header
+          %h3
+            Video
+            %em.label.label-highlight Title
+        %p.video_description
+          Lorem ipsum dolor sit amet, qui risus mus aliquet alias, placerat volutpat consequat turpis vivamus quis fermentum. Massa dui odio. Pretium sociis luctus sodales in ratione.
+          %em.label.label-highlight Laoreet
+          vulputate sit wisi, a aliquam, est vivamus malesuada condimentum nostra volutpat, odio et sed eros aliquam, pulvinar est in nulla hendrerit. Vestibulum volutpat orci varius, euismod quis nunc mattis malesuada, quis nulla tortor lacinia id vestibulum, mattis venenatis sed integer.
+        %hr
+        %footer.video_review There are currently no reviews.
