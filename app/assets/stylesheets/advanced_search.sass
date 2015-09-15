@@ -1,0 +1,86 @@
+section.advanced_search
+  margin: 0 auto
+  background: #f7f7f7
+  padding: 20px
+  min-width: 1170px
+
+  h2.results_count
+    font-size: 24px
+    margin: 20px 0
+
+  form
+    header
+      h1
+        font-size: 24px
+        margin-bottom: 20px
+    .average_rating_label
+      margin: 0 0 10px 16px
+      font-size: 15px
+      font-weight: bold
+    label[for="rating_from"]
+      text-align: left
+      padding-right: 0
+      width: 53px
+    label[for="rating_to"]
+      text-align: left
+      padding: 7px 0
+      width: 21px
+  hr
+    border: 1px dotted #cecece
+
+  article.video
+    min-width: 1130px
+    border: 1px solid #cecece
+    margin-bottom: 10px
+    padding: 15px
+    header
+      margin-bottom: 5px
+    .video_data
+      width: 100%
+      height: 236px
+      min-width: 1098px
+      position: relative
+      figure
+        padding: 0
+        border-right: 2px solid #cecece
+        margin-right: 0
+        max-width: 182px
+      .video_body
+        min-width: 915px
+        position: absolute
+        top: 0
+        left: 180px
+        height: 100%
+        padding-right: 0
+        h3
+          font-size: 24px
+        p.video_description
+          padding: 3px 0
+          margin-top: 15px
+          overflow: auto
+          height: 98px
+        .details
+          font-size: 20px
+          span.average_rating
+            padding-right: 12px
+            border-right: 2px dotted #cecece
+          span.reviews_count
+            padding-left: 8px
+        hr
+          margin: 10px 0
+        footer.video_review
+          position: absolute
+          bottom: 0
+          left: 15px
+          overflow: auto
+          max-height: 42px
+          width: 100%
+          &:empty
+            display: none
+
+.label-highlight
+  font-size: 100% !important
+  font-weight: inherit !important
+  font-style: inherit !important
+  color: #333 !important
+  background: #fff401 !important
