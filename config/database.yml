@@ -1,0 +1,17 @@
+development:
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  database: daweidai_development
+  pool: 5
+  username: daweidai 
+  password: 
+
+test:
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  database: daweidai_test
+  pool: 5
+  username: daweidai
+  password: 
