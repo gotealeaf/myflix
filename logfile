@@ -1,0 +1,61 @@
+LOG:  database system was shut down at 2015-09-23 10:36:30 PDT
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  database "daweidai" does not exist
+FATAL:  database "dawdai" does not exist
+FATAL:  role "dawdai2" does not exist
+FATAL:  role "dawdai2" does not exist
+ERROR:  permission denied to create database
+STATEMENT:  CREATE DATABASE "dawdai_development_2" ENCODING = 'unicode'
+ERROR:  permission denied to create database
+STATEMENT:  CREATE DATABASE "dawdai_test_2" ENCODING = 'unicode'
+FATAL:  database "daweidai_test" does not exist
+FATAL:  database "daweidai" does not exist
+ERROR:  database "daweidai_development" already exists
+STATEMENT:  CREATE DATABASE "daweidai_development" ENCODING = 'unicode'
+ERROR:  permission denied for relation videos
+STATEMENT:  SELECT "id", "title", "description", "small_cover_url", "large_cover_url" FROM "public"."videos"  ORDER BY "id" ASC  LIMIT 1000
+ERROR:  syntax error at or near "dt" at character 1
+STATEMENT:  dt
+	help
+	help
+	;
+ERROR:  syntax error at or near "dt" at character 1
+STATEMENT:  dt;
+ERROR:  syntax error at or near "dt" at character 1
+STATEMENT:  dt
+	s
+	sd
+	sd
+	asd
+	;
+ERROR:  syntax error at or near "desc" at character 1
+STATEMENT:  desc videos;
+ERROR:  syntax error at or near "d" at character 1
+STATEMENT:  d videos;
+ERROR:  syntax error at or near "dt" at character 1
+STATEMENT:  dt
+	:
+	;
+ERROR:  syntax error at or near "dt" at character 1
+STATEMENT:  dt
+	;
+ERROR:  syntax error at or near "d" at character 1
+STATEMENT:  d videos;
+ERROR:  relation "video" does not exist at character 15
+STATEMENT:  select * from video
+	;
+ERROR:  relation "videos" does not exist at character 24
+STATEMENT:  SELECT "videos".* FROM "videos"
+ERROR:  relation "videos" does not exist at character 24
+STATEMENT:  SELECT "videos".* FROM "videos"
+ERROR:  permission denied for relation videos
+STATEMENT:  SELECT "id", "title", "description", "small_cover_url", "large_cover_url" FROM "public"."videos"  ORDER BY "id" ASC  LIMIT 1000
+ERROR:  relation "videos" does not exist at character 24
+STATEMENT:  SELECT "videos".* FROM "videos"
+ERROR:  relation "videos" does not exist at character 24
+STATEMENT:  SELECT "videos".* FROM "videos"
+ERROR:  relation "videos" does not exist at character 24
+STATEMENT:  SELECT "videos".* FROM "videos"
+ERROR:  relation "videos" does not exist at character 24
+STATEMENT:  SELECT "videos".* FROM "videos"
