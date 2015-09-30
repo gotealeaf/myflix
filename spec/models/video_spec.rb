@@ -1,16 +1,8 @@
 require 'spec_helper'
 
 describe Video do
-  it "saves itself" do
-    video = Video.new(title: "Jurassic Park", description: "classic movie for sure")
-    video.save
-    expect(Video.first).to eq(video)
-  end
+  it { should belong_to(:category)}
+  it { should validate_presence_of(:title)}
+  it { should validate_presence_of(:description)}
 
-  it 'belongs to category' do
-    action = Category.create(name: "Action Thriller")
-    video = Video.create(title: "Transformer", description: "WOW, great", category: action)
-    expect(video.category).to eq(action)
-  end
-  
 end
