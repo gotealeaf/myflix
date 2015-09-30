@@ -166,7 +166,7 @@ DEPENDENCIES
   pry-nav
   rails (= 4.1.1)
   rails_12factor
-  rspec-rails (= 2.99)
+  rspec-rails
   sass-rails
   thin
   uglifier
