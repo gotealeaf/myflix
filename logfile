@@ -118,3 +118,54 @@ LOG:  database system is shut down
 LOG:  database system was shut down at 2015-09-29 23:59:34 PDT
 LOG:  database system is ready to accept connections
 LOG:  autovacuum launcher started
+LOG:  autovacuum launcher shutting down
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2015-09-30 16:43:59 PDT
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  syntax error at or near "%" at character 52
+STATEMENT:  SELECT "videos".* FROM "videos"  WHERE (title LIKE %'Visit'%)
+ERROR:  syntax error at or near "%" at character 52
+STATEMENT:  SELECT "videos".* FROM "videos"  WHERE (title LIKE %'Visit'%)
+ERROR:  syntax error at or near "%" at character 52
+STATEMENT:  SELECT "videos".* FROM "videos"  WHERE (title LIKE %'Visit'%)
+ERROR:  column "created_at" does not exist at character 71
+STATEMENT:  SELECT "videos".* FROM "videos"  WHERE (title LIKE '%sit%')  ORDER BY created_at DESC
+ERROR:  column "created_at" does not exist at character 73
+STATEMENT:  SELECT "videos".* FROM "videos"  WHERE (title LIKE '%Visit%')  ORDER BY created_at DESC
+ERROR:  column "created_at" does not exist at character 73
+STATEMENT:  SELECT "videos".* FROM "videos"  WHERE (title LIKE '%Visit%')  ORDER BY created_at DESC
+ERROR:  column "created_at" does not exist at character 73
+STATEMENT:  SELECT "videos".* FROM "videos"  WHERE (title LIKE '%Visit%')  ORDER BY created_at DESC
+LOG:  autovacuum launcher shutting down
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2015-10-03 09:30:03 PDT
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+LOG:  autovacuum launcher shutting down
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2015-10-04 23:34:48 PDT
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  terminating connection due to administrator command
+LOG:  autovacuum launcher shutting down
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2015-10-05 13:24:19 PDT
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  terminating connection due to administrator command
+LOG:  autovacuum launcher shutting down
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2015-10-05 23:02:28 PDT
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
