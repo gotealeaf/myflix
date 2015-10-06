@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.1.2'
 
+gem 'bootstrap_form'
 gem 'bootstrap-sass'
 gem 'coffee-rails'
 gem 'rails', '4.1.1'
@@ -9,6 +10,7 @@ gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'pg'
+gem 'bcrypt-ruby'
 
 group :development do
   gem 'thin'
@@ -19,14 +21,19 @@ end
 group :development, :test do
   gem 'pry'
   gem 'pry-nav'
-  gem 'rspec-rails', '2.99'
+  gem 'rspec-rails'
 end
 
 group :test do
   gem 'database_cleaner', '1.2.0'
 end
 
+group :test do
+  gem 'shoulda-matchers'
+end
+
 group :production do
   gem 'rails_12factor'
 end
+
 
