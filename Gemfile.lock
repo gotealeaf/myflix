@@ -151,6 +151,7 @@ GEM
     uglifier (2.3.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    vcr (2.9.3)
 
 PLATFORMS
   ruby
@@ -173,3 +174,4 @@ DEPENDENCIES
   shoulda-matchers (= 2.7.0)
   thin
   uglifier
+  vcr (= 2.9.3)
