@@ -18,3 +18,8 @@ Video.create(title: 'Monk',
 	description: 'Highly anticipated movie on monks',
 	small_cover_url: '/tmp/monk.jpg',
 	large_cover_url: '/tmp/large_large.jpg')
+
+Category.create(name: 'Drama')
+Category.create(name: 'Comedy')
+Category.create(name: 'Action')
+Category.create(name: 'Thriller')
