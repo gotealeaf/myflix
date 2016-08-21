@@ -1,0 +1,10 @@
+- if @results.empty?
+  %header
+    %h3= "No Results matching your query were found"
+    
+%article.video_category
+  .videos.row
+    - @results.each do |video|
+      .video.col-sm-2
+        = link_to video_path(video) do
+          %img(src="/tmp/#{video.small_cover_url}")

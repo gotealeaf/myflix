@@ -5,9 +5,9 @@
     %li= link_to "Videos"
     %li= link_to "My Queue"
     %li= link_to "People"
-  %form.col-md-5.navbar-form(action="")
+  = form_tag search_videos_path, class: 'col-md-5 navbar-form', method: 'get' do
     .form-group
-      %input.form-control(type="text" placeholder="Search for videos here")
+      %input.form-control(name="search_term" type="text" placeholder="Search for videos here")
     %button.btn.btn-default(type="submit") Search
   #user_links.pull-right
     %ul
