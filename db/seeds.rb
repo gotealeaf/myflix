@@ -22,3 +22,30 @@ Video.create(title: 'Monk',
 	small_cover_url: 'monk.jpg',
 	large_cover_url: 'monk_large.jpg',
 	category: comedy)
+
+Video.create(title: 'Rush Hour',
+	description: 'The series based on the blockbuster film',
+	small_cover_url: 'south_park.jpg',
+	large_cover_url: 'south_park.jpg',
+	category: comedy)
+
+Video.create(title: 'Modern Family',
+	description: 'A comedy on the Modern family',
+	small_cover_url: 'family_guy.jpg',
+	large_cover_url: 'family_guy.jpg',
+	category: comedy)
+
+Video.create(title: 'Galavant',
+	description: 'A really great comedy',
+	small_cover_url: 'south_park.jpg',
+	large_cover_url: 'south_park.jpg',
+	category: comedy)
+
+Video.create(title: 'Devious Maids', description: 'Zoila and the gang',
+	small_cover_url: 'futurama.jpg', large_cover_url: 'futurama.jpg', category: comedy)
+
+Video.create(title: 'Mentalist', description: 'The mentalist returns',
+	small_cover_url: 'monk.jpg', large_cover_url: 'monk_large.jpg', category: drama)
+
+Video.create(title: 'CSI LA', description: 'LL Cool J and the gang',
+	small_cover_url: 'family_guy.jpg', large_cover_url: 'family_guy.jpg', category: drama)
