@@ -1,0 +1,5 @@
+<% @videos.each do |video| %>
+  <%= link_to "", nil do %>
+    <img src="/img/#{video.small_cover_url}.jpg" />
+  <% end %>
+<% end %>
